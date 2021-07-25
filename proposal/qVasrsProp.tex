@@ -215,6 +215,9 @@ urlcolor=g1          % color of external links
 \newcommand{\xxx}{\mycom{\stfootcol{Placeholder}{blue!20}\xspace}}
 \newcommand{\cn}{\mycom{\stfootcol{Cite}{blue!20}\xspace}}
 
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\entails}[1]{\vdash_{#1}}
+
 
 \begin{document}
 \newcommand{\HorizontalLine}{\rule{\linewidth}{0.3mm}}
@@ -229,13 +232,27 @@ urlcolor=g1          % color of external links
 	\vspace{0.5cm}
 	{\today \vspace{2cm}}
 \end{center}
+
+\vspace*{2cm}
+
 \section{Introduction}
+\input{chapters/chap_introduction.tex}
 
 
-\begin{figure}[H]
-\input{fig/lst_ex_p0.tex}
-\caption{Program $P$}
-\end{figure}
+
+\section{Rational Vector Addition Systems with Resets}
+\input{chapters/chap_qvasr.tex}
+
+\input{fig/matrix_ex_p0.tex}
+
+
+\section{Rational Vector Addition Systems with Resets and States}
+\input{chapters/chap_qvasrs.tex}
+
+\section{Implementation}
+
+\section{Approach}
+
 
 
 \pagebreak

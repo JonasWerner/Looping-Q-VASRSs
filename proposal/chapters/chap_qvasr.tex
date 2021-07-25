@@ -1,0 +1,13 @@
+\begin{mydef}
+A transition system is a pair T = $(S, \rightarrow)$ consisting of a set of states $S$, and a transition relation $\rightarrow \subseteq S \times S$. We define $\rightarrow^*$ as the reflexive transitive closure of $\rightarrow$.
+\end{mydef}
+
+\begin{mydef}
+A rational vector addition system with resets ($\Q-VASR$) of dimension d is a finite set $V \subseteq \{0, 1\}^d \times \Q^d$, consisting of of tuples $(\vec{r}, \vec{a})$, with binary reset $\vec{r}$ and rational addition vector $\vec{a}$ of dimension d.
+\end{mydef}
+
+\begin{mydef}
+A \Q-VASR abstraction is a tuple $A = (S, V)$ consisting of a rational matrix $S \in \Q^{d \times n}$ and a d-dimensional \Q-VASR $V$. The dimensions $d$ and $n$ are called concrete and abstract dimensions.
+\end{mydef}
+
+Given a transition formula $F$ and a \Q-VASR abstraction $A$, if $F \entails{S} V$ then we say that $A$ is a \Q-VASR abstraction of $F$.
