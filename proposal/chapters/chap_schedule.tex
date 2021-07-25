@@ -1,0 +1,34 @@
+\pagenumbering{gobble}
+This schedule illustrates the approach and shows the sequence of the individual tasks. \\ \\
+\begin{figure}[H]
+  	\hspace*{-4cm}
+    \begin{tikzpicture}
+    \begin{ganttchart}[hgrid, vgrid, x unit=3.2cm, bar height=.6,, title height=1, canvas/.append style={alias=frame}
+    ]{1}{6}
+
+    \gantttitle{Time in months}{6} \ganttnewline
+
+    \gantttitlelist{1,...,6}{1} \\
+
+
+    \ganttbar{1. $\mathbb{Q}$-VASR library}{1}{2}
+    \ganttbar[inline]{}{1}{2} \ \\
+
+    \ganttbar{2. $\mathbb{Q}$-VASRS extension}{3}{3}
+    \ganttbar[inline]{}{3}{3} \ \\
+
+    \ganttbar{3. Testing}{4}{4}
+    \ganttbar[inline]{}{4}{4} \ \\
+
+    \ganttbar{4. Evaluation}{5}{5}
+    \ganttbar[inline]{}{5}{5} \ \\
+
+    \ganttbar{5. Thesis}{5}{6}
+    \ganttbar[inline]{}{5}{6} \ \\
+
+
+    \end{ganttchart}
+    \useasboundingbox (frame.south west) rectangle (frame.north east);
+    \end{tikzpicture}
+    \caption{Timetable for this master thesis.}
+\end{figure}
