@@ -1,0 +1,16 @@
+
+	\begin{algorithm}
+		\caption{\texttt{abstract-VASR(\tranFormula)}}\label{euclid}
+		\begin{algorithmic}[1]
+			\State $\abst{} := (\mathit{I_n}, \emptyset)$
+			\State $\Gamma := \tranFormula$
+			\While{$\Gamma\ \texttt{is satisfiable}$}
+			\State $M := \texttt{a model of } \Gamma$
+			\State $G := \texttt{a disjunct of DNF of } \Gamma \texttt{, where } M \models G$
+			\State $\abst{G} := \qvasr \texttt{ abstraction of }G$
+			\State $\abst{} := \abst{} \sqcup \abst{G}$
+			\State $\Gamma := \Gamma\ \land\ \neg\gamma\abst{}$
+			\EndWhile \\
+			\Return $\abst{}$
+		\end{algorithmic}
+	\end{algorithm}

@@ -8,6 +8,8 @@
   plainpages=false,%
   pdfusetitle]{hyperref}
 \usepackage[all]{hypcap}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 \usepackage{cite}
 \usepackage{booktabs}
 \usepackage{url}
@@ -138,6 +140,11 @@
 \newcommand{\interpret}{\ensuremath{\mathcal{I}}\xspace}
 \newcommand{\eval}[1]{\ensuremath{\llbracket #1 \rrbracket}_{M, \varv}\xspace}
 
+\newcommand{\abst}[1]{\ensuremath{\mathit{(S^{#1}, V^{#1})}}}
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+
+
 %%%%%%%%%%%% Numbered example environment
 % \newcounter{example}[section]
 % \newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
@@ -193,6 +200,14 @@ urlcolor=g1          % color of external links
 
 \lstset{escapechar=@,style=boogie}
 
+\algrenewcommand\alglinenumber[1]{\footnotesize #1}
+
+\usepackage{regexpatch}
+
+\makeatletter
+\xpatchcmd{\algorithmic}{\labelsep 0.5em}{\labelsep 1.5em}{\typeout{Success!}}{\typeout{Oh dear!}}
+\makeatother
+
 %%%%%%%%%%%% Comments
 \newif\iffinal
 %\finaltrue % comment out to remove comments
@@ -217,6 +232,11 @@ urlcolor=g1          % color of external links
 
 \newcommand{\Q}{\ensuremath{\mathbb{Q}}}
 \newcommand{\entails}[1]{\vdash_{#1}}
+
+\newcommand{\qvasr}{\ensuremath{\mathit{\mathbb{Q} \text{-}VASR}}\xspace}
+\newcommand{\qvasrs}{\ensuremath{\mathit{\mathbb{Q} \text{-}VASRS}}\xspace}
+
+\newcommand{\tranFormula}{\ensuremath{F(\vec{x}, \vec{x}')}}
 
 
 \begin{document}
@@ -250,6 +270,10 @@ urlcolor=g1          % color of external links
 \input{chapters/chap_qvasrs.tex}
 
 \section{Implementation}
+\input{fig/psd_algo_1.tex}
+
+\input{fig/psd_algo_join.tex}
+
 
 \section{Approach}
 
