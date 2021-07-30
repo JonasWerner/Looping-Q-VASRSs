@@ -3,7 +3,7 @@ This schedule illustrates the approach and shows the sequence of the individual 
 \begin{figure}[H]
   	\hspace*{-4cm}
     \begin{tikzpicture}
-    \begin{ganttchart}[hgrid, vgrid, x unit=3.2cm, bar height=.6,, title height=1, canvas/.append style={alias=frame}
+    \begin{ganttchart}[hgrid, vgrid, x unit=3.1cm, bar height=.6,, title height=1, canvas/.append style={alias=frame}
     ]{1}{6}
 
     \gantttitle{Time in months}{6} \ganttnewline
@@ -11,10 +11,10 @@ This schedule illustrates the approach and shows the sequence of the individual 
     \gantttitlelist{1,...,6}{1} \\
 
 
-    \ganttbar{1. $\mathbb{Q}$-VASR library}{1}{2}
+    \ganttbar{1. \qvasr library}{1}{2}
     \ganttbar[inline]{}{1}{2} \ \\
 
-    \ganttbar{2. $\mathbb{Q}$-VASRS extension}{3}{3}
+    \ganttbar{2. \qvasrs implementation}{3}{3}
     \ganttbar[inline]{}{3}{3} \ \\
 
     \ganttbar{3. Testing}{4}{4}
@@ -28,5 +28,5 @@ This schedule illustrates the approach and shows the sequence of the individual 
     \end{ganttchart}
     \useasboundingbox (frame.south west) rectangle (frame.north east);
     \end{tikzpicture}
-    \caption{Timetable for this master thesis.}
+    \caption{Timetable for this project.}
 \end{figure}
