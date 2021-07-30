@@ -1,5 +1,5 @@
 
-	\begin{algorithm}
+	\begin{algorithm}[H]
 		\caption{\texttt{abstract-VASRS}$(\tranFormula, P)$}\label{euclid}
 		\begin{algorithmic}[1]
 			\State $\abst{} \gets (\mathit{I_n}, \emptyset)$
@@ -16,7 +16,7 @@
 				\ForEach{$(\vec{r}, \vec{a}) \in \texttt{image}(\mathit{S^{p,q}, T^{p, q}})$}
 					\State $E \gets E \cup \{p, (\vec{r}, \vec{a}), q\}$
 				\EndFor
-			\EndFor
-			\Return $(S,(P, E))$
+			\EndFor \\ 
+			\Return $\texttt{reach}(S,(P, E))(S\vec{x}, S\vec{x}') \circ (\vec{x}' = \vec{x} \lor \tranFormula)$
 		\end{algorithmic}
 	\end{algorithm}
