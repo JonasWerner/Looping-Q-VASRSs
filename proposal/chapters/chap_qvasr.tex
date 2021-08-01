@@ -3,6 +3,10 @@ A transition system is a pair T = $(S, \rightarrow)$ consisting of a set of stat
 \end{mydef}
 
 \begin{mydef}
+A transition formula \tranFormula of dimension $n$ is a first order logic formula ranging over variables $\vec{x} = x_1, \ldots x_n$ and $\vec{x}' = x_1', \ldots, x_n'$, where $\vec{x}$ denotes the state before a transition and $\vec{x}'$ after. \tranFormula defines a transition system $(S_F, \rightarrow_F)$ with state space $S_F = \mathbb{Q}$ and transitions $\vec{u} \rightarrow_F \vec{v}$ if $F(\vec{u}, \vec{v})$ is valid.
+\end{mydef}
+
+\begin{mydef}
 A rational vector addition system with resets (\qvasr) of dimension d is a finite set $V \subseteq \{0, 1\}^d \times \Q^d$, consisting of of tuples $(\vec{r}, \vec{a})$, with binary reset $\vec{r}$ and rational addition vector $\vec{a}$ of dimension d.
 \end{mydef}
 
@@ -17,8 +21,8 @@ A \qvasr abstraction is a tuple $A = (S, V)$ consisting of a rational matrix $S 
 Given a transition formula $F$ and a \qvasr abstraction $A$, if $F \entails{S} V$ then we say that $A$ is a \qvasr abstraction of $F$.
 
 \begin{mydef}
-Given a d-dimensional \qvasr $\mathit{V}$,  $i, j \in \{1 ,\ldots, d\}$ are coherent dimensions of $\mathit{V}$ if for all $\vec{r}, \vec{a} \ in \mathit{V} r_i = r_j$. Coherency is denoted by $\equiv_{\mathit{V}}$. \\
-\coherent forms an equivalence relation on $\{1, \ldots, d$. The equivalence classes of $\coherent$ are referred to as the coherence classes of $\mathit{V}$.
+Given a d-dimensional \qvasr $\mathit{V}$,  $i, j \in \{1 ,\ldots, d\}$ are coherent dimensions of $\mathit{V}$ if for all $\vec{r}, \vec{a} \in \mathit{V} r_i = r_j$. Coherency is denoted by $\equiv_{\mathit{V}}$. \\
+\coherent forms an equivalence relation on $\{1, \ldots, d\}$. The equivalence classes of $\coherent$ are referred to as the coherence classes of $\mathit{V}$.
 \end{mydef}
 
 \begin{mydef}
