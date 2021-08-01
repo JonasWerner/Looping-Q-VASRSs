@@ -7,7 +7,20 @@ A rational vector addition system with resets (\qvasr) of dimension d is a finit
 \end{mydef}
 
 \begin{mydef}
+Given transition systems $A = (\mathbb{Q}^n, \rightarrow_A)$ and $B = (\mathbb{Q}^m, \rightarrow_B)$ of dimensions $n$ and $m$. A linear simulation is a linear transformation represented by matrix $S \in \mathbb{Q}^{m \times n}$ such that for all $\vec{u}, \vec{v} \in \mathbb{Q}^n$ with $\vec{u} \rightarrow_A \vec{v}$, we have $S\vec{u} \rightarrow_B S\vec{v}$. A linear simulation $S$ from $A$ to $B$ is denoted as $A \Vdash_{S} B$
+\end{mydef}
+
+\begin{mydef}
 A \qvasr abstraction is a tuple $A = (S, V)$ consisting of a rational matrix $S \in \Q^{d \times n}$ and a d-dimensional \qvasr $V$. The dimensions $d$ and $n$ are called concrete and abstract dimensions.
 \end{mydef}
 
 Given a transition formula $F$ and a \qvasr abstraction $A$, if $F \entails{S} V$ then we say that $A$ is a \qvasr abstraction of $F$.
+
+\begin{mydef}
+Given a d-dimensional \qvasr $\mathit{V}$,  $i, j \in \{1 ,\ldots, d\}$ are coherent dimensions of $\mathit{V}$ if for all $\vec{r}, \vec{a} \ in \mathit{V} r_i = r_j$. Coherency is denoted by $\equiv_{\mathit{V}}$. \\
+\coherent forms an equivalence relation on $\{1, \ldots, d$. The equivalence classes of $\coherent$ are referred to as the coherence classes of $\mathit{V}$.
+\end{mydef}
+
+\begin{mydef}
+A \qvasr abstraction $\mathit{A = (S, V)}$ is normal of there is no non-zero vector $\vec{z}$ that is coherent to $\mathit{V}$ such that $\vec{z}S = 0$.
+\end{mydef}
