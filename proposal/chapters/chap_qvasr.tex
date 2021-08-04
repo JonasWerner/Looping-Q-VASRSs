@@ -30,7 +30,7 @@ To compute a \qvasr-abstraction $A = (S, V)$ for a given conjunctive transition 
  \item The set of linear combinations of variables that are reset in $C$: $Res_C = \{ \langle \vec{s}, a \rangle : C \models \vec{s} \cdot \vec{x}' = a \}$
  \item The set of linear combinations of variables that are incremented in $C$: $Inc_C = \{ \langle \vec{s}, a \rangle : C \models \vec{s} \cdot \vec{x}' = \vec{s} \cdot \vec{x} + a \}$
 \end{itemize}
-By solving the emerging linear equation systems we get bases for $Res_C: \{\langle \vec{s}_1, a_1 \rangle, \ldots, \langle \vec{s}_m, a_m \rangle\}$ and $Inc_C: \{ \langle \vec{s}_{m+1}, a_{m+1} \rangle , \ldots, \langle \vec{s}_d, a_d\rangle \}$. \\ We define the \qvasr-abstraction of $C$ as $\alpha(C) = (S, \{(\vec{r}, \vec{a})\})$, with \\
+By solving the emerging linear equation systems of $ \vec{s} \cdot \vec{x}' = a$ and $\vec{s} \cdot \vec{x}' = \vec{s} \cdot \vec{x} + a $ we compute bases for $Res_C: \{\langle \vec{s}_1, a_1 \rangle, \ldots, \langle \vec{s}_m, a_m \rangle\}$ and $Inc_C: \{ \langle \vec{s}_{m+1}, a_{m+1} \rangle , \ldots, \langle \vec{s}_d, a_d\rangle \}$ respectively. \\ We define the \qvasr-abstraction of $C$ as $\alpha(C) = (S, \{(\vec{r}, \vec{a})\})$, with \\
 
 \begin{minipage}{0.3\textwidth}
 \centering
