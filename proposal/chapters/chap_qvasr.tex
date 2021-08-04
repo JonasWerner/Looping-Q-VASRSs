@@ -5,6 +5,12 @@ A transition system is a pair T = $(S, \rightarrow)$ consisting of a set of stat
 \begin{mydef}
 A transition formula \tranFormula of dimension $n$ is a first order logic formula ranging over variables $\vec{x} = x_1, \ldots x_n$ and $\vec{x}' = x_1', \ldots, x_n'$, where $\vec{x}$ denotes the state before a transition and $\vec{x}'$ after. \tranFormula defines a transition system $(S_F, \rightarrow_F)$ with state space $S_F = \mathbb{Q}$ and transitions $\vec{u} \rightarrow_F \vec{v}$ if $F(\vec{u}, \vec{v})$ is valid.
 \end{mydef}
+\begin{example}
+    From example program $P$ we can extract the transition formula of the \texttt{while} loop as:
+    \begin{align*}
+    \tranFormula_L =\ \  &x \leq \land x' = x + y \land y' = y+1 \land z' = x \\ \lor & x \leq 20 \land x > 10 \land x' = x + 2 \land y' = y - 3
+    \end{align*}
+\end{example}
 
 \begin{mydef}
 A rational vector addition system with resets (\qvasr) of dimension d is a finite set $V \subseteq \{0, 1\}^d \times \Q^d$, consisting of of tuples $(\vec{r}, \vec{a})$, with binary reset $\vec{r}$ and rational addition vector $\vec{a}$ of dimension d.
@@ -16,9 +22,17 @@ Given transition systems $A = (\mathbb{Q}^n, \rightarrow_A)$ and $B = (\mathbb{Q
 
 \begin{mydef}
 A \qvasr abstraction is a tuple $A = (S, V)$ consisting of a rational matrix $S \in \Q^{d \times n}$ and a d-dimensional \qvasr $V$. The dimensions $d$ and $n$ are called concrete and abstract dimensions.
+Given a transition formula \tranFormula and a \qvasr abstraction $A$, if $F \entails{S} V$ then we say that $A$ is a \qvasr abstraction of $F$.
 \end{mydef}
 
-Given a transition formula $F$ and a \qvasr abstraction $A$, if $F \entails{S} V$ then we say that $A$ is a \qvasr abstraction of $F$.
+To compute a \qvasr-abstraction $A = (S, V)$ for a given conjunctive transition formula \conjunctTF, with $C \entails{S} V$, we need to calculate vector space bases of two sets:
+\begin{itemize}
+ \item The set of linear combinations of variables that are reset in $C$: $Res_C = \{ \langle \vec{s}, a \rangle : C \models \vec{s} \cdot \vec{x}' = a \}$
+ \item The set of linear combinations of variables that are incremented in $C$: $Inc_C = \{ \langle \vec{s}, a \rangle : C \models \vec{s} \cdot \vec{x}' = \vec{s} \cdot \vec{x} + a \}$
+\end{itemize}
+\begin{example}
+Given conjunction $C = x' = x+ y \land y' = y+ 1 \land z' = x$, we can compute a \qvasr-abstraction
+\end{example}
 
 \begin{mydef}
 Given a d-dimensional \qvasr $\mathit{V}$,  $i, j \in \{1 ,\ldots, d\}$ are coherent dimensions of $\mathit{V}$ if for all $\vec{r}, \vec{a} \in \mathit{V} r_i = r_j$. Coherency is denoted by $\equiv_{\mathit{V}}$. \\
@@ -28,3 +42,5 @@ Given a d-dimensional \qvasr $\mathit{V}$,  $i, j \in \{1 ,\ldots, d\}$ are cohe
 \begin{mydef}
 A \qvasr abstraction $\mathit{A = (S, V)}$ is normal of there is no non-zero vector $\vec{z}$ that is coherent to $\mathit{V}$ such that $\vec{z}S = 0$.
 \end{mydef}
+
+\input{fig/matrix_ex_p0.tex}
