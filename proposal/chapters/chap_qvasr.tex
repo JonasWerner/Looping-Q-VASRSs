@@ -6,7 +6,7 @@ A transition system is a pair T = $(S, \rightarrow)$ consisting of a set of stat
 A transition formula \tranFormula of dimension $n$ is a first order logic formula ranging over variables $\vec{x} = x_1, \ldots x_n$ and $\vec{x}' = x_1', \ldots, x_n'$, where $\vec{x}$ denotes the state before a transition and $\vec{x}'$ after. \tranFormula defines a transition system $(S_F, \rightarrow_F)$ with state space $S_F = \mathbb{Q}$ and transitions $\vec{u} \rightarrow_F \vec{v}$ if $F(\vec{u}, \vec{v})$ is valid.
 \end{mydef}
 \begin{example}
-    From example program $P$ we can extract the transition formula of the \texttt{while} loop as:
+    From example program $P$ we can extract the transition formula of the \texttt{while} loop ranging from line \texttt{4} to \texttt{13} as:
     \begin{align*}
     \tranFormula_\ell =\ \  &x \leq 10 \ \land\ x' = x + y\ \land\ y' = y+1\ \land\ z' = x\ \\ \lor\ & x \leq 20\ \land\ x > 10\ \land\ x' = x + 2\ \land\ y' = y - 3
     \end{align*}
