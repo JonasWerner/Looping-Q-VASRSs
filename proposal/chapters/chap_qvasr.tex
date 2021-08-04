@@ -8,7 +8,7 @@ A transition formula \tranFormula of dimension $n$ is a first order logic formul
 \begin{example}
     From example program $P$ we can extract the transition formula of the \texttt{while} loop as:
     \begin{align*}
-    \tranFormula_L =\ \  &x \leq \land x' = x + y \land y' = y+1 \land z' = x \\ \lor & x \leq 20 \land x > 10 \land x' = x + 2 \land y' = y - 3
+    \tranFormula_\ell =\ \  &x \leq 10 \ \land\ x' = x + y\ \land\ y' = y+1\ \land\ z' = x\ \\ \lor\ & x \leq 20\ \land\ x > 10\ \land\ x' = x + 2\ \land\ y' = y - 3
     \end{align*}
 \end{example}
 
@@ -30,8 +30,32 @@ To compute a \qvasr-abstraction $A = (S, V)$ for a given conjunctive transition 
  \item The set of linear combinations of variables that are reset in $C$: $Res_C = \{ \langle \vec{s}, a \rangle : C \models \vec{s} \cdot \vec{x}' = a \}$
  \item The set of linear combinations of variables that are incremented in $C$: $Inc_C = \{ \langle \vec{s}, a \rangle : C \models \vec{s} \cdot \vec{x}' = \vec{s} \cdot \vec{x} + a \}$
 \end{itemize}
+By solving the emerging linear equation systems we get bases for $Res_C: \{\langle \vec{s}_1, a_1 \rangle, \ldots, \langle \vec{s}_m, a_m \rangle\}$ and $Inc_C: \{ \langle \vec{s}_{m+1}, a_{m+1} \rangle , \ldots, \langle \vec{s}_d, a_d\rangle \}$. \\ We define the \qvasr-abstraction of $C$ as $\alpha(C) = (S, \{(\vec{r}, \vec{a})\})$, with \\
+
+\begin{minipage}{0.3\textwidth}
+\centering
+    $ S = \begin{pmatrix}
+            \vec{s}_1 \\
+            \vdots \\
+            \vec{s}_d
+            \end{pmatrix}$
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\centering
+$\vec{r} = (\underbrace{0 \cdots 0}_{\text{m times}} \ \ \underbrace{1 \cdots 1}_{\text{(d-m times)}})$
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\centering
+$\vec{a} = \begin{pmatrix}
+            \vec{a}_1 \\
+            \vdots \\
+            \vec{a}_d
+            \end{pmatrix}$
+\end{minipage}
+
 \begin{example}
-Given conjunction $C = x' = x+ y \land y' = y+ 1 \land z' = x$, we can compute a \qvasr-abstraction
+Given conjunction $C = x' = x+ y \land y' = y+ 1 \land z' = x$, we can compute a \qvasr-abstraction $\alpha(C)$ as follows: \\
+
 \end{example}
 
 \begin{mydef}
@@ -40,7 +64,9 @@ Given a d-dimensional \qvasr $\mathit{V}$,  $i, j \in \{1 ,\ldots, d\}$ are cohe
 \end{mydef}
 
 \begin{mydef}
-A \qvasr abstraction $\mathit{A = (S, V)}$ is normal of there is no non-zero vector $\vec{z}$ that is coherent to $\mathit{V}$ such that $\vec{z}S = 0$.
+A \qvasr abstraction $\mathit{A = (S, V)}$ is normal if there is no non-zero vector $\vec{z}$ that is coherent to $\mathit{V}$ such that $\vec{z}S = 0$.
 \end{mydef}
 
-\input{fig/matrix_ex_p0.tex}
+\begin{example}
+    \input{fig/matrix_ex_p0.tex}
+\end{example}
