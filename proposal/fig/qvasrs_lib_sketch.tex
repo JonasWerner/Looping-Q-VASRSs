@@ -1,0 +1,16 @@
+% Define block styles
+\tikzstyle{block} = [rectangle, draw, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+
+\begin{tikzpicture}[node distance = 5cm, auto]
+    % Place nodes
+    \node [block, align=left] (input) {\textbf{Input:} \\
+        Transition formula $\tranFormula$ \\
+        Set of predicates $P$};
+    \node [block, align=left, below of=input](H) {\GammaTF satisfiable?};
+    \node [block, align=left, right of=H](abstr) {Compute \qvasr-abstraction (S,V)};
+    \node [block, align=left, below of=abstr](pushout) {\texttt{pushout}};
+    \node [block, align=left, left of=pushout](image) {\texttt{image}}
+    % Draw edges
+  ;
+\end{tikzpicture}
