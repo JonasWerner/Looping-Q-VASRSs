@@ -1,16 +1,28 @@
 % Define block styles
-\tikzstyle{block} = [rectangle, draw, rounded corners, minimum height=4em]
+\tikzstyle{block} = [rectangle, draw, rounded corners, minimum height=4em, minimum width={width("\qvasr-abstraction")+10pt},
+]
 \tikzstyle{line} = [draw, -latex']
 
-\begin{tikzpicture}[node distance = 5cm, auto]
+    \begin{tikzpicture}[%
+    ->,
+    >=stealth',
+    shorten >=1pt,
+    auto,
+    node distance=6cm,
+    scale=1,
+    transform shape,
+    align=center,
+    smallnode/.style={inner sep=1.4},
+    initial text =,
+    anchor=center]
     % Place nodes
-    \node [block, align=left] (input) {\textbf{Input:} \\
-        Transition formula $\tranFormula$ \\
-        Set of predicates $P$};
-    \node [block, align=left, below of=input](H) {\GammaTF satisfiable?};
-    \node [block, align=left, right of=H](abstr) {Compute \qvasr-abstraction (S,V)};
+    \node [block, align=left](H) {$\Gamma$ satisfiable?};
+    \node [block, align=center, right of=H, xshift=3cm](abstr) {\texttt{Compute} \\ \qvasr-\texttt{abstraction} $\hat{\alpha}(c)$};
     \node [block, align=left, below of=abstr](pushout) {\texttt{pushout}};
-    \node [block, align=left, left of=pushout](image) {\texttt{image}}
+    \node [block, align=left, below of=H](image) {\texttt{image}};
     % Draw edges
-  ;
+    \draw [->]  (H) to node[above] {\textbf{yes}} node[below] {get model \\ that satisfies a cube c in $\Gamma$} (abstr);
+    \draw [->]  (abstr) to node[above] {} node[right] {$\hat{\alpha}(c) := (S_c, V_c)$} (pushout);
+    \draw [->]  (pushout) to node[above] {} node[above] {$S := \texttt{pushout}(S, S_c)$} (image);
+    \draw [->]  (image) to node[above] {} node[right, align=left] {$\Gamma := \Gamma \land \neg \gamma(S, V)$ \\ \\ \\$V := \texttt{image}(V) \cup \texttt{image}(V_c)$} (H);
 \end{tikzpicture}
