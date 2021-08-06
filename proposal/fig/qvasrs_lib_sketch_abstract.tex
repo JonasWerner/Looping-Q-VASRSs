@@ -19,11 +19,12 @@
     anchor=center]
     % Place nodes
     \node [block, align=left](vasrs) {\texttt{\qvasrs-entry}};
+    \node [block, align=left, right of=vasrs, xshift=3cm](reach) {\texttt{reach}};
     \node [block, align=left](vasrs) {};
     \node [block, align=left, below of=vasrs](H) {\texttt{\qvasr-entry}};
     \node [block, align=center, right of=H, xshift=3cm](abstr) {\texttt{\qvasr-abstractor}};
     \node [block, align=left, below of=abstr, fill=white](pushout) {\texttt{pushout}};
-    \node [block, align=left, below of=H, fill=white](image) {\texttt{\qvasr-image-builder}};
+    \node [block, align=left, below of=H, fill=white](image) {\texttt{image-builder}};
 
     \begin{scope}[on background layer]
     \node[group, draw=black,fill=stmtcolor,fit=(pushout) (image), label=below :{\texttt{\qvasr-join}}](FIt1) {};
