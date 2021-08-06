@@ -1,0 +1,37 @@
+% Define block styles
+\tikzstyle{block} = [rectangle, draw, rounded corners, minimum height=4em, minimum width={width("\qvasr-image-builder")+10pt},
+]
+\tikzstyle{group} = [rectangle, draw, rounded corners, minimum height=5em
+]
+\tikzstyle{line} = [draw, -latex']
+
+    \begin{tikzpicture}[%
+    ->,
+    >=stealth',
+    shorten >=1pt,
+    auto,
+    node distance=6cm,
+    scale=1,
+    transform shape,
+    align=center,
+    smallnode/.style={inner sep=1.4},
+    initial text =,
+    anchor=center]
+    % Place nodes
+    \node [block, align=left](vasrs) {\texttt{\qvasrs-entry}};
+    \node [block, align=left](vasrs) {};
+    \node [block, align=left, below of=vasrs](H) {\texttt{\qvasr-entry}};
+    \node [block, align=center, right of=H, xshift=3cm](abstr) {\texttt{\qvasr-abstractor}};
+    \node [block, align=left, below of=abstr, fill=white](pushout) {\texttt{pushout}};
+    \node [block, align=left, below of=H, fill=white](image) {\texttt{\qvasr-image-builder}};
+
+    \begin{scope}[on background layer]
+    \node[group, draw=black,fill=stmtcolor,fit=(pushout) (image), label=below :{\texttt{\qvasr-join}}](FIt1) {};
+    \end{scope}
+
+    % Draw edges
+    \draw [->]  (H) to node[above] {formula is satisfiable} node[below] {} (abstr);
+    \draw [->]  (abstr) to node[above] {} node[left] {need upper limit \\ of abstraction} (pushout);
+    \draw [->]  (pushout) to node[above] {} node[above] {} (image);
+    \draw [->]  (image) to node[above] {} node[right, align=left] {update formula} (H);
+\end{tikzpicture}

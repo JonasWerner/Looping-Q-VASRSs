@@ -1,5 +1,5 @@
 % Define block styles
-\tikzstyle{block} = [rectangle, draw, rounded corners, minimum height=4em, minimum width={width("\qvasr-abstraction")+10pt},
+\tikzstyle{block} = [rectangle, draw, rounded corners, minimum height=4em, minimum width={width("\qvasr-abstraction $\hat{\alpha}(c)$")+10pt},
 ]
 \tikzstyle{line} = [draw, -latex']
 
@@ -16,13 +16,14 @@
     initial text =,
     anchor=center]
     % Place nodes
-    \node [block, align=left](H) {$\Gamma$ satisfiable?};
+    \node [block, align=left](vasrs) {};
+    \node [block, align=left, below of=vasrs](H) {$\Gamma$ satisfiable?};
     \node [block, align=center, right of=H, xshift=3cm](abstr) {\texttt{Compute} \\ \qvasr-\texttt{abstraction} $\hat{\alpha}(c)$};
     \node [block, align=left, below of=abstr](pushout) {\texttt{pushout}};
     \node [block, align=left, below of=H](image) {\texttt{image}};
     % Draw edges
     \draw [->]  (H) to node[above] {\textbf{yes}} node[below] {get model \\ that satisfies a cube c in $\Gamma$} (abstr);
-    \draw [->]  (abstr) to node[above] {} node[right] {$\hat{\alpha}(c) := (S_c, V_c)$} (pushout);
-    \draw [->]  (pushout) to node[above] {} node[above] {$S := \texttt{pushout}(S, S_c)$} (image);
-    \draw [->]  (image) to node[above] {} node[right, align=left] {$\Gamma := \Gamma \land \neg \gamma(S, V)$ \\ \\ \\$V := \texttt{image}(V) \cup \texttt{image}(V_c)$} (H);
+    \draw [->]  (abstr) to node[above] {} node[right] {} (pushout);
+    \draw [->]  (pushout) to node[above] {} node[above] {} (image);
+    \draw [->]  (image) to node[above] {} node[right, align=left] {} (H);
 \end{tikzpicture}

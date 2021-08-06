@@ -18,7 +18,7 @@
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{tikz}
-\usetikzlibrary{positioning,shapes.geometric, arrows,automata, decorations.pathreplacing, calc}
+\usetikzlibrary{positioning,shapes.geometric, arrows,automata, decorations.pathreplacing, calc, fit, backgrounds}
 \usepackage{pgf}
 \usepackage{slantsc}
 \usepackage{geometry}
@@ -129,16 +129,6 @@
 \newcommand{\trans}[1]{\ensuremath{\xrightarrow{\st{#1}}}\xspace}
 \newcommand{\stateSet}[1]{\ensuremath{\{#1\}}\xspace}
 \newcommand{\vocab}[1]{\ensuremath{V_{\mathit{#1}}}\xspace}
-
-
-\newcommand{\precon}{\ensuremath{\mathit{\stateSet{\varphi}}\xspace}}
-\newcommand{\postcon}{\ensuremath{\mathit{\stateSet{\psi}}}\xspace}
-\newcommand{\accel}[1]{\ensuremath{\psi^*_{L_{#1}}}\xspace}
-\newcommand{\atm}[1]{\ensuremath{\mathcal{A}_{#1}}\xspace}
-\newcommand{\prog}[1]{\ensuremath{P_{#1}}\xspace}
-
-\newcommand{\interpret}{\ensuremath{\mathcal{I}}\xspace}
-\newcommand{\eval}[1]{\ensuremath{\llbracket #1 \rrbracket}_{M, \varv}\xspace}
 
 \newcommand{\abst}[1]{\ensuremath{\mathit{(S^{#1}, V^{#1})}}}
 \algnewcommand\algorithmicforeach{\textbf{for each}}
