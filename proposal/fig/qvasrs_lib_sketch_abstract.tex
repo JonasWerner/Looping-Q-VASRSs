@@ -10,7 +10,7 @@
     >=stealth',
     shorten >=1pt,
     auto,
-    node distance=6cm,
+    node distance=4cm,
     scale=1,
     transform shape,
     align=center,
@@ -18,21 +18,30 @@
     initial text =,
     anchor=center]
     % Place nodes
-    \node [block, align=left](vasrs) {\texttt{\qvasrs-entry}};
+    \node [align=left, yshift=-1.5cm](input) {\textbf{Input}: \\
+        - transition formula \\
+        - set of predicates};
+    \node [align=left, right of=input, xshift=3cm](output) {\textbf{Output}: \\
+        - reachability relation};
+    \node [block, align=left, below of=input, yshift=1.5cm](vasrs) {\texttt{\qvasrs-engine}};
     \node [block, align=left, right of=vasrs, xshift=3cm](reach) {\texttt{reach}};
-    \node [block, align=left](vasrs) {};
     \node [block, align=left, below of=vasrs](H) {\texttt{\qvasr-entry}};
     \node [block, align=center, right of=H, xshift=3cm](abstr) {\texttt{\qvasr-abstractor}};
     \node [block, align=left, below of=abstr, fill=white](pushout) {\texttt{pushout}};
     \node [block, align=left, below of=H, fill=white](image) {\texttt{image-builder}};
 
     \begin{scope}[on background layer]
-    \node[group, draw=black,fill=stmtcolor,fit=(pushout) (image), label=below :{\texttt{\qvasr-join}}](FIt1) {};
+    \node[group, draw=black,fill=stmtcolor,fit=(pushout) (image), label=above :{\texttt{\qvasr-join}}](FIt1) {};
     \end{scope}
 
     % Draw edges
-    \draw [->]  (H) to node[above] {formula is satisfiable} node[below] {} (abstr);
-    \draw [->]  (abstr) to node[above] {} node[left] {need upper limit \\ of abstraction} (pushout);
+    \draw [->]  (input) to node[above] {} node[above] {} (vasrs);
+    \draw [->]  (reach) to node[above] {} node[above] {} (output);
+    \draw [->]  (H) to node[above] {} node[below] {} (abstr);
+    \draw [->]  (abstr) to node[above] {} node[left] {} (pushout);
     \draw [->]  (pushout) to node[above] {} node[above] {} (image);
-    \draw [->]  (image) to node[above] {} node[right, align=left] {update formula} (H);
+    \draw [->]  (image) to node[above] {} node[right, align=left] {} (H);
+    \draw [->, bend right]  (H) to node[above] {} node[right, align=left] {} (vasrs);
+    \draw [->, bend right]  (vasrs) to node[above] {} node[right, align=left] {} (H);
+    \draw [->]  (vasrs) to node[above] {} node[above] {} (reach);
 \end{tikzpicture}
