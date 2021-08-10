@@ -1,11 +1,6 @@
 
 Analyzing program loops is an important part of multiple software engineering tasks, such as bug detection, test case generation, and optimization. Loop analysis is, however, one of the most challenging aspects of program analysis, especially with complex loops that feature multiple paths, created by \texttt{if-else} branches, and nested loops. Loop analysis has been called the "Archilles heel" of program verification\cite{0.1007/s10703-012-0176-y}. \par
-There are three prominent techniques of loop analysis: loop unwinding, loop invariant calculation, and loop summarization. Loop unwinding deals with a loop by unrolling each loop iteration until a certain number. This technique is quite simple but cannot reason about the program behavior beyond the unwinding bound. \\
+There are three prominent techniques of loop analysis: loop unwinding, loop invariant calculation, and loop summarization\cite{0.1007/s10703-012-0176-y}, \cite{8241837}, \cite{10.1007/978-3-030-25543-5_7}. Loop unwinding deals with a loop by unrolling each loop iteration until a certain number. This technique is quite simple but cannot reason about the program behavior beyond the unwinding bound. \\
 Loop invariants are properties that hold before and after each loop iteration modeling its behaviour. Loop invariant's usefulness are however tied to how strong they are, and finding sufficiently strong invariants "is an art"\cite{0.1007/s10703-012-0176-y}. A software-model checker, for example, may not terminate if given loop invariants are insufficiently general. \par
-
-\begin{minipage}[t]{0.3\textwidth}
-	\begin{figure}[H]
-	\input{fig/lst_ex_p0.tex}
-	\caption{Program $P$.}
-	\end{figure}
-\end{minipage}
+Loop summarization on the other hand provides a more accurate and complete view of the loop. A loop summary models the relationship between inputs and outputs as a set of constraints that can be used to replace the loop in a program. Loop summaries are not guaranteed to be precise, meaning they can over- or underapproxmiate the loop's behavior. \par
+Silverman and Kincaid\cite{10.1007/978-3-030-25543-5_7} proposed a technique that computes loop summaries with guarantees on the approximation quality. This approach uses rational vector addition systems (\qvasr) which 
