@@ -6,19 +6,19 @@
     >=stealth',
     shorten >=1pt,
     auto,
-    node distance=5cm,
+    node distance=3cm,
     scale=1,
     transform shape,
     align=center,
-    smallnode/.style={inner sep=1.4},
+    smallnode/.style={inner sep=1.2},
     initial text =,
     anchor=center]
 
-    	\node[draw, ellipse, initial above, initial text =](1){$x \leq 10$};
-    	\node[draw, ellipse](2) [right of=1] {$10 < x \land x \leq 20$};
+    	\node[draw, ellipse, initial right, initial text =](1){$x \leq 10$};
+    	\node[draw, ellipse](2) [below of=1] {$10 < x \land x \leq 20$};
     	% \node[draw, ellipse, accepting] (3) [right of=2] {$x > 20$};
 
-    	\path (1) edge node [above]{ $
+    	\path (1) edge node [left]{ $
                     \begin{pmatrix}
                       \begin{pmatrix}
                             0 \\
@@ -31,7 +31,7 @@
                      \end{pmatrix}
                      $ } (2)
 
-    	 (1) edge[loop below] node { $
+    	 (1) edge[loop above] node { $
                     \begin{pmatrix}
                       \begin{pmatrix}
                             0 \\
