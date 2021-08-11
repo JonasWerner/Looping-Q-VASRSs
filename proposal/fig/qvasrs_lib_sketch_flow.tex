@@ -1,0 +1,49 @@
+% Define block styles
+\tikzstyle{block} = [rectangle, draw, rounded corners, minimum height=4em, minimum width={width("\qvasr-image-builder")+10pt},
+]
+\tikzstyle{group} = [rectangle, draw, rounded corners, minimum height=5em
+]
+\tikzstyle{line} = [draw, -latex']
+
+\begin{tikzpicture}[%
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=4cm,
+	scale=1,
+	transform shape,
+	align=center,
+	smallnode/.style={inner sep=1.4},
+	initial text =,
+	anchor=center]
+	% Place nodes
+	\node [align=left, yshift=-1.5cm](input) {\textbf{Input}: \\
+		- transition formula $F$ of a loop};
+
+	\node [block, align=left, below of=input, yshift=1.5cm](predtransformer) {Predicate transformer};
+	\node [align=left, right of=predtransformer, xshift=3cm](output) {\textbf{Output}: \\
+		- loop summary};
+	\node [block, align=left, below of=predtransformer](vasrs) {\texttt{\qvasrs-engine}};
+	\node [block, align=left, right of=vasrs, xshift=3cm](reach) {\texttt{reach}};
+	\node [block, align=left, below of=vasrs](H) {Is $\Gamma$ satisfiable?};
+	\node [block, align=center, right of=H, xshift=3cm](abstr) {\texttt{\qvasr-abstractor}};
+	\node [block, align=left, below of=abstr, fill=white](pushout) {\texttt{pushout}};
+	\node [block, align=left, below of=H, fill=white](image) {\texttt{image-builder}};
+	
+	\begin{scope}[on background layer]
+		\node[group, draw=black,fill=stmtcolor,fit=(pushout) (image), label=above :{\texttt{\qvasr-join}}](FIt1) {};
+	\end{scope}
+	
+	% Draw edges
+	\draw [->]  (input) to node[above] {} node[above] {} (predtransformer);
+	\draw [->]  (predtransformer) to node[right] {} node[right, align=left] {$F$ \\ set of predicates $P$} (vasrs);
+	\draw [->]  (reach) to node[above] {} node[above] {} (output);
+	\draw [->]  (H) to node[above] {yes} node[below] {} (abstr);
+	\draw [->]  (abstr) to node[above] {} node[right] {\qvasr-abstraction $\mathcal{A}$} (pushout);
+	\draw [->]  (pushout) to node[above] {} node[above] {} (image);
+	\draw [->]  (image) to node[above] {} node[right, align=left] {refine $\Gamma$} (H);
+	\draw [->, bend right]  (H) to node[above] {} node[right, align=left] {} (vasrs);
+	\draw [->, bend right]  (vasrs) to node[above] {} node[right, align=left] {} (H);
+	\draw [->]  (vasrs) to node[above] {} node[above] {} (reach);
+\end{tikzpicture}
