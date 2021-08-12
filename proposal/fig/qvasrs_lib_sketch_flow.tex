@@ -26,9 +26,9 @@
 	\node [block, align=left, below of=input, yshift=1.5cm](predtransformer) {Predicate transformer};
 	\node [align=left, right of=predtransformer, xshift=3cm](output) {\textbf{Output}: \\
 		loop summary};
-	\node [block, align=left, below of=predtransformer](vasrs) {\texttt{\qvasrs-builder}};
+	\node [block, align=left, below of=predtransformer](vasrs) {Are there $p, q \in P$ \\ with $\pqvasr \not\in \mathcal{A}$?};
 	\node [block, align=left, right of=vasrs, xshift=3cm](reach) {\texttt{reach}};
-	\node [block, align=left, below of=vasrs, yshift=-1cm](H) {Is $\Gamma$ satisfiable?};
+	\node [block, align=left, below of=vasrs, yshift=-1cm](H) {Is \pqformula satisfiable?};
 	\node [block, align=center, right of=H, xshift=3cm](abstr) {\texttt{\qvasr-abstractor}};
 	\node [block, align=left, below of=abstr, fill=white](pushout) {\texttt{pushout}};
 	\node [block, align=left, below of=H, fill=white](image) {\texttt{image-builder}};
@@ -41,13 +41,13 @@
 	\draw [->]  (input) to node[above] {} node[right] {$F :=$ transition formula \\ of a loop with \\ $n$ variables} (predtransformer);
 	\draw [->]  (predtransformer) to node[right] {} node[right, align=left] {$F$\\ $P$ := set of predicates \\ $\mathcal{A} := \emptyset$} (vasrs);
 	\draw [->]  (reach) to node[above] {} node[above] {} (output);
-	\draw [->, bend right]  (vasrs) to node[left] {For every $p, q \in P:$\\$ \Gamma := p \land F \land q$ \\ \\ $S_\Gamma := \mathit{I_n}$ \\
-	$V_\Gamma := \emptyset$} node[right, align=left] {} (H);
-	\draw [->]  (H) to node[above] {yes} node[below] {$c :=$ cube in \\ $\mathit{DNF(\Gamma)}$} (abstr);
+	\draw [->, bend right]  (vasrs) to node[left] {yes \\ $\pqformula := p \land F \land q$ \\ \\ $\pq{S} := \mathit{I_n}$ \\
+	$\pq{V} := \emptyset$} node[right, align=left] {} (H);
+	\draw [->]  (H) to node[above] {yes} node[below] {$c :=$ cube in \\ $\mathit{DNF(\pqformula)}$} (abstr);
 	\draw [->]  (abstr) to node[above] {} node[left] {$(S_c, V_c) :=$ abstraction(c)} (pushout);
-	\draw [->]  (pushout) to node[above] {} node[above] {$S_\Gamma :=$ \texttt{pushout($S_\Gamma, S_c$)}} (image);
-	\draw [->]  (image) to node[above] {} node[left, align=left] {$\Gamma :=$ refine$(\Gamma)$ \\ $V_\Gamma :=$ \texttt{image$(V_\Gamma)$} \\ $\cup$ \texttt{image$(V_c)$}} (H);
+	\draw [->]  (pushout) to node[above] {} node[above] {$\pq{S} :=$ \texttt{pushout($\pq{S}, S_c$)}} (image);
+	\draw [->]  (image) to node[above] {} node[left, align=left] {$\pqformula :=$ refine$(\pqformula)$ \\ $\pq{V} :=$ \texttt{image(\pq{V})} $\cup$ \texttt{image$(V_c)$}} (H);
 	\draw [->, bend right]  (H) to node[above] {} node[right, align=left] {no \\
-	$(S_\Gamma, V_\Gamma)$ is best \qvasr-abstraction for $\Gamma$ \\ $\mathcal{A} := \mathcal{A} \cup \pqvasr$} (vasrs);
-	\draw [->]  (vasrs) to node[above] {} node[above] {$\mathcal{A}$ is best \\ $\qvasrs$-abstraction \\ of $F$} (reach);
+	$\pqvasr$ is best \qvasr-abstraction for $\pqformula$ \\ $\mathcal{A} := \mathcal{A} \cup \pqvasr$} (vasrs);
+	\draw [->]  (vasrs) to node[above] {} node[above] {yes} (reach);
 \end{tikzpicture}
