@@ -3,14 +3,13 @@
 ]
 \tikzstyle{group} = [rectangle, draw, rounded corners, minimum height=5em
 ]
-\tikzstyle{line} = [draw, -latex']
 
 \newcommand{\pq}[1]{\ensuremath{#1_{p, q}}\xspace}
 \newcommand{\pqvasr}{\ensuremath{(\pq{S}, \pq{V})}\xspace}
 \newcommand{\pqformula}{\ensuremath{\pq{\Gamma}}\xspace}
 
 \begin{tikzpicture}[%
-	->,
+    ->,
 	>=stealth',
 	shorten >=1pt,
 	auto,
@@ -24,7 +23,7 @@
 	% Place nodes
 	\node [align=left](input) {\textbf{Input}};
 	\node [block, align=left, below=of input, yshift=2cm](predtransformer) {\texttt{predicate transformer}};
-	\node [block, align=left, below=of predtransformer, yshift=1.5cm](vasrs) {are there $p, q \in P$ \\ with $\pqvasr \not\in \mathcal{V}$?};
+	\node [block, align=left, below=of predtransformer, yshift=1.5cm](vasrs) {Are there $p, q \in P$ \\ with $\pqvasr \not\in \mathcal{V}$?};
 	\node [block, align=left, right=of vasrs](reach) {\texttt{reach}};
 	\node [block, align=left, below=of vasrs, yshift=1cm](H) {\pqformula satisfiable?};
 	\node [block, align=center, right=of H](abstr) {\texttt{\qvasr-abstractor}};
@@ -37,15 +36,51 @@
 	\end{scope}
 	
 	% Draw edges
-	\draw [->]  (input) to node[above] {} node[right] {$F :=$ loop's transition formula \\ with $n$ variables} (predtransformer);
-	\draw [->]  (predtransformer) to node[right] {} node[right, align=left] {$F$\\ $P$ := set of predicates \\ $\mathcal{V} := \emptyset$} (vasrs);
-	\draw [->]  (reach) to node[above] {} node[above] {} (output);
-	\draw [->, bend right]  (vasrs) to node[left] {yes \\ $\pqformula := p \land F \land q$ \\ $\pqvasr := (\mathit{I_n},\emptyset)$} node[right, align=left] {} (H);
-	\draw [->]  (H) to node[above] {yes} node[below] {$c :=$ cube in \\ $\mathit{DNF(\pqformula)}$} (abstr);
-	\draw [->]  (abstr) to node[above] {} node[left] {$(S_c, V_c) :=$ \texttt{abstraction(c)}} (pushout);
-	\draw [->]  (pushout) to node[above] {} node[above] {$\pq{S} :=$ \texttt{pushout($\pq{S}, S_c$)}} (image);
-	\draw [->]  (image) to node[above] {} node[left, align=left] {$\pqformula :=$ refine$(\pqformula)$ \\ $\pq{V} :=$ \texttt{image(\pq{V})} \\ $\cup$ \texttt{image$(V_c)$}} (H);
-	\draw [->, bend right]  (H) to node[above] {} node[right, align=left] {no \\
+	\draw (input) to node[above] {} node[right] {$F :=$ loop's transition formula \\ with $n$ variables} (predtransformer);
+	%\draw (predtransformer) to node[right] {} node[right, align=left] {$F$\\ $P$ := set of predicates \\ $\mathcal{V} := \emptyset$} (vasrs);
+	\draw (reach) to node[above] {} node[above] {} (output);
+	\draw [bend right]  (vasrs) to node[left, align=right] {\textbf{yes} \\ $\pqformula := p \land F \land q$ \\ \\ $\pqvasr := (\mathit{I_n},\emptyset)$} node[right, align=left] {} (H);
+	\draw (H) to node[above] {\textbf{yes}} node[below] {$c :=$ cube in $\mathit{DNF(\pqformula)}$} (abstr);
+	\draw (abstr) to node[above] {} node[left] {$(S_c, V_c) :=$ \texttt{abstraction(c)}} (pushout);
+	\draw (pushout) to node[above] {} node[above] {$\pq{S} :=$ \texttt{pushout($\pq{S}, S_c$)}} (image);
+	
+	%\draw (image) to node[above] {} node[left, align=left] {$\pqformula :=$ refine$(\pqformula)$ \\ $\pq{V} :=$ \texttt{image(\pq{V})} \\ $\cup$ \texttt{image$(V_c)$}} (H);
+	
+		\draw (image) to node[above] {} node[left, align=left] {%
+		{\begin{varwidth}{3.5cm}
+				\vspace*{-0.5cm}
+				\begin{align*}
+					\pqformula :=&\ \texttt{refine}(\pqformula) \\ \\
+					\pq{V} :=&\ \texttt{image}(\pq{V}) \\
+					&\cup \texttt{image}(V_c)
+		\end{align*}\end{varwidth}}
+	} (H);
+	
+	
+	\draw (predtransformer) to node[above] {} node[right, align=left] {%
+		{\begin{varwidth}{3.5cm}
+			\vspace*{-0.5cm}
+			\begin{align*}
+				F \\
+				P &:= \text{set of predicates} \\
+				\mathcal{V} &:= \emptyset
+			\end{align*}\end{varwidth}}
+		} (vasrs);
+
+	\begin{comment}
+		\draw[] (vasrs) to node[above] {} node[left, align=right] {% 
+	{\begin{varwidth}{4cm}
+	\begin{align*}
+	\textbf{yes} \\
+	\pqformula &:=\ p \land F \land q \\
+	\pq{S} &:= I_n \\
+	\pq{V} &:= \emptyset
+	\end{align*}\end{varwidth}}
+	} (H);
+	\end{comment}
+
+
+	\draw [bend right]  (H) to node[above] {} node[right, align=left] {\textbf{no} \\
 	$\mathcal{V} := \mathcal{V} \cup \pqvasr$} (vasrs);
-	\draw [->]  (vasrs) to node[below] {$\mathcal{A} := \qvasrs(\mathcal{V}, P)$} node[above] {no} (reach);
+	\draw (vasrs) to node[below] {$\mathcal{A} := \qvasrs(\mathcal{V}, P)$} node[above] {\textbf{no}} (reach);
 \end{tikzpicture}
