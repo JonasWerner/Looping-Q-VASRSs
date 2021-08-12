@@ -39,8 +39,8 @@
 	\draw (input) to node[above] {} node[right] {$F :=$ loop's transition formula \\ with $n$ variables} (predtransformer);
 	%\draw (predtransformer) to node[right] {} node[right, align=left] {$F$\\ $P$ := set of predicates \\ $\mathcal{V} := \emptyset$} (vasrs);
 	\draw (reach) to node[above] {} node[above] {} (output);
-	\draw [bend right]  (vasrs) to node[left, align=right] {\textbf{yes} \\ $\pqformula := p \land F \land q$ \\ \\ $\pqvasr := (\mathit{I_n},\emptyset)$} node[right, align=left] {} (H);
-	\draw (H) to node[above] {\textbf{yes}} node[below] {$c :=$ cube in $\mathit{DNF(\pqformula)}$} (abstr);
+	\draw [bend right]  (vasrs) to node[above left, align=right, yshift=-0.5cm] {\textbf{yes} \\ $\pqformula := p \land F \land q$ \\ $\pqvasr := (\mathit{I_n},\emptyset)$} node[right, align=left] {} (H);
+	\draw (H) to node[above, xshift=-1.5cm] {\textbf{yes}} node[below] {$c :=$ cube in $\mathit{DNF(\pqformula)}$} (abstr);
 	\draw (abstr) to node[above] {} node[left] {$(S_c, V_c) :=$ \texttt{abstraction(c)}} (pushout);
 	\draw (pushout) to node[above] {} node[above] {$\pq{S} :=$ \texttt{pushout($\pq{S}, S_c$)}} (image);
 	
@@ -50,7 +50,7 @@
 		{\begin{varwidth}{3.5cm}
 				\vspace*{-0.5cm}
 				\begin{align*}
-					\pqformula :=&\ \texttt{refine}(\pqformula) \\ \\
+					\pqformula :=&\ \texttt{refine}(\pqformula) \\ \bigskip
 					\pq{V} :=&\ \texttt{image}(\pq{V}) \\
 					&\cup \texttt{image}(V_c)
 		\end{align*}\end{varwidth}}
@@ -79,8 +79,6 @@
 	} (H);
 	\end{comment}
 
-
-	\draw [bend right]  (H) to node[above] {} node[right, align=left] {\textbf{no} \\
-	$\mathcal{V} := \mathcal{V} \cup \pqvasr$} (vasrs);
-	\draw (vasrs) to node[below] {$\mathcal{A} := \qvasrs(\mathcal{V}, P)$} node[above] {\textbf{no}} (reach);
+	\draw [bend right]  (H) to node[above] {} node[below right, align=left] {$\mathcal{V} := \mathcal{V} \cup \pqvasr$ \\ \textbf{no}} (vasrs);
+	\draw (vasrs) to node[below] {$\mathcal{A} := \qvasrs(\mathcal{V}, P)$} node[above, xshift=-1.5cm] {\textbf{no}} (reach);
 \end{tikzpicture}
