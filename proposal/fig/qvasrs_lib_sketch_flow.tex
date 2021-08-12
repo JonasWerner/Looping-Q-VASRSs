@@ -5,12 +5,16 @@
 ]
 \tikzstyle{line} = [draw, -latex']
 
+\newcommand{\pq}[1]{\ensuremath{#1_{p, q}}}
+\newcommand{\pqvasr}{\ensuremath{(\pq{S}, \pq{V})}}
+\newcommand{\pqformula}{\ensuremath{\pq{\Gamma}}}
+
 \begin{tikzpicture}[%
 	->,
 	>=stealth',
 	shorten >=1pt,
 	auto,
-	node distance=4cm,
+	node distance=5cm,
 	scale=1,
 	transform shape,
 	align=center,
@@ -18,15 +22,13 @@
 	initial text =,
 	anchor=center]
 	% Place nodes
-	\node [align=left, yshift=-1.5cm](input) {\textbf{Input}: \\
-		- transition formula $F$ of a loop};
-
+	\node [align=left, yshift=-1.5cm](input) {\textbf{Input}};
 	\node [block, align=left, below of=input, yshift=1.5cm](predtransformer) {Predicate transformer};
 	\node [align=left, right of=predtransformer, xshift=3cm](output) {\textbf{Output}: \\
-		- loop summary};
-	\node [block, align=left, below of=predtransformer](vasrs) {\texttt{\qvasrs-engine}};
+		loop summary};
+	\node [block, align=left, below of=predtransformer](vasrs) {\texttt{\qvasrs-builder}};
 	\node [block, align=left, right of=vasrs, xshift=3cm](reach) {\texttt{reach}};
-	\node [block, align=left, below of=vasrs](H) {Is $\Gamma$ satisfiable?};
+	\node [block, align=left, below of=vasrs, yshift=-1cm](H) {Is $\Gamma$ satisfiable?};
 	\node [block, align=center, right of=H, xshift=3cm](abstr) {\texttt{\qvasr-abstractor}};
 	\node [block, align=left, below of=abstr, fill=white](pushout) {\texttt{pushout}};
 	\node [block, align=left, below of=H, fill=white](image) {\texttt{image-builder}};
@@ -36,14 +38,16 @@
 	\end{scope}
 	
 	% Draw edges
-	\draw [->]  (input) to node[above] {} node[above] {} (predtransformer);
-	\draw [->]  (predtransformer) to node[right] {} node[right, align=left] {$F$ \\ set of predicates $P$} (vasrs);
+	\draw [->]  (input) to node[above] {} node[right] {$F :=$ transition formula \\ of a loop with \\ $n$ variables} (predtransformer);
+	\draw [->]  (predtransformer) to node[right] {} node[right, align=left] {$F$\\ $P$ := set of predicates \\ $\mathcal{A} := \emptyset$} (vasrs);
 	\draw [->]  (reach) to node[above] {} node[above] {} (output);
-	\draw [->]  (H) to node[above] {yes} node[below] {} (abstr);
-	\draw [->]  (abstr) to node[above] {} node[right] {\qvasr-abstraction $\mathcal{A}$} (pushout);
-	\draw [->]  (pushout) to node[above] {} node[above] {} (image);
-	\draw [->]  (image) to node[above] {} node[right, align=left] {refine $\Gamma$} (H);
-	\draw [->, bend right]  (H) to node[above] {} node[right, align=left] {} (vasrs);
-	\draw [->, bend right]  (vasrs) to node[above] {} node[right, align=left] {} (H);
-	\draw [->]  (vasrs) to node[above] {} node[above] {} (reach);
+	\draw [->, bend right]  (vasrs) to node[left] {For every $p, q \in P:$\\$ \Gamma := p \land F \land q$ \\ \\ $S_\Gamma := \mathit{I_n}$ \\
+	$V_\Gamma := \emptyset$} node[right, align=left] {} (H);
+	\draw [->]  (H) to node[above] {yes} node[below] {$c :=$ cube in \\ $\mathit{DNF(\Gamma)}$} (abstr);
+	\draw [->]  (abstr) to node[above] {} node[left] {$(S_c, V_c) :=$ abstraction(c)} (pushout);
+	\draw [->]  (pushout) to node[above] {} node[above] {$S_\Gamma :=$ \texttt{pushout($S_\Gamma, S_c$)}} (image);
+	\draw [->]  (image) to node[above] {} node[left, align=left] {$\Gamma :=$ refine$(\Gamma)$ \\ $V_\Gamma :=$ \texttt{image$(V_\Gamma)$} \\ $\cup$ \texttt{image$(V_c)$}} (H);
+	\draw [->, bend right]  (H) to node[above] {} node[right, align=left] {no \\
+	$(S_\Gamma, V_\Gamma)$ is best \qvasr-abstraction for $\Gamma$ \\ $\mathcal{A} := \mathcal{A} \cup \pqvasr$} (vasrs);
+	\draw [->]  (vasrs) to node[above] {} node[above] {$\mathcal{A}$ is best \\ $\qvasrs$-abstraction \\ of $F$} (reach);
 \end{tikzpicture}
