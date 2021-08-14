@@ -5,7 +5,21 @@ Loop invariants are properties that hold before and after each loop iteration, m
 Loop summarization on the other hand provides a more accurate and complete view of the loop. A loop summary models the relationship between inputs and outputs as a set of constraints that can be used to replace the loop in a program. Loop summaries are not guaranteed to be precise, meaning they can over- or underapproximate the loop's behavior. Counterexamples found using underapproximative loop summaries are guaranteed to be feasible counterexamples, the summaries can, however, miss feasible counterexample as they model only a subset of the actual loop behavior \cite{10.1007/s10703-015-0228-1}. Overapproxiamtive loop summaries on the other hand form a superset over the actual loop behavior, resulting in possible spurious counterexamples. The quality of overapproximative loop summaries depends on how much the summary overapproximates the actual loop behavior.\par
 \jw{Todo: \qvasr and \qvasrs introduction}
 Silverman and Kincaid\cite{10.1007/978-3-030-25543-5_7} proposed an overapproximative loop summarization that guarantees a certain degree of approximation precision.\\ \par 
-The proposed technique makes use of \textsl{rational vector addition systems} (\qvasr). A \qvasr $V$ of dimension $d$ is a finite set of transformer $(\vec{r}, \vec{a}) \subseteq \{0, 1\}^d \times \mathbb{Q}^d$ each transformer consist of a binary \textsl{reset} vector $\vec{r}$ and a rational \textsl{addition} vector $\vec{a}$. Given a loop's transition formula, such a transformer models the relation of an input vector $\vec{x}$ and output vector $\vec{x}'$ in the following way: If the reset vector of a variable $x$ is 0 then it means that that variable is reset in the loop. The addition vector represents increases or decreases to variables or to a relation of variables in the loop. A transition from an input vector $\vec{u}$ to an output vector $\vec{u}$ is only possible if $\vec{v} = \vec{r} *\footnote{\text{Hadamard product}} \vec{u} + \vec{a}$ for some transformer $(\vec{r}, \vec{a})$ in the \qvasr.
+The proposed technique makes use of \textsl{rational vector addition systems} (\qvasr). A \qvasr of dimension $d$ is a finite set $V \subseteq \{0, 1\}^d \times \mathbb{Q}^d$ of transformers. Each transformer $(\vec{r}, \vec{a})$ consist of binary \textsl{reset} vector $\vec{r}$ and rational \textsl{addition} vector $\vec{a}$. These transformer model transitions between two vectors $\vec{u}$ and $\vec{v}$ the following way: $\vec{v} = \vec{u} * \vec{r} + \vec{a}$, with * being the Hadamard product.
+\qvasr can be used to model transition formulas: \\
+For example assume the following transition formula $F: x' = x + 1 \land y' = 2$ is given. 
+$
+\begin{pmatrix}
+	\begin{pmatrix}
+		1 \\
+		0
+	\end{pmatrix},
+	\begin{pmatrix}
+		1 \\
+		2
+	\end{pmatrix}
+\ \end{pmatrix}
+$ \\
 \begin{minipage}[t]{0.3\linewidth} \centering
 	\begin{figure}[H]
 		\input{fig/lst_ex_p0.tex}
