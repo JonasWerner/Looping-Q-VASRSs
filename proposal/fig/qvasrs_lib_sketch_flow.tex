@@ -37,7 +37,7 @@
 	% Draw edges
 	\draw (input) to node[above] {} node[right] {$F :=$ loop's transition formula \\ with $n$ variables} (predtransformer);
 	%\draw (predtransformer) to node[right] {} node[right, align=left] {$F$\\ $P$ := set of predicates \\ $\mathcal{V} := \emptyset$} (vasrs);
-	\draw (reach) to node[above] {} node[left] {\texttt{reach($\mathcal{A}$)} := \\ overapproximation of \\ reflexive transitive \\ closure of $F$} (output);
+	\draw (reach) to node[above] {} node[left] {\texttt{reach($\mathcal{A}$)} := \\ overapproximation \\ of $F's$ reflexive \\ transitive closure} (output);
 	\draw [bend right]  (vasrs) to node[above left, align=right, yshift=-0.5cm] {\textbf{yes} \\ $\pqformula := p \land F \land q$ \\ $\pqvasr := (\mathit{I_n},\emptyset)$} node[right, align=left] {} (H);
 	\draw (H) to node[above, xshift=-1.5cm] {\textbf{yes}} node[below] {$c :=$ cube in $\mathit{DNF(\pqformula)}$} (abstr);
 	\draw (abstr) to node[above] {} node[left] {$(S_c, V_c) :=$ \\ \texttt{abstraction(c)}} (pushout);
