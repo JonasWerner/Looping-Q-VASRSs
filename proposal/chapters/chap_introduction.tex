@@ -22,9 +22,12 @@ The proposed technique makes use of \textsl{rational vector addition systems} (\
 \begin{minipage}[t]{0.3\linewidth} \centering
 	\begin{figure}[H]
 		\input{fig/qvasrs_ex_p0.tex}
-		\caption{\\ \qvasrs-abstraction of $P$'s loop.}
+		\caption{\\ \qvasrs of $P$'s loop.}
 	\end{figure}
 \end{minipage}
+\vspace*{1cm}
+To improve precision we introduce $\qvasr$ with states (\qvasrs). Given a \qvasr $V$, a \qvasrs of dimension $d$ is a pair $\mathcal{V} = (P, E)$, with $P$ being a finite set of control states given as predicates and $E \subseteq P \times (\vec{r}, \vec{a}) \times P$ with $(\vec{r}, \vec{a}) \in V$ being a finite set of edges. For all $p \neq q \in P$ we have $p\ \land\ q$ unsatisfiable. Now, a \qvasrs can transition between two vectors $\vec{u}$ and $\vec{v}$ if there is an edge $(p,\ (\vec{r},\ \vec{a}),\ q) \in E$, with $\vec{v} = \vec{r} * \vec{u} + \vec{a}$. \par
+Figure 3 details the \qvasrs of program $P's$ loop, in which the \texttt{if else} conditions hold. \par
+To compute the reflexive transitive closure of a \qvasrs one has to calculate its reachability relation, for which Haase and Halfon proposed a polytime procedure. The procedure unwinds the \qvasrs into multiple formulas that as conjunction form the reflexive transitive closure. \\
 
-To improve precision we introduce $\qvasr$ with states (\qvasrs). Given a \qvasr $V$, a \qvasrs of dimension $d$ is a pair $\mathcal{V} = (P, E)$, with $P$ being a finite set of control states given as predicates and $E \subseteq P \times (\vec{r}, \vec{a}) \times P$ with $(\vec{r}, \vec{a}) \in V$ being a finite set of edges. For all $p \neq q \in P$ we have $p \land q$ unsatisfiable.
 \jw{Todo:\qvasrs -> states/predicates improve accuracy by constraining nondeterminism, and short mention of reach and Ultimate}
