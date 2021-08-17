@@ -1,9 +1,10 @@
 
-In this chapter we give an outline on how we plan to implement a \qvasrs-loop summarization library in \textsc{Ultimate}. \par
-\jw{Todo: Detail what each block does.}
+The new \qvasrs loop summarization library shall be implemented as proposed in Figure 4\ref{fig}. As input it takes a transition formula, computed from a loop, and gives it to a predicate transformer. The predicate transformer then computes a set of predicates $P$ that fulfill the condition of pairwise unsatisfiability and initializes an empty \qvasrs $\mathcal{V}$. The predicate transformer can employ different techniques to compute predicates to test the effectiveness and speed of for example strong vs weak predicates. While there are pairs of predicates $p, q \in P$ that do not have a corresponding \qvasr-abstraction $\pqvasr \in \mathcal{V}$, we construct a new formula $\pqformula = p\land F \land q$ and begin to compute \pqvasr. If a model $\mathcal{M}$ satisfies $\pqformula$, we take cube $c$ from the disjunctive normal form of $\pqformula$ that is satisfied by $\mathcal{M}$ and compute a \qvasr-abstraction $(S_c, V_c)$ for it in the \texttt{\qvasr-abstractor}. Because we want $\pqvasr$ to be the least upper bound of $\pqformula$, we need to \texttt{join} $\pqvasr$ and $(S_c, V_c)$. In \texttt{pushout} we compute a linear simulation from $\pq{S}$ to $S_c$ and update $\pq{S}$ accordingly. In the \texttt{image-builder} we calculate and incorporate the changes to variables done by $V_c$ into $\pq{V}$. \pqvasr is a least upper bound for $(S_c, V_c)$. We update $\pqformula$ to exclude $c$ from it. If $\pqformula$ is still satisfiable, we begin anew. \\
+If \pqformula is unsatisfiable, we return $\pqvasr$ and add it to $\mathcal{V}$.
 \begin{figure}[H]
     \input{fig/qvasrs_lib_sketch_flow.tex}
     \caption{Proposed implementation of a \qvasrs loop summarizer.}
+    \label{fig}
 \end{figure}
 
 A master's thesis consists of six months of work. This chapter will give an outline of the approach of how we plan to implement a \qvasr and \qvasrs loop acceleration library in the software-verification framework Ultimate, use the library with accelerated interpolation, evaluate its performance, and writing a thesis, in this given time frame. \\ \par
