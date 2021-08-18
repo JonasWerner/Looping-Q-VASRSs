@@ -18,7 +18,7 @@
 	% Place nodes
 	\node [align=left](input) {\textbf{Input}};
 	\node [block, align=left, below=of input, yshift=2cm](predtransformer) {\texttt{predicate transformer}};
-	\node [block, align=center, below=of predtransformer, yshift=1.5cm](vasrs) {Are there $p, q \in P$ with no \\ \qvasr-abstraction \\ \pqvasr $\in \mathcal{V}$?};
+	\node [block, align=center, below=of predtransformer, yshift=1.5cm](vasrs) {Are there $p, q \in P$ with no \\ \qvasr-abstraction \\ \pqvasr $\in \mathcal{A}$?};
 	\node [block, align=left, right=of vasrs](reach) {\texttt{reach}};
 	\node [block, align=left, below=of vasrs, yshift=1cm](H) {\pqformula satisfiable?};
 	\node [block, align=center, right=of H](abstr) {\texttt{\qvasr-abstractor}};
@@ -32,11 +32,11 @@
 	% Draw edges
 	\draw (input) to node[above] {} node[right] {$F :=$ loop's transition formula \\ with $n$ variables} (predtransformer);
 	%\draw (predtransformer) to node[right] {} node[right, align=left] {$F$\\ $P$ := set of predicates \\ $\mathcal{V} := \emptyset$} (vasrs);
-	\draw (reach) to node[above] {} node[left] {\texttt{reach($\mathcal{A}$)} = \\ loop summary} (output);
+	\draw (reach) to node[above] {} node[left] {\texttt{reach($\mathcal{V}$)} = \\ loop summary} (output);
 	\draw [bend right]  (vasrs) to node[above left, align=right, yshift=-0.5cm] {\textbf{yes} \\ $\pqformula := p \land F \land q$ \\ $\pqvasr := (\mathit{I_n},\emptyset)$} node[right, align=left] {} (H);
 	\draw (H) to node[above, xshift=-1.5cm] {\textbf{yes}} node[below] {$c :=$ cube in $\mathit{DNF(\pqformula)}$} (abstr);
 	\draw (abstr) to node[above] {} node[left] {$(S_c, V_c) :=$ \\ \texttt{abstraction(c)}} (pushout);
-	\draw (pushout) to node[above] {} node[above] {$\pq{S}$ simulates $S_c$} (image);
+	\draw (pushout) to node[below] {$\pq{S}$ now simulates $(S_c, V_c)$} node[above] {$\pq{S}$ := \texttt{pushout($\pq{S}, S_c$)} } (image);
 	
 	%\draw (image) to node[above] {} node[left, align=left] {$\pqformula :=$ refine$(\pqformula)$ \\ $\pq{V} :=$ \texttt{image(\pq{V})} \\ $\cup$ \texttt{image$(V_c)$}} (H);
 	
@@ -57,7 +57,7 @@
 			\begin{align*}
 				F \\
 				P &= \text{set of predicates} \\
-				\mathcal{V} &:= \emptyset
+				\mathcal{A} &:= \emptyset
 			\end{align*}\end{varwidth}}
 		} (vasrs);
 
@@ -73,6 +73,6 @@
 	} (H);
 	\end{comment}
 
-	\draw [bend right]  (H) to node[above] {} node[below right, align=left] {$\mathcal{V} := \mathcal{V} \cup \pqvasr$ \\ \textbf{no}} (vasrs);
-	\draw (vasrs) to node[below] {$\mathcal{A} := \qvasrs(\mathcal{V}, P)$} node[above, xshift=-1.5cm] {\textbf{no}} (reach);
+	\draw [bend right]  (H) to node[above] {} node[below right, align=left] {$\mathcal{A} := \mathcal{A} \cup \pqvasr$ \\ \textbf{no}} (vasrs);
+	\draw (vasrs) to node[below] {$\mathcal{V} := \qvasrs(\mathcal{A}, P)$} node[above, xshift=-1.5cm] {\textbf{no}} (reach);
 \end{tikzpicture}
