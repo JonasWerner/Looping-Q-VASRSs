@@ -73,6 +73,6 @@
 	} (H);
 	\end{comment}
 
-	\draw [bend right]  (H) to node[above] {} node[below right, align=left] {$\mathcal{A} := \mathcal{A} \cup \pqvasr$ \\ \textbf{no}} (vasrs);
+	\draw [bend right]  (H) to node[above] {} node[right, align=left, yshift=-0.25cm] {$\mathcal{A} := \mathcal{A} \cup \pqvasr$ \\ \pqvasr = best \qvasr-abstraction\\ \textbf{no}} (vasrs);
 	\draw (vasrs) to node[below] {$\mathcal{V} := \qvasrs(\mathcal{A}, P)$} node[above, xshift=-1.5cm] {\textbf{no}} (reach);
 \end{tikzpicture}
