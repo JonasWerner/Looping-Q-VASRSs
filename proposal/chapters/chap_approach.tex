@@ -3,7 +3,7 @@ The proposed \qvasrs loop summarization library shall be implemented as envision
 If \pqformula is unsatisfiable, then $\pqvasr$ is a least upper bound for \pqformula, we return and add it to $\mathcal{V}$. When every predicate pair $p, q \in P$ has a \qvasr-abstraction $\pqvasr \in \mathcal{V}$, construct edges and transitions building the \qvasrs $\mathcal{A}$. Compute the reachability relation of $\mathcal{A}$ in \texttt{reach} and calculate from that the reflexive transitive closure, which is finally returned and used in \textsc{Ultimate}.
 \begin{figure}[H]
     \input{fig/qvasrs_lib_sketch_flow.tex}
-    \caption{Proposed implementation of a \qvasrs based loop summarizer.}
+    \caption{Proposed implementation of a \qvasrs-based loop summarizer.}
     \label{fig}
 \end{figure}
 
