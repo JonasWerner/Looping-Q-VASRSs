@@ -36,7 +36,7 @@
 	\draw [bend right]  (vasrs) to node[above left, align=right, yshift=-0.5cm] {\textbf{yes} \\ $\pqformula := p \land F \land q$ \\ $\pqvasr := (\mathit{I_n},\emptyset)$} node[right, align=left] {} (H);
 	\draw (H) to node[above, xshift=-1.5cm] {\textbf{yes}} node[below] {$c :=$ cube in $\mathit{DNF(\pqformula)}$} (abstr);
 	\draw (abstr) to node[above] {} node[left] {$(S_c, V_c) :=$ \\ \texttt{abstraction(c)}} (pushout);
-	\draw (pushout) to node[below] {$\pq{S}$ now simulates $(S_c, V_c)$} node[above] {$\pq{S}$ := \texttt{pushout($\pq{S}, S_c$)} } (image);
+	\draw (pushout) to node[below] {$\pq{S}$ simulates $(S_c, V_c)$} node[above] {$\pq{S}$ := \texttt{pushout($\pq{S}, S_c$)} } (image);
 	
 	%\draw (image) to node[above] {} node[left, align=left] {$\pqformula :=$ refine$(\pqformula)$ \\ $\pq{V} :=$ \texttt{image(\pq{V})} \\ $\cup$ \texttt{image$(V_c)$}} (H);
 	
@@ -73,6 +73,6 @@
 	} (H);
 	\end{comment}
 
-	\draw [bend right]  (H) to node[above] {} node[right, align=left, yshift=-0.25cm] {$\mathcal{A} := \mathcal{A} \cup \pqvasr$ \\ \pqvasr is best \qvasr-abstraction\\ \textbf{no}} (vasrs);
+	\draw [bend right]  (H) to node[above] {} node[right, align=left, yshift=-0.25cm] {$\mathcal{A} := \mathcal{A} \cup \pqvasr$ \vspace{0.5cm} \\ \pqvasr is best abstraction\\ \textbf{no}} (vasrs);
 	\draw (vasrs) to node[below] {$\mathcal{V} := \qvasrs(\mathcal{A}, P)$} node[above, xshift=-1.5cm] {\textbf{no}} (reach);
 \end{tikzpicture}
