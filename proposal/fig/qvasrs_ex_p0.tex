@@ -7,7 +7,7 @@
     shorten >=1pt,
     auto,
     node distance=3cm,
-    scale=1,
+    scale=0.9,
     transform shape,
     align=center,
     smallnode/.style={inner sep=1.2},
@@ -18,7 +18,7 @@
     	\node[draw, ellipse](2) [below of=1] {$10 < x \land x \leq 20$};
     	% \node[draw, ellipse, accepting] (3) [right of=2] {$x > 20$};
 
-    	\path (1) edge node [left]{ $
+    	\path (1) edge node [right]{ $
                     \begin{pmatrix}
                       \begin{pmatrix}
                             0 \\
