@@ -1,6 +1,6 @@
 
-The proposed \qvasrs loop summarization library shall be implemented as envisioned in Figure \ref{fig}: The input consists of a loop's transition formula that was computed in advance by other tools. This transition formula is firstly used in the \texttt{predicate transformer} to compute a set of predicates $P$ that fulfill the condition of pairwise unsatisfiability. The \texttt{predicate transformer} will be able to employ different techniques of predicate generation making it possible to test the effectiveness and speed of, for example, strong versus weak predicates. Following the predicate generation, an empty \qvasr-abstraction set $\mathcal{A}$ is initialized. For each pair of predicates $p, q \in P$ we need to compute a \qvasr-abstraction $\pqvasr$. This is done using the formula $\pqformula = p \land F \land q$, which is checked for satisfiability. If a model $\mathcal{M}$ satisfies $\pqformula$, we take cube $c$ from the disjunctive normal form of $\pqformula$ that is satisfied by $\mathcal{M}$ and use the \texttt{\qvasr-abstractor} to compute a \qvasr-abstraction $(S_c, V_c)$ for it. Because we want $\pqvasr$ to be the least upper bound of $\pqformula$, $(S_c, V_c) \preceq \pqvasr$ has to hold. To ensure this, we need to \text{join} the two \qvasr-abstractions $\pqvasr$ and $(S_c, V_c)$. The \texttt{join} consists of two operations, firstly, in \texttt{pushout}, we compute a linear simulation from $S_c$ to $\pq{S}$ and update $\pq{S}$ accordingly. Secondly, in the \texttt{image-builder}, we calculate and incorporate the changes to variables done by $V_c$ into $\pq{V}$. After \texttt{pushout} and \texttt{image} we know that \pqvasr simulates $(S_c, V_c)$ and with that $(S_c, V_c) \preceq \pqvasr$ holds. We do not need another \qvasr-abstraction for $c$, so that we update $\pqformula$ to exclude the cube from it. If $\pqformula$ is still satisfiable, we begin anew.
-If \pqformula is unsatisfiable, then $\pqvasr$ is the least upper bound for \pqformula, we return and add it to $\mathcal{A}$. When every predicate pair $p, q \in P$ has a \qvasr-abstraction $\pqvasr \in \mathcal{A}$, construct a \qvasrs $\mathcal{V}$ using the predicates and \qvasr-abstractions in $\mathcal{A}$. In \texttt{reach} we compute the reachability relation of $\mathcal{V}$ which is then used to form a loop summary that is finally returned to \textsc{Ultimate}.
+The proposed \qvasrs loop summarization library shall be implemented as envisioned in Figure \ref{fig}: The input consists of a transition formula of a loop, that was computed by other tools. This transition formula is firstly used in the \texttt{predicate transformer} to compute a set of predicates $P$ that fulfill the condition of pairwise unsatisfiability. The \texttt{predicate transformer} will be able to employ different techniques of predicate generation making it possible to test the effectiveness and speed of, for example, strong versus weak predicates. Following the predicate generation, an empty \qvasr-abstraction set $\mathcal{A}$ is initialized. For each pair of predicates $p, q \in P$ we construct the formula $\pqformula = p \land F \land q$, which is checked for satisfiability. If a model $\mathcal{M}$ satisfies $\pqformula$, we search for a cube $c$ in the disjunctive normal form of $\pqformula$ that is satisfied by $\mathcal{M}$ and use the \texttt{\qvasr-abstractor} to compute a \qvasr-abstraction $(S_c, V_c)$ for it. Because we want $\pqvasr$ to be the least upper bound of $\pqformula$, $(S_c, V_c) \preceq \pqvasr$ has to hold. To ensure this, we need to \text{join} the two \qvasr-abstractions. The \texttt{join} consists of two operations, firstly, in \texttt{pushout}, we compute a linear simulation from $S_c$ to $\pq{S}$ and update $\pq{S}$ accordingly. Secondly, in the \texttt{image-builder}, we calculate and incorporate the changes to variables done by $V_c$ into $\pq{V}$. After \texttt{pushout} and \texttt{image} we know that \pqvasr simulates $(S_c, V_c)$ and with that $(S_c, V_c) \preceq \pqvasr$ holds. We do not need another \qvasr-abstraction for $c$, so we update $\pqformula$ to exclude the cube from it. If $\pqformula$ is still satisfiable, we begin anew.
+If, on the other hand, \pqformula is unsatisfiable, then we know that $\pqvasr$ is the least upper bound for \pqformula, we return and add it to $\mathcal{A}$. When every predicate pair has a \qvasr-abstraction, construct a \qvasrs $\mathcal{V}$. In \texttt{reach} we compute the reachability relation of $\mathcal{V}$ which is then used to form a loop summary that is finally returned to \textsc{Ultimate}.
 \begin{figure}[H]
     \input{fig/qvasrs_lib_sketch_flow.tex}
     \caption{Proposed implementation of a \qvasrs-based loop summarizer.}
@@ -15,13 +15,13 @@ We divide the project into five distinct milestones:
                Implementation of \qvasr abstraction computation, \qvasr image calculation, \texttt{pushout}, and needed auxiliary classes for matrix and vector operations into a new loop acceleration library in Ultimate.
 
 			  \textsl{Duration:} 2 months \\
-			  \textsl{Deliverable:} An implemented library capable of computing \qvasr
+			  \textsl{Deliverable:} An implemented library capable of computing the best \qvasr-abstraction.
 
 	\item[2.] \textsl{Implementing \qvasrs functionality:} \\
                Implementing \qvasrs functionality and reachability relation computation \texttt{reach} in the \qvasr library.
 
 			  \textsl{Duration:} 1 month \\
-			  \textsl{Deliverable:} An implemented library capable of computing \qvasrs, \texttt{reach}, and returning the reflexive transitive closure of a loop.
+			  \textsl{Deliverable:} An implemented library capable of computing \qvasrs, their reachability relation \texttt{reach}, and returning a loop summary.
 
 	\item[3.] \textsl{Testing the library:} \\
                Test the library to make sure it works as intended, fix any occurring bugs, and implement its usage in the \texttt{accelerated interpolation} scheme.
@@ -32,7 +32,7 @@ We divide the project into five distinct milestones:
 	\item[4.] \textsl{Evaluating the library's performance:} \\
                Run the library on various benchmarks, log its performance, and compare it to other techniques.
 
-			  \textsl{Duration:} 1 month \\
+			  \textsl{Duration:} 1 month, note that a big portion of this time is spent waiting on results as benchmarks can take some time to be finished. In this waiting time we will work on the thesis, leading to an overlap in the schedule.\\
 			  \textsl{Deliverable:} Data of the performance of the \qvasr library.
 
 	\item[5.] \textsl{Writing a thesis:} \\
