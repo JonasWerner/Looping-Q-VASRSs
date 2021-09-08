@@ -1,0 +1,42 @@
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel} % use ngerman here for german text
+\usepackage[T1]{fontenc}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{lmodern}
+\usepackage[protrusion=true,expansion=true,kerning]{microtype}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usetheme{Boadilla}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\usepackage{tkz-euclide}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{shapes,shapes.geometric,arrows,fit,calc,positioning,automata,}
+\usetikzlibrary{positioning,shapes.geometric, arrows,automata, decorations.pathreplacing}
+\usepackage{pgf}
+\usepackage{slantsc}
+\usepackage{geometry}
+\usepackage{amssymb}
+\usepackage{subcaption}
+
+\newcommand{\jw}[1]{\mycom{\todo[color=blue!40,inline]{\small JW: #1}}}
+\newcommand{\dd}[1]{\mycom{\todo[color=orange!40,inline]{\small DD: #1}}}
+\newcommand{\ts}[1]{\mycom{\todo[color=green!40,inline]{\small TS: #1}}}
+
+
+\newcommand{\all}[1]{\mycom{\todo[color=green!40,inline]{\small #1}}}
+\newcommand{\meta}[1]{\mycom{\todo[color=blue!10,inline,caption={Beschreibung},nolist]{\setlist{nolistsep}\small #1}}}
+\newcommand{\xxx}{\mycom{\stfootcol{Placeholder}{blue!20}\xspace}}
+\newcommand{\cn}{\mycom{\stfootcol{Cite}{blue!20}\xspace}}
+
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\entails}[1]{\vdash_{#1}}
+
+\newcommand{\qvasr}{\ensuremath{\mathit{\mathbb{Q} \text{-}VASR}}\xspace}
+\newcommand{\qvasrs}{\ensuremath{\mathit{\mathbb{Q} \text{-}VASRS}}\xspace}
+
+\newcommand{\tranFormula}{\ensuremath{F(\vec{x}, \vec{x}')}\xspace}
+\newcommand{\coherent}{\ensuremath{\equiv_{\mathit{V}}}}
+\newcommand{\conjunctTF}{\ensuremath{C(\vec{x}, \vec{x}')}}
+\newcommand{\GammaTF}{\ensuremath{\Gamma(\vec{x}, \vec{x}')}\xspace}
