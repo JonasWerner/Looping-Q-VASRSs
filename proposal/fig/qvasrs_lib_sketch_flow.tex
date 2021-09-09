@@ -61,18 +61,6 @@
 			\end{align*}\end{varwidth}}
 		} (vasrs);
 
-	\begin{comment}
-		\draw[] (vasrs) to node[above] {} node[left, align=right] {% 
-	{\begin{varwidth}{4cm}
-	\begin{align*}
-	\textbf{yes} \\
-	\pqformula &:=\ p \land F \land q \\
-	\pq{S} &:= I_n \\
-	\pq{V} &:= \emptyset
-	\end{align*}\end{varwidth}}
-	} (H);
-	\end{comment}
-
 	\draw [bend right]  (H) to node[above] {} node[right, align=left, yshift=-0.25cm] {$\mathcal{A} := \mathcal{A} \cup \pqvasr$ \vspace{0.5cm} \\ \pqvasr is best abstraction\\ \textbf{no}} (vasrs);
 	\draw (vasrs) to node[below] {$\mathcal{V} := \qvasrs(\mathcal{A}, P)$} node[above, xshift=-1.5cm] {\textbf{no}} (reach);
 \end{tikzpicture}
