@@ -12,27 +12,27 @@ Beginning with the \texttt{else} branch, we extract the transition formula:
 	G= \ (x \leq 20 \land\ x > 10 \land x' = x + 2 \land y' = y - 3)
 \end{equation*}
 The variable $x$ is not reset but incremented by 2, variable $y$ is not reset either and decremented by 3.
-We get reset vector $\NiceMatrixOptions{code-for-first-col=\scriptstyle}
+We get reset vector $
 \vec{r}_G = \ \ 
-\begin{bNiceMatrix}[first-col=3]
-	x & 1 \\
-	y & 1 
-\end{bNiceMatrix}
+\begin{bmatrix}
+	1 \\
+	1 
+\end{bmatrix}
 $
-and addition vector $\NiceMatrixOptions{code-for-first-col=\scriptstyle}
+and addition vector $
 \vec{a}_G = \ \ 
-\begin{bNiceMatrix}[first-col=3]
-	x & 2 \\
-	y & -3 
-\end{bNiceMatrix}$ \\
+\begin{bmatrix}
+	2 \\
+	-3 
+\end{bmatrix}$ \\
 $G$ can therefore be modeled with the \qvasr  
-$V_P = \begin{Bmatrix}
+$V_G = 
+\begin{Bmatrix}
 	\begin{pmatrix}
-		\NiceMatrixOptions{code-for-first-col=\scriptstyle}
-		\begin{bNiceMatrix}[first-col=3]
-			x & 1 \\
-			y & 1
-		\end{bNiceMatrix},
+		\begin{bmatrix}
+			 1 \\
+			 1
+		\end{bmatrix},
 		\begin{bmatrix}
 			2 \\
 			-3
@@ -40,11 +40,24 @@ $V_P = \begin{Bmatrix}
 	\end{pmatrix}
 \end{Bmatrix}
 $ \par \vspace{2pt}
+For the rest of this proposal we will use the following, more intuitive notation of \qvasr:
+$V_G = 
+\begin{Bmatrix}
+	\begin{bmatrix}
+		x \\
+		y
+	\end{bmatrix} \rightarrow_P
+	\begin{bmatrix}
+		x + 2 \\
+		y - 3
+	\end{bmatrix}
+\end{Bmatrix}
+$ \par
 From the \texttt{if} branch we extract the following transition formula:
 \begin{equation*}
 	H= \ (x \leq 10 \land x' = x + y\ \land\ y' = y + 1 \land z' = x)
 \end{equation*} In contrast to $G$ there are no constant increments to variables $x$ and $z$, they are changed by a variable amount. A \qvasr cannot represent $H$ because \qvasr only model transitions with constant resets and increments. 
-
+\jw{TODO}
 However, when we transform $H$ by substituting $x$ by $z'$ and $y$ by $y'- 1$ we get the constant relation between variables: $-x' + y' + z' = 1$. This relation can be modeled by a \qvasr using a linear simulation. A \textsl{linear simulation} $S$ is a rational matrix projecting variable relations to a \qvasr. Given \qvasr $V$, we extend the notion of transitions to make use of linear simulations: $S\vec{v} = S\vec{u} * \vec{r} + \vec{a}$ for some $(\vec{r}, \vec{a}) \in V$. For $H$ we compute the linear simulation 
 $S_H = 
 \NiceMatrixOptions{code-for-first-row=\scriptstyle}
@@ -58,25 +71,18 @@ We impose a partial order $\preceq$ on \qvasr-abstractions $(S_1, V_1)$ and $(S_
 
 We see in the example that the conditions of the \texttt{if else} statement, \texttt{x <= 10} and \\ \texttt{x > 10}, are not modeled in the \qvasr-abstraction $(S_P, V_P)$, which leads to the inclusion of transitions that would violate these conditions in the actual loop and would therefore not exist. \\
 
-\begin{minipage}[t]{0.3\linewidth} \centering
+\begin{minipage}[t]{0.3\textwidth} \centering
 	\begin{figure}[H]
 		\input{fig/lst_ex_p0.tex}
 		\caption{Program $P$ \\ with \texttt{while} loop.}
 		\label{code}
 	\end{figure}
 \end{minipage}
-\begin{minipage}[t]{0.35\linewidth} \centering
+\begin{minipage}[t]{\textwidth} \centering
 	\begin{figure}[H]
 			\input{fig/matrix_ex_p0.tex}
 			\caption{\\ Best \qvasr-abstraction \\ of $P$'s loop.}
 			\label{vasr}
-	\end{figure}
-\end{minipage}
-\begin{minipage}[t]{0.3\linewidth} \centering
-	\begin{figure}[H]
-		\input{fig/qvasrs_ex_p0.tex}
-		\caption{\\ \qvasrs of $P$'s loop.}
-		\label{vasrs}
 	\end{figure}
 \end{minipage}
 \vspace*{1cm}
@@ -84,6 +90,10 @@ We see in the example that the conditions of the \texttt{if else} statement, \te
 To exclude such transitions we constrain \qvasr. We only allow transitions that satisfy a set of predicates $P$. Using predicates in $P$ as control states, we can construct a nondeterministic finite automaton that represents all allowed transitions. This automaton is called a \qvasr with states (\qvasrs), where each transition is labeled by a reset, addition vector pair $(\vec{r}, \vec{a})$. The predicates are pairwise unsatisfiable, minimizing the automaton's possible successor state space. A vector $\vec{u}$ can only transition to $\vec{v}$ if there is an edge $(p, (\vec{r}, \vec{a}), q)$, with $\vec{v} = \vec{r} * \vec{u} + \vec{a}$ and $p, q \in P$. \par
 Figure \ref{vasrs} shows the \qvasrs of $P$'s loop, it was constructed using $(S_P, V_P)$, seen in Figure \ref{vasr}, and the predicates $x \leq 10$ and $10 < x \land x \leq 20$ as states. We see that there are no transitions that violate the \texttt{if else} conditions. \par
 To compute a loop summary, one has to calculate the reachability relation of the \qvasrs. Haase and Halfon \cite{DBLP:conf/rp/HaaseH14} proposed a polytime procedure that unwinds an integer vector addition system into multiple formulas that, as conjunction, form a summary of the system. This procedure can be adapted to work with \qvasrs. \\ \par
-
+\begin{figure}[H]
+	\input{fig/qvasrs_ex_p0.tex}
+	\caption{\\ \qvasrs of $P$'s loop.}
+	\label{vasrs}
+\end{figure}
 \textsc{Ultimate}\cite{Zitat02} is a software analysis framework consisting of multiple plugins and libraries for various software verification tasks. \textsc{Ultimate} already features numerous loop summarization techniques, they, however, have problems with nested loops, loop branching, and approximation precision. Problems that can be potentially solved by the usage of \qvasrs. We plan on implementing a new loop summarization library based on \qvasrs, integrate it into the \texttt{accelerated interpolation} scheme, which computes state assertions for programs utilizing loop summaries, and compare the performance of \qvasrs to other implemented loop summarization techniques. \par
 The remainder of this proposal is structured as follows, in section \ref{prob} we formulate our problem statement, followed by an outline of the project's approach in section \ref{app}, and last but not least we present a timetable showing the chronological order of the project in section \ref{sched}.

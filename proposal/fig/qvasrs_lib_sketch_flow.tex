@@ -23,7 +23,7 @@
 	\node [block, align=left, below=of vasrs, yshift=1cm](H) {\pqformula satisfiable?};
 	\node [block, align=center, right=of H](abstr) {\texttt{\qvasr-abstractor}};
 	\node [block, align=left, below=of abstr, fill=white, yshift=1cm](pushout) {\texttt{pushout}};
-	\node [block, align=left, below=of H, fill=white, yshift=1cm](image) {\texttt{image-builder}};
+	\node [block, align=left, below=of H, fill=white, yshift=1cm](image) {\texttt{image}};
 	\node [align=left, above= of reach](output) {\textbf{Output}};
 	\begin{scope}[on background layer]
 		\node[group, draw=black,fill=stmtcolor,fit=(pushout) (image), label=below :{\texttt{\qvasr-join}}](FIt1) {};

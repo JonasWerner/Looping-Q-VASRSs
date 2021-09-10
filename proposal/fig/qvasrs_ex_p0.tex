@@ -19,44 +19,26 @@
     	% \node[draw, ellipse, accepting] (3) [right of=2] {$x > 20$};
 
     	\path (1) edge node [right]{ $
-                    \begin{pmatrix}
-                      \begin{bmatrix}
-                            0 \\
-                            1
-                       \end{bmatrix},
-                       \begin{bmatrix}
-                             1 \\
-                             1
-                       \end{bmatrix}
-                     \end{pmatrix}
+					\begin{bmatrix}
+						- x + y + z - 5 \\
+						y - 3
+					\end{bmatrix}
                      $ } (2)
-
-    	 (1) edge[loop above] node { $
-                    \begin{pmatrix}
-                      \begin{bmatrix}
-                            0 \\
-                            1
-                       \end{bmatrix},
-                       \begin{bmatrix}
-                             1 \\
-                             1
-                       \end{bmatrix}
-                     \end{pmatrix}
-                     $ } (1)
-
-    	 (2) edge[loop below] node { $
-                    \begin{pmatrix}
-                      \begin{bmatrix}
-                            1 \\
-                            1
-                       \end{bmatrix},
-                       \begin{bmatrix}
-                             -5 \\
-                             -3
-                       \end{bmatrix}
-                     \end{pmatrix}
-                     $ } (2)
-    	;
+	
+	    	 (1) edge[loop above] node { $
+					\begin{bmatrix}
+						- x + y + z - 5 \\
+					 	y - 3
+					\end{bmatrix}
+	         $ } (1)
+	
+	    	 (2) edge[loop below] node { $
+	               \begin{bmatrix}
+						1 \\
+						y + 1
+					\end{bmatrix}
+	                     $ } (2)
+	    	;
     \end{tikzpicture}
     %\caption{\qvasrs abstraction $\mathcal{A}$ of program $P$.}
 \end{figure}
