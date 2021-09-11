@@ -56,16 +56,35 @@ $ \par
 From the \texttt{if} branch we extract the following transition formula:
 \begin{equation*}
 	H= \ (x \leq 10 \land x' = x + y\ \land\ y' = y + 1 \land z' = x)
-\end{equation*} In contrast to $G$ there are no constant increments to variables $x$ and $z$, they are changed by a variable amount. A \qvasr cannot represent $H$ because \qvasr only model transitions with constant resets and increments. 
-\jw{TODO}
-However, when we transform $H$ by substituting $x$ by $z'$ and $y$ by $y'- 1$ we get the constant relation between variables: $-x' + y' + z' = 1$. This relation can be modeled by a \qvasr using a linear simulation. A \textsl{linear simulation} $S$ is a rational matrix projecting variable relations to a \qvasr. Given \qvasr $V$, we extend the notion of transitions to make use of linear simulations: $S\vec{v} = S\vec{u} * \vec{r} + \vec{a}$ for some $(\vec{r}, \vec{a}) \in V$. For $H$ we compute the linear simulation 
-$S_H = 
-\NiceMatrixOptions{code-for-first-row=\scriptstyle}
-\begin{bNiceMatrix}[first-row=1]
-	x & y & z \\
-	-1 & 1 & 1 \\
-	0 & 1 & 0
-\end{bNiceMatrix} $, in which the first row represents the relation $-x + y + z$ and the second row, stemming from the conjunct $y' = y + 1$, represents just $y$. The tuple $(S, V)$ is called a \textsl{\qvasr-abstraction}. For transition formulas with constant increments, such as $G$, an identity matrix $I$ is used as simulation matrix. \par
+\end{equation*} In contrast to $G$ there are no constant increments to variables $x$ and $z$, they are changed by a variable amount. A \qvasr cannot represent $H$ because they only model transitions with constant resets and increments. 
+
+\newcommand{\s}{\ensuremath{\begin{bmatrix} s_1 \\ s_2 \\ s_3 \end{bmatrix}}}
+\newcommand{\p}{\ensuremath{\begin{bmatrix} x' \\ y' \\ z' \end{bmatrix}}}
+\newcommand{\up}{\ensuremath{\begin{bmatrix} x \\ y \\ z \end{bmatrix}}}
+
+\jw{TODO : However, we can compute an abstraction that simulates the formula -> ....}
+We can represent an overapproximation of $H$ as a \qvasr $V$. This is done using linear simulations. A linear simulation from $H$ to $V$ is a linear transformation $S$ such that for all transitions $\vec{u} \rightarrow_H \vec{v}$ we have $S\vec{u} \rightarrow_V S\vec{v}$. Meaning, every transition $\vec{u} \rightarrow_H \vec{v}$ can be represented in $V$ by multiplying $S$ with $\vec{u}$ and $\vec{v}$. The tuple $(S, V)$ is called a \qvasr-abstraction. To synthesize a \qvasr-abstraction for $H$ we need to compute resets and additions in $V$ as sets of linear combinations with $S$. The set of resets is defined as: 
+\begin{equation*}
+	Res_H = \left\{ (\s, a) : H \models \s \cdot \p = a \right\}	
+\end{equation*}
+ and the set of additions as:
+\begin{equation*}
+	Inc_H = \left\{(\s, a) : H \models \s \cdot \p = \s \cdot \up + a\right\}	
+\end{equation*}
+By using the updates to variables in $H$: $x' = x + y, y' = y + 1, z' = x$ to solve the equations in the sets for \s, we get:
+\begin{align*}
+	Res_H &= \left\{ (\begin{bmatrix} -a \\ a \\ a \end{bmatrix}, a) \right\} \text{with vector basis} (\begin{bmatrix} -1 \\ 1 \\ 1 \end{bmatrix}, 1) \\
+	Inc_H &= \left\{ (\begin{bmatrix} 0 \\ a \\ 0 \end{bmatrix}, a) \right\} \text{with vector basis} (\begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}, 1)
+\end{align*}
+
+
+
+
+
+
+
+
+For transition formulas with constant increments, such as $G$, an identity matrix $I$ is used as simulation matrix. \par
 The effect on variables by the loop in $P$ can be represented by the disjunction of $G$ and $H$, for whom we have already computed \qvasr-abstractions. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the most precise overapproximation of the whole loop's behavior we need the \textsl{best} \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates every branch in the loop.
 We impose a partial order $\preceq$ on \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$, with $(S_1, V_1) \preceq (S_2, V_2)$ if $(S_2, V_2)$ simulates $(S_1, V_1)$. The best abstraction $(\tilde{S}, \tilde{V})$ is the least upper bound with regard to $\preceq$, meaning $(S, V) \preceq (\tilde{S}, \tilde{V})$ for all \qvasr-abstractions $(S, V)$. The abstraction $(\tilde{S}, \tilde{V})$ computed by iteratively \textsl{joining} abstractions. Joining two \qvasr-abstractions results in a single abstraction simulating both. Figure \ref{vasr} shows the best \qvasr-abstraction of $P$'s loop, which is the result of joining $G$'s and $H$'s abstractions. \\
 
