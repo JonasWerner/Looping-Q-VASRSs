@@ -7,37 +7,43 @@ If \pqformula is unsatisfiable, then we know that $\pqvasr$ is the least upper b
     \label{fig}
 \end{figure}
 
-A master's thesis consists of six months of work. In the following we will give an outline of the approach of how we plan to implement a \qvasr and \qvasrs loop summarization library in the software-verification framework \textsc{Ultimate}, use the library with \texttt{accelerated interpolation}, evaluate its performance, and writing a thesis, in this given time frame. \\ \par
+A master's thesis consists of six months of work which translates to 24 work weeks. In the following we will give an outline of the approach of how we plan to implement a \qvasr and \qvasrs loop summarization library in the software-verification framework \textsc{Ultimate}, use the library with \texttt{accelerated interpolation}, evaluate its performance, and writing a thesis, in this given time frame. \\ \par
 We divide the project into five distinct milestones:
 
 \begin{itemize}
 	\item[1.] \textsl{Implementing a \qvasr library:} \\
-               Implementation of \qvasr abstraction computation, \qvasr \texttt{image} calculation, \texttt{pushout}, and needed auxiliary classes for matrix and vector operations into a new loop summarization library in \textsc{Ultimate}.
+               Implementation of \qvasr abstraction computation, \qvasr \texttt{image} calculation, \texttt{pushout}, and needed auxiliary classes for matrix and vector operations into a new loop summarization library in \textsc{Ultimate} with unit tests to verify functionality.
 
-			  \textsl{Duration:} 2 months \\
-			  \textsl{Deliverable:} An implemented library capable of computing the \\ best \qvasr-abstraction.
+			  \textsl{Duration:} 8 weeks of work \\
+			  \textsl{Deliverable:} An implemented library capable of computing the \\ best \qvasr-abstraction with unit tests to verify functionality.
 
 	\item[2.] \textsl{Implementing \qvasrs functionality:} \\
                Implementing \qvasrs functionality and reachability relation computation \texttt{reach} in the \qvasr library.
 
-			  \textsl{Duration:} 1 month \\
+			  \textsl{Duration:} 4 weeks of work\\
 			  \textsl{Deliverable:} An implemented library capable of computing \qvasrs, their reachability relation \texttt{reach}, and returning a loop summary.
 
-	\item[3.] \textsl{Testing the library:} \\
-               Test the library to make sure it works as intended, fix any occurring bugs, and implement its usage in the \texttt{accelerated interpolation} scheme.
+	\item[3.] \textsl{Integration into accelerated interpolation} \\
+			  Integrating the library into the interpolant generation scheme \\ \texttt{accelerated interpolation}.
+	
+			  \textsl{Duration:} 1 week of work \\
+			  \textsl{Deliverable:} \qvasrs library can be used in the \texttt{accelerated interpolation} scheme.
 
-			  \textsl{Duration:} 1 month \\
-			  \textsl{Deliverable:} A tested and bugfree \qvasr library that can be used in the \\ \texttt{accelerated interpolation} scheme.
+	\item[4.] \textsl{Testing the library:} \\
+               Test the library on a set of tests covering borderline cases, such as nonterminating loops, nondeterministic loops, etc, to make sure it works as intended, fix any occurring bugs, and implement its usage in the \texttt{accelerated interpolation} scheme.
 
-	\item[4.] \textsl{Evaluating the library's performance:} \\
-               Run the library on various benchmarks, log its performance, and compare it to other techniques.
+			  \textsl{Duration:} 3 weeks of work \\
+			  \textsl{Deliverable:} A tested and bugfree \qvasr library.
 
-			  \textsl{Duration:} 1 month: \textsl{note that a big portion of this time is spent waiting on results as benchmarks can take some time to be finished. In this waiting time we will work on the thesis in parallel, leading to an overlap in the schedule.}\\
-			  \textsl{Deliverable:} Data of the performance of the \qvasr library.
+	\item[5.] \textsl{Evaluating the library's performance:} \\
+               Run the library on a broad suite of benchmarks, such as the set of \texttt{sv-comp} benchmarks \cite{svcomp}, log its performance, compare it to other techniques, and optimize inefficiencies.
 
-	\item[5.] \textsl{Writing a thesis:} \\
+			  \textsl{Duration:} 4 weeks of work: \
+			  \textsl{Deliverable:} A profiled and optimized library and data of the performance of the \qvasr library.
+
+	\item[6.] \textsl{Writing a thesis:} \\
               Writing a thesis on the findings of this project, proofreading it, and printing it.
 
-			  \textsl{Duration:} 2 months \\
+			  \textsl{Duration:} 8 weeks of work \\
 			  \textsl{Deliverable:}	A master's thesis
 \end{itemize}

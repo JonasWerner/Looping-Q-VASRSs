@@ -3,28 +3,31 @@ This schedule illustrates the approach and shows the sequence of the individual 
 \begin{figure}[H]
   	\hspace*{-4cm}
     \begin{tikzpicture}
-    \begin{ganttchart}[hgrid, vgrid, x unit=3.1cm, bar height=.6,, title height=1, canvas/.append style={alias=frame}
-    ]{1}{6}
+    \begin{ganttchart}[hgrid, vgrid, x unit=0.75cm, bar height=.6,, title height=1, canvas/.append style={alias=frame}
+    ]{1}{24}
 
-    \gantttitle{Time in months}{6} \ganttnewline
+    \gantttitle{Time in months}{24} \ganttnewline
 
-    \gantttitlelist{1,...,6}{1} \\
+    \gantttitlelist{1,...,24}{1} \\
 
 
-    \ganttbar{1. \qvasr library}{1}{2}
-    \ganttbar[inline]{}{1}{2} \ \\
+    \ganttbar{1. \qvasr library}{1}{8}
+    \ganttbar[inline]{}{1}{8} \ \\
 
-    \ganttbar{2. \qvasrs functionality}{3}{3}
-    \ganttbar[inline]{}{3}{3} \ \\
+    \ganttbar{2. \qvasrs functionality}{9}{12}
+    \ganttbar[inline]{}{9}{12} \ \\
 
-    \ganttbar{3. Testing}{4}{4}
-    \ganttbar[inline]{}{4}{4} \ \\
+	\ganttbar{3. Integration}{13}{13}
+	\ganttbar[inline]{}{13}{13} \ \\
 
-    \ganttbar{4. Evaluation}{5}{5}
-    \ganttbar[inline]{}{5}{5} \ \\
+    \ganttbar{4. Testing}{14}{16}
+    \ganttbar[inline]{}{14}{16} \ \\
 
-    \ganttbar{5. Thesis}{5}{6}
-    \ganttbar[inline]{}{5}{6} \
+    \ganttbar{5. Evaluation}{17}{20}
+    \ganttbar[inline]{}{17}{20} \ \\
+
+    \ganttbar{6. Thesis}{21}{24}
+    \ganttbar[inline]{}{21}{24} \
     \end{ganttchart}
     \useasboundingbox (frame.south west) rectangle (frame.north east);
     \end{tikzpicture}
