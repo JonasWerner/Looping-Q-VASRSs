@@ -67,7 +67,7 @@ From the \texttt{if} branch we extract the following transition formula:
 	H= \ (x \leq 10 \land x' = x + y\ \land\ y' = y + 1 \land z' = x)
 \end{equation*} In contrast to $G$ there are no constant increments to variables $x$ and $z$, they are changed by an arbitrary amount. A \qvasr cannot represent $H$ because they only able to model transitions with constant resets and increments. 
 
-\newcommand{\s}{\ensuremath{\begin{bmatrix} s_1 & s_2 & s_3 \end{bmatrix}}}
+\newcommand{\s}{\ensuremath{\begin{bmatrix} s_x & s_y & s_z \end{bmatrix}}}
 \newcommand{\p}{\ensuremath{\begin{bmatrix} x' \\ y' \\ z' \end{bmatrix}}}
 \newcommand{\up}{\ensuremath{\begin{bmatrix} x \\ y \\ z \end{bmatrix}}}
 
@@ -79,21 +79,52 @@ $S =
 	\vdots & \ddots & \vdots \\
 	s_{m ,1} & \ldots & s_{m, n} \\
 \end{bmatrix}$ 
-such that for all transitions $\vec{u} \rightarrow_H \vec{v}$ we have $S\cdot\vec{u} \rightarrow_V S\cdot\vec{v}$. Meaning, every transition $\vec{u} \rightarrow_F \vec{v}$ can be represented in $V$ by matrix multiplying $S$ with $\vec{u}$ and $\vec{v}$. The tuple $(S, V)$ is called a \qvasr-abstraction. \par For $H$ we need to compute both the linear transformation matrix $S_H$ and the \qvasr $V_H$. We know that a \qvasr consists of pairs of reset and addition vectors, from the formula $S \cdot \vec{u} \rightarrow_V S \cdot \vec{u}$ from before, we get the transition in $V_H$ as $T: S\cdot\vec{v} = \vec{r}*S\cdot\vec{u} + \vec{a}$. \\ To get the reset variables we consider $\vec{r}$ in $T$ as $\vec{0}$, which forms a linear set of equations that model a set:
-The set of resets is defined as: 
+such that for all transitions $\vec{u} \rightarrow_H \vec{v}$ we have $S\cdot\vec{u} \rightarrow_V S\cdot\vec{v}$. Meaning, every transition $\vec{u} \rightarrow_F \vec{v}$ can be represented in $V$ by matrix multiplying $S$ with $\vec{u}$ and $\vec{v}$. The tuple $(S, V)$ is called a \qvasr-abstraction. \par For $H$ we need to calculate both the linear transformation matrix $S_H$ and the \qvasr $V_H$. We know that a \qvasr consists of pairs of reset and addition vectors, we use the formula $S \cdot \vec{u} \rightarrow_V S \cdot \vec{u}$ to get a transition in $V_H$ as $S\cdot\vec{v} = \vec{r}*S\cdot\vec{u} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as $\vec{0}$, which forms a linear set of equations that model a set of resets:
 \begin{equation*}
 	Res_H = \left\{ (\s, a) : H \models \s \cdot \p = a \right\}	
 \end{equation*}
- and the set of additions as:
+For the set of additions, we consider $\vec{r}$ as $\vec{1}$ which forms the set of additions as:
 \begin{equation*}
 	Inc_H = \left\{(\s, a) : H \models \s \cdot \p = \s \cdot \up + a\right\}	
 \end{equation*}
-By using the updates to variables in $H$: $x' = x + y, y' = y + 1, z' = x$ to solve the equations in the sets for \s, we get:
-\begin{align*}
-	Res_H &= \left\{ (\begin{bmatrix} -a & a & a \end{bmatrix}, a) \right\}\ \text{which has a vector basis}\ \left\{(\begin{bmatrix} -1 & 1 & 1 \end{bmatrix}, 1)\right\} \\
-	Inc_H &= \left\{ (\begin{bmatrix} 0 & a & 0 \end{bmatrix}, a) \right\}\ \text{which has a vector basis}\ \left\{(\begin{bmatrix} 0 & 1 & 0 \end{bmatrix}, 1)\right\}
-\end{align*}
-With these vector basis we can construct $(S_H, V_H)$, $S_H$ consists of the basis \s vectors, while
+We use the updates to variables: $x' = x + y, \ y'= y + 1\ z' = x$ , found in $H$, to solve the equations in the sets for \s, resulting in: 
+\begin{center}
+	\begin{minipage}{0.5\linewidth}
+		\begin{equation*}
+			Res_H = \left\{ (\begin{bmatrix} -a & a & a \end{bmatrix}, a) \right\}\
+		\end{equation*}
+	\end{minipage}
+	\begin{minipage}{0.4\linewidth}
+		\begin{equation*}
+			Inc_H = \left\{ (\begin{bmatrix} 0 & a & 0 \end{bmatrix}, a) \right\}\ 
+		\end{equation*}
+	\end{minipage}
+\end{center}
+Observe that these form a vector space. Because we want to construct a linear transformation, we need to compute a basis for space: 
+\begin{center}
+	\begin{minipage}{0.5\linewidth}
+	\begin{equation*}
+		Res_H = \{(
+		\NiceMatrixOptions{code-for-first-row=\scriptstyle}
+			\begin{bNiceMatrix}[first-row=1]
+				 x & y & z \\
+				 -1 & 1 & 1 
+			\end{bNiceMatrix}, 1)\}
+	\end{equation*}
+	\end{minipage}
+	\begin{minipage}{0.4\linewidth}
+	\begin{equation*}
+	    Inc_H = \{(
+	    \NiceMatrixOptions{code-for-first-row=\scriptstyle}
+	    	\begin{bNiceMatrix}[first-row=1] 
+	    		x & y & z \\
+	    		 0 & 1 & 0 
+	    	 \end{bNiceMatrix}, 1)\}
+	\end{equation*}
+	\end{minipage}
+\end{center}
+
+
 \begin{align*}
 	S_H = \begin{bmatrix} -1 & 1 & 1 \\ 0 & 1 & 0 \end{bmatrix}
 	V_H = \begin{bmatrix} - x + y + z \\ y \end{bmatrix} \rightarrow_V \begin{bmatrix}	1 \\ y + 1 \end{bmatrix}
