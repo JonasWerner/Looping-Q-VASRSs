@@ -43,6 +43,7 @@ bordercolor=cyan!50!black]{todonotes}
 \usepackage{makecell}
 \usepackage{stmaryrd}
 \usepackage{nicematrix}
+\usepackage{wrapfig}
 
 \DeclareSymbolFont{matha}{OML}{txmi}{m}{it}% txfonts
 \DeclareMathSymbol{\varv}{\mathord}{matha}{118}
@@ -138,6 +139,10 @@ text depth=.6ex,
 \newcommand{\pq}[1]{\ensuremath{#1_{p, q}}\xspace}
 \newcommand{\pqvasr}{\ensuremath{(\pq{S}, \pq{V})}\xspace}
 \newcommand{\pqformula}{\ensuremath{\pq{\Gamma}}\xspace}
+
+\newcommand{\s}{\ensuremath{\begin{bmatrix} s_x & s_y & s_z \end{bmatrix}}}
+\newcommand{\p}{\ensuremath{\begin{bmatrix} x' \\ y' \\ z' \end{bmatrix}}}
+\newcommand{\up}{\ensuremath{\begin{bmatrix} x \\ y \\ z \end{bmatrix}}}
 
 %%%%%%%%%%%% Numbered example environment
 % \newcounter{example}[section]
