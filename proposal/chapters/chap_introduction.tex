@@ -67,7 +67,7 @@ From the \texttt{if} branch we extract the following transition formula:
 	H= \ (x \leq 10 \land x' = x + y\ \land\ y' = y + 1 \land z' = x)
 \end{equation*} In contrast to $G$ there are no constant increments to variables $x$ and $z$, they are changed by an arbitrary amount. A \qvasr cannot represent $H$ because they only able to model transitions with constant resets and increments. 
 
-\newcommand{\s}{\ensuremath{\begin{bmatrix} s_1 \\ s_2 \\ s_3 \end{bmatrix}}}
+\newcommand{\s}{\ensuremath{\begin{bmatrix} s_1 & s_2 & s_3 \end{bmatrix}}}
 \newcommand{\p}{\ensuremath{\begin{bmatrix} x' \\ y' \\ z' \end{bmatrix}}}
 \newcommand{\up}{\ensuremath{\begin{bmatrix} x \\ y \\ z \end{bmatrix}}}
 
@@ -90,8 +90,8 @@ The set of resets is defined as:
 \end{equation*}
 By using the updates to variables in $H$: $x' = x + y, y' = y + 1, z' = x$ to solve the equations in the sets for \s, we get:
 \begin{align*}
-	Res_H &= \left\{ (\begin{bmatrix} -a \\ a \\ a \end{bmatrix}, a) \right\}\ \text{which has a vector basis}\ \left\{(\begin{bmatrix} -1 \\ 1 \\ 1 \end{bmatrix}, 1)\right\} \\
-	Inc_H &= \left\{ (\begin{bmatrix} 0 \\ a \\ 0 \end{bmatrix}, a) \right\}\ \text{which has a vector basis}\ \left\{(\begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}, 1)\right\}
+	Res_H &= \left\{ (\begin{bmatrix} -a & a & a \end{bmatrix}, a) \right\}\ \text{which has a vector basis}\ \left\{(\begin{bmatrix} -1 & 1 & 1 \end{bmatrix}, 1)\right\} \\
+	Inc_H &= \left\{ (\begin{bmatrix} 0 & a & 0 \end{bmatrix}, a) \right\}\ \text{which has a vector basis}\ \left\{(\begin{bmatrix} 0 & 1 & 0 \end{bmatrix}, 1)\right\}
 \end{align*}
 With these vector basis we can construct $(S_H, V_H)$, $S_H$ consists of the basis \s vectors, while
 \begin{align*}
