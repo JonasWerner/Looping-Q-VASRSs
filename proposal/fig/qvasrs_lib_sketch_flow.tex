@@ -30,7 +30,7 @@
 	\end{scope}
 	
 	% Draw edges
-	\draw (input) to node[above] {} node[right] {$F :=$ loop's transition formula} (predtransformer);
+	\draw (input) to node[above] {} node[right] {$F :=$ transition formula of a loop} (predtransformer);
 	%\draw (predtransformer) to node[right] {} node[right, align=left] {$F$\\ $P$ := set of predicates \\ $\mathcal{V} := \emptyset$} (vasrs);
 	\draw (reach) to node[above] {} node[left] {\texttt{reach($\mathcal{V}$)} is \\ loop summary of $F$} (output);
 	\draw [bend right]  (vasrs) to node[above left, align=right, yshift=-0.5cm] {\textbf{yes} \\ $\pqformula := p \land F \land q'$ \\ $\pqvasr := (\mathit{I},\emptyset)$} node[right, align=left] {} (H);

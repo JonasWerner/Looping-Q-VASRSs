@@ -21,14 +21,14 @@ Beginning with the \texttt{else} branch, we extract the transition formula:
 \end{equation*}
 The variable $x$ is not reset but incremented by 2, variable $y$ is not reset either and decremented by 3.
 We get reset vector $
-\vec{r}_G = \ \ 
+\vec{r}_G = \  
 \begin{bmatrix}
 	1 \\
 	1 
 \end{bmatrix}
 $
 and addition vector $
-\vec{a}_G = \ \ 
+\vec{a}_G = \ 
 \begin{bmatrix}
 	2 \\
 	-3 
@@ -66,7 +66,7 @@ V_G =
 From the \texttt{if} branch we extract the following transition formula:
 \begin{equation*}
 	H= \ (x \leq 10 \land x' = x + y\ \land\ y' = y + 1 \land z' = x)
-\end{equation*} In contrast to $G$ there are no constant increments to variables $x$ and $z$, they are changed by an arbitrary amount. A \qvasr cannot represent $H$ because they only able to model transitions with constant resets and increments. We can, however, represent an overapproximation of $H$ as a \qvasr. This is done using linear simulations. Given a transition formula $F$ of dimension $n$ and a \qvasr $V$ of dimension $m$, a linear simulation from $F$ to $V$ is a linear transformation matrix \\ 
+\end{equation*} In contrast to $G$ there are no constant increments to variables $x$ and $z$, they are changed by an arbitrary amount. A \qvasr cannot represent $H$ because they only able to model transitions with constant resets and increments. We can, however, represent an overapproximation of $H$ as a \qvasr. This is done using linear simulations. Given a transition formula $F$ of dimension $n$ and a \qvasr $V$ of dimension $m$, a linear simulation from $F$ to $V$ is a linear transformation matrix: 
 $S = 
 \begin{bmatrix}
 	 s_{1 ,1} & \ldots & s_{1, n} \\
@@ -82,6 +82,7 @@ For the set of additions, we consider $\vec{r}$ as $\vec{1}$ which forms the set
 	Inc_H = \left\{(\s, a) : H \models \s \cdot \p = \s \cdot \up + a\right\}	
 \end{equation*}
 We use the updates to variables: $x' = x + y, \ y'= y + 1\ z' = x$ , found in $H$, to solve the equations in the sets for \s, resulting in: 
+\vspace*{-0.5em}
 \begin{center}
 	\begin{minipage}{0.5\linewidth}
 		\begin{equation*}
@@ -94,7 +95,8 @@ We use the updates to variables: $x' = x + y, \ y'= y + 1\ z' = x$ , found in $H
 		\end{equation*}
 	\end{minipage}
 \end{center}
-Observe that these form a vector space. Because we want to construct a linear transformation, we need to compute a basis for each space: 
+Observe that these form a vector space. Because we want to construct a linear transformation, we need to compute a basis for each space:
+\vspace*{-1em}
 \begin{center}
 	\begin{minipage}{0.5\linewidth}
 	\begin{equation*}
@@ -117,7 +119,8 @@ Observe that these form a vector space. Because we want to construct a linear tr
 	\end{equation*}
 	\end{minipage}
 \end{center}
-Each row in the basis corresponds to a variable in the formula such that we can derive relations between variables. From the reset base, we can deduce that the sum $-x + y + z$ is reset and is incremented by $1$, meaning that after each transition of $H$ we know that $-x + y + z = 1$. From the basis of additions, we derive that $y$ is not reset but incremented by $1$. To form the linear transformation matrix $S_H$ we combine these rows to one matrix. We see that the basis of resets and additions contain only one vector each, resulting in only one reset addition pair for $V_H$. As we have seen $-x + y + z$ is reset and $y$ is not. We get reset vector $\vec{r} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$ and because $-x + y + z$ is incremented by $1$ same as $y$, we get addition vector $\vec{a} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$. Resulting in the \qvasr-abstraction depicted in figure \ref{vasr  H}.
+Each row of the basis corresponds to a variable in the formula such that we can derive relations between variables. From the reset base we can deduce that the sum $-x + y + z$ is reset and incremented by $1$, meaning that after each transition of $H$ we know that $-x + y + z = 1$ holds. From the basis of additions we derive that $y$ is not reset and incremented by $1$. To form the linear transformation matrix $S_H$ we combine these rows to one coherent matrix. We see that the basis of resets and additions contain only one vector each, resulting in only one reset addition pair for $V_H$. As we have seen $-x + y + z$ is reset and $y$ is not. We get reset vector $\vec{r} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$ and because $-x + y + z$ is incremented by $1$, same as $y$, we get addition vector $\vec{a} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$. Resulting in the \qvasr-abstraction depicted in figure \ref{vasr  H}.
+\vspace*{-2em}
 \begin{figure}[H]
 	\begin{center}
 		\begin{minipage}{0.3\linewidth}
@@ -134,26 +137,34 @@ Each row in the basis corresponds to a variable in the formula such that we can 
 	\label{vasr H}
 	\end{center}
 \end{figure}
-For transition formulas with constant increments, such as $G$, an identity matrix $I$ is used as simulation matrix. \par
-The effect on variables by the loop in $P$ can be represented by the disjunction of $G$ and $H$, for whom we have already computed \qvasr-abstractions. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the most precise overapproximation of the whole loop's behavior we need the \textsl{best} \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates every branch in the loop.
-We impose a partial order $\preceq$ on \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$, with $(S_1, V_1) \preceq (S_2, V_2)$ if $(S_2, V_2)$ simulates $(S_1, V_1)$. The best abstraction $(\tilde{S}, \tilde{V})$ is the least upper bound with regard to $\preceq$, meaning $(S, V) \preceq (\tilde{S}, \tilde{V})$ for all \qvasr-abstractions $(S, V)$. The abstraction $(\tilde{S}, \tilde{V})$ computed by iteratively \textsl{joining} abstractions. Joining two \qvasr-abstractions results in a single abstraction simulating both. Figure \ref{vasr} shows the best \qvasr-abstraction of $P$'s loop, which is the result of joining $G$'s and $H$'s abstractions. \\
-\begin{figure}[H]
-	\input{fig/matrix_ex_p0.tex}
-	\caption{Best \qvasr-abstraction of $P$'s loop.}
-	\label{vasr}
-\end{figure}
-
-We see in the example that the conditions of the \texttt{if else} statement, \texttt{x <= 10} and \\ \texttt{x > 10}, are not modeled in the \qvasr-abstraction $(S_P, V_P)$, which leads to the inclusion of transitions that would violate these conditions in the actual loop and would therefore not exist. \\
-To exclude such transitions we constrain \qvasr. We only allow transitions that satisfy a set of predicates $P$. Using predicates in $P$ as control states, we can construct a nondeterministic finite automaton that represents all allowed transitions. This automaton is called a \qvasr with states (\qvasrs), where each transition is labeled by a reset, addition vector pair $(\vec{r}, \vec{a})$. The predicates are pairwise unsatisfiable, minimizing the automaton's possible successor state space. A vector $\vec{u}$ can only transition to $\vec{v}$ if there is an edge $(p, (\vec{r}, \vec{a}), q)$, with $\vec{v} = \vec{r} * \vec{u} + \vec{a}$ and $p, q \in P$.
-
-\begin{wrapfigure}{l}{0.4\linewidth}
-	\input{fig/qvasrs_ex_p0.tex}
-	\caption{\\ \qvasrs of $P$'s loop.}
-	\label{vasrs}
-\end{wrapfigure}
+\vspace*{-2em}For transition formulas with constant increments, such as $G$, an identity matrix $I$ is used as simulation matrix. \par
+The effect on variables by the loop in $P$ can be represented by the following conjunction: 
+\begin{equation*}
+	x \leq 20 \land (H \lor G)
+\end{equation*}
+With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the most precise overapproximation of the whole loop's behavior we need the \textsl{best} \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates every branch in the loop.
+We impose a partial order $\preceq$ on \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$, with $(S_1, V_1) \preceq (S_2, V_2)$ if $(S_2, V_2)$ simulates $(S_1, V_1)$. The best abstraction $(\tilde{S}, \tilde{V})$ is the least upper bound with regard to $\preceq$, meaning $(S, V) \preceq (\tilde{S}, \tilde{V})$ for all \qvasr-abstractions $(S, V)$. The abstraction $(\tilde{S}, \tilde{V})$ computed by iteratively \textsl{joining} abstractions. Joining two \qvasr-abstractions results in a single abstraction simulating both. Figure \ref{vasr} shows the best \qvasr-abstraction of the loop in $P$, which is the result of joining $G$'s and $H$'s abstractions. \\
+\begin{center}
+	\begin{figure}[H]
+		\input{fig/matrix_ex_p0.tex}
+		\caption{Best \qvasr-abstraction of $P$'s loop.}
+		\label{vasr}
+	\end{figure}
+\end{center}
+Using this \qvasr-abstraction we can extract the following transition formula that acts as loop summary:
+\begin{align*}
+	\exists k_1, k_2.\ &((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \land\ y' = y + k_1 - 3k_2)\ \\ &\lor\ x' = x\ \land\ y' = y\ \land\ z' = z
+\end{align*}
+We see in the example that neither the loop guard \texttt{x <= 20} nor the conditions of the \texttt{if else} statement, \texttt{x <= 10} and \\ \texttt{x > 10}, are not considered in the \qvasr-abstraction $(S_P, V_P)$, leading to the inclusion of transitions that would violate these conditions in the actual loop and would therefore not exist. \\
+To exclude such transitions, and by that improve precision of the summary, we constrain \qvasr. We only allow transitions that satisfy a set of predicates $P$. Using predicates in $P$ as control states, we can construct a nondeterministic finite automaton that represents all allowed transitions. This automaton is called a \qvasr with states (\qvasrs), where each transition is labeled by a reset, addition vector pair $(\vec{r}, \vec{a})$. The predicates are pairwise unsatisfiable, minimizing the automaton's possible successor state space. A vector $\vec{u}$ can only transition to $\vec{v}$ if there is an edge $(p, (\vec{r}, \vec{a}), q)$, with $\vec{v} = \vec{r} * \vec{u} + \vec{a}$ and $p, q \in P$.
 Figure \ref{vasrs} shows the \qvasrs of $P$'s loop, it was constructed using $(S_P, V_P)$, seen in Figure \ref{vasr}, and the predicates $x \leq 10$ and $10 < x \land x \leq 20$ as states.
+\begin{figure}[H]
+	\input{fig/qvasrs_ex_p0.tex}
+	\caption{\\ \qvasrs of the loop of $P$.}
+	\label{vasrs}
+\end{figure}
  We see that there are no transitions that violate the \texttt{if else} conditions. \par
-To compute a loop summary, one has to calculate the reachability relation of the \qvasrs. Haase and Halfon \cite{DBLP:conf/rp/HaaseH14} proposed a polytime procedure that unwinds an integer vector addition system into multiple formulas that, as conjunction, form a summary of the system. This procedure can be adapted to work with \qvasrs. \\ \par
+To compute a loop summary from a \qvasrs, one has to calculate the reachability relation of the automaton. Haase and Halfon \cite{DBLP:conf/rp/HaaseH14} proposed a polytime procedure that unwinds an integer vector addition system into multiple formulas that, as conjunction, form a summary of the system. This procedure can be adapted to work with \qvasrs. \\ \par
 
 \textsc{Ultimate}\cite{Zitat02} is a software analysis framework consisting of multiple plugins and libraries for various software verification tasks. \textsc{Ultimate} already features numerous loop summarization techniques, they, however, have problems with nested loops, loop branching, and approximation precision. Problems that can be potentially solved by the usage of \qvasrs. We plan on implementing a new loop summarization library based on \qvasrs, integrate it into the \texttt{accelerated interpolation} scheme, which computes state assertions for programs utilizing loop summaries, and compare the performance of \qvasrs to other implemented loop summarization techniques. \par
 The remainder of this proposal is structured as follows, in section \ref{prob} we formulate our problem statement, followed by an outline of the project's approach in section \ref{app}, and last but not least we present a timetable showing the chronological order of the project in section \ref{sched}.
