@@ -6,7 +6,7 @@ Loop summarization on the other hand provides a more accurate and complete view 
 Silverman and Kincaid\cite{DBLP:conf/cav/SilvermanK19} proposed an overapproximative loop summarization that \textsl{guarantees} a certain degree of approximation precision.\par 
 
 The proposed technique makes use of vector addition systems which are a prominent class of infinite-state transition systems with decidable reachability \cite{DBLP:conf/rp/HaaseH14}. A vector addition system consists of a finite number of integer-typed variables. When a transition is taken, these variables are updated by an addition of a constant. Silverman and Kincaid use a variation of vector addition systems that are based on rational-typed variables instead of integers and extend transitions by employing the notion of resets. When a transition is taken in a rational vector addition systems (\qvasr) a variable is either incremented by a constant, reset to 0, or reset and incremented.
-A \qvasr of dimension $d$ is a finite set $V \subseteq \{0, 1\}^d \times \mathbb{Q}^d$ of transformers. Each transformer $(\vec{r}, \vec{a}) \in V$ consists of binary \textsl{reset} vector $\vec{r}$, where 0 indicates a reset, and rational \textsl{addition} vector $\vec{a}$. A \qvasr $V$ defines a transition system $(S_V, \rightarrow_V)$, with state space $S_V \subseteq \Q^d$ which can transition between states $\vec{x} \rightarrow_V \vec{x}'$, if $\vec{x}' = \vec{r} * \vec{x} + \vec{a}$ for some transformer $(\vec{r}, \vec{a}) \in V$, with $*$ being the Hadamard product. \par A \qvasr can be used to model an approximation of a given transition formula. A transition formula $F$ is a first-order formula defined over free variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ that designate the state before and after a transition, where $n$ is called the dimension of the formula. Figure \ref{code} depicts a program containing a \texttt{while} loop from lines 4 - 12 for which we want to compute a loop summary using \qvasr.
+A \qvasr of dimension $d$ is a finite set $V \subseteq \{0, 1\}^d \times \mathbb{Q}^d$ of transformers. Each transformer $(\vec{r}, \vec{a}) \in V$ consists of binary \textsl{reset} vector $\vec{r}$, where 0 indicates a reset, and rational \textsl{addition} vector $\vec{a}$. A \qvasr $V$ defines a transition system $(S_V, \rightarrow_V)$, with state space $S_V \subseteq \Q^d$, which can transition between states $\vec{x} \rightarrow_V \vec{x}'$, if $\vec{x}' = \vec{r} * \vec{x} + \vec{a}$ for some transformer $(\vec{r}, \vec{a}) \in V$, with $*$ being the Hadamard product. \par A \qvasr can be used to represent an overapproximation of a given transition formula. A transition formula $F$ is a first-order formula defined over free variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ that designate the state before and after a transition, where $n$ is called the dimension of the formula. Figure \ref{code} depicts a program containing a \texttt{while} loop from lines 4 - 12 for which we want to compute a loop summary using \qvasr.
 \begin{wrapfigure}{L}{0.4\linewidth}
 	\vspace{-10pt}
 	\centering
@@ -19,7 +19,7 @@ Beginning with the \texttt{else} branch, we extract the transition formula:
 \begin{equation*}
 	G= \ (x \leq 20 \land\ x > 10 \land x' = x + 2 \land y' = y - 3)
 \end{equation*}
-The variable $x$ is not reset but incremented by 2, variable $y$ is not reset either and decremented by 3.
+The variable $x$ is not reset but incremented by 2, variable $y$ is not reset and decremented by 3.
 We get reset vector $
 \vec{r}_G = \  
 \begin{bmatrix}
@@ -32,8 +32,8 @@ and addition vector $
 \begin{bmatrix}
 	2 \\
 	-3 
-\end{bmatrix}$
-$G$ can therefore be modeled with the \qvasr
+\end{bmatrix}$ \\
+$G$ can therefore be modeled by the \qvasr
 $V_G = 
 \begin{Bmatrix}
 	\begin{pmatrix}
@@ -55,7 +55,7 @@ V_G =
 	\begin{bmatrix}
 		x \\
 		y
-	\end{bmatrix} \rightarrow_P
+	\end{bmatrix} \rightarrow_{V_G}
 	\begin{bmatrix}
 		x + 2 \\
 		y - 3
@@ -66,18 +66,18 @@ V_G =
 From the \texttt{if} branch we extract the following transition formula:
 \begin{equation*}
 	H= \ (x \leq 10 \land x' = x + y\ \land\ y' = y + 1 \land z' = x)
-\end{equation*} In contrast to $G$ there are no constant increments to variables $x$ and $z$, they are changed by an arbitrary amount. A \qvasr cannot represent $H$ because they only able to model transitions with constant resets and increments. We can, however, represent an overapproximation of $H$ as a \qvasr. This is done using linear simulations. Given a transition formula $F$ of dimension $n$ and a \qvasr $V$ of dimension $m$, a linear simulation from $F$ to $V$ is a linear transformation matrix: 
+\end{equation*} In contrast to $G$ there are no constant increments to variables $x$ and $z$. They are changed by an arbitrary amount. A \qvasr cannot represent $H$ by a  \qvasr because they are only able to model transitions with constant resets and increments. We can, however, represent an overapproximation of $H$ as a \qvasr. This is done using linear simulations. Given a transition formula $F$ of dimension $n$ and a \qvasr $V$ of dimension $m$, a linear simulation from $F$ to $V$ is a linear transformation matrix: 
 $S = 
 \begin{bmatrix}
 	 s_{1 ,1} & \ldots & s_{1, n} \\
 	\vdots & \ddots & \vdots \\
 	s_{m ,1} & \ldots & s_{m, n} \\
 \end{bmatrix}$ 
-such that for all transitions $\vec{u} \rightarrow_H \vec{v}$ we have $S\cdot\vec{u} \rightarrow_V S\cdot\vec{v}$. Meaning, every transition $\vec{u} \rightarrow_F \vec{v}$ can be represented in $V$ by matrix multiplying $S$ with $\vec{u}$ and $\vec{v}$. The tuple $(S, V)$ is called a \qvasr-abstraction. \par For $H$ we need to calculate both the linear transformation matrix $S_H$ and the \qvasr $V_H$. We know that a \qvasr consists of pairs of reset and addition vectors, we use the formula $S \cdot \vec{u} \rightarrow_V S \cdot \vec{u}$ to get a transition in $V_H$ as $S\cdot\vec{v} = \vec{r}*S\cdot\vec{u} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as $\vec{0}$, which forms a linear set of equations that model a set of resets:
+such that for all transitions $\vec{x} \rightarrow_F \vec{x}'$ we have $S\cdot\vec{x} \rightarrow_V S\cdot\vec{x}'$. Meaning, every transition $\vec{x} \rightarrow_F \vec{x}'$ can be represented in $V$ by a matrix multiplication of $S$ and $\vec{x}$ and $\vec{x}'$. The tuple $(S, V)$ is called a \qvasr-abstraction. \par For $H$ we need to calculate both the linear transformation matrix $S_H$ and the \qvasr $V_H$. We know that a \qvasr consists of pairs of reset and addition vectors, we use the formula $S \cdot \vec{u} \rightarrow_V S \cdot \vec{u}$ to get a transition in $V_H$ as $S\cdot\vec{x}' = \vec{r}*S\cdot\vec{x} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as the zero vector $\vec{0}$, which forms a linear set of equations that model a set of resets:
 \begin{equation*}
 	Res_H = \left\{ (\s, a) : H \models \s \cdot \p = a \right\}	
 \end{equation*}
-For the set of additions, we consider $\vec{r}$ as $\vec{1}$ which forms the set of additions as:
+For the set of additions, we consider $\vec{r}$ as the constant one vector $\vec{1}$ which forms the set of additions as:
 \begin{equation*}
 	Inc_H = \left\{(\s, a) : H \models \s \cdot \p = \s \cdot \up + a\right\}	
 \end{equation*}
@@ -147,16 +147,16 @@ We impose a partial order $\preceq$ on \qvasr-abstractions $(S_1, V_1)$ and $(S_
 \begin{center}
 	\begin{figure}[H]
 		\input{fig/matrix_ex_p0.tex}
-		\caption{Best \qvasr-abstraction of $P$'s loop.}
+		\caption{Best \qvasr-abstraction of the loop in $P$.}
 		\label{vasr}
 	\end{figure}
 \end{center}
-Using this \qvasr-abstraction we can extract the following transition formula that acts as loop summary:
+Using this \qvasr-abstraction we can derive the following transition formula as loop summary:
 \begin{align*}
 	\exists k_1, k_2.\ &((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \land\ y' = y + k_1 - 3k_2)\ \\ &\lor\ x' = x\ \land\ y' = y\ \land\ z' = z
 \end{align*}
-We see in the example that neither the loop guard \texttt{x <= 20} nor the conditions of the \texttt{if else} statement, \texttt{x <= 10} and \\ \texttt{x > 10}, are not considered in the \qvasr-abstraction $(S_P, V_P)$, leading to the inclusion of transitions that would violate these conditions in the actual loop and would therefore not exist. \\
-To exclude such transitions, and by that improve precision of the summary, we constrain \qvasr. We only allow transitions that satisfy a set of predicates $P$. Using predicates in $P$ as control states, we can construct a nondeterministic finite automaton that represents all allowed transitions. This automaton is called a \qvasr with states (\qvasrs), where each transition is labeled by a reset, addition vector pair $(\vec{r}, \vec{a})$. The predicates are pairwise unsatisfiable, minimizing the automaton's possible successor state space. A vector $\vec{u}$ can only transition to $\vec{v}$ if there is an edge $(p, (\vec{r}, \vec{a}), q)$, with $\vec{v} = \vec{r} * \vec{u} + \vec{a}$ and $p, q \in P$.
+We see in the example that neither the loop guard \texttt{x <= 20} nor the conditions of the \texttt{if else} statement, \texttt{x <= 10} and \texttt{x > 10}, are not considered in the \qvasr-abstraction $(S_P, V_P)$, leading to the inclusion of transitions that would violate these conditions in the actual loop and would therefore not exist. \\
+To exclude such transitions, and by that improve precision of the summary, we constrain \qvasr. We only allow transitions that satisfy a set of predicates $P$. Using predicates in $P$ as control states, we can construct a nondeterministic finite automaton that represents all allowed transitions. This automaton is called a \qvasr with states (\qvasrs), where each transition is labeled by a reset, addition vector pair $(\vec{r}, \vec{a})$. The predicates are pairwise unsatisfiable, minimizing the automaton's possible successor state space. A vector $\vec{x}$ can only transition to $\vec{x}'$ if there is an edge $(p, (\vec{r}, \vec{a}), q)$, with $\vec{x}' = \vec{r} * \vec{x} + \vec{a}$ and $p, q \in P$.
 Figure \ref{vasrs} shows the \qvasrs of $P$'s loop, it was constructed using $(S_P, V_P)$, seen in Figure \ref{vasr}, and the predicates $x \leq 10$ and $10 < x \land x \leq 20$ as states.
 \begin{figure}[H]
 	\input{fig/qvasrs_ex_p0.tex}
@@ -164,7 +164,7 @@ Figure \ref{vasrs} shows the \qvasrs of $P$'s loop, it was constructed using $(S
 	\label{vasrs}
 \end{figure}
  We see that there are no transitions that violate the \texttt{if else} conditions. \par
-To compute a loop summary from a \qvasrs, one has to calculate the reachability relation of the automaton. Haase and Halfon \cite{DBLP:conf/rp/HaaseH14} proposed a polytime procedure that unwinds an integer vector addition system into multiple formulas that, as conjunction, form a summary of the system. This procedure can be adapted to work with \qvasrs. \\ \par
+To compute a loop summary from a \qvasrs, one has to calculate the reachability relation of the automaton. Haase and Halfon \cite{DBLP:conf/rp/HaaseH14} proposed a polytime procedure that computes a series of formulas from computed Parikh images that, as conjunction, form a summary of the system. This procedure can be adapted to work with \qvasrs. \\ \par
 
 \textsc{Ultimate}\cite{Zitat02} is a software analysis framework consisting of multiple plugins and libraries for various software verification tasks. \textsc{Ultimate} already features numerous loop summarization techniques, they, however, have problems with nested loops, loop branching, and approximation precision. Problems that can be potentially solved by the usage of \qvasrs. We plan on implementing a new loop summarization library based on \qvasrs, integrate it into the \texttt{accelerated interpolation} scheme, which computes state assertions for programs utilizing loop summaries, and compare the performance of \qvasrs to other implemented loop summarization techniques. \par
 The remainder of this proposal is structured as follows, in section \ref{prob} we formulate our problem statement, followed by an outline of the project's approach in section \ref{app}, and last but not least we present a timetable showing the chronological order of the project in section \ref{sched}.
