@@ -1,5 +1,8 @@
 
-\documentclass[]{beamer}
+\documentclass[%
+10pt,
+dvipsnames,
+]{beamer}
 
 \input{chap/preamble.tex}
 
@@ -44,24 +47,193 @@
   \titlepage
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
 \begin{frame}[t]
 	\frametitle{Motivation}
-	
+	\begin{itemize}
+		\item Loop analysis is one of the most challenging parts of software verification \\
+		$\rightarrow$ "Archilles Heel of program verification" \cite{DBLP:journals/fmsd/KroeningSTTW13} \pause
+		\begin{columns}
+			\begin{column}{0.4\textwidth}
+				\begin{figure}[h]
+					\vspace*{0.5cm}
+					\resizebox{0.6\textwidth}{!}{\input{fig/lst_ex_p0.tex}}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.6\textwidth}
+				\pause
+				\only<3> {
+				Loop Unwinding:
+				\begin{itemize}
+					\item Quite simple
+					\item {\color{red}{But:}} \\
+					Cannot reason about loop behavior beyond unwinding bound
+				\end{itemize} }
+				\only<4> {
+					Loop Invariants:
+					\begin{itemize}
+						\item Loop invariants hold before and after the loop
+						\item {\color{red}{But:}} \\
+						Usefulness is tied to how strong they are \\
+						$\rightarrow$ Finding strong loop invariants "is an art" \cite{DBLP:journals/fmsd/KroeningSTTW13}
+				\end{itemize} }				
+				\only<5> {
+					Loop Summarization:
+					\begin{itemize}
+						\item Models relation between input and output as a set of constrains
+						\item {\color{red}{But:}} \\
+						Not guaranteed to be precise \\
+						$\rightarrow$ Over- or underapproximation of loop behavior
+				\end{itemize} }	
+				\only<6> { }	
+			\end{column}
+		\end{columns}
+	\only<6>{
+	\item Solution: \\
+	Overapproximative loop summary using rational vector addition systems (\qvasr) \cite{DBLP:conf/cav/SilvermanK19} \\
+	$\rightarrow$ Overapproximation with a guaranteed degree of precision
+	}
+	\end{itemize}
 \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
 
 \begin{frame}[t]
 	\frametitle{\qvasr}
+	\begin{itemize}
+		\item A \qvasr\ $V$ is a transition system, consisting of a set of transformer: \\ \vspace*{0.5cm}
+		\begin{center}
+		 $ V = 
+		\begin{Bmatrix}
+			\begin{pmatrix}
+				\underbrace{
+				\begin{bmatrix}
+					r_1 \\
+					\vdots \\
+					r_n
+				\end{bmatrix}}_{reset \in \{0,1\}^n},
+				\underbrace{
+				\begin{bmatrix}
+					a_1 \\
+					\vdots \\
+					a_n
+				\end{bmatrix}}_{addition \in \mathbb{Q}^n}
+			\end{pmatrix}
+		\end{Bmatrix}
+	$
+	\end{center}
+	\vspace*{0.5cm}
+	\item That model transitions between two states $\vec{x}$ and $\vec{x}'$ as \\
+	\begin{equation*}
+			\begin{bmatrix}
+				x_1' \\
+				\vdots \\
+				x_n'
+			\end{bmatrix}
+		=
+			\begin{bmatrix}
+				x_1 \\
+				\vdots \\
+				x_n
+			\end{bmatrix}
+		*
+			\begin{bmatrix}
+			r_1 \\
+			\vdots \\
+			r_n
+			\end{bmatrix}
+		+
+			\begin{bmatrix}
+			a_1 \\
+			\vdots \\
+			a_n
+		\end{bmatrix}		
+	\end{equation*}
+	for some $(\vec{r}, \vec{a}) \in V$
+	\end{itemize}
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
+\tikzset{box/.style={inner xsep=0pt}}
+
+\begin{frame}[t]
+	\frametitle{\qvasr}
+	\begin{columns}
+		\begin{column}{0.4\textwidth}
+			\begin{figure}[h]
+				\vspace*{0.5cm}
+				\resizebox{0.6\textwidth}{!}{\input{fig/lst_ex_p0.tex}}
+				\vspace{-0.5cm}
+				\caption*{Program containing a loop.}
+			\end{figure}
+		\end{column} \pause
+			\begin{column}{0.6\textwidth}
+			\begin{figure}[h]
+				\begin{equation*}
+					G: x \leq 20 \land x > 10 \land x' = {\color<4>{red}{x}} + {\color<5>{red}{2}} \land y' = {\color<4>{red}{y}} {\color<5>{red}{-3}}
+				\end{equation*}
+			\caption*{Transition formula $G$ of the else branch.}
+			\end{figure}
+		\end{column}
+	\end{columns}
+	\begin{columns}
+	\begin{column}{0.4\textwidth} \uncover<6>{
+			\begin{figure}
+				$V_G = 
+				\begin{Bmatrix}
+					\begin{bmatrix}
+						x \\
+						y
+					\end{bmatrix} \rightarrow_{V_G}
+					\begin{bmatrix}
+						x + 2 \\
+						y - 3
+					\end{bmatrix}
+				\end{Bmatrix}
+				$
+			\caption*{Intuitive notation of $V_G$.}
+			\end{figure}
+	}
+	\end{column}
+	\begin{column}{0.4\textwidth} \uncover<3->{
+		\begin{figure}
+			$V_G = 
+			\begin{Bmatrix}
+				\begin{pmatrix}
+					\begin{bmatrix}
+						{\color<4>{red}{1}} \\
+						{\color<4>{red}{1}}
+					\end{bmatrix},
+					\begin{bmatrix}
+						{\color<5>{red}{2}} \\
+						{\color<5>{red}{-3}}
+					\end{bmatrix}
+				\end{pmatrix}
+			\end{Bmatrix}
+			$
+			\caption*{\qvasr\ $V_G$.}
+		\end{figure}
+	}
+	\end{column}
+\end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
+\begin{frame}
+	\frametitle{\qvasr-Abstraction}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
 
 \begin{frame}[t]
 	\frametitle{\qvasrs}
 \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
 
 \begin{frame}[t]
 	\frametitle{Approach}
 		\nocite{DBLP:conf/cav/SilvermanK19}
 	\resizebox{11cm}{!}{\input{./fig/qvasrs_lib_sketch_flow_pres.tex}}
 \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
 
 \begin{frame}
 	\label{slide:bibliography}
@@ -72,7 +244,7 @@
 	\bibliography{bib/bib}
 \end{frame}
 
-
+\begin{comment}
 \begin{frame}{Bibliography}
 	\frametitle{References}
 	\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
@@ -102,5 +274,6 @@
 	\end{thebibliography}
 
 \end{frame}
+\end{comment}
 
 \end{document}
