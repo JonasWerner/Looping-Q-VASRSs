@@ -123,7 +123,7 @@ dvipsnames,
 		\end{center}
 	\end{definition}
 	\begin{definition}
-	Given a \qvasr $V$ and a transformer $(\vec{r}, \vec{a}) \in V$, transitions between two states $\vec{x}$ and $\vec{x}'$ are defined as: \\
+	Given a \qvasr $V$ and a transformer $(\vec{r}, \vec{a}) \in V$, transitions between two states $\vec{x} \rightarrow_V \vec{x}'$ are defined as: \\
 	\begin{equation*}
 			\begin{bmatrix}
 				x_1' \\
@@ -190,18 +190,108 @@ dvipsnames,
 		\begin{column}{0.6\textwidth}
 			\begin{figure}[h]
 				\begin{equation*}
-					H: x \leq 10 \land x' = x + {\color<3>{red}{y}} \land y' = y + 1 \land z' = {\color<3>{red}{x}}
+					H: x \leq 10 \land x' = x + {\color<3->{red}{y}} \land y' = y + 1 \land z' = {\color<3->{red}{x}}
 				\end{equation*}
 				\caption*{Transition formula $H$ of the if branch.}
 			\end{figure}
 		\end{column}
 	\end{columns}
+	\pause
+	\vspace*{1cm}
+	\only<4->{
+	\begin{itemize}
+		\item \alert{\qvasr\ can only model constant additions!} \pause \pause
+		\item But, we can overapproximate $H$ by computing a \qvasr-abstraction
+	\end{itemize}
+	}
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
 \begin{frame}
 	\frametitle{\qvasr-Abstraction}
+	\newcommand{\s}{\ensuremath{\begin{bmatrix} s_x & s_y & s_z \end{bmatrix}}}
+	\newcommand{\p}{\ensuremath{\begin{bmatrix} x' \\ y' \\ z' \end{bmatrix}}}
+	\newcommand{\up}{\ensuremath{\begin{bmatrix} x \\ y \\ z \end{bmatrix}}}
+	\begin{definition}
+		Given a transition formula $F$, a \qvasr-abstraction for $F$ is a tuple $(S_F, V_F)$ consisting of a matrix $S_F$ and a \qvasr\ $V_F$. The matrix $S_F$ acts as a linear transformation of $F$ to $V_F$. \\ Meaning, for every transition \\
+			$
+			\begin{bmatrix}
+				x_1 \\
+				\vdots \\
+				x_n
+			\end{bmatrix}
+			\rightarrow_F
+			\begin{bmatrix}
+				x_1' \\
+				\vdots \\
+				x_n'
+			\end{bmatrix}
+			$
+			in $F$, there is: \ \
+			$ S_F \cdot
+				\begin{bmatrix}
+					x_1' \\
+					\vdots \\
+					x_n'
+				\end{bmatrix}
+				=
+				S_F \cdot
+				\begin{bmatrix}
+					x_1 \\
+					\vdots \\
+					x_n
+				\end{bmatrix}
+				*
+				%%%%%%%%%%%%%%%%%%%% RESET
+				\only<3-5>{
+				\begin{bmatrix}
+					\color{red}{0} \\
+					\color{red}{\vdots} \\
+				\color{red}{0}
+				\end{bmatrix}	
+				}
+				%%%%%%%%%%%%%%%%%%%%% VANILLA
+				\only<1, 4->{
+				\begin{bmatrix}
+					r_1 \\
+					\vdots \\
+					r_n
+				\end{bmatrix}
+				}
+				%%%%%%%%%%%%%%%%%%%%%% NOT RESET
+				\only<6>{
+				\begin{bmatrix}
+					\color{red}{1} \\
+					\color{red}{\vdots} \\
+					\color{red}{1}
+				\end{bmatrix}
+				}
+				+
+				\begin{bmatrix}
+					a_1 \\
+					\vdots \\
+					a_n
+				\end{bmatrix}	
+			$
+			in $V_F$
+	\end{definition}
+	\pause
+	\begin{center}
+			$H: x \leq 10 \land x' = x + y \land y' = y + 1 \land z' = x$ \pause
+			\only<2-5>{
+			\begin{equation*}
+				Res_H = \left\{ (\s, a) : H \models \underbrace{\s}_{solve} \cdot \p = \underbrace{a}_{solve} \right\} 	
+			\end{equation*} \pause
+			$Res_H = \left\{ (\begin{bmatrix} -a & a & a \end{bmatrix}, a) \right\}\ \pause \xrightarrow{\text{Base}}\ Res_H = \left\{ (\begin{bmatrix} -1 & 1 & 1 \end{bmatrix}, 1) \right\}\ $
+		}
+		\only<6->{
+			\begin{equation*}
+				Inc_H = \left\{(\s, a) : H \models \s \cdot \p = \s \cdot \up + a\right\}	
+			\end{equation*}
+			$Inc_H = \left\{ (\begin{bmatrix} 0 & a & 0 \end{bmatrix}, a) \right\}\ \pause \xrightarrow{\text{Base}}\ Inc_H = \left\{ (\begin{bmatrix} 0 & 1 & 0 \end{bmatrix}, 1) \right\}\ $
+		}
+	\end{center}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
