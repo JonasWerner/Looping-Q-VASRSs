@@ -252,7 +252,7 @@ dvipsnames,
 				\end{bmatrix}	
 				}
 				%%%%%%%%%%%%%%%%%%%%% VANILLA
-				\only<1, 4->{
+				\only<1>{
 				\begin{bmatrix}
 					r_1 \\
 					\vdots \\
@@ -260,7 +260,7 @@ dvipsnames,
 				\end{bmatrix}
 				}
 				%%%%%%%%%%%%%%%%%%%%%% NOT RESET
-				\only<6>{
+				\only<6->{
 				\begin{bmatrix}
 					\color{red}{1} \\
 					\color{red}{\vdots} \\
@@ -285,11 +285,14 @@ dvipsnames,
 			\end{equation*} \pause
 			$Res_H = \left\{ (\begin{bmatrix} -a & a & a \end{bmatrix}, a) \right\}\ \pause \xrightarrow{\text{Base}}\ Res_H = \left\{ (\begin{bmatrix} -1 & 1 & 1 \end{bmatrix}, 1) \right\}\ $
 		}
-		\only<6->{
+		\only<7->{
 			\begin{equation*}
 				Inc_H = \left\{(\s, a) : H \models \s \cdot \p = \s \cdot \up + a\right\}	
 			\end{equation*}
-			$Inc_H = \left\{ (\begin{bmatrix} 0 & a & 0 \end{bmatrix}, a) \right\}\ \pause \xrightarrow{\text{Base}}\ Inc_H = \left\{ (\begin{bmatrix} 0 & 1 & 0 \end{bmatrix}, 1) \right\}\ $
+			\uncover<8->{
+			$Inc_H = \left\{ (\begin{bmatrix} 0 & a & 0 \end{bmatrix}, a) \right\}\ } 
+			\uncover<9->
+			{\xrightarrow{\text{Base}}\ Inc_H = \left\{ (\begin{bmatrix} 0 & 1 & 0 \end{bmatrix}, 1) \right\}\ }$
 		}
 	\end{center}
 \end{frame}
