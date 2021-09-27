@@ -239,10 +239,10 @@ dvipsnames,
 	\pause
 	\vspace*{1cm}
 	\only<4->{
-	\begin{itemize}
+		\begin{center}
 		\item \alert{\qvasr\ can only model constant additions!} \pause \pause
 		\item But, we can overapproximate $H$ by computing a \qvasr-abstraction
-	\end{itemize}
+		\end{center}		
 	}
 \end{frame}
 
@@ -338,21 +338,131 @@ dvipsnames,
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
-\begin{frame}
+\begin{frame}[t]
+	\frametitle{\qvasr-Abstraction}
+		\begin{center}
+			$H: x \leq 10 \land x' = x + y \land y' = y + 1 \land z' = x$ \pause
+		\end{center}
+		\vspace*{0.5cm}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{equation*} \only<2-4, 6->{
+					Res_H = \left\{ (\begin{bmatrix} {\color<3>{red}{-1}} & {\color<3>{red}{1}} & {\color<3>{red}{1}} \end{bmatrix}, {\color<4>{red}{1}}) \right\}\ 
+					}
+					\only<5>{
+					Res_H = \underbrace{Res_H = \left\{ (\begin{bmatrix} -1 & 1 & 1 \end{bmatrix}, 1) \right\}\ }_{\color{red}{1}\ reset}
+					}
+				\end{equation*}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{equation*}
+					\only<2-5, 7>{
+					Inc_H = \left\{ (\begin{bmatrix} {\color<3>{red}{0}} & {\color<3>{red}{1}} & {\color<3>{red}{0}} \end{bmatrix}, {\color<4>{red}{1}}) \right\}\
+					}
+					\only<6>{
+					Inc_H = \underbrace{\left\{ (\begin{bmatrix} 0 & 1 & 0 \end{bmatrix}, 1) \right\}\}}_{\color{red}{1}\ addition}
+					}
+				\end{equation*}
+			\end{column}
+		\end{columns}
+		\only<2->{
+		\begin{figure}
+			\begin{equation*}
+				S_H = \begin{bmatrix} {\color<3>{red}{-1}} & {\color<3>{red}{1}} & {\color<3>{red}{1}} \\ {\color<3>{red}{0}} & {\color<3>{red}{1}} & {\color<3>{red}{0}} \end{bmatrix} \hspace*{0.5cm}
+				V_H = 
+				\begin{Bmatrix}
+					\begin{pmatrix}
+						\begin{bmatrix}
+							\color<5>{red}{0} \\
+							\color<6>{red}{1}
+						\end{bmatrix},
+						\begin{bmatrix}
+							{\color<4>{red}{1}} \\
+							{\color<4>{red}{1}}
+						\end{bmatrix}
+					\end{pmatrix}
+				\end{Bmatrix}
+				\end{equation*}
+			\caption*{\qvasr-abstraction of $H$}
+		\end{figure}
+	} 
+	\only<7>{
+		\begin{figure}
+			\begin{equation*}
+			V_H = \begin{Bmatrix} \begin{bmatrix} - x + y + z \\ y \end{bmatrix} \rightarrow_{V_H} \begin{bmatrix}	1 \\ y + 1 	\end{bmatrix} \end{Bmatrix}
+			\end{equation*}
+		\caption*{Intuitive view of \qvasr-abstraction} 
+		\end{figure}
+	}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
+\begin{frame}[t]
 	\frametitle{\qvasr-Abstraction Partial Order}
-	\resizebox{0.4\textwidth}{!}{\input{fig/partial_order_hierarchy.tex}}
+	\begin{columns}
+		\begin{column}{0.4\textwidth}
+			\begin{figure}[h]
+				\vspace*{0.5cm}
+				\resizebox{0.6\textwidth}{!}{\input{fig/lst_ex_p0.tex}}
+				\vspace{-0.5cm}
+				\caption*{Program containing a loop.}
+			\end{figure}
+		\end{column} \pause
+		\begin{column}{0.6\textwidth}
+			\begin{itemize}
+				\item The transition formula of the loop: \\ $F = H \lor G$
+				\item We need a \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates both $(S_H, V_H)$ and $(S_G, V_G)$
+			\end{itemize}
+			\begin{center}
+				\resizebox{0.6\textwidth}{!}{\input{fig/partial_order_hierarchy.tex}}
+			\end{center}
+		\end{column}
+	\end{columns}
+	We get $(\tilde{S}, \tilde{V})$ by computing a join of $(S_H, V_H)$
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
+\begin{frame}[t]
+	\frametitle{Best \qvasr-abstraction}
+	\begin{center}
+		\begin{figure}
+		\input{fig/best_qvasr_abstr.tex}
+		\caption*{\qvasr-abstraction $V_F$ of $F$}
+		\end{figure}
+	\end{center}
+\pause
+Using $V_F$, we can derive the following transition formula as loop summary:
+	\begin{align*}
+		\exists k_1, k_2.\ &((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \\ &\land\ y' = y + k_1 - 3k_2)\ \lor\ x' = x\ \land\ y' = y\ \land\ z' = z
+	\end{align*}
+\pause
+\begin{center}
+\alert{Neither loop guard nor conditions of the if-else statement are considered!}
+\end{center}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
 
 \begin{frame}[t]
 	\frametitle{\qvasrs}
+	To improve
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
+
+\begin{frame}[t]
+	\frametitle{Goals}
+	The goals of this master thesis are:
+	\begin{itemize}
+		\item Implementing a new loop summary library in the software analysis framework \textsc{Ultimate} \footnote{\url{https://ultimate.informatik.uni-freiburg.de}} based on \qvasr, \qvasr-abstractions, and \qvasrs
+		\item Integration of the library into the accelerated interpolation interpolant computation scheme
+		\item Benchmarking and comparing the library against other loop summarization techniques
+	\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
 
 \begin{frame}[t]
 	\frametitle{Approach}
-		\nocite{DBLP:conf/cav/SilvermanK19}
 	\resizebox{11cm}{!}{\input{./fig/qvasrs_lib_sketch_flow_pres.tex}}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
