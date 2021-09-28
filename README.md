@@ -5,5 +5,5 @@ feature multiple paths and nested loops. Computing overapproximative loop summar
 loop analyzation technique that represents the relationship between inputs and outputs as a set
 of constraints. But, Overapproximation is prone to imprecision.
 Kincaid and Silverman proposed a novel overapproximation approach, based on rational vector addition systems with resets (Q-VASR),
-that guarantee a certain degree of precision. In this presentation we will introduce this approach, and
-propose an implementation of a new loop summarization library based on Q-VASR.
+that guarantee a certain degree of precision. This project an implements a new loop summarization library based on Q-VASR in the software verification framework Ultimate.
+https://ultimate.informatik.uni-freiburg.de
