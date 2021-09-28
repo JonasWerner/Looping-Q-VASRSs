@@ -419,6 +419,7 @@ dvipsnames,
 		\end{column}
 	\end{columns}
 	We get $(\tilde{S}, \tilde{V})$ by computing a join of $(S_H, V_H)$
+	\jw{	WRITE HERE THE EQUATION T1S1 = T2S2 oder wie die geht !!!!!!!}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
@@ -431,11 +432,12 @@ dvipsnames,
 		\end{figure}
 	\end{center}
 \pause
-Using $V_F$, we can derive the following transition formula as loop summary:
+Using $V_F$, we can derive the following overapproximation of $F$:
 	\begin{align*}
 		\exists k_1, k_2.\ &((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \\ &\land\ y' = y + k_1 - 3k_2)\ \lor\ x' = x\ \land\ y' = y\ \land\ z' = z
 	\end{align*}
 \pause
+\vspace*{-0.5cm}
 \begin{center}
 \alert{Neither loop guard nor conditions of the if-else statement are considered!}
 \end{center}
