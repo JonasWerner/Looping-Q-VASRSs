@@ -1,5 +1,5 @@
-Loop summarization using vector 
-
+Loop Summarization using Rational Vector Addition Systems with Resets in Accelerated Interpolation
+==================================================================================================
 Analyzing program loops is an important part of multiple software engineering tasks, such
 as bug detection, test case generation, and optimization. Loop analysis is, however, one
 of the most challenging aspects of program analysis, especially with complex loops that
