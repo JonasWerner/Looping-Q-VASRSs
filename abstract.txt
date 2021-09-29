@@ -9,4 +9,4 @@ of constraints. But overapproximation is prone to imprecision.
 Kincaid and Silverman proposed a novel overapproximation approach, based on rational vector addition systems with resets (Q-VASR),
 that guarantee a certain degree of precision. In this presentation we will introduce this approach, and
 propose an implementation of a new loop summarization library based on Q-VASR,
-which we want to use in the already implemented accelerated interpolation scheme.
+which we want to integrate in the already implemented accelerated interpolation scheme.
