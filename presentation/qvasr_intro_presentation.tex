@@ -9,7 +9,8 @@ dvipsnames,
 \usetheme{Madrid}
 \usecolortheme{dolphin}
 
-\title[\qvasr]{Rational Vector Addition Systems \\ with Resets and States}
+\title[\qvasr]{Rational Vector Addition Systems \\ with Resets and States \\
+in Accelerated Interpolation}
 
 % For short you could for example use the last name only, it's optional as is
 % the short title
@@ -53,7 +54,8 @@ dvipsnames,
 	\begin{itemize}
 		\item Loop analysis is one of the most challenging parts of software verification \\
 		$\rightarrow$ "Archilles Heel of program verification" \cite{DBLP:journals/fmsd/KroeningSTTW13} \pause
-		\begin{columns}
+		\vspace*{1cm}
+		\begin{columns}[t]
 			\begin{column}{0.4\textwidth}
 				\begin{figure}[h]
 					\vspace*{0.5cm}
@@ -89,7 +91,6 @@ dvipsnames,
 			\end{column}
 		\end{columns}
 	\only<6>{
-	\item Solution: \\
 	Overapproximative loop summary using rational vector addition systems (\qvasr) \cite{DBLP:conf/cav/SilvermanK19} \\
 	$\rightarrow$ Overapproximation with a guaranteed degree of precision
 	}
@@ -100,7 +101,7 @@ dvipsnames,
 \begin{frame}[t]
 	\frametitle{\qvasr}
 	\begin{definition}
-			A \qvasr\ $V$ is a transition system, consisting of a set of transformer: \\
+			A \qvasr\ $V$ is a transition system, consisting of a set of transformers: \\
 			\begin{center}
 			 $ V = 
 			\begin{Bmatrix}
@@ -241,7 +242,7 @@ dvipsnames,
 	\only<4->{
 		\begin{center}
 		\item \alert{\qvasr\ can only model constant additions!} \pause \pause
-		\item But, we can overapproximate $H$ by computing a \qvasr-abstraction
+		\item We can overapproximate $H$ by computing a \qvasr-abstraction
 		\end{center}		
 	}
 \end{frame}
@@ -326,13 +327,13 @@ dvipsnames,
 			$Res_H = \left\{ (\begin{bmatrix} -a & a & a \end{bmatrix}, a) \right\}\ \pause \xrightarrow{\text{Base}}\ Res_H = \left\{ (\begin{bmatrix} -1 & 1 & 1 \end{bmatrix}, 1) \right\}\ $
 		}
 		\only<7->{
-			\begin{equation*}
-				Inc_H = \left\{(\s, a) : H \models \s \cdot \p = \s \cdot \up + a\right\}	
-			\end{equation*}
+				\resizebox{0.9\textwidth}{!}{
+					$Inc_H = \left\{(\s, a) : H \models \s \cdot \p = \s \cdot \up + a\right\}$
+				}
 			\uncover<8->{
-			$Inc_H = \left\{ (\begin{bmatrix} 0 & a & 0 \end{bmatrix}, a) \right\}\ } 
+			$Inc_H = \left\{ (\begin{bmatrix} 0 & a & 0 \end{bmatrix}, a) \right\}\ $} 
 			\uncover<9->
-			{\xrightarrow{\text{Base}}\ Inc_H = \left\{ (\begin{bmatrix} 0 & 1 & 0 \end{bmatrix}, 1) \right\}\ }$
+			{$\xrightarrow{\text{Base}}\ Inc_H = \left\{ (\begin{bmatrix} 0 & 1 & 0 \end{bmatrix}, 1) \right\}\ $}
 		}
 	\end{center}
 \end{frame}
@@ -350,7 +351,7 @@ dvipsnames,
 					Res_H = \left\{ (\begin{bmatrix} {\color<3>{red}{-1}} & {\color<3>{red}{1}} & {\color<3>{red}{1}} \end{bmatrix}, {\color<4>{red}{1}}) \right\}\ 
 					}
 					\only<5>{
-					Res_H = \underbrace{Res_H = \left\{ (\begin{bmatrix} -1 & 1 & 1 \end{bmatrix}, 1) \right\}\ }_{\color{red}{1}\ reset}
+					Res_H = \underbrace{\left\{ (\begin{bmatrix} -1 & 1 & 1 \end{bmatrix}, 1) \right\}\ }_{\color{red}{1}\ reset}
 					}
 				\end{equation*}
 			\end{column}
@@ -410,14 +411,27 @@ dvipsnames,
 		\end{column} \pause
 		\begin{column}{0.6\textwidth}
 			\begin{itemize}
-				\item The transition formula of the loop: \\ $F = H \lor G$
-				\item We need a \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates both $(S_H, V_H)$ and $(S_G, V_G)$
+				\item The transition formula of the loop: 
+				\begin{equation*}
+					F = H \lor G
+				\end{equation*}
+				\item We need a \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates both $(S_H, V_H)$ and $(S_G, V_G)$ 
+				\begin{equation*}
+					\rightarrow T_HS_H = \tilde{S} = T_GS_G 
+				\end{equation*}
+				\begin{equation*}
+					\text{Solve:}\ \tilde{S} = \begin{bmatrix} t^{H}_1 & t^{H}_2  \end{bmatrix} S_H  = \begin{bmatrix} t^{G}_1 & t^{G}_2\end{bmatrix} S_G
+				\end{equation*}
 			\end{itemize}
 		\end{column}
 	\end{columns}
-	\begin{center}
-	\resizebox{0.4\textwidth}{!}{\input{fig/partial_order_hierarchy.tex}}
-	\end{center}
+	\begin{itemize}
+		\item Compute new changes on relations as $\tilde{V}$
+		\begin{equation*}
+			\tilde{V} = \{(T_H \times \vec{r}_H, T\vec{a}_H) \cup (T_G\times \vec{r}_G, T_G\vec{a}_G)\}
+		\end{equation*}
+	Where $(T \times \vec{r})_i = r_j$ is a translation of $r_i$ to a non-zero $r_j \in T$
+	\end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
@@ -445,7 +459,7 @@ Using $V_F$, we can derive the following overapproximation of $F$:
 
 \begin{frame}[t]
 	\frametitle{\qvasrs}
-	To improve
+	To improve precision we extend \qvasr-abstractions to 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
@@ -464,6 +478,13 @@ Using $V_F$, we can derive the following overapproximation of $F$:
 \begin{frame}[t]
 	\frametitle{Approach}
 	\resizebox{11cm}{!}{\input{./fig/qvasrs_lib_sketch_flow_pres.tex}}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
+
+\begin{frame}[t]
+	\frametitle{Approach}
+	\resizebox{11cm}{!}{\input{./fig/qvasrs_lib_sketch_flow_pres_first.tex}}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
 
