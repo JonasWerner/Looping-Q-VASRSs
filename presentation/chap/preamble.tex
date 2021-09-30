@@ -39,6 +39,7 @@ bordercolor=cyan!50!black]{todonotes}
 \usepackage{nicematrix}
 \usepackage{mathtools}
 
+
 \DeclareSymbolFont{matha}{OML}{txmi}{m}{it}% txfonts
 \DeclareMathSymbol{\varv}{\mathord}{matha}{118}
 
@@ -143,6 +144,9 @@ text depth=.6ex,
 \newcommand{\err}{\ensuremath{\mathit{err}}}
 \newcommand{\init}{\ensuremath{\mathit{init}}}
 
+\newcommand{\abst}[1]{\ensuremath{\mathit{(S^{#1}, V^{#1})}}}
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
 
 \newcommand{\pq}[1]{\ensuremath{#1_{p, q}}}
 \newcommand{\pqvasr}{\ensuremath{(\pq{S}, \pq{V})}}

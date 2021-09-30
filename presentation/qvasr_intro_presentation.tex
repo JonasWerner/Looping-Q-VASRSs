@@ -92,7 +92,7 @@ in Accelerated Interpolation}
 		\end{columns}
 	\only<6>{
 	Overapproximative loop summary using rational vector addition systems (\qvasr) \cite{DBLP:conf/cav/SilvermanK19} \\
-	$\rightarrow$ Overapproximation with a guaranteed degree of precision
+	$\rightarrow$ Overapproximation with a \textsl{guaranteed} degree of precision
 	}
 	\end{itemize}
 \end{frame}
@@ -124,7 +124,7 @@ in Accelerated Interpolation}
 		\end{center}
 	\end{definition}
 	\begin{definition}
-	Given a \qvasr $V$ and a transformer $(\vec{r}, \vec{a}) \in V$, transitions between two states $\vec{x} \rightarrow_V \vec{x}'$ are defined as: \\
+	Given a \qvasr\ $V$ and a transformer $(\vec{r}, \vec{a}) \in V$, transitions between two states $\vec{x} \rightarrow_V \vec{x}'$ are defined as: \\
 	\begin{equation*}
 			\begin{bmatrix}
 				x_1' \\
@@ -459,7 +459,14 @@ Using $V_F$, we can derive the following overapproximation of $F$:
 
 \begin{frame}[t]
 	\frametitle{\qvasrs}
-	To improve precision we extend \qvasr-abstractions to 
+	To improve precision, we constrain \qvasr\ transitions by using a set of predicates $P$ as states. We introduce a so called \qvasrs
+	\begin{definition}
+		Given a \qvasr-abstraction $(S,V)$, a \qvasrs $\mathcal{V}$ is a nondeterministic finite automaton $(Q, E)$ consisting of a set of states $Q$ and a set of edges $E \subseteq Q \times V \times Q$, \\
+		where each transition is labeled by a transition in $V$ \\
+		$\mathcal{V}$ can transition $(q_1, \vec{x}) \rightarrow_\mathcal{V} (q_2, \vec{x}')$ if there is some edge $(q_1, (\vec{r}, \vec{a}), q_2)$
+	\end{definition}
+	We use $P = \{ x \leq 10, 10 < x \land x \leq 20\}:$ \\ \vspace{0.5cm}
+	\input{fig/qvasrs_ex_p0.tex }
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
