@@ -1,0 +1,51 @@
+\documentclass[11pt]{article}
+
+\input{chapters/0_preamble.tex}
+
+\begin{document}
+\newcommand{\HorizontalLine}{\rule{\linewidth}{0.3mm}}
+
+
+\begin{center}
+	{\scshape\Large Master Thesis \par}
+	\vspace{1.5cm}
+	{\huge\bfseries Accelerated Interpolation Using Rational Vector Addition Systems with Resets and States. \par}
+
+	\vspace{1cm}
+	{\large \scshape Jonas Werner\par}
+	\vspace{0.5cm}
+	{\today \vspace{2cm}}
+\end{center}
+
+\section*{Abstract}
+
+\section*{Introduction}
+\input{chapters/1_introduction.tex}
+\section*{Background}
+\input{chapters/2_background.tex}
+
+\section*{Accelerated Interpolation}
+\input{chapters/3_accelerated_interpolation.tex}
+
+\section*{Loop Summarization using Qvasr}
+\input{chapters/4_qvasr.tex}
+
+\section*{Extension to Qvasrs}
+\input{chapters/5_qvasrs.tex}
+
+\section*{Implementation}
+\input{chapters/6_implementation.tex}
+
+\section*{Evaluation}
+\input{chapters/7_evaluation.tex}
+
+\section*{Future Work/Conclusion}
+\input{chapters/8_conclusion.tex}
+
+
+\pagebreak
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{ieeetr}
+\bibliography{bib/bib}
+
+\end{document}
