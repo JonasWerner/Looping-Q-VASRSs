@@ -1,7 +1,72 @@
 
-\jw{This chapter is mostly focused on trace abstraction $\rightarrow$  It introduces the reader to the concept of trace abstraction. \\
+\begin{comment}
+	This chapter is mostly focused on trace abstraction $\rightarrow$  It introduces the reader to the concept of trace abstraction. \\
 	- Introduce logic, logical variables, terms, formulas, transition formulas with primed and unprimed variables, programs, program states, loops $\rightarrow$  then program-, error traces, feasible and infeasible counterexamples, CFGs, interpolants. \\ - From intuitive to true definitions. \\
 	Here the running example from the introduction gets dissected to illustrate the definitions. \\ 
-	Further the problems loops can cause are introduced, followed by a definition of loop summaries $\rightarrow$ introduction reflexive transitive closure of a formula \\
-	\vspace{1cm}
-	15 pages}
+	Further the problems loops can cause are introduced, followed by a definition of loop summaries $\rightarrow$ introduction reflexive transitive closure of a formula 
+	15 pages
+\end{comment}
+
+This chapter shall introduce our understanding and notation of logic and formulas, programs, control-flow, and other needed background definitions. Furthermore, we will give an overview of the \traceabstraction \cite{10.1007/978-3-642-03237-0_7} counterexample-guided abstraction refinement scheme used in \ultimate.
+
+\subsection{Logical Fundamentals}
+We model programs using first order logic, this chapter will introduce the basic notions used in this paper.
+\begin{mydef}[Term] 
+	Given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, with countable sets \\ $\vocab{\Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred}$ representing the sets of variables, constant symbols, function symbols, and predicate symbols respectively, we define terms inductively as follows:
+	\begin{itemize}
+		\item Every $x \in \vocab{Var}$ is a term.
+		\item Every $c \in \vocab{Const}$ is a term.
+		\item If $t_0, \ldots, t_n$ are terms and $f \in \vocab{Fun}$ being a function symbol with arity $n$, then $f(t_0, \ldots, t_n)$ is a term.
+	\end{itemize}
+\end{mydef}
+Using the definitions of terms, we can introduce first-order logic formulas.
+
+\begin{mydef}[Formula]
+	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, first-order logic formulas are inductively defined as follows:
+	\begin{itemize}
+		\item $\bot$ is a formula.
+		\item If  $t_0, \ldots, t_n$ are terms, and $p \in \vocab{pred}$ is a predicate symbol with arity $n$, then $p(t_0, \ldots, t_n)$ is a formula.
+		\item If $\varphi$ is a formula, then $\neg \varphi$ is a formula.
+		\item If $\varphi$ and $\psi$ are formulas, then $\varphi \land \psi$ are formulas.
+		\item If $\varphi$ is a formula, and $x \ in \vocab{Var}$ then $\exists x. \varphi$ is a formula.
+	\end{itemize}
+\end{mydef}
+
+\begin{mydef}[Model]
+	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, a model $\mathcal{M} = (D, \interpret)$ is a tuple consisting of a nonempty set $D$, called interpretation domain, and an interpretation function \interpret that assigns constants, functions, and predicates over $D$ to symbols in $V$.
+\end{mydef}
+
+\begin{mydef}[Assignment of Variables]
+	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, and domain $D$, an assignment of variable $v \in \vocab{Var}$ is a function $\varv: v \rightarrow D$.
+\end{mydef}
+
+\begin{mydef}[Evaluation of Terms]
+	Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, and $\varv$ a variable assignment, the evaluation of terms is a function $\eval{\cdot}$ that is inductively defined as:
+	\begin{itemize}
+		\item For each $x \in \vocab{Var}$, $\eval{x} = \varv(x)$
+		\item For each $c \in \vocab{Const}$, $\eval{c} = \interpret(c)$
+		\item If $t_0, \ldots, t_n$ are terms, $f \in \vocab{Fun}$, and f has arity $n$ then \\ $\eval{f(t_0, \cdots, t_n)}$ is $\interpret(f)(\eval{t_0}, \ldots, \eval{t_n})$
+	\end{itemize}
+\end{mydef}
+
+\subsection{Model Checking}
+
+\subsection{Programs}
+\begin{figure}[H]
+	\centering
+	\input{fig/lst_ex_p0.tex}
+	\caption{Program $P$ \\ with \texttt{while} loop.}
+	\label{code}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\input{fig/fig_ex_p0_cfg.tex}
+	\caption{Program $P$ \\ with \texttt{while} loop.}
+	\label{code}
+\end{figure}
+
+
+
+
+\subsection{Trace Abstraction}

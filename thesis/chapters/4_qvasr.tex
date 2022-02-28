@@ -1,10 +1,167 @@
 
-\jw{Introduce loop summarization using rational vector addition systems with resets \\
+\begin{comment}
+	\jw{Introduce loop summarization using rational vector addition systems with resets \\
 	- What are qvasr? What are qvasr abstractions? what are least upper bounds on abstractions? \\
 	- start with qvasr on example that does not need abstraction $\rightarrow$ no relations between variables \\
 	- move on to example with relations between variables; show simulation matrix and imaging \\
 	- abstractions are an overapproximation \\
 	- imprecise because of ignorance of assumptions $\rightarrow$ transfer to next chapter \\
 	- usage of running example which is turned to qvasr abstraction \\
-		\vspace{1cm}
+	\vspace{1cm}
 	20 pages}
+\end{comment}
+
+\section{\qvasr}
+A \qvasr of dimension $d$ is a finite set $V \subseteq \{0, 1\}^d \times \mathbb{Q}^d$ of transformers. Each transformer $(\vec{r}, \vec{a}) \in V$ consists of binary \textsl{reset} vector $\vec{r}$, where 0 indicates a reset, and rational \textsl{addition} vector $\vec{a}$. A \qvasr $V$ defines a transition system $(S_V, \rightarrow_V)$, with state space $S_V \subseteq \Q^d$, which can transition between states $\vec{x} \rightarrow_V \vec{x}'$, if $\vec{x}' = \vec{r} * \vec{x} + \vec{a}$ for some transformer $(\vec{r}, \vec{a}) \in V$, with $*$ being the Hadamard product. \par A \qvasr can be used to represent an overapproximation of a given transition formula. A transition formula $F$ is a first-order formula defined over free variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ that designate the state before and after a transition, where $n$ is called the dimension of the formula. Figure \ref{code} depicts a program containing a \texttt{while} loop from lines 4 - 12 for which we want to compute a loop summary using \qvasr.
+\begin{wrapfigure}{L}{0.4\linewidth}
+	\vspace{-10pt}
+	\centering
+	\input{fig/lst_ex_p0.tex}
+	\caption{Program $P$ \\ with \texttt{while} loop.}
+	\label{code}
+\end{wrapfigure}
+To accomplish this we need to compute a \qvasr for every path through the loop. In this example there are two paths created by the \texttt{if else} statement.
+Beginning with the \texttt{else} branch, we extract the transition formula:
+\begin{equation*}
+	G= \ (x \leq 20 \land\ x > 10 \land x' = x + 2 \land y' = y - 3)
+\end{equation*}
+The variable $x$ is not reset but incremented by 2, variable $y$ is not reset and decremented by 3.
+We get reset vector $
+\vec{r}_G = \  
+\begin{bmatrix}
+	1 \\
+	1 
+\end{bmatrix}
+$
+and addition vector $
+\vec{a}_G = \ 
+\begin{bmatrix}
+	2 \\
+	-3 
+\end{bmatrix}$ \\
+$G$ can therefore be modeled by the \qvasr
+$V_G = 
+\begin{Bmatrix}
+	\begin{pmatrix}
+		\begin{bmatrix}
+			1 \\
+			1
+		\end{bmatrix},
+		\begin{bmatrix}
+			2 \\
+			-3
+		\end{bmatrix}
+	\end{pmatrix}
+\end{Bmatrix}
+$ \par \vspace{2pt}
+For the remainder of this proposal we will use the following, more intuitive notation of \qvasr:
+\begin{equation*}
+	V_G = 
+	\begin{Bmatrix}
+		\begin{bmatrix}
+			x \\
+			y
+		\end{bmatrix} \rightarrow_{V_G}
+		\begin{bmatrix}
+			x + 2 \\
+			y - 3
+		\end{bmatrix}
+	\end{Bmatrix}
+\end{equation*}
+
+From the \texttt{if} branch we extract the following transition formula:
+\begin{equation*}
+	H= \ (x \leq 10 \land x' = x + y\ \land\ y' = y + 1 \land z' = x)
+\end{equation*} In contrast to $G$ there are no constant increments to variables $x$ and $z$. They are changed by an arbitrary amount. A \qvasr cannot represent $H$ by a  \qvasr because they are only able to model transitions with constant resets and increments. 
+
+\subsection{\qvasr-Abstraction}
+
+We can, however, represent an overapproximation of $H$ as a \qvasr. This is done using linear simulations. Given a transition formula $F$ of dimension $n$ and a \qvasr $V$ of dimension $m$, a linear simulation from $F$ to $V$ is a linear transformation matrix: 
+$S = 
+\begin{bmatrix}
+	s_{1 ,1} & \ldots & s_{1, n} \\
+	\vdots & \ddots & \vdots \\
+	s_{m ,1} & \ldots & s_{m, n} \\
+\end{bmatrix}$ 
+such that for all transitions $\vec{x} \rightarrow_F \vec{x}'$ we have $S\cdot\vec{x} \rightarrow_V S\cdot\vec{x}'$. Meaning, every transition $\vec{x} \rightarrow_F \vec{x}'$ can be represented in $V$ by a matrix multiplication of $S$ and $\vec{x}$ and $\vec{x}'$. The tuple $(S, V)$ is called a \qvasr-abstraction. \par For $H$ we need to calculate both the linear transformation matrix $S_H$ and the \qvasr $V_H$. We know that a \qvasr consists of pairs of reset and addition vectors, we use the formula $S \cdot \vec{u} \rightarrow_V S \cdot \vec{u}$ to get a transition in $V_H$ as $S\cdot\vec{x}' = \vec{r}*S\cdot\vec{x} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as the zero vector $\vec{0}$, which forms a linear set of equations that model a set of resets:
+\begin{equation*}
+	Res_H = \left\{ (\s, a) : H \models \s \cdot \p = a \right\}	
+\end{equation*}
+For the set of additions, we consider $\vec{r}$ as the constant one vector $\vec{1}$ which forms the set of additions as:
+\begin{equation*}
+	Inc_H = \left\{(\s, a) : H \models \s \cdot \p = \s \cdot \up + a\right\}	
+\end{equation*}
+We use the updates to variables: $x' = x + y, \ y'= y + 1\ z' = x$ , found in $H$, to solve the equations in the sets for \s, resulting in: 
+\vspace*{-0.5em}
+\begin{center}
+	\begin{minipage}{0.5\linewidth}
+		\begin{equation*}
+			Res_H = \left\{ (\begin{bmatrix} -a & a & a \end{bmatrix}, a) \right\}\
+		\end{equation*}
+	\end{minipage}
+	\begin{minipage}{0.4\linewidth}
+		\begin{equation*}
+			Inc_H = \left\{ (\begin{bmatrix} 0 & a & 0 \end{bmatrix}, a) \right\}\ 
+		\end{equation*}
+	\end{minipage}
+\end{center}
+Observe that these form a vector space. Because we want to construct a linear transformation, we need to compute a basis for each space:
+\vspace*{-1em}
+\begin{center}
+	\begin{minipage}{0.5\linewidth}
+		\begin{equation*}
+			Res_H = \{(
+			\NiceMatrixOptions{code-for-first-row=\scriptstyle}
+			\begin{bNiceMatrix}[first-row=1]
+				x & y & z \\
+				-1 & 1 & 1 
+			\end{bNiceMatrix}, 1)\}
+		\end{equation*}
+	\end{minipage}
+	\begin{minipage}{0.4\linewidth}
+		\begin{equation*}
+			Inc_H = \{(
+			\NiceMatrixOptions{code-for-first-row=\scriptstyle}
+			\begin{bNiceMatrix}[first-row=1] 
+				x & y & z \\
+				0 & 1 & 0 
+			\end{bNiceMatrix}, 1)\}
+		\end{equation*}
+	\end{minipage}
+\end{center}
+Each row of the basis corresponds to a variable in the formula such that we can derive relations between variables. From the reset base we can deduce that the sum $-x + y + z$ is reset and incremented by $1$, meaning that after each transition of $H$ we know that $-x + y + z = 1$ holds. From the basis of additions we derive that $y$ is not reset and incremented by $1$. To form the linear transformation matrix $S_H$ we combine these rows to one coherent matrix. We see that the basis of resets and additions contain only one vector each, resulting in only one reset addition pair for $V_H$. As we have seen $-x + y + z$ is reset and $y$ is not. We get reset vector $\vec{r} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$ and because $-x + y + z$ is incremented by $1$, same as $y$, we get addition vector $\vec{a} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$. Resulting in the \qvasr-abstraction depicted in figure \ref{vasr  H}.
+\vspace*{-2em}
+\begin{figure}[H]
+	\begin{center}
+		\begin{minipage}{0.3\linewidth}
+			\begin{equation*}
+				S_H = \begin{bmatrix} -1 & 1 & 1 \\ 0 & 1 & 0 \end{bmatrix}
+			\end{equation*}
+		\end{minipage}
+		\begin{minipage}{0.6\linewidth}
+			\begin{equation*}
+				V_H = \begin{Bmatrix} \begin{bmatrix} - x + y + z \\ y \end{bmatrix} \rightarrow_{V_H} \begin{bmatrix}	1 \\ y + 1 \end{bmatrix} \end{Bmatrix}
+			\end{equation*}
+		\end{minipage}
+		\caption{\qvasr-abstraction of transition formula $H$.}
+		\label{vasr H}
+	\end{center}
+\end{figure}
+\vspace*{-2em}For transition formulas with constant increments, such as $G$, an identity matrix $I$ is used as simulation matrix. \par
+The effect on variables by the loop in $P$ can be represented by the following conjunction: 
+\begin{equation*}
+	x \leq 20 \land (H \lor G)
+\end{equation*}
+With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the most precise overapproximation of the whole loop's behavior we need the \textsl{best} \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates every branch in the loop.
+We impose a partial order $\preceq$ on \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$, with $(S_1, V_1) \preceq (S_2, V_2)$ if $(S_2, V_2)$ simulates $(S_1, V_1)$. The best abstraction $(\tilde{S}, \tilde{V})$ is the least upper bound with regard to $\preceq$, meaning $(S, V) \preceq (\tilde{S}, \tilde{V})$ for all \qvasr-abstractions $(S, V)$. The abstraction $(\tilde{S}, \tilde{V})$ computed by iteratively \textsl{joining} abstractions. Joining two \qvasr-abstractions results in a single abstraction simulating both. Figure \ref{vasr} shows the best \qvasr-abstraction of the loop in $P$, which is the result of joining $G$'s and $H$'s abstractions. \\
+\begin{center}
+	\begin{figure}[H]
+		\input{fig/matrix_ex_p0.tex}
+		\caption{Best \qvasr-abstraction of the loop in $P$.}
+		\label{vasr}
+	\end{figure}
+\end{center}
+Using this \qvasr-abstraction we can derive the following transition formula as loop summary:
+\begin{align*}
+	\exists k_1, k_2.\ &((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \land\ y' = y + k_1 - 3k_2)\ \\ &\lor\ x' = x\ \land\ y' = y\ \land\ z' = z
+\end{align*}

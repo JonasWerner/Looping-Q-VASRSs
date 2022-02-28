@@ -1,0 +1,33 @@
+
+	\begin{algorithm}[H]
+		\caption{\texttt{join-VASR$(\abst{1}, \abst{2})$}}\label{euclid}
+		\begin{algorithmic}[1]
+			\State $\mathit{S^1, T^1, T^2} \gets \texttt{empty matrices}$
+			\ForEach {$\texttt{coherence class }\mathit{C^1}\ \texttt{of}\ \mathit{V^1}$}
+				\ForEach {$\texttt{coherence class }\mathit{C^2}\ \texttt{of }\mathit{S^2}$}
+					\State $(U^1, U^2) \gets \texttt{pushout}(\mathit{\Pi_{C^1}S^1, \Pi_{C^2}S^2})$
+					\medskip
+					\State $S \gets
+					 \begin{pmatrix}
+						S \\
+						\mathit{U^1\Pi_{C^1}S^1}
+					\end{pmatrix}$
+					\medskip
+					\State $T^1 \gets
+					\begin{pmatrix}
+						T^1 \\
+						\mathit{U^1\Pi_{C^1}}
+					\end{pmatrix}$
+					\medskip
+					\State $T^2 \gets
+					\begin{pmatrix}
+						T^2 \\
+						\mathit{U^2\Pi_{C^2}}
+					\end{pmatrix}$									
+				\EndFor
+			\EndFor
+			
+			\State $\mathit{V} \gets \texttt{image}(\mathit{V^1, T^1}) \cup \texttt{image}(\mathit{V^2, T^2})$ \\
+			\Return $\{ \abst{}, T^1, T^2 \}$
+		\end{algorithmic}
+	\end{algorithm}

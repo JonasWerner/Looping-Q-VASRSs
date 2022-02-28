@@ -1,0 +1,22 @@
+
+	\begin{algorithm}[H]
+		\caption{\texttt{abstract-VASRS}$(\tranFormula, P)$}\label{euclid}
+		\begin{algorithmic}[1]
+			\State $\abst{} \gets (\mathit{I_n}, \emptyset)$
+			\State $E \gets \emptyset$
+			\ForEach {$\texttt{predicate } p \in P$}
+				\ForEach {$\texttt{predicate } q \in P$}
+					\State $H := p(\vec{x})\ \land\  \tranFormula\ \land \ q(\vec{x}')$
+					\State $\abst{p, q} \gets \texttt{abstract-VASR}(H)$
+				\EndFor
+			\EndFor
+			\ForEach{\abst{p, q}}
+				\State $\{ \abst{\sqcup}, \mathit{T, T^{p,q}} \} \gets \texttt{join-VASR}(\abst{}, \abst{p, q})$
+				\State $\abst{} \gets \abst{\sqcup}$
+				\ForEach{$(\vec{r}, \vec{a}) \in \texttt{image}(\mathit{S^{p,q}, T^{p, q}})$}
+					\State $E \gets E \cup \{p, (\vec{r}, \vec{a}), q\}$
+				\EndFor
+			\EndFor \\ 
+			\Return $\texttt{reach}(S,(P, E))(S\vec{x}, S\vec{x}') \circ (\vec{x}' = \vec{x} \lor \tranFormula)$
+		\end{algorithmic}
+	\end{algorithm}

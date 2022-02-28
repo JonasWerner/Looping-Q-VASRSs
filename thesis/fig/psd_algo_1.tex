@@ -1,0 +1,17 @@
+
+	\begin{algorithm}[H]
+		\caption{\texttt{abstract-VASR$(\tranFormula)$}}\label{euclid}
+		\begin{algorithmic}[1]
+			\State $\abst{} \gets (\mathit{I_n}, \emptyset)$
+			\State $\Gamma \gets \tranFormula$
+			\While{$\Gamma\ \texttt{is satisfiable}$}
+			\State $M \gets \texttt{a model of } \Gamma$
+			\State $G \gets \texttt{disjunct of DNF of } \Gamma \texttt{, where } M \models G$
+			\State $\abst{G} \gets \qvasr \texttt{ abstraction of }G$
+			\State $\{\abst{\sqcup}, \mathit{T, T^G} \} \gets \texttt{join-VASR}(\abst{}, \abst{G})$
+			\State $\abst{} \gets \abst{\sqcup}$
+			\State $\Gamma \gets \Gamma\ \land\ \neg\gamma\abst{}$
+			\EndWhile \\
+			\Return $\abst{}$
+		\end{algorithmic}
+	\end{algorithm}

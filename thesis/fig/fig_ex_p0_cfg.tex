@@ -1,0 +1,28 @@
+
+		\begin{tikzpicture}[%
+    ->,
+    >=stealth',
+    shorten >=1pt,
+    auto,
+    node distance=3cm,
+    scale=1,
+    transform shape,
+    align=center,
+    smallnode/.style={inner sep=1.4},
+    initial text =,
+    anchor=center]
+
+			\node[state, initial above, initial text =](1){$\loc{1}$};
+			\node[state] (head) [below of=1] {$\loc{4}$};
+			\node[state] (loopEntry)[left of=head] {$\loc{5}$};
+			\node[state] (if)[above left of=loopEntry] {$\loc{6}$};
+			
+			\node[state] (else)[below left of=loopEntry] {$\loc{10}$};
+			\node[state] (loopExit)[right of=head] {$\loc{13}$};
+			
+			\node[state] (assertTrue)[below left of=loopExit] {$\loc{14}$};
+			\node[state, accepting] (assertFalse)[below right of=loopExit] {$\loc{14}$};
+
+			\path (1) edge node []{\st{x:=2}\\ \st{y:=2}\\ \st{z:=3}} (head)
+			;
+		\end{tikzpicture}
