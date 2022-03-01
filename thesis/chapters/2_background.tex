@@ -9,7 +9,7 @@
 
 This chapter shall introduce our understanding and notation of logic and formulas, programs, control-flow, and other needed background definitions. Furthermore, we will give an overview of the \traceabstraction \cite{10.1007/978-3-642-03237-0_7} counterexample-guided abstraction refinement scheme used in \ultimate.
 
-\subsection{Logical Fundamentals}
+\subsection{Logical Background}
 We use first-order logic to model programs, this chapter will introduce our definitions and notations used throughout this thesis.
 \begin{mydef}[Term] 
 	Given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, with countable sets $\vocab{\Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred}$ representing the sets of variables, constant symbols, function symbols, and predicate symbols respectively, we define terms inductively as follows:
@@ -24,7 +24,7 @@ Using the definitions of terms, we can introduce first-order logic formulas.
 \begin{mydef}[Formula]
 	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, first-order logic formulas are inductively defined as follows:
 	\begin{itemize}
-		\item $\bot$ (\textsc{false}) is a formula.
+		\item $\bot$ (\textsl{false}) is a formula.
 		\item If  $t_0, \ldots, t_n$ are terms, and $p \in \vocab{pred}$ is a predicate symbol with arity $n$, \\ then $p(t_0, \ldots, t_n)$ is a formula.
 		\item If $\varphi$ is a formula, then $\neg \varphi$ is a formula.
 		\item If $\varphi$ and $\psi$ are formulas, then $\varphi \land \psi$ are formulas.
@@ -77,9 +77,8 @@ Assume we are given a program as seen in \ref{code}. We consider each line of co
 	<UnOp> ::= `-' | `!'
 \end{grammar}
 Where $Var_{id}$ represents any variable declared in the program and $*$ corresponds to a nondetermnistic choice.
-For brevity's sake we use \texttt{bexpr} instead of \texttt{assume bexpr}.
 
-\begin{mydef}
+\begin{mydef}[Control-Flow Graph]
 	Given a finite set of program statements \stmt. A control-flow graph is a labelled graph $G_P = (\Loc, \delta, \loc{\init}, \loc{\err})$, with
 	\Loc being a finite set of locations,
 	a set of edges between two locations labelled with a statement $\delta \subseteq \Loc \times \stmt \times \Loc$,
@@ -96,35 +95,10 @@ Assigning every program variable a valuation creates a program state.
 
 %the n may be wrong, because traces can be infinite in theory? no, because a program can only have finitely many variable declarations. The source code is finite.
 
-\begin{mydef}
+\begin{mydef}[Variable Valuation]
 	Assume a program $P$ is defined over $n$ variables, a program state $\sigma$ is a function assigning each variable $v_i \in \Var$, \ $0 \leq i \leq n$ a variable valuation $\rho_i$. The set $S$ denotes the set of all program states.
 \end{mydef}
 
-
-\begin{mydef}
-	Given the set of all expressions over program variables $\mathit{Expr}$, an interpretation function $\interpret: Expr \times \sigma \rightarrow D$ is a function assigning each expression $expr \in \mathit{Expr}$ a value in its domain $D$ with regard to the program state $\sigma$.
-\end{mydef}
-
-
-\ts{What is an interpretation function?}
-\dd{Perhaps you should explain what your interpretation function is :p}
-
-Program statements can change the valuation of variables, transitioning one program state to another.
-
-\begin{mydef}
-	Each program statement $\texttt{s} \in \stmt$ defines a binary relation $\rho \subseteq S \times S$ over the set of program states $S$, called successor relation. Which is, given interpretation function $\mathcal{I}$, inductively defined as
-	$$ \rho =
-	\begin{cases}
-		\{(\sigma, \sigma')\ |\ \mathcal{I}(\text{bexpr})(\sigma)\ =\ true\ \text{and}\ \sigma = \sigma'\} ,                                        & \text{if}\ s \equiv \text{\texttt{assume bexpr}} \\
-		\{(\sigma, \sigma')\ |\ \sigma' = \sigma[x \mapsto \mathcal{I}(expr)(\sigma)]\} ,                                                           & \text{if}\ s \equiv \texttt{x := expr}           \\
-		\{(\sigma, \sigma')\ |\ \exists \sigma''\ \text{where}\ (\sigma, \sigma'') \in \rho(s_1)\ \text{and}\ (\sigma'', \sigma') \in \rho(s_2) \}, & \text{if}\ s \equiv \texttt{$s_1;s_2$}
-	\end{cases}
-	$$
-\end{mydef}
-%	\ts{You already used $\rho$ for valuation.}
-\begin{mydef}
-	\jw{Sets of States.}
-\end{mydef}
 \begin{center}
 	\begin{minipage}[b]{0.4\linewidth}
 			\begin{figure}[H]

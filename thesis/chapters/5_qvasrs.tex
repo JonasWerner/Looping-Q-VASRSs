@@ -8,7 +8,7 @@
 	15 pages}
 \end{comment}
 
-We see in the example that neither the loop guard \texttt{x <= 20} nor the conditions of the \texttt{if else} statement, \texttt{x <= 10} and \texttt{x > 10}, are not considered in the \qvasr-abstraction $(S_P, V_P)$, leading to the inclusion of transitions that would violate these conditions in the actual loop and would therefore not exist. \\
+We see in the example that neither the loop guard \texttt{x <= 20} nor the expressions of the \texttt{if else} statement, \texttt{x <= 10} and \texttt{x > 10}, are not considered in the \qvasr-abstraction $(S_P, V_P)$, leading to the inclusion of transitions that would violate these conditions in the actual loop and would therefore not exist. \\
 To exclude such transitions, and by that improve precision of the summary, we constrain \qvasr. We only allow transitions that satisfy a set of predicates $P$. Using predicates in $P$ as control states, we can construct a nondeterministic finite automaton that represents all allowed transitions. This automaton is called a \qvasr with states (\qvasrs), where each transition is labeled by a reset, addition vector pair $(\vec{r}, \vec{a})$. The predicates are pairwise unsatisfiable, minimizing the automaton's possible successor state space. A vector $\vec{x}$ can only transition to $\vec{x}'$ if there is an edge $(p, (\vec{r}, \vec{a}), q)$, with $\vec{x}' = \vec{r} * \vec{x} + \vec{a}$ and $p, q \in P$.
 Figure \ref{vasrs} shows the \qvasrs of $P$'s loop, it was constructed using $(S_P, V_P)$, seen in Figure \ref{vasr}, and the predicates $x \leq 10$ and $10 < x \land x \leq 20$ as states.
 \begin{figure}[H]
