@@ -10,43 +10,113 @@
 This chapter shall introduce our understanding and notation of logic and formulas, programs, control-flow, and other needed background definitions. Furthermore, we will give an overview of the \traceabstraction \cite{10.1007/978-3-642-03237-0_7} counterexample-guided abstraction refinement scheme used in \ultimate.
 
 \subsection{Logical Background}
-We use first-order logic to model programs, this chapter will introduce our definitions and notations used throughout this thesis.
+To represent programs formally, we make use of first-order logic. This chapter will introduce our definitions and notations used throughout this thesis.
+
+\subsubsection{Notation}
+We utilize the standard logical notations. We represent boolean values: $\bot$ meaning \textsl{false} and $\top$ meaning \textsl{true}. \\ Logical connectives are defined as:
+\begin{itemize}
+	\item Negation (\textsl{not}) denoted by: $\neg$
+	\item Conjunction (\textsl{and}) denoted by: $\land$
+	\item Disjunction (\textsl{or}) denoted by: $\lor$
+	\item Implication (\textsl{if $\ldots$ then}) denoted by: $\rightarrow$
+	\item Biconditional (\textsl{if and only if}) denoted by: $\leftrightarrow$
+\end{itemize}
+Formulas can be quantified, we define quantifiers as:
+\begin{itemize}
+	\item Existential quantification (\textsl{there exists}) denoted by: $\exists$
+	\item Universal quantification (\textsl{for all}) denoted by: $\forall$
+\end{itemize}
+
+\subsubsection{Syntax}
+We firstly introduce our first-order logic syntax.
+Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$ be a vocabulary consisting of the countable sets:
+\begin{itemize}
+	\item $\vocab{Var}$ containing all so called \textsl{variables}
+	\item $\vocab{Const}$ containing all so called \textsl{constant symbols}
+	\item $\vocab{Fun} $ containing all so called \textsl{function symbols}. Each symbol $f \in \vocab{Fun}$ has a natural number $\geq 1$ called arity of $f$
+ 	\item $\vocab{Pred}$ containing all so called \textsl{predicate symbols}. Each symbol $p \in \vocab{Pred}$ has a natural number $\geq 0$ called arity of $p$
+\end{itemize}
+Assume we are given such a vocabulary, we can construct first-order logic terms using the symbols in the vocabulary.
 \begin{mydef}[Term] 
-	Given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, with countable sets $\vocab{\Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred}$ representing the sets of variables, constant symbols, function symbols, and predicate symbols respectively, we define terms inductively as follows:
+	Given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, we define terms inductively as follows:
 	\begin{itemize}
 		\item Every $x \in \vocab{Var}$ is a term.
 		\item Every $c \in \vocab{Const}$ is a term.
 		\item If $t_0, \ldots, t_n$ are terms and $f \in \vocab{Fun}$ being a function symbol with arity $n$, then $f(t_0, \ldots, t_n)$ is a term.
 	\end{itemize}
-\end{mydef} \vspace*{1cm} \par
-Using the definitions of terms, we can introduce first-order logic formulas.
-
+\end{mydef}
+Using first-order logic terms, we can introduce first-order logic formulas.
 \begin{mydef}[Formula]
 	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, first-order logic formulas are inductively defined as follows:
 	\begin{itemize}
-		\item $\bot$ (\textsl{false}) is a formula.
+		\item $\bot$ is a formula.
 		\item If  $t_0, \ldots, t_n$ are terms, and $p \in \vocab{pred}$ is a predicate symbol with arity $n$, \\ then $p(t_0, \ldots, t_n)$ is a formula.
 		\item If $\varphi$ is a formula, then $\neg \varphi$ is a formula.
 		\item If $\varphi$ and $\psi$ are formulas, then $\varphi \land \psi$ are formulas.
 		\item If $\varphi$ is a formula, and $x \in \vocab{Var}$ then $\exists x. \varphi$ is a formula.
 	\end{itemize}
-\end{mydef} \vspace*{1cm} \par
-
+\end{mydef}
+To give variables, constants, functions, and predicates concrete values, we can assign them a model.
 \begin{mydef}[Model]
-	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, a model $\mathcal{M} = (D, \interpret)$ is a tuple consisting of a nonempty set $D$, called interpretation domain, and an interpretation function \interpret that assigns constants, functions, and predicates over $D$ to symbols in $V$.
-\end{mydef}
-
-\begin{mydef}[Assignment of Variables]
-	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, and domain $D$, an assignment of variable $v \in \vocab{Var}$ is a function $\varv: v \rightarrow D$.
-\end{mydef}
-
-\begin{mydef}[Evaluation of Terms]
-	Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, and $\varv$ a variable assignment, the evaluation of terms is a function $\eval{\cdot}$ that is inductively defined as:
+	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, a model $\mathcal{M} = (D, \interpret)$ is a tuple consisting of a nonempty set $D$, called interpretation domain, and an interpretation function \interpret that assigns constants, functions, and predicates over $D$ to symbols in $V$. $M$ has the following characteristics:
 	\begin{itemize}
-		\item For each $x \in \vocab{Var}$, $\eval{x} = \varv(x)$
-		\item For each $c \in \vocab{Const}$, $\eval{c} = \interpret(c)$
-		\item If $t_0, \ldots, t_n$ are terms, $f \in \vocab{Fun}$, and f has arity $n$ then \\ $\eval{f(t_0, \cdots, t_n)}$ is $\interpret(f)(\eval{t_0}, \ldots, \eval{t_n})$
+		\item The domain of \interpret is $\vocab{Const} \cup \vocab{Fun} \cup \vocab{Pred}$
+		\item \interpret maps every constant symbol $c \in \vocab{Const}$ to an element in $D$
+		\item \interpret maps every function symbol $f \in \vocab{Fun}$, with arity $n$, to a corresponding n-ary function with domain $D^n$ and range $D$
+		\item \interpret maps every predicate symbol $p \in \vocab{Pred}$ with arity $n$ to an n-ary relation over the domain $D$
 	\end{itemize}
+\end{mydef}
+Using a model, we can now assign concrete values to variables.
+\begin{mydef}[Assignment of Variables]
+	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, and model $\mathcal{M} = (D, \interpret)$, an assignment of variable $v \in \vocab{Var}$ is a function $\rho: v \rightarrow D$. Mapping each variable a value in domain $D$.
+\end{mydef}
+Assume $f \in \vocab{Fun}$ is a function defined as $f: X \rightarrow Y$ with some domain $X$ and range $Y$. Let $x \in X$ and $y \in Y$, we use $f[x \rightarrow y]$  to denote the function that maps all $\bar{x} \in X \backslash \{ x \}$ to $f(\bar{x})$ and $x$ to $y$.
+
+\subsubsection{Semantics}
+Assume we are given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, we know how to assign values using models and variable assignments. The task now is to understand how to interpret them. This section serves to introduce semantics of fist-order logic.
+\begin{mydef}[Evaluation of Terms]
+	Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, and $\rho$ a variable assignment. The evaluation of terms is a function $\eval{\cdot}$ that is inductively defined as:
+	\begin{itemize}
+		\item For each $v \in \vocab{Var}$, $\eval{v} = \rho(v)$
+		\item For each $c \in \vocab{Const}$, $\eval{c} = \interpret(c)$
+		\item If $t_0, \ldots, t_n$ are terms, $f \in \vocab{Fun}$, with f having arity $n$ then \\ $\eval{f(t_0, \cdots, t_n)}$ is $\interpret(f)(\eval{t_0}, \ldots, \eval{t_n})$
+	\end{itemize}
+\end{mydef}
+From the evaluation of terms we can derive the evaluation of formulas, which decides whether a formula is \textsl{true} or \textsl{false}.
+
+\begin{mydef}[Evaluation of Formulas]
+		Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, a variable assignment $\rho$, and $\varphi_0, \varphi_1$ being first-order logic formulas. The evaluation of formulas is a function $\eval{\cdot}$ that is inductively defined as: \\
+		\begin{itemize}
+			\item {\makebox[3cm]{$\eval{\bot} \hfill$}} \textbf{false}
+			\item {\makebox[3cm]{$ \eval{p(t_0, \ldots, t_n)} \hfill$}} 
+				$
+				\begin{cases}
+					\textbf{true}, & \text{for } (\eval{t_0}, \ldots, \eval{t_n}) \in \interpret(p)\\
+					\textbf{false}, & \text{otherwise}
+				\end{cases}
+				$
+			\item {\makebox[3cm]{$\eval{\neg \varphi_0} \hfill$}}
+				$
+				\begin{cases}
+					\textbf{true}, & \text{for } \eval{\varphi_0} \text{ \textbf{false}}\\
+					\textbf{false}, & \text{for } \eval{\varphi_0} \text{ \textbf{true}}\\
+				\end{cases}
+				$
+			\item {\makebox[3cm]{$\eval{\varphi_0 \land \varphi_1} \hfill$}}
+				$
+				\begin{cases}
+					\textbf{true}, & \text{for } \eval{\varphi_0} \text{ \textbf{true} and } \eval{\varphi_1} \text{ \textbf{true}} \\
+					\textbf{false}, & \text{otherwise} \\
+				\end{cases}
+				$
+			\item {\makebox[3cm]{$\eval{\exists v. \varphi_0} \hfill$}}
+				$
+				\begin{cases}
+					\textbf{true}, & \text{if there exists } x \in D \text{ where } \eval{\varphi_0 [v \rightarrow x]} \text{ \textbf{true}} \\
+					\textbf{false}, & \text{otherwise} \\
+				\end{cases}
+				$
+		\end{itemize}
 \end{mydef}
 
 \subsection{Programs}
@@ -76,7 +146,7 @@ Assume we are given a program as seen in \ref{code}. We consider each line of co
 	
 	<UnOp> ::= `-' | `!'
 \end{grammar}
-Where $Var_{id}$ represents any variable declared in the program and $*$ corresponds to a nondetermnistic choice.
+Where $Var_{id}$ represents any variable declared in the program and $*$ corresponds to a nondetermnistic expression.
 
 \begin{mydef}[Control-Flow Graph]
 	Given a finite set of program statements \stmt. A control-flow graph is a labelled graph $G_P = (\Loc, \delta, \loc{\init}, \loc{\err})$, with
