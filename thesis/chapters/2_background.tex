@@ -1,4 +1,4 @@
-
+\newcommand{\stateSpace}{\ensuremath{S_{V, \mu}}}
 \begin{comment}
 	This chapter is mostly focused on trace abstraction $\rightarrow$  It introduces the reader to the concept of trace abstraction. \\
 	- Introduce logic, logical variables, terms, formulas, transition formulas with primed and unprimed variables, programs, program states, loops $\rightarrow$  then program-, error traces, feasible and infeasible counterexamples, CFGs, interpolants. \\ - From intuitive to true definitions. \\
@@ -13,7 +13,7 @@ This chapter shall introduce our understanding and notation of logic and formula
 To represent programs formally, we make use of first-order logic. This chapter will introduce our definitions and notations used throughout this thesis.
 
 \subsubsection{Notation}
-We utilize the standard logical notations. We represent boolean values: $\bot$ meaning \textsl{false} and $\top$ meaning \textsl{true}. \\ Logical connectives are defined as:
+We utilize the standard logical notations: We represent boolean values as $\bot$, meaning \textsl{false}, and $\top$, meaning \textsl{true}. \\ Logical connectives are defined as:
 \begin{itemize}
 	\item Negation (\textsl{not}) denoted by: $\neg$
 	\item Conjunction (\textsl{and}) denoted by: $\land$
@@ -85,7 +85,7 @@ Assume we are given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, 
 From the evaluation of terms we can derive the evaluation of formulas, which decides whether a formula is \textsl{true} or \textsl{false}.
 
 \begin{mydef}[Evaluation of Formulas]
-		Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, a variable assignment $\rho$, and $\varphi_0, \varphi_1$ being first-order logic formulas. The evaluation of formulas is a function $\eval{\cdot}$ that is inductively defined as: \\
+		Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, a variable assignment $\rho$, and $\varphi_0, \varphi_1$ being first-order logic formulas over $V$. The evaluation of formulas is a function $\eval{\cdot}$ that is inductively defined as: \\
 		\begin{itemize}
 			\item {\makebox[3cm]{$\eval{\bot} \hfill$}} \textbf{false}
 			\item {\makebox[3cm]{$ \eval{p(t_0, \ldots, t_n)} \hfill$}} 
@@ -120,54 +120,37 @@ From the evaluation of terms we can derive the evaluation of formulas, which dec
 \end{mydef}
 
 \subsection{Programs}
-Assume we are given a program as seen in \ref{code}. We consider each line of code a so called program statement. These statements use the following context-free grammar that is a derived and simplified version of the grammar of the intermediate verification language Boogie\cite{Boogie}.
+In this chapter we will introduce our understanding on how to model programs using first-order logic. We will begin with our syntax of programs, then explain program statement semantics.
+
+\subsubsection{Program Syntax}
+Assume we are given the example program as seen in figure \ref{code}. We see that the code contains various typed variables such as \texttt{x : int} and instructions over these variables. \\ These instructions use the following context-free grammar $\Sigma$ that is a derived and simplified version of the grammar of the intermediate verification language Boogie\cite{Boogie}.
 \setlength{\grammarparsep}{20pt plus 1pt minus 1pt} % increase separation between rules
-\setlength{\grammarindent}{12em} % increase separation between LHS/RHS 
-\begin{grammar}
-	<Stmt> ::= `assume' <Expr> ;
-	\alt $Var_{id}$ `:=' <Expr> ;
-	\alt `havoc' $Var_{id}$ ;
-	\alt `assert' <Expr> ;
-	\alt `while' ( <WildcardExpr> ) <Stmt>* ;
-	\alt <IfStmt>;
-	
-	<IfStmt> ::= `if' ( <WildcardExpr> ) <Stmt>* `else' <Stmt>*
+\setlength{\grammarindent}{12em} % increase separation between LHS/RHS
+\begin{figure}[H]
+	\input{fig/grammar.tex}
+	\caption{Context-free grammar $\Sigma$ detailing program instructions.}
+	\label{grmr}
+\end{figure}
+We call words derived from $\langle Stmt \rangle$ program statements, words derived from $\langle Expr \rangle$ expressions, and $Var_{id}$ represent the program variables.
+We define programs as follows:
 
-	<Expr> ::= <Expr> <BinOp> <Expr>
-	\alt <UnOp> <Expr>
-	\alt `True'
-	\alt `False'
-		
-	<WildCardExpr> ::= <Expr> | `*'
-	
-	<BinOp> ::= `+' | `-' | `*' | `/' | `\%'
-	\alt `\&\&' | `||' | `==' | `!='
-	\alt `<' | `<=' | `>' | `>='
-	
-	<UnOp> ::= `-' | `!'
-\end{grammar}
-Where $Var_{id}$ represents any variable declared in the program and $*$ corresponds to a nondetermnistic expression.
-
-\begin{mydef}[Control-Flow Graph]
-	Given a finite set of program statements \stmt. A control-flow graph is a labelled graph $G_P = (\Loc, \delta, \loc{\init}, \loc{\err})$, with
-	\Loc being a finite set of locations,
-	a set of edges between two locations labelled with a statement $\delta \subseteq \Loc \times \stmt \times \Loc$,
-	an initial location $\loc{init} \in \Loc$, and
-	an error location $\loc{err} \in \Loc$.
+\begin{mydef}[Programs]
+	A program is a triple $P = (V, \mu, st)$, with $V$ being a set of variables, a function $\mu: V \rightarrow \{ \mathbb{Z}, \mathbb{R}, \mathbb{B} \}$ that maps variables $v \in V$ to a domain, which is either the set of integers, the rational numbers, or boolean values $\mathbb{B} = \{\textbf{true}, \textbf{false}\}$. Furthermore, $st$ is a derived word from $\Sigma$ representing the program instructions.
 \end{mydef}
-In this paper we will use control-flow graphs to represent programs.
-% \dd{It is useful to wrap all the function symbols in Latex macros}
-% \ts{And to use mathit for identifiers consisting of several letters (like $\mathit{Var}$)}
-Program variables are typed, e.g. integer or boolean variables, there exists \\
-an interpretation domain $D$ defining the set of all possible variable values.
-\jw{TODO}
-Assigning every program variable a valuation creates a program state.
-
-%the n may be wrong, because traces can be infinite in theory? no, because a program can only have finitely many variable declarations. The source code is finite.
-
-\begin{mydef}[Variable Valuation]
-	Assume a program $P$ is defined over $n$ variables, a program state $\sigma$ is a function assigning each variable $v_i \in \Var$, \ $0 \leq i \leq n$ a variable valuation $\rho_i$. The set $S$ denotes the set of all program states.
+\subsubsection{Program Semantics}
+We see in figure \ref{grmr} that there are five kinds of program statements: An assumption over variables \texttt{assume}, an assignment to variables \texttt{:=}, a non deterministic assignment \texttt{havoc}, an assertion on variable values \texttt{assert}, a program loop \texttt{while}, that repeats a statement until its loop guard, the $\langle WildcardExpr \rangle$ in $\Sigma$, no longer holds, and an conditional branching, in form of an \texttt{if else} statement. \\
+Most program statements change the assignment of variables and with that changes the state a program is in. 
+\begin{mydef}[Program State]
+	Given a program $P = (V, \mu, st)$ a program state is a function $\sigma: V \rightarrow \mu(V)$ that assigns each variable $v \in V$ a value in its domain $\mu(v)$. We denote the set of all program states as \stateSpace.
 \end{mydef}
+
+
+\begin{comment}
+	\begin{mydef}[Sets of Program States]
+	To represent multiple program states we use first-order logic formulas. Given a first-order logic formula $\varphi$, defined over variables in $V$, we denote $\{\varphi\} = \{s \in \stateSpace | \eval{\varphi} \text{ where } \rho = s\}$
+	\end{mydef}
+\end{comment}
+
 
 \begin{center}
 	\begin{minipage}[b]{0.4\linewidth}
@@ -191,6 +174,14 @@ Assigning every program variable a valuation creates a program state.
 
 
 \subsection{Model Checking}
+\begin{mydef}[Control-Flow Graph]
+	Given a finite set of program statements \stmt. A control-flow graph is a labelled graph $G_P = (\Loc, \delta, \loc{\init}, \loc{\err})$, with
+	\Loc being a finite set of locations,
+	a set of edges between two locations labelled with a statement $\delta \subseteq \Loc \times \stmt \times \Loc$,
+	an initial location $\loc{init} \in \Loc$, and
+	an error location $\loc{err} \in \Loc$.
+\end{mydef}
+In this paper we will use control-flow graphs to represent programs.
 
 
 \subsection{Trace Abstraction}
