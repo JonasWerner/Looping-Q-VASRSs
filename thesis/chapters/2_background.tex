@@ -138,10 +138,30 @@ We define programs as follows:
 	A program is a triple $P = (V, \mu, st)$, with $V$ being a set of variables, a function $\mu: V \rightarrow \{ \mathbb{Z}, \mathbb{R}, \mathbb{B} \}$ that maps variables $v \in V$ to a domain, which is either the set of integers, the rational numbers, or boolean values $\mathbb{B} = \{\textbf{true}, \textbf{false}\}$. Furthermore, $st$ is a derived word from $\Sigma$ representing the program instructions.
 \end{mydef}
 \subsubsection{Program Semantics}
-We see in figure \ref{grmr} that there are five kinds of program statements: An assumption over variables \texttt{assume}, an assignment to variables \texttt{:=}, a non deterministic assignment \texttt{havoc}, an assertion on variable values \texttt{assert}, a program loop \texttt{while}, that repeats a statement until its loop guard, the $\langle WildcardExpr \rangle$ in $\Sigma$, no longer holds, and an conditional branching, in form of an \texttt{if else} statement. \\
+We consider five kinds of program statements in the grammar $\Sigma$: An assumption over variables \texttt{assume}, an assignment to variables \texttt{:=}, a non deterministic assignment \texttt{havoc}, a program loop \texttt{while}, that repeats a statement until its loop guard, the $\langle WildcardExpr \rangle$, no longer holds, and an conditional branching, in form of an \texttt{if else} statement. With the first three, \texttt{assume}, \texttt{assignment}, and \texttt{havoc} being atomic statements. Whereas \texttt{while} and \texttt{if else} are compound statements..... \jw{todo}
 Most program statements change the assignment of variables and with that changes the state a program is in. 
 \begin{mydef}[Program State]
 	Given a program $P = (V, \mu, st)$ a program state is a function $\sigma: V \rightarrow \mu(V)$ that assigns each variable $v \in V$ a value in its domain $\mu(v)$. We denote the set of all program states as \stateSpace.
+\end{mydef}
+Using program states, we can now set the semantics for the three atomic program statements.
+\begin{mydef}[Program Statement Semantics]
+	We define the semantics of program statements as a binary relation over program states $\sigma_1, \sigma_2$, whereas $\sigma_1$ denotes the program's state before the statement and $\sigma_2$ after. To model time steps, the variables in $\sigma_2$ are replaced by so called primed variables, meaning every variable $v \in Var$ is replaced by $v'$. \\
+	\begin{itemize}
+		\item The semantics of the assumption statement: \texttt{assume $\langle Expr \rangle$} are defined as the relation: \\
+		\begin{equation*}
+			\{(\sigma_1, \sigma_2) \in \stateSpace \times \stateSpace\ |\ \eval{\langle Expr \rangle}\ \land\ \bigwedge\limits_{v \in V} v' = v  \text{ is true}\}
+		\end{equation*}
+		\item The semantics of the \texttt{assignment} statement: \texttt{$Var_{id}$ := $\langle Expr \rangle$} are defined as the relation: \\
+		\begin{equation*}
+			 \{(\sigma_1, \sigma_2) \in \stateSpace \times \stateSpace\ |\ \eval{x' = \eval{\langle Expr\rangle}\ \land\ \bigwedge\limits_{v \in V, v \not= x} v' = v 
+			} \text{ is true}\}
+		\end{equation*}
+		\item The semantics of the \texttt{havoc} statement: $havoc\ Var_{id}$ are defined as the relation: \\
+		\begin{equation*}
+			\{(\sigma_1, \sigma_2) \in \stateSpace \times \stateSpace\ |\ \bigwedge\limits_{v 	\in V, v \not= x} v' = v 
+			\text{ is true} \}
+		\end{equation*}
+	\end{itemize}
 \end{mydef}
 
 

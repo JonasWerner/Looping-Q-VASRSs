@@ -3,14 +3,12 @@
 	<Stmt> ::= `assume' <Expr> ;
 	\alt $Var_{id}$ `:=' <Expr> ;
 	\alt `havoc' $Var_{id}$ ;
-	\alt `assert' <Expr> ;
 	\alt `while' ( <WildcardExpr> ) <Stmt>* ;
-	\alt <IfStmt>;
-	
-	<IfStmt> ::= `if' ( <WildcardExpr> ) <Stmt>* `else' <Stmt>*
+	\alt `if' ( <WildcardExpr> ) <Stmt>* `else' <Stmt>*
 	
 	<Expr> ::= <Expr> <BinOp> <Expr>
 	\alt <UnOp> <Expr>
+	\alt $Var_{id}$
 	\alt `true'
 	\alt `false'
 	
