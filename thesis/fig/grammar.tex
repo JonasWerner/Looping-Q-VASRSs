@@ -1,14 +1,14 @@
 
 \begin{grammar}
 	<Stmt> ::= `assume' <Expr> ;
-	\alt $Var_{id}$ `:=' <Expr> ;
-	\alt `havoc' $Var_{id}$ ;
+	\alt $v$ `:=' <Expr> ;
+	\alt `havoc' $v$ ;
 	\alt `while' ( <WildcardExpr> ) <Stmt>* ;
 	\alt `if' ( <WildcardExpr> ) <Stmt>* `else' <Stmt>*
 	
 	<Expr> ::= <Expr> <BinOp> <Expr>
 	\alt <UnOp> <Expr>
-	\alt $Var_{id}$
+	\alt $v$
 	\alt `true'
 	\alt `false'
 	

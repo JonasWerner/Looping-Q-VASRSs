@@ -21,7 +21,7 @@
 			\node[state] (loopExit)[right of=head] {$\loc{13}$};
 			
 			\node[state] (assertTrue)[below left of=loopExit] {$\loc{14}$};
-			\node[state, accepting] (assertFalse)[below of=loopExit] {$\loc{15}$};
+			\node[state, accepting] (assertFalse)[below of=loopExit] {$\loc{err}$};
 			
 			\path (1) edge node []{\st{x:=0}\\ \st{y:=2}\\ \st{z:=3}} (head)
 			(head) edge node []{\st{x<=20}} (loopEntry)
@@ -34,6 +34,6 @@
 			(else) edge[bend left] node [left]{\st{x:=x+2}\\ \st{y:=y-3}} (loopEntry)
 			
 			(loopExit) edge node []{\st{x==20}} (assertTrue)
-			(loopExit) edge node []{\st{x!=20}} (assertFalse)
+			(loopExit) edge node []{\st{x!=22}} (assertFalse)
 			;
 \end{tikzpicture}
