@@ -259,10 +259,15 @@ For example, when we extend the program $P$ as seen in \ref{codeNoAss} with an \
 		\end{figure}
 	\end{minipage}
 \end{center}
-For the rest of the paper, we denote control-flow graph with error location as control-flow graph.
+For the rest of the thesis, denote control-flow graph with error location just as control-flow graph except stated otherwise.
 The control-flow of a program can now be described by so called traces through the control-flow graph.
 \begin{mydef}
-	Given a program	\prg, its control-flow graph \\ \cfg, a trace $\tau = \trf_1, \trf_2, \ldots $ of a program is a finite or infinite sequence of transition formulas $\trf_1, \trf_2, \ldots$
+	Given a program	\prg, its control-flow graph \\ G = \cfg, a trace $\tau = \trf_1, \trf_2, \ldots $ of a program is a finite or infinite sequence of transitions $\trf_1, \trf_2, \ldots$ with $\trf_i \in \Pi$, and $(scr(\trf_i), \trf_i, tgt(\trf_i)) \in \delta$
+\end{mydef}
+This definition only establishes that traces adhere to the graph structure of the control-flow graph. We need to set which traces are actually feasible.
+\begin{mydef}
+	Given a program	\prg, its control-flow graph \\ G = \cfg, and a trace $\tau = \trf_1, \trf_2, \ldots $, \tau is feasible if and only if
+	TODO
 \end{mydef}
 \jw{todo: reachability, program traces, etc.}
 
