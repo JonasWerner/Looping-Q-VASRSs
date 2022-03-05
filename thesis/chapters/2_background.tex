@@ -70,7 +70,7 @@ Using a model, we can now assign concrete values to variables.
 \begin{mydef}[Assignment of Variables]
 	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, and model $\mathcal{M} = (D, \interpret)$, an assignment of variable $v \in \vocab{Var}$ is a function $\rho: v \rightarrow D$. Mapping each variable a value in domain $D$.
 \end{mydef}
-Assume $f \in \vocab{Fun}$ is a function defined as $f: X \rightarrow Y$ with some domain $X$ and range $Y$. Let $x \in X$ and $y \in Y$, we use $f[x \rightarrow y]$  to denote the function that maps all $\bar{x} \in X \backslash \{ x \}$ to $f(\bar{x})$ and $x$ to $y$.
+Assume $f \in \vocab{Fun}$ is a function defined as $f: X \mapsto Y$ with some domain $X$ and range $Y$. Let $x \in X$ and $y \in Y$, we use $f[x \mapsto y]$  to denote the function that maps all $\bar{x} \in X \backslash \{ x \}$ to $f(\bar{x})$ and $x$ to $y$.
 
 \subsubsection{Semantics}
 Assume we are given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, we know how to assign values using models and variable assignments. The task now is to understand how to interpret them. This section serves to introduce semantics of fist-order logic.
@@ -112,7 +112,7 @@ From the evaluation of terms we can derive the evaluation of formulas, which dec
 			\item {\makebox[3cm]{$\eval{\exists v. \varphi_0} \hfill$}}
 				$
 				\begin{cases}
-					\textbf{true}, & \text{if there exists } x \in D \text{ where } \eval{\varphi_0 [v \rightarrow x]} \text{ \textbf{true}} \\
+					\textbf{true}, & \text{if there exists } x \in D \text{ where } \eval{\varphi_0 [v \mapsto x]} \text{ \textbf{true}} \\
 					\textbf{false}, & \text{otherwise} \\
 				\end{cases}
 				$
@@ -135,17 +135,17 @@ We call words derived from $\langle Stmt \rangle$ program statements, words deri
 We define programs as follows:
 
 \begin{mydef}[Programs]
-	A program is a triple $P = (V, \mu, st)$, with $V$ being a set of variables, a function $\mu: V \rightarrow \{ \mathbb{Z}, \mathbb{R}, \mathbb{B} \}$ that maps variables $v \in V$ to a domain, which is either the set of integers, the rational numbers, or boolean values $\mathbb{B} = \{\textbf{true}, \textbf{false}\}$. Furthermore, $st$ is a derived word from $\Sigma$ representing the program instructions.
+	A program is a triple \prg, with $V$ being a set of variables, a function $\mu: V \rightarrow \{ \mathbb{Z}, \mathbb{R}, \mathbb{B} \}$ that maps variables $v \in V$ to a domain, which is either the set of integers, the rational numbers, or boolean values $\mathbb{B} = \{\textbf{true}, \textbf{false}\}$. Furthermore, $st$ is a derived word from $\Sigma$ representing the program instructions.
 \end{mydef}
 \subsubsection{Program Semantics}
 We consider five kinds of program statements in the grammar $\Sigma$: An assumption over variables \texttt{assume}, an assignment to variables \texttt{:=}, a non deterministic assignment \texttt{havoc}, a program loop \texttt{while}, that repeats a statement until its loop guard, the $\langle WildcardExpr \rangle$, no longer holds, and an conditional branching, in form of an \texttt{if else} statement. With the first three, \st{assume $\langle Expr \rangle$ }, \st{v := $\langle Expr \rangle$}, and \st{havoc v}, being atomic statements. Whereas \texttt{while} and \texttt{if else} are compound statements..... \jw{todo}
 We regard expressions $\langle Expr \rangle$ as logical formulas. Most program statements change the assignment of variables and with that changes the state a program is in. 
 \begin{mydef}[Program State]
-	Given a program $P = (V, \mu, st)$ a program state is a function $\sigma: V \rightarrow \mu(V)$ that assigns each variable $v \in V$ a value in its domain $\mu(v)$. We denote the set of all program states as \stateSpace.
+	Given a program \prg a program state is a function $\sigma: V \rightarrow \mu(V)$ that assigns each variable $v \in V$ a value in its domain $\mu(v)$. We denote the set of all program states as \stateSpace.
 \end{mydef}
 Using program states, we can now set the semantics for the three atomic program statements.
 \begin{mydef}[Program Statement Semantics]
-		Given a program $P = (V, \mu, st)$, we define the semantics of program statements as a binary relation over program states $\sigma_1, \sigma_2$, whereas $\sigma_1$ denotes the program's state before the statement and $\sigma_2$ after. To model time steps, the variables in $\sigma_2$ are replaced by so called primed variables, meaning every variable $v \in Var$ is replaced by $v'$. \\
+		Given a program \prg, we define the semantics of program statements as a binary relation over program states $\sigma_1, \sigma_2$, whereas $\sigma_1$ denotes the program's state before the statement and $\sigma_2$ after. To model time steps, the variables in $\sigma_2$ are replaced by so called primed variables, meaning every variable $v \in Var$ is replaced by $v'$. \\
 	\begin{itemize}
 		\item The semantics of the \textnormal{\texttt{assumption}} statement: \textnormal{\st{assume $\langle Expr \rangle$}} are defined as the relation: \\
 		\begin{equation*}
@@ -170,32 +170,59 @@ Using program states, we can now set the semantics for the three atomic program 
 	To represent multiple program states we use first-order logic formulas. Given a first-order logic formula $\varphi$, defined over variables in $V$, we denote $\{\varphi\} = \{s \in \stateSpace | \eval{\varphi} \text{ where } \rho = s\}$
 	\end{mydef}
 \end{comment}
-The change from one program state to another is called a transition. To model transitions efficiently, we introduce transition formulas.
-\begin{mydef}[Transition Formula]
-		Given a program $P = (V, \mu, st)$ with variable $v \in V$, transitions from program state $\sigma_1$ to state $\sigma_2$ is characterized by the transition formula defined over variables $V$ and $V'$ whereas $V'$ contains all variables found in $V$ but primed. The set $V$ characterizes the variables before the transition, e.g. the variable valuations in $\sigma_1$, in contrast to $V'$ which represents the variable valuations after the transition. A transition between two states is only possible, if and only if the transition formula is satisfiable for the give states. \\ We specify for each of the atomic program statements the following transition formulas: 
-		\begin{itemize}
-			\item {\makebox[3cm]{\textnormal{\st{assume $\langle Expr \rangle$}}}}: $Expr\ \land \bigwedge\limits_{v \in V} v' = v $
-			\item {\makebox[3cm]{\normalfont{\st{v := $\langle Expr \rangle$}}}}: $v' = Expr\ \land \bigwedge\limits_{v \in V, v \not= x} v' = v $
-			\item {\makebox[3cm]{\normalfont \st{havoc v}}}: $\bigwedge\limits_{v \in V, v \not= x} v' = v $
-		\end{itemize}  
+To model while and if else, we can concatenate these three atomic statements to form a sequence of statements.
+\begin{mydef}[Concatenation of Program Statements]
+	Let \st{$s_1$} and \st{$s_2$} be atomic program statements and $\sigma_1$, $\sigma_2$ be program states, the semantics of the concatenation \st{$s_1;s_2$} are defined as:
+	\begin{equation*}
+		\{(\sigma_1, \sigma_2) \in \stateSpace \times \stateSpace\ |\ \exists \sigma_3 \in \stateSpace. (\sigma_1, \sigma_3) \in \text{\st{$s_1$}} \land (\sigma_3, \sigma_2) \in \text{\st{$s_2$}}
+	\end{equation*}
 \end{mydef}
-For brevity's sake we will use the notation \st{$\langle Expr \rangle$} for assumptions, and omit $\bigwedge\limits_{v \in V} v' = v$ in assumptions and assignments.
+
+The change from one program state to another is called a \textsl{transition}. To model transitions efficiently, we introduce transition formulas.
+\begin{mydef}[Transition Formula]
+		Given a program \prg with variable $v \in V$, transitions from program state $\sigma_1$ to state $\sigma_2$ is characterized by the transition formula defined over variables $V$ and $V'$ whereas $V'$ contains all variables found in $V$ but primed. The set $V$ characterizes the variables before the transition, e.g. the variable valuations in $\sigma_1$, in contrast to $V'$ which represents the variable valuations after the transition. A transition between two states is only possible, if and only if the transition formula is satisfiable for the give states.
+\end{mydef}
+ We specify for each of the atomic program statements the following transition formulas: 
+ \begin{center}
+\begin{itemize}
+	\item \st{assume $\langle Expr \rangle$}: 
+	\begin{equation*}
+		Expr\ \land \bigwedge\limits_{v \in V} v' = v 
+	\end{equation*}
+	\item \st{v := $\langle Expr \rangle$}:
+	\begin{equation*}
+		v' = Expr\ \land \bigwedge\limits_{v \in V, v \not= x} v' = v 
+	\end{equation*}
+	\item \st{havoc v}: 
+	\begin{equation*}
+			\bigwedge\limits_{v \in V, v \not= x} v' = v 
+	\end{equation*}
+\end{itemize} 
+ \end{center}
+For brevity's sake we will use the notation \st{$\langle Expr \rangle$} for assumptions, and omit $\bigwedge\limits_{v \in V} v' = v$ in assumptions and assignments. \\
+With transition formulas we can model state transitions using the strongest postcondition. The strongest postcondition applied on a program state $\sigma$, that satisfies a given first-order logic formula $\varphi$, and a transition formula \trf results in a formula $\psi$ that the follower states after the transition have to satisfy.
+\begin{mydef}[Strongest Postcondition]
+	Given a first-order logic formula $\varphi$ and transition formula \trf with set of variables $V$, the strongest postcondition $	sp(\varphi, \trf)$ is the formula defined as:
+	\begin{equation*}
+		sp(\varphi, \trf) = (\exists V. \varphi \land \tf)[V' \mapsto V]
+	\end{equation*}
+\end{mydef}
 \subsection{Program Verification}
 This section serves as an introduction to our understanding of program verification. Our goal is to prove whether a program is \textsl{correct} or to find a counterexample to correctness. In the following we define our understanding of safety, model a program's control-flow, and introduce traces.
 \subsubsection{Control-Flow Graph}
- Assume we are given a program $P = (V, \mu, st)$, the order in which the program's instructions can be executed is called control-flow. We can construct a directed graph that models this control-flow in form of a control-flow graph.
+ Assume we are given a program \prg, the order in which the program's instructions can be executed is called control-flow. We can construct a directed graph that models this control-flow in form of a control-flow graph.
  
  \begin{mydef}[Control-Flow Graph]
- 	Given a program $P = (V, \mu, st)$, a control-flow graph $G = (Loc, \delta, \loc{init})$ is a directed graph consisting of a finite set of so called program locations $Loc$, a set of edges $\delta \subseteq Loc \times TF \times Loc$ between two locations, labeled with a transition formula, and an initial location $\loc{init}$. 
+ 	Given a program \prg, a control-flow graph $G = (Loc, \Pi, \delta, src, tgt, \loc{init})$ is a directed graph consisting of a finite set of program locations $Loc$, a set of transitions $\Pi$, a set of edges $\delta \subseteq Loc \times \Pi \times Loc$ between two locations, labeled with a transition, a function $src: \Pi \rightarrow Loc$ mapping the source of each transition to a location, a function $tgt: \Pi \rightarrow Loc$ mapping the target of transitions to locations, and an initial location $\loc{init}$. 
  \end{mydef}
-To illustrate the notion of control-flow graphs, assume we are given program $P$ as seen in Figure \ref{code}, we construct the corresponding control-flow graph $G_P = (Loc_P, \delta_G, \loc{init})$, with $Loc_P = \{\loc{1}, \loc{4}, \loc{4}, \loc{6}, \loc{10}, \loc{13}\}$, $\delta_P = \{(\loc{1}, x' = 0 \land y' = 2 \land z' = 3, \loc{4}), (\loc{4}, x \leq 20, \loc{5}), (\loc{5}, x \leq 10, \loc{6}), (\loc{6}, z' = x \land x' = x + y \land y' = y + 1, \loc{5}), (\loc{5}, x > 10, \loc{10}), (\loc{10}, x' = x + 2 \land y' = y - 3 , \loc{5}), (\loc{4}, x > 20, \loc{13}) \}$, and $\loc{init} = \loc{1}$
-\begin{center}
+To illustrate the notion of control-flow graphs, assume we are given program $P$ as seen in Figure \ref{code}, we construct the control-flow graph $G_P$ seen in Figure \ref{cfg:P:Noass}
+.\begin{center}
 	\begin{minipage}[b]{0.4\linewidth}
 		\begin{figure}[H]
 			\centering
 			\input{fig/lst_ex_p5.tex}
 			\caption{Program $P$.}
-			\label{code}
+			\label{codeNoAss}
 		\end{figure}
 	\end{minipage}
 	\hfill
@@ -204,26 +231,22 @@ To illustrate the notion of control-flow graphs, assume we are given program $P$
 			\centering
 			\input{fig/fig_ex_p5_cfg.tex}
 			\caption{Control-flow graph $G_P$ for program $P$.}
-			\label{cfg:P}
+			\label{cfg:P:Noass}
 		\end{figure}
 	\end{minipage}
 \end{center}
-For defining correctness of a program, we firstly need to extend our grammar, by introducing a new statement: the \texttt{assert} statement.
-An assert statement .... \jw{todo}\\ \\
-
-We extend our definition of control-flow graphs to control-flow graphs with error locations.
- \begin{mydef}[Control-Flow Graph]
-	Given a program $P = (V, \mu, st)$, a control-flow graph with error location $G = (Loc, \delta, \loc{init}, \loc{err})$ is a control-flow graph extended by a set of error locations $\loc{err}$.
+For defining correctness of a program, we need to extend the definition of control-flow graphs, by introducing error locations. An error location signifies an unwanted program state. We construct error locations by using the \texttt{assert} statement in program code. An assertion verifies whether a given expression holds, if so, the program continues normally, if not it terminates, returning that an error location has been reached. We extend control-flow graphs to control-flow graphs with error locations.
+ \begin{mydef}[Control-Flow Graph with Error Locations]
+	Given a program \\ \prg, a control-flow graph with error location \cfg is a control-flow graph extended by a set of error locations $\loc{err}$.
 \end{mydef}
-For example, when we add an \texttt{assert} statement to our example program from before, we get the following control-flow graph with error locations:
-
+For example, when we extend the program $P$ as seen in \ref{codeNoAss} with an \texttt{assert} statement, we get the control-flow graph depicted in Figure \ref{codeWithAss}. We see the error location $\loc{err}$ which is reached by violating the expression \texttt{x == 22}.
 \begin{center}
 	\begin{minipage}[b]{0.4\linewidth}
 		\begin{figure}[H]
 			\centering
 			\input{fig/lst_ex_p0.tex}
-			\caption{Program $P$ with assertion.}
-			\label{code}
+			\caption{Program $P$ with \\ assertion \texttt{x == 22}.}
+			\label{codeWithAss}
 		\end{figure}
 	\end{minipage}
 	\hfill
@@ -231,12 +254,16 @@ For example, when we add an \texttt{assert} statement to our example program fro
 		\begin{figure}[H]
 			\centering
 			\input{fig/fig_ex_p0_cfg.tex}
-			\caption{Control-flow graph with error location $G_P$ for program $P$.}
-			\label{cfg:P}
+			\caption{Control-flow graph $G_P$ with error location $\loc{err}$ for program $P$.}
+			\label{cfg:P:Ass}
 		\end{figure}
 	\end{minipage}
 \end{center}
-
+For the rest of the paper, we denote control-flow graph with error location as control-flow graph.
+The control-flow of a program can now be described by so called traces through the control-flow graph.
+\begin{mydef}
+	Given a program	\prg, its control-flow graph \\ \cfg, a trace $\tau = \trf_1, \trf_2, \ldots $ of a program is a finite or infinite sequence of transition formulas $\trf_1, \trf_2, \ldots$
+\end{mydef}
 \jw{todo: reachability, program traces, etc.}
 
 
