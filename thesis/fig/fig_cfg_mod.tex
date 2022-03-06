@@ -1,0 +1,26 @@
+\begin{tikzpicture}[%
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=3cm,
+	scale=0.9,
+	transform shape,
+	align=center,
+	smallnode/.style={inner sep=1.4},
+	initial text =,
+	anchor=center]
+	
+	\node[state, initial above, initial text =](1){$\loc{1}$};
+	\node[state] (head) [below of=1] {$\loc{2}$};
+	\node[state] (nondet) [left of=head] {$\loc{3}$};
+	\node[state] (asstrue) [below of=head] {$\loc{5}$};
+	\node[state, accepting] (assfalse) [below right of=head] {$\loc{err}$};
+	
+	\path (1) edge node []{\st{x:=1}} (head)
+	(head) edge[bend right] node {\st{*}} (nondet)
+	(nondet) edge[bend right] node []{\st{x:=2*x}} (head)
+	(head) edge node []{\st{x\%2==0}} (asstrue)
+	(head) edge node []{\st{x\%2!=0}} (assfalse)
+	;
+\end{tikzpicture}

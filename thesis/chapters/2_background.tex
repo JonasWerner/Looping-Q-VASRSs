@@ -119,6 +119,7 @@ From the evaluation of terms we can derive the evaluation of formulas, which dec
 		\end{itemize}
 \end{mydef}
 A formula $\varphi$ is called satisfiable if there exists a model $\mathcal{M} = (D, \interpret)$ and a variable assignment $\rho$ such that $\eval{\varphi}$ is true. A formula is valid if there is no model $\mathcal{M} = (D, \interpret)$, such $\eval{\varphi}$ is false.
+In the following we will omit the model notation... \jw{todo}
 \subsection{Programs}
 In this chapter we will introduce our understanding on how to model programs using first-order logic. We will begin with our syntax of programs, then explain program statement semantics.
 
@@ -131,17 +132,21 @@ Assume we are given the example program as seen in figure \ref{code}. We see tha
 	\caption{Context-free grammar $\Sigma$ detailing program instructions.}
 	\label{grmr}
 \end{figure}
-We call words derived from $\langle Stmt \rangle$ program statements, words derived from $\langle Expr \rangle$ expressions, and $v \in V$ represents a program variable.
+We call words derived from $\langle Stmt \rangle$ program statements, words derived from $\langle Expr \rangle$ expressions, and $v \in V$ represents a program variable and $c$ represents a constant in a fitting model.
 We define programs as follows:
 
 \begin{mydef}[Programs]
 	A program is a triple \prg, with $V$ being a set of variables, a function $\mu: V \rightarrow \{ \mathbb{Z}, \mathbb{R}, \mathbb{B} \}$ that maps variables $v \in V$ to a domain, which is either the set of integers, the rational numbers, or boolean values $\mathbb{B} = \{\textbf{true}, \textbf{false}\}$. Furthermore, $st$ is a derived word from $\Sigma$ representing the program instructions.
 \end{mydef}
 \subsubsection{Program Semantics}
-We consider five kinds of program statements in the grammar $\Sigma$: An assumption over variables \texttt{assume}, an assignment to variables \texttt{:=}, a non deterministic assignment \texttt{havoc}, a program loop \texttt{while}, that repeats a statement until its loop guard, the $\langle WildcardExpr \rangle$, no longer holds, and an conditional branching, in form of an \texttt{if else} statement. With the first three, \st{assume $\langle Expr \rangle$ }, \st{v := $\langle Expr \rangle$}, and \st{havoc v}, being atomic statements. Whereas \texttt{while} and \texttt{if else} are compound statements..... \jw{todo}
+We consider five kinds of program statements in the grammar $\Sigma$: An assumption over variables \texttt{assume}, an assignment to variables \texttt{:=}, a non deterministic assignment \texttt{havoc}, a program loop \texttt{while}, that repeats a statement until its loop guard, the $\langle WildcardExpr \rangle$, no longer holds, and an conditional branching, in form of an \texttt{if else} statement. With the first three: \st{assume $\langle Expr \rangle$ }, \st{v := $\langle Expr \rangle$}, and \st{havoc v}, being atomic statements. Whereas \texttt{while} and \texttt{if else} are a compound of atomic statements.
 We regard expressions $\langle Expr \rangle$ as logical formulas. Most program statements change the assignment of variables and with that changes the state a program is in. 
 \begin{mydef}[Program State]
 	Given a program \prg a program state is a function $\sigma: V \rightarrow \mu(V)$ that assigns each variable $v \in V$ a value in its domain $\mu(v)$. We denote the set of all program states as \stateSpace.
+\end{mydef}
+We use fist-order logic formulas to detail sets of states.
+\begin{mydef}[Sets of Program States]
+	Given a first-order logic formula $\varphi$, a set of program states $\{ \varphi \}$ contains all program states $\sigma_i$ for which $\eval{\varphi [V\mapsto \mu_i(V) ]}$ is true.
 \end{mydef}
 Using program states, we can now set the semantics for the three atomic program statements.
 \begin{mydef}[Program Statement Semantics]
@@ -170,7 +175,7 @@ Using program states, we can now set the semantics for the three atomic program 
 	To represent multiple program states we use first-order logic formulas. Given a first-order logic formula $\varphi$, defined over variables in $V$, we denote $\{\varphi\} = \{s \in \stateSpace | \eval{\varphi} \text{ where } \rho = s\}$
 	\end{mydef}
 \end{comment}
-To model while and if else, we can concatenate these three atomic statements to form a sequence of statements.
+To model while and if else, we can concatenate these three atomic statements to form sequences of statements.
 \begin{mydef}[Concatenation of Program Statements]
 	Let \st{$s_1$} and \st{$s_2$} be atomic program statements and $\sigma_1$, $\sigma_2$ be program states, the semantics of the concatenation \st{$s_1;s_2$} are defined as:
 	\begin{equation*}
@@ -260,15 +265,13 @@ For example, when we extend the program $P$ as seen in \ref{codeNoAss} with an \
 	\end{minipage}
 \end{center}
 For the rest of the thesis, denote control-flow graph with error location just as control-flow graph except stated otherwise.
+\subsubsection{Program Correctness}
 The control-flow of a program can now be described by so called traces through the control-flow graph.
 \begin{mydef}
 	Given a program	\prg, its control-flow graph \\ G = \cfg, a trace $\tau = \trf_1, \trf_2, \ldots $ of a program is a finite or infinite sequence of transitions $\trf_1, \trf_2, \ldots$ with $\trf_i \in \Pi$, and $(scr(\trf_i), \trf_i, tgt(\trf_i)) \in \delta$
 \end{mydef}
 This definition only establishes that traces adhere to the graph structure of the control-flow graph. We need to set which traces are actually feasible.
-\begin{mydef}
-	Given a program	\prg, its control-flow graph \\ G = \cfg, and a trace $\tau = \trf_1, \trf_2, \ldots $, \tau is feasible if and only if
-	TODO
-\end{mydef}
+
 \jw{todo: reachability, program traces, etc.}
 
 

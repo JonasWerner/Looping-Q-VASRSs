@@ -7,12 +7,16 @@
 	\alt `if' ( <WildcardExpr> ) <Stmt>* `else' <Stmt>*
 	
 	<Expr> ::= <Expr> <BinOp> <Expr>
+	\alt <Var>
 	\alt <UnOp> <Expr>
-	\alt $v$
 	\alt `true'
 	\alt `false'
 	
 	<WildCardExpr> ::= <Expr> | `*'
+	
+	<Var> ::= 	$v$ | <Const>
+
+	<Const> ::= $c$
 	
 	<BinOp> ::= `+' | `-' | `*' | `/' | `\%'
 	\alt `\&\&' | `||' | `==' | `!='

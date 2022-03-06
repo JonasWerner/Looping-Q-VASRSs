@@ -11,10 +11,34 @@
 	20 pages}
 \end{comment}
 
-This chapter will introduce the notion of rational vector addition systems (\qvasr) and their extension to \qvasr-abstractions.
+This chapter will firstly give an overview of the challenges program loops introduce, then we will define our understanding of the loop summarization technique based on rational vector addition systems with resets (\qvasr), which will then be extended to \qvasr-abstractions, and lastly we introduce rational vector addition systems with resets and states (\qvasrs).
+
+\subsection{Motivation Loop Summarization}
+A program loop, created by, for example, a \texttt{while} statement, can introduce up to infinitely many program traces. Let us, for instance, assume we have a non deterministic loop, \texttt{while (*); x:=2*x}, and an error location outside of the loop asserting \texttt{x\%2==0}. To check safety we would have to prove infinitely many program traces as infeasible
+
+.\begin{center}
+	\begin{minipage}[t]{0.4\linewidth}
+		\begin{figure}[H]
+			\centering
+			\input{fig/lst_code_mod.tex}
+			\caption{Program $P_1$ with nondeterministically terminating loop.}
+			\label{codeExMotAss}
+		\end{figure}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t]{0.59\linewidth}
+		\begin{figure}[H]
+			\centering
+			\input{fig/fig_cfg_mod.tex}
+			\caption{Control-flow graph $G_{P_1}$ for program $P_1$.}
+			\label{cfgExMotAss}
+		\end{figure}
+	\end{minipage}
+\end{center}
 
 \subsection{\qvasr}
 A \qvasr of dimension $d$ is a finite set $V \subseteq \{0, 1\}^d \times \mathbb{Q}^d$ of transformers. Each transformer $(\vec{r}, \vec{a}) \in V$ consists of binary \textsl{reset} vector $\vec{r}$, where 0 indicates a reset, and rational \textsl{addition} vector $\vec{a}$. A \qvasr $V$ defines a transition system $(S_V, \rightarrow_V)$, with state space $S_V \subseteq \Q^d$, which can transition between states $\vec{x} \rightarrow_V \vec{x}'$, if $\vec{x}' = \vec{r} * \vec{x} + \vec{a}$ for some transformer $(\vec{r}, \vec{a}) \in V$, with $*$ being the Hadamard product. \par A \qvasr can be used to represent an overapproximation of a given transition formula. A transition formula $F$ is a first-order formula defined over free variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ that designate the state before and after a transition, where $n$ is called the dimension of the formula. Figure \ref{code} depicts a program containing a \texttt{while} loop from lines 4 - 12 for which we want to compute a loop summary using \qvasr.
+
 \begin{wrapfigure}{L}{0.4\linewidth}
 	\vspace{-10pt}
 	\centering
