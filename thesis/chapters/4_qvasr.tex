@@ -11,11 +11,8 @@
 	20 pages}
 \end{comment}
 
-This chapter will firstly give an overview of the challenges program loops introduce, then we will define our understanding of the loop summarization technique based on rational vector addition systems with resets (\qvasr), which will then be extended to \qvasr-abstractions, and lastly we introduce rational vector addition systems with resets and states (\qvasrs).
-
-\subsection{Motivation Loop Summarization}
-A program loop, created by, for example, a \texttt{while} statement, can introduce up to infinitely many program traces. Let us, for instance, assume we have a non deterministic loop, \texttt{while (*); x:=2*x}, and an error location outside of the loop asserting \texttt{x\%2==0}. To check safety we would have to prove infinitely many program traces as infeasible
-
+This chapter will firstly give an overview of the challenges program loops introduce, then we will define our understanding of the loop summarization technique based on rational vector addition systems with resets (\qvasr), which will then be extended to \qvasr-abstractions, and lastly we introduce rational vector addition systems with resets and states (\qvasrs). \par
+A program loop, created by, for example, a \texttt{while} statement, can introduce up to infinitely many program traces. Let us, for instance, assume we have a non deterministic loop, \texttt{while (*); x:=2*x}, and an error location outside of the loop asserting \texttt{x\%2==0}. To check safety we would have to prove, in the worst case, infinitely many program traces as infeasible
 .\begin{center}
 	\begin{minipage}[t]{0.4\linewidth}
 		\begin{figure}[H]
@@ -35,7 +32,8 @@ A program loop, created by, for example, a \texttt{while} statement, can introdu
 		\end{figure}
 	\end{minipage}
 \end{center}
-
+Instead, we can compute a loop summarization that characterizes changes to variables as a first-order logic formula. Loop summaries are not guaranteed to be precise, meaning they can over- or underapproximate the loop's behavior. Counterexamples found using underapproximative loop summaries are guaranteed to be feasible. But due to the underapproximate nature of the summaries they can miss other feasible counterexample as they model only a subset of the actual loop behavior \cite{DBLP:journals/fmsd/KroeningLW15}. Loop summaries that overapproximate the loop's behaviour on the other hand form a superset of the actual loop behavior, resulting in possible spurious counterexamples. The quality of overapproximative loop summaries depend on the degree of overapproximation of the actual loop behavior.
+In the following we present our approach of computing an overapproximative loop summarization based on the findings of Kincaid et al. \cite{DBLP:conf/cav/SilvermanK19}.
 \subsection{\qvasr}
 A \qvasr of dimension $d$ is a finite set $V \subseteq \{0, 1\}^d \times \mathbb{Q}^d$ of transformers. Each transformer $(\vec{r}, \vec{a}) \in V$ consists of binary \textsl{reset} vector $\vec{r}$, where 0 indicates a reset, and rational \textsl{addition} vector $\vec{a}$. A \qvasr $V$ defines a transition system $(S_V, \rightarrow_V)$, with state space $S_V \subseteq \Q^d$, which can transition between states $\vec{x} \rightarrow_V \vec{x}'$, if $\vec{x}' = \vec{r} * \vec{x} + \vec{a}$ for some transformer $(\vec{r}, \vec{a}) \in V$, with $*$ being the Hadamard product. \par A \qvasr can be used to represent an overapproximation of a given transition formula. A transition formula $F$ is a first-order formula defined over free variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ that designate the state before and after a transition, where $n$ is called the dimension of the formula. Figure \ref{code} depicts a program containing a \texttt{while} loop from lines 4 - 12 for which we want to compute a loop summary using \qvasr.
 
