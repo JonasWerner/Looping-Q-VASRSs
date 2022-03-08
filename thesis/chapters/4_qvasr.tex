@@ -57,7 +57,8 @@ We want to model changes to variables in a loop using rational vector addition s
 \end{mydef}
 We see, that there are three distinct changes to variables modelled in \qvasr: A variable is incremented, for example \st{x:=x+1}, a variable is reset to zero, as in \st{x:=0}, or a variable is reset and then incremented to a constant, \st{x:=3}. \par
 
-A \qvasr can be used to represent an overapproximation of a given transition formula. A transition formula $F$ over variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ designate the program state before and after the transition, $n$ is called the dimension of the formula. Figure \ref{codeWithAss} depicts a program containing a \texttt{while} loop from lines 4 - 12 for which we want to compute a loop summary using \qvasr. \par
+A \qvasr can be used to represent an overapproximation of a given transition formula. A transition formula $\trf_1$ over variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ designate the program state before and after the transition, $n$ is called the dimension of the formula. Transition formula $\trf_1$ defines a transition system $(S_{\trf_1}, \rightarrow_{\trf_1})$, where $S_{\trf_1}$ is defined over the domains of $\vec{x}$, whereas two program states $\sigma_1$, $\sigma_2$ can transition $\sigma_1 \rightarrow_{\trf_1}$ if and only if the variable valuations of $\sigma_1$ as $\vec{x}$ and valuations of $\sigma_2$ as $\vec{x}'$ is valid. \\ \par
+Figure \ref{codeWithAss} depicts a program containing a \texttt{while} loop from lines 4 - 12 for which we want to compute a loop summary using \qvasr. \par
 To get a loop summary, approximating the entire loop, we need to compute a \qvasr for every path through the loop. In this example there are two paths created by the \texttt{if else} statement.
 Beginning with the \texttt{else} branch, from line 9 to 12, we extract the transition formula:
 \begin{equation*}
@@ -92,7 +93,7 @@ $V_G =
 	\end{pmatrix}
 \end{Bmatrix}
 $ \par \vspace{2pt}
-For the remainder of this proposal we will use the following, more intuitive notation of \qvasr:
+For the remainder of this thesis we will use the following, more intuitive notation that shows relations between variables more clearly:
 \begin{equation*}
 	V_G = 
 	\begin{Bmatrix}
@@ -102,22 +103,81 @@ For the remainder of this proposal we will use the following, more intuitive not
 		\end{bmatrix}
 	\end{Bmatrix}
 \end{equation*}
-
-From the \texttt{if} branch we extract the following transition formula:
+\subsection{\qvasr-Abstraction}
+\qvasr can only model the aforementioned three transitions: increment, reset, and reset and increment. Increments, and resets and increments, however, are tied to constant variable updates. Updates that reference, for example, other variables, cannot be modeled as a \qvasr. When we look at the example program \ref{cfg:P:Ass}, we see that in the \texttt{if} there are not constant increments, such as \st{z:=x} and \st{x:=x+y}. \\
+We extract the transition formula:
 \begin{equation*}
 	H= \ (x \leq 10 \land x' = x + y\ \land\ y' = y + 1 \land z' = x)
-\end{equation*} In contrast to $G$ there are no constant increments to variables $x$ and $z$. They are changed by an arbitrary amount. A \qvasr cannot represent $H$ by a  \qvasr because they are only able to model transitions with constant resets and increments. 
+\end{equation*}
 
-\subsection{\qvasr-Abstraction}
+We can approximate $H$ with a \qvasr, using linear simulations.
 
-We can, however, represent an overapproximation of $H$ as a \qvasr. This is done using linear simulations. Given a transition formula $F$ of dimension $n$ and a \qvasr $V$ of dimension $m$, a linear simulation from $F$ to $V$ is a linear transformation matrix: 
-$S = 
-\begin{bmatrix}
-	s_{1 ,1} & \ldots & s_{1, n} \\
-	\vdots & \ddots & \vdots \\
-	s_{m ,1} & \ldots & s_{m, n} \\
-\end{bmatrix}$ 
-such that for all transitions $\vec{x} \rightarrow_F \vec{x}'$ we have $S\cdot\vec{x} \rightarrow_V S\cdot\vec{x}'$. Meaning, every transition $\vec{x} \rightarrow_F \vec{x}'$ can be represented in $V$ by a matrix multiplication of $S$ and $\vec{x}$ and $\vec{x}'$. The tuple $(S, V)$ is called a \qvasr-abstraction. \par For $H$ we need to calculate both the linear transformation matrix $S_H$ and the \qvasr $V_H$. We know that a \qvasr consists of pairs of reset and addition vectors, we use the formula $S \cdot \vec{u} \rightarrow_V S \cdot \vec{u}$ to get a transition in $V_H$ as $S\cdot\vec{x}' = \vec{r}*S\cdot\vec{x} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as the zero vector $\vec{0}$, which forms a linear set of equations that model a set of resets:
+\begin{mydef}[Linear Simulation]
+	Given two transition systems $T_1 = (\valuations^n, \rightarrow_1)$ and $T_2 = (\valuations^m, \rightarrow_2)$, operating over the vector space containing reals and integers, a linear simulation from $T_1$ to $T_2$ is a linear transformation $S: \valuations^{m \times n}$ such that for all vectors $\vec{u}$, $\vec{v} \in \valuations^n$ with $\vec{u} \rightarrow_1 \vec{v}$, we have $S\vec{u} \rightarrow_2 S\vec{v}$. We denote the linear simulation from $T_1$ to $T_2$ as $T_1 \vdash_S T_2$
+\end{mydef}
+The task now is to synthesize a \qvasr $V$ and linear simulation $S$, such that $\trf \vdash_S V$.
+
+\begin{mydef}[\qvasr-Abstraction]
+	 Given a transition formula \trf of dimension $n$ and a \qvasr $V$ of dimension $m$, a linear simulation from \trf to $V$ is a linear transformation matrix: 
+	$S = 
+	\begin{bmatrix}
+		s_{1 ,1} & \ldots & s_{1, n} \\
+		\vdots & \ddots & \vdots \\
+		s_{m ,1} & \ldots & s_{m, n} \\
+	\end{bmatrix}$ 
+	such that for all transitions $\vec{x} \rightarrow_\trf \vec{x}'$ we have $S\vec{x} \rightarrow_V S\vec{x}'$. Meaning, every transition $\vec{x} \rightarrow_\trf \vec{x}'$ can be represented in $V$ by a matrix multiplication of $S$ and $\vec{x}$ and $\vec{x}'$. The tuple $(S, V)$ is called a \qvasr-abstraction.
+\end{mydef}
+
+To abstract a transition formula $\trf$ with $n$ variables $\vec{x} = x_1, \ldots, x_n$, we need to calculate both the linear transformation matrix $S$ and the \qvasr $V$. We know that a \qvasr consists of pairs of transformers, which contain reset and addition vectors. We use the formula $S \vec{u} \rightarrow_V S\vec{u}$ to get a transition in $V$ as $S\vec{x}' = \vec{r}*S\vec{x} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as the zero vector $\vec{0}$, we get the formula $S\vec{x}' = \vec{a}$ which forms a linear set of equations that models the set of resets:
+\begin{equation*}
+	Res_\trf = \left\{ (\sn, a)\ |\ \sn \cdot \pn = a \right\}	
+\end{equation*}
+For the set of additions, we consider $\vec{r}$ as the constant one vector $\vec{1}$, and get formula $S\vec{x}' = S\vec{x} + \vec{a}$ which forms the set of additions as:
+\begin{equation*}
+	Inc_\trf = \left\{(\sn, a)\ |\ \sn \cdot \pn = \sn \cdot \upn + a\right\}	
+\end{equation*}
+
+\begin{comment}
+	\begin{equation*}
+	Res_H = \left\{ (\s, a) | H \models \s \cdot \p = a \right\}	
+	\end{equation*}
+	
+	\begin{equation*}
+	Inc_H = \left\{(\s, a) | H \models \s \cdot \p = \s \cdot \up + a\right\}	
+	\end{equation*}
+\end{comment}
+By solving the following equations for $s_1, \ldots s_n$: \\
+\begin{align*}
+	Res\trf &= \sn \cdot \pn = a \\
+ 			&= s_1x_1 + \ldots s_nx_n = a
+\end{align*}
+
+\begin{align*}
+	Inc_\trf &= \sn \cdot \pn = \sn \cdot \upn + a  \\ \vspace{0.5cm}
+			 &= s_1x_1' + \ldots s_nx_n' = s_1x_1 + \ldots + s_nx_n + a
+\end{align*}
+
+We get a vector space for which we then need to compute a basis. Assume we have basis for the set of resets:
+$Res_\trf = \{(\vec{s}_1, a_1), \ldots, (\vec{s}_m, a_m)\}$ and basis for the set of additions as: $Inc_\trf = \{(\vec{s}_{m+1}, a_{m+1}), \ldots, (\vec{s}_d, a_d)\}$. \\ We construct the \qvasr-abstraction $(S, V)$ as: \\
+\begin{center}
+\begin{minipage}{0.3\linewidth}
+	\begin{equation*}
+		S = \begin{bmatrix} \vec{s_1} & \ldots & \vec{s_d} \end{bmatrix}
+	\end{equation*}
+\end{minipage}
+\begin{minipage}{0.3\linewidth}
+	\begin{equation*}
+		\vec{r} = [ \underbrace{0 \ldots 0}_{m\text{ times}} \overbrace{1 \ldots 1}^{d - m \text{ times}} ]
+	\end{equation*}
+\end{minipage}
+\begin{minipage}{0.3\linewidth}
+	\begin{equation*}
+		\vec{a} = \begin{bmatrix} a_1 \\ \vdots \\ a_d \end{bmatrix}
+	\end{equation*}
+\end{minipage}
+\end{center}
+
+To abstract the transition formula $H$, we need to calculate both the linear transformation matrix $S_H$ and the \qvasr $V_H$. We know that a \qvasr consists of pairs of transformers, which contain reset and addition vectors. We use the formula $S \cdot \vec{u} \rightarrow_V S \cdot \vec{u}$ to get a transition in $V_H$ as $S\cdot\vec{x}' = \vec{r}*S\cdot\vec{x} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as the zero vector $\vec{0}$, which forms a linear set of equations that model a set of resets:
 \begin{equation*}
 	Res_H = \left\{ (\s, a) : H \models \s \cdot \p = a \right\}	
 \end{equation*}
