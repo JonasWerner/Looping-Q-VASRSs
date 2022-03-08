@@ -187,7 +187,7 @@ The change from one program state to another is called a \textsl{transition}. To
 \begin{mydef}[Transition Formula]
 		Given a program \prg with variable $v \in V$, transitions from program state $\sigma_1$ to state $\sigma_2$ is characterized by the transition formula defined over variables $V$ and $V'$ whereas $V'$ contains all variables found in $V$ but primed. The set $V$ characterizes the variables before the transition, e.g. the variable valuations in $\sigma_1$, in contrast to $V'$ which represents the variable valuations after the transition. A transition between two states is only possible, if and only if the transition formula is satisfiable for the give states. The number of variables in $V$ is called the dimension of the transitions formula.
 \end{mydef}
- We specify for each of the atomic program statements the following transition formulas: 
+ We specify for each of the atomic program statements the following \textsl{transition formulas}: 
  \begin{center}
 \begin{itemize}
 	\item \st{assume $\langle Expr \rangle$}: 
@@ -271,6 +271,11 @@ The control-flow of a program can now be described by so called traces through t
 	Given a program	\prg, its control-flow graph \\ G = \cfg, a trace $\tau = \trf_1, \trf_2, \ldots $ of a program is a finite or infinite sequence of transitions $\trf_1, \trf_2, \ldots$ with $\trf_i \in \Pi$, and $(scr(\trf_i), \trf_i, tgt(\trf_i)) \in \delta$
 \end{mydef}
 This definition only establishes that traces adhere to the graph structure of the control-flow graph. We need to set which traces are actually feasible.
+\begin{mydef}
+	Given a trace $\tau = \trf_1, \trf_2, \ldots $ of a program, $\tau$ is called feasible, if for all transition $\pi_i$ $sp(\phi_{i-1}$
+\end{mydef}
+
+
 
 \jw{todo: reachability, program traces, etc.}
 
