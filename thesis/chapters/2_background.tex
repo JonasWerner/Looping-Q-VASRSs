@@ -119,12 +119,11 @@ From the evaluation of terms we can derive the evaluation of formulas, which dec
 		\end{itemize}
 \end{mydef}
 A formula $\varphi$ is called satisfiable if there exists a model $\mathcal{M} = (D, \interpret)$ and a variable assignment $\rho$ such that $\eval{\varphi}$ is true. A formula is valid if there is no model $\mathcal{M} = (D, \interpret)$, such $\eval{\varphi}$ is false.
-In the following we will omit the model notation... \jw{todo}
 \subsection{Programs}
 In this chapter we will introduce our understanding on how to model programs using first-order logic. We will begin with our syntax of programs, then explain program statement semantics.
 
 \subsubsection{Program Syntax}
-Assume we are given the example program as seen in figure \ref{code}. We see that the code contains various typed variables such as \texttt{x : int} and instructions over these variables. \\ These instructions use the following context-free grammar $\Sigma$ that is a derived and simplified version of the grammar of the intermediate verification language Boogie\cite{Boogie}.
+Assume we are given the example program as seen in figure \ref{codeNoAss}. We see that the code contains various typed variables such as \texttt{x : int} and instructions over these variables. \\ These instructions use the following context-free grammar $\Sigma$ that is a derived and simplified version of the grammar of the intermediate verification language Boogie\cite{Boogie}.
 \setlength{\grammarparsep}{20pt plus 1pt minus 1pt} % increase separation between rules
 \setlength{\grammarindent}{12em} % increase separation between LHS/RHS
 \begin{figure}[H]
@@ -221,7 +220,7 @@ This section serves as an introduction to our understanding of program verificat
  \begin{mydef}[Control-Flow Graph]
  	Given a program \prg, a control-flow graph $G = (Loc, \Pi, \delta, src, tgt, \loc{init})$ is a directed graph consisting of a finite set of program locations $Loc$, a set of transitions $\Pi$, a set of edges $\delta \subseteq Loc \times \Pi \times Loc$ between two locations, labeled with a transition, a function $src: \Pi \rightarrow Loc$ mapping the source of each transition to a location, a function $tgt: \Pi \rightarrow Loc$ mapping the target of transitions to locations, and an initial location $\loc{init}$. 
  \end{mydef}
-To illustrate the notion of control-flow graphs, assume we are given program $P$ as seen in Figure \ref{code}, we construct the control-flow graph $G_P$ seen in Figure \ref{cfg:P:Noass}
+To illustrate the notion of control-flow graphs, assume we are given program $P$ as seen in Figure \ref{codeNoAss}, we construct the control-flow graph $G_P$ seen in Figure \ref{cfg:P:Noass}
 .\begin{center}
 	\begin{minipage}[b]{0.4\linewidth}
 		\begin{figure}[H]
