@@ -1,26 +1,22 @@
 
 \begin{grammar}
-	<Stmt> ::= `assume' <Expr> ;
-	\alt $v$ `:=' <Expr> ;
-	\alt `havoc' $v$ ;
-	\alt `while' ( <WildcardExpr> ) <Stmt>* ;
-	\alt `if' ( <WildcardExpr> ) <Stmt>* `else' <Stmt>*
+	<Stmt> ::= \gramr{assume} <Expr> ;
+	\alt $v$ \gramr{:=} <Expr> ;
+	\alt \gramr{havoc} $v$ ;
+	\alt \gramr{while} ( <WildcardExpr> ) <Stmt>* ;
+	\alt \gramr{if} ( <WildcardExpr> ) <Stmt>* \gramr{else} <Stmt>*
 	
 	<Expr> ::= <Expr> <BinOp> <Expr>
-	\alt <Var>
+	\alt $v$
 	\alt <UnOp> <Expr>
-	\alt `true'
-	\alt `false'
+	\alt \gramr{true}
+	\alt \gramr{false}
 	
-	<WildCardExpr> ::= <Expr> | `*'
+	<WildCardExpr> ::= <Expr> | \gramr{*}
 	
-	<Var> ::= 	$v$ | <Const>
-
-	<Const> ::= $c$
+	<BinOp> ::= \gramr{+} | \gramr{-} | \gramr{$\cdot$} | \gramr{/} | \gramr{\%}
+	\alt \gramr{\&\&} | \gramr{||} | \gramr{==} | \gramr{!=}
+	\alt \textless | \textless= | \textgreater | \textgreater=
 	
-	<BinOp> ::= `+' | `-' | `*' | `/' | `\%'
-	\alt `\&\&' | `||' | `==' | `!='
-	\alt `<' | `<=' | `>' | `>='
-	
-	<UnOp> ::= `-' | `!'
+	<UnOp> ::= \gramr{-} | \gramr{!}
 \end{grammar}

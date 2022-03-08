@@ -132,7 +132,7 @@ Assume we are given the example program as seen in figure \ref{code}. We see tha
 	\caption{Context-free grammar $\Sigma$ detailing program instructions.}
 	\label{grmr}
 \end{figure}
-We call words derived from $\langle Stmt \rangle$ program statements, words derived from $\langle Expr \rangle$ expressions, and $v \in V$ represents a program variable and $c$ represents a constant in a fitting model.
+We call words derived from $\langle Stmt \rangle$ program statements, words derived from $\langle Expr \rangle$ expressions, and $v \in V$ represents a program variable or a constant in a fitting model.
 We define programs as follows:
 
 \begin{mydef}[Programs]
@@ -146,8 +146,9 @@ We regard expressions $\langle Expr \rangle$ as logical formulas. Most program s
 \end{mydef}
 We use fist-order logic formulas to detail sets of states.
 \begin{mydef}[Sets of Program States]
-	Given a first-order logic formula $\varphi$, a set of program states $\{ \varphi \}$ contains all program states $\sigma_i$ for which $\eval{\varphi [V\mapsto \mu_i(V) ]}$ is true.
+	Given a first-order logic formula $\varphi$, a set of program states $\{ \varphi \}$ contains all program states $\sigma_i: V \rightarrow \mu_i(V)$ for which $\eval{\varphi [V\mapsto \mu_i(V) ]}$ is true.
 \end{mydef}
+The set of all program states $\stateSpace$ is defined as $\{\top\}$ and the empty set of program states as $\{\bot\}$.
 Using program states, we can now set the semantics for the three atomic program statements.
 \begin{mydef}[Program Statement Semantics]
 		Given a program \prg, we define the semantics of program statements as a binary relation over program states $\sigma_1, \sigma_2$, whereas $\sigma_1$ denotes the program's state before the statement and $\sigma_2$ after. To model time steps, the variables in $\sigma_2$ are replaced by so called primed variables, meaning every variable $v \in Var$ is replaced by $v'$. \\
