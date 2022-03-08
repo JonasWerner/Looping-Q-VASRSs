@@ -39,7 +39,7 @@ and an error location outside of the loop asserting \texttt{x\%2==0}. To check s
 Instead, we can compute a loop summarization that characterizes changes to variables as a first-order logic formula. Loop summaries are not guaranteed to be precise, meaning they can over- or underapproximate the loop's behavior. Feasible error traces, found using underapproximative loop summaries, are guaranteed to be feasible. But due to the underapproximate nature of the summaries they can miss other feasible counterexample as they model only a subset of the actual loop behavior \cite{DBLP:journals/fmsd/KroeningLW15}. Loop summaries that overapproximate the loop's behaviour, on the other hand, form a superset of the actual loop behavior, resulting in possible spurious feasible error traces. The quality of overapproximative loop summaries depend on the degree of overapproximation of the actual loop behavior.
 Kincaid et al. \cite{DBLP:conf/cav/SilvermanK19} devised an overapproximative loop summarization method that guarantees a certain degree of precision by utilizing rational vector addition systems with resets. In the following we present our adaption of that summarization technique.
 \subsection{\qvasr}
-To summarize a loop, we make use of a special kind of vector addition system. Vector additions systems are a class of infinite-state transition systems.
+To summarize a loop, we make use vector addition systems. Vector additions systems are a class of infinite-state transition systems.
 
 \begin{mydef}[Transition System]
 	A transition system \transSys{} is a tuple, consisting of a finite or infinite set of states $S$ and a transition relation $\rightarrow \subseteq S \times S$.
@@ -48,17 +48,23 @@ To summarize a loop, we make use of a special kind of vector addition system. Ve
 A concretization of a transition system is a vector addition system that is defined over rational values.
 
 \begin{mydef}[Rational Vector Addition System]
-	Given two vectors consisting of rational numbers $\vec{u}$, and $\vec{v}$ of length $d$, a rational vector addition system $V$ of dimension $d$ is a finite set $V \subseteq \mathbb{Q}^d$ of transformers. It defines a transition system \transSys{V}, with state space $S_V = \mathbb{Q}$ and transition relation $\vec{u} \rightarrow_V \vec{v}$ if and only if $\vec{v} = \vec{u} + \vec{a}$ for some $\vec{a} \in V$. 
+	Given two vectors $\vec{u}$, and $\vec{v}$ consisting of $d$ rational numbers, a rational vector addition system $V$ of dimension $d$ is a finite set $V \subseteq \mathbb{Q}^d$ of transformers. A transformer $\vec{a}$ is a vector of length $d$, called addition vector, containing rational numbers. Rational vector addition systems define a transition system \transSys{V}, with state space $S_V = \mathbb{Q}$ and transition relation $\vec{u} \rightarrow_V \vec{v}$ if and only if $\vec{v} = \vec{u} + \vec{a}$ for some $\vec{a} \in V$. 
 \end{mydef}
+We want to model changes to variables in a loop using rational vector addition systems, however, additions alone do not cover all possible transitions. A variable can be \textsl{reset} to an arbitrary constant. For example, the transition \st{x:=0} sets variable \texttt{x} to zero no matter what value $x$ had before the transition. We extend rational vector addition systems to rational vector addition systems with resets (\qvasr).
 
-A \qvasr of dimension $d$ is a finite set $V \subseteq \{0, 1\}^d \times \mathbb{Q}^d$ of transformers. Each transformer $(\vec{r}, \vec{a}) \in V$ consists of binary \textsl{reset} vector $\vec{r}$, where 0 indicates a reset, and rational \textsl{addition} vector $\vec{a}$. A \qvasr $V$ defines a transition system $(S_V, \rightarrow_V)$, with state space $S_V \subseteq \Q^d$, which can transition between states $\vec{x} \rightarrow_V \vec{x}'$, if $\vec{x}' = \vec{r} * \vec{x} + \vec{a}$ for some transformer $(\vec{r}, \vec{a}) \in V$, with $*$ being the Hadamard product. \par A \qvasr can be used to represent an overapproximation of a given transition formula. A transition formula $F$ is a first-order formula defined over free variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ that designate the state before and after a transition, where $n$ is called the dimension of the formula. Figure \ref{code} depicts a program containing a \texttt{while} loop from lines 4 - 12 for which we want to compute a loop summary using \qvasr.
-To accomplish this we need to compute a \qvasr for every path through the loop. In this example there are two paths created by the \texttt{if else} statement.
-Beginning with the \texttt{else} branch, we extract the transition formula:
+\begin{mydef}[Rational Vector Addition Systems with Resets]
+		Given two vectors $\vec{u}$, and $\vec{v}$ consisting of $d$ rational numbers, a rational vector addition system with resets (\qvasr) $V$ of dimension $d$ is a rational vector addition system $V \subseteq \{0, 1\}^d \mathbb{Q}^d$, where each transformer consists of a addition vector $\vec{a} \subseteq \mathbb{Q}^d$ and a binary reset vector $\vec{r} \subseteq \{0, 1\}^d$. A \qvasr defines a transition system \transSys{V}, with state space $S_V = \mathbb{Q}$ and transition relation $\vec{u} \rightarrow_V \vec{v}$ if and only if $\vec{v} = \vec{r} * \vec{u} + \vec{a}$ for some $(\vec{r}, \vec{a}) \in V$, with $*$ being the Hadamard product.
+\end{mydef}
+We see, that there are three distinct changes to variables modelled in \qvasr: A variable is incremented, for example \st{x:=x+1}, a variable is reset to zero, as in \st{x:=0}, or a variable is reset and then incremented to a constant, \st{x:=3}. \par
+
+A \qvasr can be used to represent an overapproximation of a given transition formula. A transition formula $F$ over variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ designate the program state before and after the transition, $n$ is called the dimension of the formula. Figure \ref{codeWithAss} depicts a program containing a \texttt{while} loop from lines 4 - 12 for which we want to compute a loop summary using \qvasr. \par
+To get a loop summary, approximating the entire loop, we need to compute a \qvasr for every path through the loop. In this example there are two paths created by the \texttt{if else} statement.
+Beginning with the \texttt{else} branch, from line 9 to 12, we extract the transition formula:
 \begin{equation*}
 	G= \ (x \leq 20 \land\ x > 10 \land x' = x + 2 \land y' = y - 3)
 \end{equation*}
-The variable $x$ is not reset but incremented by 2, variable $y$ is not reset and decremented by 3.
-We get reset vector $
+We see, that variable $x$ is not reset but incremented by 2 and variable $y$ is not reset and decremented by 3.
+Knowing this, we get reset vector $
 \vec{r}_G = \  
 \begin{bmatrix}
 	1 \\
@@ -91,12 +97,8 @@ For the remainder of this proposal we will use the following, more intuitive not
 	V_G = 
 	\begin{Bmatrix}
 		\begin{bmatrix}
-			x \\
-			y
-		\end{bmatrix} \rightarrow_{V_G}
-		\begin{bmatrix}
-			x + 2 \\
-			y - 3
+			x' = x + 2 \\
+			y' = y - 3
 		\end{bmatrix}
 	\end{Bmatrix}
 \end{equation*}
@@ -172,7 +174,7 @@ Each row of the basis corresponds to a variable in the formula such that we can 
 		\end{minipage}
 		\begin{minipage}{0.6\linewidth}
 			\begin{equation*}
-				V_H = \begin{Bmatrix} \begin{bmatrix} - x + y + z \\ y \end{bmatrix} \rightarrow_{V_H} \begin{bmatrix}	1 \\ y + 1 \end{bmatrix} \end{Bmatrix}
+				V_H = \begin{Bmatrix} \begin{bmatrix} -x' + y' + z' = 1\\ y' = y + 1 \end{bmatrix} \end{Bmatrix}
 			\end{equation*}
 		\end{minipage}
 		\caption{\qvasr-abstraction of transition formula $H$.}
