@@ -244,11 +244,11 @@ For example, the \qvasr-abstraction  $(S_H, V_H)$ of $H$ is an overapproximation
 For transition formulas with constant increments, such as $G$, the identity matrix $I$ is used as simulation matrix. These \qvasr-abstractions are precise. \par
 
 \subsection{\qvasr-Abstraction Join}
-The changes of variable valuations by the loop in $P$ can be represented by the following transition formula: 
+The changes of program variable valuations by the loop in $P$ can be represented by the transition formula: 
 \begin{equation*}
-	x \leq 20 \land (H \lor G)
+	L = x \leq 20 \land (H \lor G)
 \end{equation*}
-With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the approximation of the whole loop's behavior we need to compute the \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates every branch. We impose a partial order to model simulations between \qvasr-abstractions.
+With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the approximation of the whole loop's behavior we need to compute the \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates $L$. \\ \par We impose a partial order to model simulations between \qvasr-abstractions.
 \begin{mydef}[\qvasr-Abstraction Preorder]
 	Given two \qvasr-abstractions  \qvAbstr{1} and \qvAbstr{2}, with abstract dimensions $e$ and $d$ respectively, we define the preorder \\ of \qvasr-abstractions as \qvAbstr{1} $\preceq$ \qvAbstr{2} if and only if there exists a linear transformation $T \in \valuations^{e \times d}$ where $V_1 \vdash_S V_2$ and $TS_1 = S_2$
 \end{mydef}
