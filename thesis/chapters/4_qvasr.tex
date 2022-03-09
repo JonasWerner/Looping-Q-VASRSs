@@ -112,7 +112,7 @@ We extract the transition formula $H$ of the if branch:
 It is possible to overapproximate $H$ using a \qvasr using linear simulations.
 
 \begin{mydef}[Linear Simulation]
-	Given two transition systems $T_1 = (\valuations^n, \rightarrow_1)$ and $T_2 = (\valuations^m, \rightarrow_2)$, operating over the vector space containing reals and integers, a linear simulation from $T_1$ to $T_2$ is a linear transformation $S: \valuations^{m \times n}$ such that for all vectors $\vec{u}$, $\vec{v} \in \valuations^n$ with $\vec{u} \rightarrow_1 \vec{v}$, we have $S\vec{u} \rightarrow_2 S\vec{v}$. We denote the linear simulation from $T_1$ to $T_2$ as $T_1 \vdash_S T_2$
+	Given two transition systems $T_1 = (\valuations^n, \rightarrow_1)$ and $T_2 = (\valuations^m, \rightarrow_2)$, operating over the vector space containing rational numbers, a linear simulation from $T_1$ to $T_2$ is a linear transformation $S: \valuations^{m \times n}$ such that for all vectors $\vec{u}$, $\vec{v} \in \valuations^n$ with $\vec{u} \rightarrow_1 \vec{v}$, we have $S\vec{u} \rightarrow_2 S\vec{v}$. We denote the linear simulation from $T_1$ to $T_2$ as $T_1 \vdash_S T_2$
 \end{mydef}
 We want to synthesize a \qvasr $V_H$ and linear simulation $S_H$, such that $H \vdash_S V$. The tuple $(S_H, V_H)$ is called a \qvasr-abstraction.
 \begin{mydef}[\qvasr-Abstraction]
