@@ -53,7 +53,7 @@ A concretization of a transition system is a vector addition system that is defi
 We want to model changes to variables in a loop using rational vector addition systems, however, additions alone do not cover all possible transitions. A variable can be \textsl{reset} to an arbitrary constant. For example, the transition \st{x:=0} sets variable \texttt{x} to zero no matter what value $x$ had before the transition. We extend rational vector addition systems to rational vector addition systems with resets (\qvasr).
 
 \begin{mydef}[Rational Vector Addition Systems with Resets]
-		Given two vectors $\vec{u}$, and $\vec{v}$ consisting of $d$ rational numbers, a rational vector addition system with resets (\qvasr) $V$ of dimension $d$ is a rational vector addition system $V \subseteq \{0, 1\}^d \mathbb{Q}^d$, where each transformer consists of a addition vector $\vec{a} \subseteq \mathbb{Q}^d$ and a binary reset vector $\vec{r} \subseteq \{0, 1\}^d$. A \qvasr defines a transition system \transSys{V}, with state space $S_V = \mathbb{Q}$ and transition relation $\vec{u} \rightarrow_V \vec{v}$ if and only if $\vec{v} = \vec{r} * \vec{u} + \vec{a}$ for some $(\vec{r}, \vec{a}) \in V$, with $*$ being the Hadamard product.
+		Given two vectors $\vec{u}$, and $\vec{v}$ consisting of $d$ rational numbers, a rational vector addition system with resets (\qvasr) $V$ of dimension $d$ is a rational vector addition system $V \subseteq \{0, 1\}^d \times \mathbb{Q}^d$, where each transformer consists of a addition vector $\vec{a} \subseteq \mathbb{Q}^d$ and a binary reset vector $\vec{r} \subseteq \{0, 1\}^d$. A \qvasr defines a transition system \transSys{V}, with state space $S_V = \mathbb{Q}$ and transition relation $\vec{u} \rightarrow_V \vec{v}$ if and only if $\vec{v} = \vec{r} * \vec{u} + \vec{a}$ for some $(\vec{r}, \vec{a}) \in V$, with $*$ being the Hadamard product.
 \end{mydef}
 We see, that there are three distinct changes to variables modelled in \qvasr: A variable is incremented, for example \st{x:=x+1}, a variable is reset to zero, as in \st{x:=0}, or a variable is reset and then incremented to a constant, \st{x:=3}. \par
 
@@ -123,7 +123,7 @@ We want to synthesize a \qvasr $V_H$ and linear simulation $S_H$, such that $H \
 		\vdots & \ddots & \vdots \\
 		s_{m ,1} & \ldots & s_{m, n} \\
 	\end{bmatrix}$ 
-	such that for all transitions $\vec{x} \rightarrow_\trf \vec{x}'$ we have $S\vec{x} \rightarrow_V S\vec{x}'$. Meaning, every transition $\vec{x} \rightarrow_\trf \vec{x}'$ can be represented in $V$ by a matrix multiplication of $S$ and $\vec{x}$ and $\vec{x}'$.
+	such that for all transitions $\vec{x} \rightarrow_\trf \vec{x}'$ we have $S\vec{x} \rightarrow_V S\vec{x}'$. Meaning, every transition $\vec{x} \rightarrow_\trf \vec{x}'$ can be represented in $V$ by a matrix multiplication of $S$ and $\vec{x}$ and $\vec{x}'$. We call $n$ the abstraction's concrete, and $d$ the abstraction's abstract dimension. 
 \end{mydef}
 To abstract a transition formula $\trf$ with $n$ variables $\vec{x} = x_1, \ldots, x_n$, we need to calculate both the linear transformation matrix $S$ and the \qvasr $V$. We know that a \qvasr consists of pairs of transformers, which contain reset and addition vectors. Using the formula $S \vec{u} \rightarrow_V S\vec{u}$, we get a transition in $V$ as $S\vec{x}' = \vec{r}*S\vec{x} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as the zero vector $\vec{0}$, and get the formula $S\vec{x}' = \vec{a}$ which forms a linear set of equations that models the set of resets:
 \begin{equation*}
@@ -173,14 +173,12 @@ $Res_\trf = \{(\vec{s}_1, a_1), \ldots, (\vec{s}_m, a_m)\}$ and basis for the se
 \end{center}
 
 For transition formula $H$, we need to calculate the matrix $S_H$ and the \qvasr $V_H$.
-We use the assignments to variables: $x' = x + y, \ y'= y + 1\ z' = x$ , found in $H$, to solve the following equations for $s_1, s_2, s_3$: \\
+We use the assignments to variables: $x' = x + y, \ y'= y + 1\ z' = x$ , found in $H$, to solve the following equations for $s_1, s_2,  s_3$:
 \begin{align*}
-	Res_H: s_1(x + y) + s_2(y + 1) + s_3x = a
+	Res_H:& \hspace*{1cm} s_1(x + y) + s_2(y + 1) + s_3x = a \\
+	Inc_H:& \hspace*{1cm} s_1(x + y) + s_2(y + 1) + s_3x = s_1x + s_2y + s_3z + a
 \end{align*}
-\begin{align*}
-	Inc_H: s_1(x + y) + s_2(y + 1) + s_3x = s_1x + s_2y + s_3z + a
-\end{align*}
-resulting in:
+resulting in the following sets:
 \vspace*{-0.5em}
 \begin{center}
 	\begin{minipage}{0.5\linewidth}
@@ -194,7 +192,7 @@ resulting in:
 		\end{equation*}
 	\end{minipage}
 \end{center}
-These sets now from a vector space, and, because we want to construct a linear combinations of variables that are reset and incremented along $H$, we need to compute a basis for each space:
+$Res_H$ and $Inc_H$ form a vector space, and, because we want to construct a linear combination of reset and incremented variables along $H$, we need to compute a basis for each space:
 \vspace*{-1em}
 \begin{center}
 	\begin{minipage}{0.5\linewidth}
@@ -218,7 +216,7 @@ These sets now from a vector space, and, because we want to construct a linear c
 		\end{equation*}
 	\end{minipage}
 \end{center}
-Each row of the basis corresponds to a variable in the formula such that we can derive relations between variables. From the reset base we can deduce that the sum $-x + y + z$ is reset and incremented by $1$, meaning that after each transition of $H$ we know that $-x + y + z = 1$ holds. From the basis of additions we derive that $y$ is not reset and incremented by $1$. To form the linear transformation matrix $S_H$ we combine these rows to one coherent matrix. We see that the basis of resets and additions contain only one vector each, resulting in only one reset addition pair for $V_H$. As we have seen $-x + y + z$ is reset and $y$ is not. We get reset vector $\vec{r} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$ and because $-x + y + z$ is incremented by $1$, same as $y$, we get addition vector $\vec{a} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$. Resulting in the \qvasr-abstraction depicted in figure \ref{vasr  H}.
+Each column of the basis corresponds to a variable in the formula such that we can derive relations between variables. From the reset base we can deduce that the sum $-x + y + z$ is reset and incremented by $1$, meaning that after each transition of $H$ we know that $-x + y + z = 1$ holds. From the basis of additions we derive that $y$ is not reset and incremented by $1$. To form the linear transformation matrix $S_H$ we combine these rows to one coherent matrix. We see that the basis of resets and additions contain only one vector each, resulting in only one reset addition pair for $V_H$. As we have seen $-x + y + z$ is reset and $y$ is not. We get reset vector $\vec{r} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$ and because $-x + y + z$ is incremented by $1$, same as $y$, we get addition vector $\vec{a} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$. Resulting in the \qvasr-abstraction depicted in figure \ref{vasr  H}.
 \vspace*{-2em}
 \begin{figure}[H]
 	\begin{center}
@@ -245,15 +243,18 @@ The \qvasr-abstractions are overapproximations because they do not model single 
 For example, the \qvasr-abstraction  $(S_H, V_H)$ of $H$ is an overapproximation, because, for instance, the transition: $\begin{bNiceMatrix}[first-col=1]  x & 1\\ y & 2 \\ z & 3 \end{bNiceMatrix} \rightarrow \begin{bNiceMatrix}[last-col]  -20 & x'\\ 3 & y' \\ 18 & z' \end{bNiceMatrix}$ is possible because $-x' + y' + z' = 1$ and $y' = y + 1$ holds. In $H$ this transition is not possible, because of $z' = x$ and $x' = x + y$. \\ \par
 For transition formulas with constant increments, such as $G$, the identity matrix $I$ is used as simulation matrix. These \qvasr-abstractions are precise. \par
 
-\subsection{\qvasr Join}
-The effect on variables by the loop in $P$ can be represented by the following conjunction: 
+\subsection{\qvasr-Abstraction Join}
+The changes of variable valuations by the loop in $P$ can be represented by the following transition formula: 
 \begin{equation*}
 	x \leq 20 \land (H \lor G)
 \end{equation*}
-With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the most precise overapproximation of the whole loop's behavior we need to compute the \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates every branch in the loop. Because \qvasr-abstractions are not unique, as they depend on vector bases, they can be of varying precision. 
+With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the approximation of the whole loop's behavior we need to compute the \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates every branch. We impose a partial order to model simulations between \qvasr-abstractions.
+\begin{mydef}[\qvasr-Abstraction Preorder]
+	Given two \qvasr-abstractions  \qvAbstr{1} and \qvAbstr{2}, with abstract dimensions $e$ and $d$ respectively, we define the preorder \\ of \qvasr-abstractions as \qvAbstr{1} $\preceq$ \qvAbstr{2} if and only if there exists a linear transformation $T \in \valuations^{e \times d}$ where $V_1 \vdash_S V_2$ and $TS_1 = S_2$
+\end{mydef}
+The \qvasr-abstraction $(\tilde{S}, \tilde{V})$ for the whole loop has to simulate both $(S_G, V_G)$ and $(S_H, V_H)$, consequently $(S_G, V_G) \preceq (\tilde{S}, \tilde{V})$ and $(S_H, V_H) \preceq (\tilde{S}, \tilde{V})$ has to hold. Additionally, we want a precise as possible \qvasr-abstraction, we have to define $(\tilde{S}, \tilde{V})$ as the least upper bound with regard to the preorder. The \qvasr-abstraction that represents the least upper bound is called the \textsl{best} \qvasr-abstraction. \\ \par
 
-
-We impose a partial order $\preceq$ on \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$, with $(S_1, V_1) \preceq (S_2, V_2)$ if $(S_2, V_2)$ simulates $(S_1, V_1)$. The best abstraction $(\tilde{S}, \tilde{V})$ is the least upper bound with regard to $\preceq$, meaning $(S, V) \preceq (\tilde{S}, \tilde{V})$ for all \qvasr-abstractions $(S, V)$. The abstraction $(\tilde{S}, \tilde{V})$ computed by iteratively \textsl{joining} abstractions. Joining two \qvasr-abstractions results in a single abstraction simulating both. Figure \ref{vasr} shows the best \qvasr-abstraction of the loop in $P$, which is the result of joining $G$'s and $H$'s abstractions. \\
+The abstraction $(\tilde{S}, \tilde{V})$ computed by iteratively \textsl{joining} abstractions. Joining two \qvasr-abstractions results in a single abstraction simulating both. Figure \ref{vasr} shows the best \qvasr-abstraction of the loop in $P$, which is the result of joining $G$'s and $H$'s abstractions. \\
 \begin{center}
 	\begin{figure}[H]
 		\input{fig/matrix_ex_p0.tex}
