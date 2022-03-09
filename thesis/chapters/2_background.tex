@@ -29,7 +29,7 @@ Formulas can be quantified, we define quantifiers as:
 
 \subsubsection{Syntax}
 We firstly introduce our first-order logic syntax.
-Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$ be a vocabulary consisting of the countable sets:
+Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$ be a vocabulary consisting of the countable sets:
 \begin{itemize}
 	\item $\vocab{Var}$ containing all \textsl{variables}
 	\item $\vocab{Const}$ containing all \textsl{constant symbols}
@@ -38,7 +38,7 @@ Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$ be a vocabular
 \end{itemize}
 Assume we are given such a vocabulary, we can construct first-order logic terms using the symbols in the vocabulary.
 \begin{mydef}[Term] 
-	Given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, we define terms inductively as follows:
+	Given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$, we define terms inductively as follows:
 	\begin{itemize}
 		\item Every $x \in \vocab{Var}$ is a term.
 		\item Every $c \in \vocab{Const}$ is a term.
@@ -47,10 +47,10 @@ Assume we are given such a vocabulary, we can construct first-order logic terms 
 \end{mydef}
 Using first-order logic terms, we can introduce first-order logic formulas.
 \begin{mydef}[Formula]
-	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, first-order logic formulas are inductively defined as follows:
+	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$, first-order logic formulas are inductively defined as follows:
 	\begin{itemize}
 		\item $\bot$ is a formula.
-		\item If  $t_0, \ldots, t_n$ are terms, and $p \in \vocab{pred}$ is a predicate symbol with arity $n$, \\ then $p(t_0, \ldots, t_n)$ is a formula.
+		\item If  $t_0, \ldots, t_n$ are terms, and $p \in \vocab{Pred}$ is a predicate symbol with arity $n$, \\ then $p(t_0, \ldots, t_n)$ is a formula.
 		\item If $\varphi$ is a formula, then $\neg \varphi$ is a formula.
 		\item If $\varphi$ and $\psi$ are formulas, then $\varphi \land \psi$ are formulas.
 		\item If $\varphi$ is a formula, and $x \in \vocab{Var}$ then $\exists x. \varphi$ is a formula.
@@ -58,7 +58,7 @@ Using first-order logic terms, we can introduce first-order logic formulas.
 \end{mydef}
 To give variables, constants, functions, and predicates concrete values, we can assign them a model.
 \begin{mydef}[Model]
-	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, a model $\mathcal{M} = (D, \interpret)$ is a tuple consisting of a nonempty set $D$, called interpretation domain, and an interpretation function \interpret that assigns constants, functions, and predicates over $D$ to symbols in $V$. $M$ has the following characteristics:
+	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$, a model $\mathcal{M} = (D, \interpret)$ is a tuple consisting of a nonempty set $D$, called interpretation domain, and an interpretation function \interpret that assigns constants, functions, and predicates over $D$ to symbols in $V$. $M$ has the following characteristics:
 	\begin{itemize}
 		\item The domain of \interpret is $\vocab{Const} \cup \vocab{Fun} \cup \vocab{Pred}$
 		\item \interpret maps every constant symbol $c \in \vocab{Const}$ to an element in $D$
@@ -68,24 +68,24 @@ To give variables, constants, functions, and predicates concrete values, we can 
 \end{mydef}
 Using a model, we can now assign concrete values to variables.
 \begin{mydef}[Assignment of Variables]
-	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, and model $\mathcal{M} = (D, \interpret)$, an assignment of variable $v \in \vocab{Var}$ is a function $\rho: v \rightarrow D$. Mapping each variable a value in domain $D$.
+	Given vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$, and model $\mathcal{M} = (D, \interpret)$, an assignment of variable $v \in \vocab{Var}$ is a function $\rho: v \rightarrow D$. Mapping each variable a value in domain $D$.
 \end{mydef}
 Assume $f \in \vocab{Fun}$ is a function defined as $f: X \mapsto Y$ with some domain $X$ and range $Y$. Let $x \in X$ and $y \in Y$, we use $f[x \mapsto y]$  to denote the function that maps all $\bar{x} \in X \backslash \{ x \}$ to $f(\bar{x})$ and $x$ to $y$.
 
 \subsubsection{Semantics}
-Assume we are given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$, we know how to assign values using models and variable assignments. The task now is to understand how to interpret them. This section serves to introduce semantics of fist-order logic.
+Assume we are given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$, we know how to assign values using models and variable assignments. The task now is to understand how to interpret them. This section serves to introduce semantics of fist-order logic.
 \begin{mydef}[Evaluation of Terms]
-	Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, and $\rho$ a variable assignment. The evaluation of terms is a function $\eval{\cdot}$ that is inductively defined as:
+	Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, and $\rho$ a variable assignment. The evaluation of terms is a function $\eval{\cdot}$ that is inductively defined as:
 	\begin{itemize}
 		\item For each $v \in \vocab{Var}$, $\eval{v} = \rho(v)$
 		\item For each $c \in \vocab{Const}$, $\eval{c} = \interpret(c)$
-		\item If $t_0, \ldots, t_n$ are terms, $f \in \vocab{Fun}$, with f having arity $n$ then \\ $\eval{f(t_0, \cdots, t_n)}$ is $\interpret(f)(\eval{t_0}, \ldots, \eval{t_n})$
+		\item If $t_0, \ldots, t_n$ are terms, $f \in \vocab{Fun}$, with f having arity $n$ then \\ $\eval{f(t_0, \cdots, t_n)} = \interpret(f)(\eval{t_0}, \ldots, \eval{t_n})$
 	\end{itemize}
 \end{mydef}
 From the evaluation of terms we can derive the evaluation of formulas, which decides whether a formula is \textsl{true} or \textsl{false}.
 
 \begin{mydef}[Evaluation of Formulas]
-		Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, a variable assignment $\rho$, and $\varphi_0, \varphi_1$ being first-order logic formulas over $V$. The evaluation of formulas is a function $\eval{\cdot}$ that is inductively defined as: \\
+		Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, a variable assignment $\rho$, and $\varphi_0, \varphi_1$ being first-order logic formulas over $V$. The evaluation of formulas is a function $\eval{\cdot}$ that is inductively defined as: \\
 		\begin{itemize}
 			\item {\makebox[3cm]{$\eval{\bot} \hfill$}} \textbf{false}
 			\item {\makebox[3cm]{$ \eval{p(t_0, \ldots, t_n)} \hfill$}} 
@@ -123,7 +123,7 @@ A formula $\varphi$ is called satisfiable if there exists a model $\mathcal{M} =
 In this chapter we will introduce our understanding on how to model programs using first-order logic. We will begin with our syntax of programs, then explain program statement semantics.
 
 \subsubsection{Program Syntax}
-Assume we are given the example program as seen in figure \ref{codeNoAss}. We see that the code contains various typed variables such as \texttt{x:int} and instructions over these variables. \\ These instructions use the following context-free grammar $\Sigma$ that is a derived and simplified version of the grammar of the intermediate verification language Boogie\cite{Boogie}.
+Assume we are given the example program as seen in Figure \ref{codeNoAss}. We can see that the code contains various typed variables such as \texttt{x:int} and instructions over these variables. \\ These instructions use the following context-free grammar $\Sigma$ that is a derived and simplified version of the grammar of the intermediate verification language Boogie\cite{Boogie}.
 \setlength{\grammarparsep}{20pt plus 1pt minus 1pt} % increase separation between rules
 \setlength{\grammarindent}{12em} % increase separation between LHS/RHS
 \begin{figure}[H]
