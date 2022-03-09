@@ -7,7 +7,81 @@
 	15 pages
 \end{comment}
 
-This chapter shall introduce our understanding and notation of logic and formulas, programs, control-flow, and other needed background definitions. Furthermore, we will give an overview of the \traceabstraction \cite{10.1007/978-3-642-03237-0_7} counterexample-guided abstraction refinement scheme used in \ultimate.
+This chapter will introduce mathematical background, our understanding and notation of logic and formulas, programs, control-flow, and other needed background definitions. Furthermore, we will give an overview of the \traceabstraction \cite{10.1007/978-3-642-03237-0_7} counterexample-guided abstraction refinement scheme used in \ultimate.
+
+\subsection{Mathematical Background}
+In this thesis we utilize various concepts of linear algebra, such as vector spaces, vector space bases, and more. This section will introduce our notations and definitions.
+We define a \textsl{vector} as $\vec{x} = x_1, \ldots, x_n$ that consists of $n$ entries, $n$ is called the dimension of the vector. The vector containing only zeroes is denoted as $\vec{0}$, the vector containing only ones by $\vec{1}$. \\ \par We denote a \textsl{matrix} as
+$S = \begin{bmatrix}
+	s_{1 ,1} & \ldots & s_{1, n} \\
+	\vdots & \ddots & \vdots \\
+	s_{m ,1} & \ldots & s_{m, n} \\
+\end{bmatrix}
+$
+with entries $s_{1, 1}, \ldots, s_{m, n}$. The integers $n$ and $m$ denote the number of columns and the number of rows respectively. A vector can be understood as a matrix of dimensions $1 \times n$, called row vector, or as a matrix of dimension $n \times 1$, called column vector.
+We define the following operations on vectors and matrices.
+\begin{mydef}[Scalar Multiplication]
+	Given a scalar $a$ and an $m \times n$ matrix \\ $S = 
+	\begin{bmatrix}
+		a_{11} & \ldots & a_{1n} \\
+		\vdots & \ddots & \vdots \\
+		a_{m1} & \ldots & a_{mn} \\
+	\end{bmatrix}$, the scalar multiplication $aS =
+	\begin{bmatrix}
+		c_{11} & \ldots & c_{1p} \\
+		\vdots & \ddots & \vdots \\
+		c_{m1} & \ldots & c_{mp} \\
+	\end{bmatrix}$ produces an $m \times n$ matrix with entries \[c_{ij} =  a \cdot a_{ij} \] for $1 \leq i \leq m$ and $1 \leq j \leq p$.
+\end{mydef}
+\begin{mydef}[Matrix Multiplication]
+	Given the $m \times n$ matrix $A = 
+	\begin{bmatrix}
+		a_{11} & \ldots & a_{1n} \\
+		\vdots & \ddots & \vdots \\
+		a_{m1} & \ldots & a_{mn} \\
+	\end{bmatrix}$, and the $n \times p$ matrix $B = 
+	\begin{bmatrix}
+	b_{11} & \ldots & b_{1p} \\
+	\vdots & \ddots & \vdots \\
+	b_{n1} & \ldots & b_{np} \\
+\end{bmatrix}$, the matrix product $AB = 
+	\begin{bmatrix}
+	c_{11} & \ldots & c_{1p} \\
+	\vdots & \ddots & \vdots \\
+	c_{m1} & \ldots & c_{mp} \\
+	\end{bmatrix}$ produces the $m \times p$ matrix $AB$ with entries \[c_{i,j} = \sum_{k=1}^n a_{ik}\cdot b_{kj}\] for $1 \leq i \leq m$ and $1 \leq j \leq p$.
+\end{mydef}
+\begin{mydef}[Hadamard Product]
+	Given matrices of same dimensions $m \times n$ $A = 
+	\begin{bmatrix}
+		a_{1 ,1} & \ldots & a_{1, n} \\
+		\vdots & \ddots & \vdots \\
+		a_{m ,1} & \ldots & a_{m, n} \\
+	\end{bmatrix}$, and $B = 
+	\begin{bmatrix}
+		b_{1 ,1} & \ldots & b_{1, n} \\
+		\vdots & \ddots & \vdots \\
+		b_{m ,1} & \ldots & b_{m, n} \\
+	\end{bmatrix}$, the hadamard product $A*B = 
+	\begin{bmatrix}
+		c_{1 ,1} & \ldots & c_{1, p} \\
+		\vdots & \ddots & \vdots \\
+		c_{m ,1} & \ldots & c_{m, p} \\
+	\end{bmatrix}$  produces an $m \times n$ matrix with entries $c_{i,j} = a_{ij} \cdot b_{ij}$ for $1 \leq i \leq m$ and $1 \leq j \leq p$.
+\end{mydef}
+\begin{mydef}[Linear Dependence]
+	The sequence of vectors $\vec{x_1}, \ldots, \vec{x_n}$ of same dimension $d$, is linear independent, if and only if there exists no non zero scalars $a_1, \ldots, a_d$ such that $a_1\vec{x_1} + \ldots + a_n\vec{x_n} = \vec{0}$
+\end{mydef}
+\begin{mydef}[Vector Spaces]
+	The set of vectors $S = \{\vec{x_1}, \ldots, \vec{x_n}\}$ is called a vector space.
+\end{mydef}
+\begin{mydef}[Linear Combination]
+	Given a vector space $S = S = \{\vec{x_1}, \ldots, \vec{x_n}\}$ and a sequence of scalars $a_1, \ldots, a_n$, a linear combination of vectors and scalars is the sum $a_1\vec{x_1} + \ldots + a_n\vec{n}$
+\end{mydef}
+\begin{mydef}[Vector Space Basis]
+	Given a vector space $S$, a set of vectors $B \subseteq S$ is a basis for vector space $S$ if its elements are linearly independent and every element of $S$ is a linear combination of elements of B.
+\end{mydef}
+
 
 \subsection{Logical Background}
 To represent programs formally, we make use of first-order logic. This chapter will introduce our definitions and notations used throughout this thesis.
