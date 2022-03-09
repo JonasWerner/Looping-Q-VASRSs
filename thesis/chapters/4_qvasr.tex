@@ -115,20 +115,19 @@ We can approximate $H$ with a \qvasr, using linear simulations.
 \begin{mydef}[Linear Simulation]
 	Given two transition systems $T_1 = (\valuations^n, \rightarrow_1)$ and $T_2 = (\valuations^m, \rightarrow_2)$, operating over the vector space containing reals and integers, a linear simulation from $T_1$ to $T_2$ is a linear transformation $S: \valuations^{m \times n}$ such that for all vectors $\vec{u}$, $\vec{v} \in \valuations^n$ with $\vec{u} \rightarrow_1 \vec{v}$, we have $S\vec{u} \rightarrow_2 S\vec{v}$. We denote the linear simulation from $T_1$ to $T_2$ as $T_1 \vdash_S T_2$
 \end{mydef}
-The task now is to synthesize a \qvasr $V$ and linear simulation $S$, such that $\trf \vdash_S V$.
+We want to synthesize a \qvasr $V_H$ and linear simulation $S_H$, such that $H \vdash_S V$. The tuple $(S_H, V_H)$ is called a \qvasr-abstraction.
 
 \begin{mydef}[\qvasr-Abstraction]
-	 Given a transition formula \trf of dimension $n$ and a \qvasr $V$ of dimension $m$, a linear simulation from \trf to $V$ is a linear transformation matrix: 
+	Given a transition formula \trf of dimension $n$ and a \qvasr $V$ of dimension $m$, a linear simulation from \trf to $V$ is a linear transformation matrix: 
 	$S = 
 	\begin{bmatrix}
 		s_{1 ,1} & \ldots & s_{1, n} \\
 		\vdots & \ddots & \vdots \\
 		s_{m ,1} & \ldots & s_{m, n} \\
 	\end{bmatrix}$ 
-	such that for all transitions $\vec{x} \rightarrow_\trf \vec{x}'$ we have $S\vec{x} \rightarrow_V S\vec{x}'$. Meaning, every transition $\vec{x} \rightarrow_\trf \vec{x}'$ can be represented in $V$ by a matrix multiplication of $S$ and $\vec{x}$ and $\vec{x}'$. The tuple $(S, V)$ is called a \qvasr-abstraction.
+	such that for all transitions $\vec{x} \rightarrow_\trf \vec{x}'$ we have $S\vec{x} \rightarrow_V S\vec{x}'$. Meaning, every transition $\vec{x} \rightarrow_\trf \vec{x}'$ can be represented in $V$ by a matrix multiplication of $S$ and $\vec{x}$ and $\vec{x}'$.
 \end{mydef}
-
-To abstract a transition formula $\trf$ with $n$ variables $\vec{x} = x_1, \ldots, x_n$, we need to calculate both the linear transformation matrix $S$ and the \qvasr $V$. We know that a \qvasr consists of pairs of transformers, which contain reset and addition vectors. We use the formula $S \vec{u} \rightarrow_V S\vec{u}$ to get a transition in $V$ as $S\vec{x}' = \vec{r}*S\vec{x} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as the zero vector $\vec{0}$, we get the formula $S\vec{x}' = \vec{a}$ which forms a linear set of equations that models the set of resets:
+To abstract a transition formula $\trf$ with $n$ variables $\vec{x} = x_1, \ldots, x_n$, we need to calculate both the linear transformation matrix $S$ and the \qvasr $V$. We know that a \qvasr consists of pairs of transformers, which contain reset and addition vectors. Using the formula $S \vec{u} \rightarrow_V S\vec{u}$, we get a transition in $V$ as $S\vec{x}' = \vec{r}*S\vec{x} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as the zero vector $\vec{0}$, and get the formula $S\vec{x}' = \vec{a}$ which forms a linear set of equations that models the set of resets:
 \begin{equation*}
 	Res_\trf = \left\{ (\sn, a)\ |\ \sn \cdot \pn = a \right\}	
 \end{equation*}
@@ -146,7 +145,7 @@ For the set of additions, we consider $\vec{r}$ as the constant one vector $\vec
 	Inc_H = \left\{(\s, a) | H \models \s \cdot \p = \s \cdot \up + a\right\}	
 	\end{equation*}
 \end{comment}
-By solving the following equations for $s_1, \ldots s_n$: \\
+By solving the following equations for $s_1, \ldots, s_n$: \\
 \begin{align*}
 	Res\trf &= \sn \cdot \pn = a \\
  			&= s_1x_1 + \ldots s_nx_n = a
@@ -156,8 +155,7 @@ By solving the following equations for $s_1, \ldots s_n$: \\
 	Inc_\trf &= \sn \cdot \pn = \sn \cdot \upn + a  \\ \vspace{0.5cm}
 			 &= s_1x_1' + \ldots s_nx_n' = s_1x_1 + \ldots + s_nx_n + a
 \end{align*}
-
-We get a vector space for which we then need to compute a basis. Assume we have basis for the set of resets:
+We get a vector space for which we need to compute a basis. Assume we have basis for the set of resets:
 $Res_\trf = \{(\vec{s}_1, a_1), \ldots, (\vec{s}_m, a_m)\}$ and basis for the set of additions as: $Inc_\trf = \{(\vec{s}_{m+1}, a_{m+1}), \ldots, (\vec{s}_d, a_d)\}$. \\ We construct the \qvasr-abstraction $(S, V)$ as: \\
 \begin{center}
 \begin{minipage}{0.3\linewidth}
@@ -177,15 +175,15 @@ $Res_\trf = \{(\vec{s}_1, a_1), \ldots, (\vec{s}_m, a_m)\}$ and basis for the se
 \end{minipage}
 \end{center}
 
-To abstract the transition formula $H$, we need to calculate both the linear transformation matrix $S_H$ and the \qvasr $V_H$. We know that a \qvasr consists of pairs of transformers, which contain reset and addition vectors. We use the formula $S \cdot \vec{u} \rightarrow_V S \cdot \vec{u}$ to get a transition in $V_H$ as $S\cdot\vec{x}' = \vec{r}*S\cdot\vec{x} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as the zero vector $\vec{0}$, which forms a linear set of equations that model a set of resets:
-\begin{equation*}
-	Res_H = \left\{ (\s, a) : H \models \s \cdot \p = a \right\}	
-\end{equation*}
-For the set of additions, we consider $\vec{r}$ as the constant one vector $\vec{1}$ which forms the set of additions as:
-\begin{equation*}
-	Inc_H = \left\{(\s, a) : H \models \s \cdot \p = \s \cdot \up + a\right\}	
-\end{equation*}
-We use the updates to variables: $x' = x + y, \ y'= y + 1\ z' = x$ , found in $H$, to solve the equations in the sets for \s, resulting in: 
+For transition formula $H$, we need to calculate the matrix $S_H$ and the \qvasr $V_H$.
+We use the updates to variables: $x' = x + y, \ y'= y + 1\ z' = x$ , found in $H$, to solve the following equations for $s_1, s_2, s_3$: \\
+\begin{align*}
+	Res_H: s_1(x + y) + s_2(y + 1) + s_3x = a
+\end{align*}
+\begin{align*}
+	Inc_H: s_1(x + y) + s_2(y + 1) + s_3x = s_1x + s_2y + s_3z + a
+\end{align*}
+resulting in:
 \vspace*{-0.5em}
 \begin{center}
 	\begin{minipage}{0.5\linewidth}
