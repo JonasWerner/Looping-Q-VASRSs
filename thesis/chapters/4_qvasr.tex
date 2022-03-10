@@ -103,8 +103,10 @@ For the remainder of this thesis we will use the following, more intuitive notat
 		\end{bmatrix}
 	\end{Bmatrix}
 \end{equation*}
-\subsection{\qvasr-Abstraction}
+\subsection{\qvasr Summarization}
 \qvasr can only model the aforementioned three transitions: increment, reset, and reset and increment. Increments, and resets and increments, however, are tied to constant variable changes. Updates that reference, for example, other variables, cannot be modeled as a \qvasr. When we look at the example program \ref{cfg:P:Ass}, we can see that in the \texttt{if} branch there are increments that reference other variables, such as \st{z:=x} and \st{x:=x+y}. \\
+
+\subsubsection{\qvasr-Abstraction}
 We extract the transition formula $H$ of the if branch:
 \begin{equation*}
 	H= \ (x \leq 10 \land x' = x + y\ \land\ y' = y + 1 \land z' = x)
@@ -243,7 +245,7 @@ The \qvasr-abstractions are overapproximations because they do not model single 
 For example, the \qvasr-abstraction  $(S_H, V_H)$ of $H$ is an overapproximation, because, for instance, the transition: $\begin{bNiceMatrix}[first-col=1]  x & 1\\ y & 2 \\ z & 3 \end{bNiceMatrix} \rightarrow \begin{bNiceMatrix}[last-col]  -20 & x'\\ 3 & y' \\ 18 & z' \end{bNiceMatrix}$ is possible because $-x' + y' + z' = 1$ and $y' = y + 1$ holds. In $H$ this transition is not possible, because of $z' = x$ and $x' = x + y$. \\ \par
 For transition formulas with constant increments, such as $G$, the identity matrix $I$ is used as simulation matrix. These \qvasr-abstractions are precise. \par
 
-\subsection{\qvasr-Abstraction Join}
+\subsubsection{\qvasr-Abstraction Join}
 The changes of program variable valuations by the loop in $P$ can be represented by the transition formula: 
 \begin{equation*}
 	L = x \leq 20 \land (H \lor G)
