@@ -259,7 +259,7 @@ With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstracti
 \begin{mydef}[\qvasr-Abstraction Preorder]
 	Given two \qvasr-abstractions  \qvAbstr{1} and \qvAbstr{2}, with abstract dimensions $e$ and $d$ respectively, we define the preorder \\ of \qvasr-abstractions as \qvAbstr{1} $\preceq$ \qvAbstr{2} if and only if there exists a linear transformation $T \in \valuations^{e \times d}$ where $V_1 \vdash_S V_2$ and $TS_1 = S_2$
 \end{mydef}
-The \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ $L$ has to simulate both $(S_G, V_G)$ and $(S_H, V_H)$, consequently $(S_G, V_G) \preceq (\tilde{S}, \tilde{V})$ and $(S_H, V_H) \preceq (\tilde{S}_L, \tilde{V}_L)$ has to hold. Additionally, we want a precise as possible \qvasr-abstraction, we have to define $(\tilde{S}_L, \tilde{V}_L)$ as the least upper bound with regard to the preorder. The \qvasr-abstraction that represents the least upper bound is called the \textsl{best} \qvasr-abstraction. \\ \par
+The \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ has to simulate both $(S_G, V_G)$ and $(S_H, V_H)$, consequently $(S_G, V_G) \preceq (\tilde{S}, \tilde{V})$ and $(S_H, V_H) \preceq (\tilde{S}_L, \tilde{V}_L)$ has to hold. Additionally, we want a precise as possible \qvasr-abstraction, we have to define $(\tilde{S}_L, \tilde{V}_L)$ as the least upper bound with regard to the preorder. The \qvasr-abstraction that represents the least upper bound is called the \textsl{best} \qvasr-abstraction. \\ \par
 
 Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ to compute a best \\ \qvasr-abstraction $(\tilde{S}, \tilde{V})$ such that $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and $(S_2, V_2) \preceq (\tilde{S}, \tilde{V})$ we use the definition of the preorder, to describe that if $(\tilde{S}, \tilde{V})$ is an upper bound of $(S_1, V_1)$ and $(S_2, V_2)$ then there exists matrices $T_1$ and $T_2$ such that $T_1S_1 = \tilde{S} = T_2S_2$ with $V_1 \vdash_{T_1} \tilde{V}$ and $V_2 \vdash_{T_2} \tilde{V}$. To compute the unknown $T_1$ and $T_2$ we convert the equation $T_1S_1 = \tilde{S} = T_2S_2$ to $T_1S_1 = T_2S_2$. \\
 We have $T_1S_1 = T_2S_2$ if and only if, each pair of rows $(\vec{t}_{1i}\vec{t}_{2i})$ of $T_1$ and $T_2$, is part of the set $\{ (t_1t_2)\ |\  \vec{t}_1S_1 = \vec{t}_2S_2\}$. Observe that this set forms a vector space, a basis for this space form our $(\vec{t}_{1i}\vec{t}_{2i})$. \\ \par
@@ -395,7 +395,7 @@ Now, we can join the two \qvasr to get $\tilde{V}_L$:
 				-5 \\
 				-3 
 			\end{bmatrix}
-		\end{pmatrix}
+		\end{pmatrix}, 
 		\begin{pmatrix}
 			\begin{bmatrix}
 				0 \\
@@ -408,15 +408,17 @@ Now, we can join the two \qvasr to get $\tilde{V}_L$:
 		\end{pmatrix}
 	\end{Bmatrix}
 \end{align*}
- 	
-The abstraction $(\tilde{S}, \tilde{V})$ computed by iteratively \textsl{joining} abstractions. Joining two \qvasr-abstractions results in a single abstraction simulating both. Figure \ref{vasr} shows the best \qvasr-abstraction of the loop in $P$, which is the result of joining $G$'s and $H$'s abstractions. \\
+Combining $S_L$ and $V_L$, we get the final best \qvasr-abstraction of the loop, represented by its transition formula $L$ as seen in Figure \ref{vasr}.
 \begin{center}
 	\begin{figure}[H]
 		\input{fig/matrix_ex_p0.tex}
-		\caption{Best \qvasr-abstraction of the loop in $P$.}
+		\caption{Best \qvasr-abstraction of the transition formula $L$.}
 		\label{vasr}
 	\end{figure}
 \end{center}
+The computation of a best \qvasr-abstraction using two \qvasr-abstraction is called \qvasr-join. Joining two \qvasr-abstractions results in a single abstraction simulating both.
+
+\subsubsection{\qvasr Summary}
 Using this \qvasr-abstraction we can derive the following transition formula as loop summary:
 \begin{align*}
 	\exists k_1, k_2.\ &((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \land\ y' = y + k_1 - 3k_2)\ \\ &\lor\ x' = x\ \land\ y' = y\ \land\ z' = z
