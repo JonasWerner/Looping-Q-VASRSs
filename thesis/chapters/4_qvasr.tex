@@ -57,7 +57,7 @@ We want to model changes to variables in a loop using rational vector addition s
 \end{mydef}
 We see, that there are three distinct changes to variables modelled in \qvasr: A variable is incremented, for example \st{x:=x+1}, a variable is reset to zero, as in \st{x:=0}, or a variable is reset and then incremented to a constant, \st{x:=3}. \par
 
-A \qvasr can be used to represent an overapproximation of a given transition formula. A transition formula $\trf_1$ over variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ designate the program state before and after the transition, $n$ is called the dimension of the formula. Transition formula $\trf_1$ defines a transition system $(S_{\trf_1}, \rightarrow_{\trf_1})$, where $S_{\trf_1}$ is defined over the domains of $\vec{x}$, whereas two program states $\sigma_1$, $\sigma_2$ can transition $\sigma_1 \rightarrow_{\trf_1}$ if and only if the variable valuations of $\sigma_1$ as $\vec{x}$ and valuations of $\sigma_2$ as $\vec{x}'$ is valid. \\ \par
+A \qvasr can be used to represent an overapproximation of a given transition formula. A transition formula $\trf_1$ over variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ designate the program state before and after the transition, $n$ is called the dimension of the formula. Transition formula $\trf_1$ defines a transition system $(S_{\trf_1}, \rightarrow_{\trf_1})$, where $S_{\trf_1}$ is defined over the domains of $\vec{x}$, whereas two program states $\sigma_1$, $\sigma_2$ can transition $\sigma_1 \rightarrow_{\trf_1} \sigma_2$ if and only if the variable valuations of $\sigma_1$ as $\vec{x}$ and valuations of $\sigma_2$ as $\vec{x}'$ is valid. \\ \par
 Figure \ref{codeWithAss} depicts a program containing a \texttt{while} loop from lines 4 - 12 for which we want to compute a loop summary using \qvasr. \par
 To get a loop summary, approximating the entire loop, we need to compute a \qvasr for every path through the loop. In this example there are two paths created by the \texttt{if else} statement.
 Beginning with the \texttt{else} branch, from line 9 to 12, we extract the transition formula:
@@ -65,7 +65,7 @@ Beginning with the \texttt{else} branch, from line 9 to 12, we extract the trans
 	G= \ (x \leq 20 \land\ x > 10 \land x' = x + 2 \land y' = y - 3)
 \end{equation*}
 We see, that variable $x$ is not reset but incremented by 2 and variable $y$ is not reset and decremented by 3.
-Knowing this, we get reset vector $
+Knowing this, we get reset vector: $
 \vec{r}_G = \  
 \begin{bmatrix}
 	1 \\
@@ -129,11 +129,11 @@ We want to synthesize a \qvasr $V_H$ and linear simulation $S_H$, such that $H \
 \end{mydef}
 To abstract a transition formula $\trf$ with $n$ variables $\vec{x} = x_1, \ldots, x_n$, we need to calculate both the linear transformation matrix $S$ and the \qvasr $V$. We know that a \qvasr consists of pairs of transformers, which contain reset and addition vectors. Using the formula $S \vec{u} \rightarrow_V S\vec{u}$, we get a transition in $V$ as $S\vec{x}' = \vec{r}*S\vec{x} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as the zero vector $\vec{0}$, and get the formula $S\vec{x}' = \vec{a}$ which forms a linear set of equations that models the set of resets:
 \begin{equation*}
-	Res_\trf = \left\{ (\sn, a)\ |\ \sn \cdot \pn = a \right\}	
+	Res_\trf = \left\{ (\sn, a)\ |\ \sn \pn = a \right\}	
 \end{equation*}
 For the set of additions, we consider $\vec{r}$ as the constant one vector $\vec{1}$, and get formula $S\vec{x}' = S\vec{x} + \vec{a}$ which forms the set of additions as:
 \begin{equation*}
-	Inc_\trf = \left\{(\sn, a)\ |\ \sn \cdot \pn = \sn \cdot \upn + a\right\}	
+	Inc_\trf = \left\{(\sn, a)\ |\ \sn \pn = \sn \upn + a\right\}	
 \end{equation*}
 \begin{comment}
 	\begin{equation*}
@@ -146,12 +146,12 @@ For the set of additions, we consider $\vec{r}$ as the constant one vector $\vec
 \end{comment}
 By solving the following equations for $s_1, \ldots, s_n$: \\
 \begin{align*}
-	Res\trf &= \sn \cdot \pn = a \\
+	Res_\trf &= \sn \pn = a \\
  			&= s_1x_1 + \ldots s_nx_n = a
 \end{align*}
 
 \begin{align*}
-	Inc_\trf &= \sn \cdot \pn = \sn \cdot \upn + a  \\ \vspace{0.5cm}
+	Inc_\trf &= \sn \pn = \sn \upn + a  \\ \vspace{0.5cm}
 			 &= s_1x_1' + \ldots s_nx_n' = s_1x_1 + \ldots + s_nx_n + a
 \end{align*}
 We get two sets that represent linear combinations of variables that are reset and incremented across \trf. We observe that the two form a vector space. These spaces can be represented using vector space basis vectors, meaning, we have to compute a basis. Assume we have basis for the set of resets:
@@ -237,7 +237,7 @@ Each column of the basis corresponds to a variable in the formula such that we c
 	\end{center}
 \end{figure}
 \vspace*{-2em}
-Given a transition formula \trf with variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ a \qvasr-abstraction $(S, V)$ that simulates \trf, with transformer $(\vec{r}_1, \vec{a}_1), \ldots, (\vec{r}_m, \vec{a}_m) \in V$ where each $\vec{r}_i, \vec{a}_i$ has $d$ entries, we compute a transition formula overapproximating \trf by constructing the following disjunction:
+Given a transition formula \trf with variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ a \qvasr-abstraction $(S, V)$ that simulates \trf, with transformer $(\vec{r}_1, \vec{a}_1), \ldots, (\vec{r}_m, \vec{a}_m) \in V$ where each $\vec{r}_i, \vec{a}_i$ has $d$ entries, we compute a transition formula overapproximating one transition of \trf by constructing the following disjunction:
 \begin{equation*}
 	\bigvee\limits_{i=1}^m \bigwedge\limits_{j=0}^d S\vec{x}' = S\vec{x} * \vec{r}_j + \vec{a}_j
 \end{equation*}
@@ -256,7 +256,7 @@ With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstracti
 \end{mydef}
 The \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ $L$ has to simulate both $(S_G, V_G)$ and $(S_H, V_H)$, consequently $(S_G, V_G) \preceq (\tilde{S}, \tilde{V})$ and $(S_H, V_H) \preceq (\tilde{S}_L, \tilde{V}_L)$ has to hold. Additionally, we want a precise as possible \qvasr-abstraction, we have to define $(\tilde{S}_L, \tilde{V}_L)$ as the least upper bound with regard to the preorder. The \qvasr-abstraction that represents the least upper bound is called the \textsl{best} \qvasr-abstraction. \\ \par
 
-Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ to compute a best \qvasr-abstraction $(\tilde{S}, \tilde{V})$ such that $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and $(S_2, V_2) \preceq (\tilde{S}, \tilde{V})$ we use the definition of the preorder, to describe that if $(\tilde{S}, \tilde{V})$ is an upper bound of $(S_1, V_1)$ and $(S_2, V_2)$ then there exists matrices $T_1$ and $T_2$ such that $T_1S_1 = \tilde{S} = T_2S_2$ with $V_1 \vdash_{T_1} \tilde{V}$ and $V_2 \vdash_{T_2} \tilde{V}$. To compute the unknown $T_1$ and $T_2$ we convert the equation $T_1S_1 = \tilde{S} = T_2S_2$ to $T_1S_1 = T_2S_2$. \\
+Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ to compute a best \\ \qvasr-abstraction $(\tilde{S}, \tilde{V})$ such that $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and $(S_2, V_2) \preceq (\tilde{S}, \tilde{V})$ we use the definition of the preorder, to describe that if $(\tilde{S}, \tilde{V})$ is an upper bound of $(S_1, V_1)$ and $(S_2, V_2)$ then there exists matrices $T_1$ and $T_2$ such that $T_1S_1 = \tilde{S} = T_2S_2$ with $V_1 \vdash_{T_1} \tilde{V}$ and $V_2 \vdash_{T_2} \tilde{V}$. To compute the unknown $T_1$ and $T_2$ we convert the equation $T_1S_1 = \tilde{S} = T_2S_2$ to $T_1S_1 = T_2S_2$. \\
 We have $T_1S_1 = T_2S_2$ if and only if, each pair of rows $(\vec{t}_{1i}\vec{t}_{2i})$ of $T_1$ and $T_2$, is part of the set $\{ (t_1t_2)\ |\  \vec{t}_1S_1 = \vec{t}_2S_2\}$. Observe that this set forms a vector space, a basis for this space form our $(\vec{t}_{1i}\vec{t}_{2i})$. \\ \par
 For example, assume we are given simulation matrices: 
 \begin{align*}
@@ -283,9 +283,18 @@ Now we insert $T_G$ and $T_H$ into the formula $T_GS_G = \tilde{S}_L = T_HS_H$:
 \begin{align*}
 	\begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\0 & 0 & 1 \end{bmatrix} = \begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix} = \begin{bmatrix}  1 & 0 \\  0 & 1\end{bmatrix}\begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix}
 \end{align*}
-to get the $\tilde{S}_L = \begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix}$
+to get $\tilde{S}_L = \begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix}$ \\ \par
 
+Knowing how to compute a simulation matrix, we move on to the calculation of the \qvasr. Firstly, we need to introduce \qvasr coherence 
 
+\begin{mydef}[\qvasr Coherence Classes]
+	Given a \qvasr $V$ of dimension $d$, we say dimensions $i, j \in \{1, \ldots, d\}$ are coherent, if for all transformer $(\vec{r}, \vec{a}) \in V$, $r_i = r_j$ holds. This means that if a transition in $V$ resets $i$ it also resets $j$ and vice versa. We denote coherence as $i \equiv_V j$ and observe that coherence forms an equivalence relation on dimensions $\{1, \ldots, d\}$. We call the equivalence classes coherence classes of $V$.
+\end{mydef}
+Given a matrix $T \in \mathbb{Q}^{e \times d}$ and a \qvasr $V$ of dimension $d$ with $k$ coherence classes $C = \{c_1, \ldots, c_k\}$, we say that $T$ is coherent to $V$ if and only if each of its rows have non-zero values only in the dimensions corresponding to a single coherence class of $c_i \in C$. \\ \par
+Let $V$ be a \qvasr with transition relation $\rightarrow_V$, let matrix  $T \in \mathbb{Q}^{e \times d}$ be a coherent to $V$ matrix that has no rows consisting entirely of zeroes, there is a \qvasr $image(V, T)$ of dimension $e$, that has transition relation $\rightarrow_{image(V, T)} = \{(T\vec{u}, T\vec{v})\ |\ (\vec{u}, \vec{v}) \in\rightarrow_V \}$ and is defined as $image(V, T) = \{(T\boxtimes\vec{r}, T\vec{a})\}$ for every transformer $(\vec{r}, \vec{a}) \in V$. Where $T\boxtimes\vec{r}$ denotes the translation of reset vector $\vec{r}$ along $T$, and is defined as $T\boxtimes\vec{r} = r_j$ where $r_j$ is an arbitrary choice of dimensions for which $T_{ij}$ is non-zero. \\ \par
+\begin{mydef}[\qvasr-Image]
+Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ and matrices $\tilde{S}$, $T_1$, and $T_2$ where $T_1S_1 = \tilde{S} = T_2S_2$, we define the \qvasr $\tilde{V} = image(V_1, T_1) \cup image(V_2, T_2)$ as the \qvasr-image of $V_1$ and $V_2$. The tuple $(\tilde{S}, \tilde{V})$ is the best \qvasr-Abstraction of $(S_1, V_1)$ and $(S_2, V_2)$.
+\end{mydef}
 
 The abstraction $(\tilde{S}, \tilde{V})$ computed by iteratively \textsl{joining} abstractions. Joining two \qvasr-abstractions results in a single abstraction simulating both. Figure \ref{vasr} shows the best \qvasr-abstraction of the loop in $P$, which is the result of joining $G$'s and $H$'s abstractions. \\
 \begin{center}
