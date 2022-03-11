@@ -64,19 +64,21 @@ Beginning with the \texttt{else} branch, from line 9 to 12, we extract the trans
 \begin{equation*}
 	G= \ (x \leq 20 \land\ x > 10 \land x' = x + 2 \land y' = y - 3)
 \end{equation*}
-We see, that variable $x$ is not reset but incremented by 2 and variable $y$ is not reset and decremented by 3.
+We see, that variable $x$ is not reset but incremented by 2 and variable $y$ is not reset and decremented by 3 variable $z$ does not appear in this branch, it consequently stays the same, meaning it is not reset and incremented by 0.
 Knowing this, we get reset vector: $
 \vec{r}_G = \  
 \begin{bmatrix}
 	1 \\
-	1 
+	1 \\
+	1
 \end{bmatrix}
 $
 and addition vector $
 \vec{a}_G = \ 
 \begin{bmatrix}
 	2 \\
-	-3 
+	-3 \\
+	0
 \end{bmatrix}$ \\
 $G$ can therefore be modeled by the \qvasr
 $V_G = 
@@ -84,22 +86,25 @@ $V_G =
 	\begin{pmatrix}
 		\begin{bmatrix}
 			1 \\
+			1 \\
 			1
 		\end{bmatrix},
 		\begin{bmatrix}
 			2 \\
-			-3
+			-3 \\
+			0
 		\end{bmatrix}
 	\end{pmatrix}
 \end{Bmatrix}
 $ \par \vspace{2pt}
-For the remainder of this thesis we will use the following, more intuitive notation that shows relations between variables more clearly:
+We will introduce the following, more intuitive notation that shows relations between variables more clearly:
 \begin{equation*}
 	V_G = 
 	\begin{Bmatrix}
 		\begin{bmatrix}
 			x' = x + 2 \\
-			y' = y - 3
+			y' = y - 3 \\
+			z' = z
 		\end{bmatrix}
 	\end{Bmatrix}
 \end{equation*}
@@ -260,7 +265,7 @@ Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ to compute a best \\
 We have $T_1S_1 = T_2S_2$ if and only if, each pair of rows $(\vec{t}_{1i}\vec{t}_{2i})$ of $T_1$ and $T_2$, is part of the set $\{ (t_1t_2)\ |\  \vec{t}_1S_1 = \vec{t}_2S_2\}$. Observe that this set forms a vector space, a basis for this space form our $(\vec{t}_{1i}\vec{t}_{2i})$. \\ \par
 For example, assume we are given simulation matrices: 
 \begin{align*}
-	S_G = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\0 & 0 & 1 \end{bmatrix}
+	S_G = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\0 & 0 & 1 \end{bmatrix} \hspace{1cm}
 	S_H = \begin{bmatrix} -1 & 1 & 1 \\ 0 & 1 & 0 \end{bmatrix}
 \end{align*}
  from before, to compute $\tilde{S}_H$, we need to compute $T_G$ and $T_H$ such that $T_GS_G = \tilde{S}_L = T_HS_H$. We define the set $\{ (\vec{t}_G\vec{t}_H)\ |\  \vec{t}_GS_G = \vec{t}_GS_H\}$ for which we have to solve for $\vec{t}_G$ and $\vec{t}_H$. Because $S_G$ has abstract dimension three and $S_H$ has abstract dimension two, we know that $\vec{t}_G$ is a vector of dimension three and $\vec{t}_H$ of dimension two. We get the following set:
@@ -291,11 +296,119 @@ Knowing how to compute a simulation matrix, we move on to the calculation of the
 	Given a \qvasr $V$ of dimension $d$, we say dimensions $i, j \in \{1, \ldots, d\}$ are coherent, if for all transformer $(\vec{r}, \vec{a}) \in V$, $r_i = r_j$ holds. This means that if a transition in $V$ resets $i$ it also resets $j$ and vice versa. We denote coherence as $i \equiv_V j$ and observe that coherence forms an equivalence relation on dimensions $\{1, \ldots, d\}$. We call the equivalence classes coherence classes of $V$.
 \end{mydef}
 Given a matrix $T \in \mathbb{Q}^{e \times d}$ and a \qvasr $V$ of dimension $d$ with $k$ coherence classes $C = \{c_1, \ldots, c_k\}$, we say that $T$ is coherent to $V$ if and only if each of its rows have non-zero values only in the dimensions corresponding to a single coherence class of $c_i \in C$. \\ \par
-Let $V$ be a \qvasr with transition relation $\rightarrow_V$, let matrix  $T \in \mathbb{Q}^{e \times d}$ be a coherent to $V$ matrix that has no rows consisting entirely of zeroes, there is a \qvasr $image(V, T)$ of dimension $e$, that has transition relation $\rightarrow_{image(V, T)} = \{(T\vec{u}, T\vec{v})\ |\ (\vec{u}, \vec{v}) \in\rightarrow_V \}$ and is defined as $image(V, T) = \{(T\boxtimes\vec{r}, T\vec{a})\}$ for every transformer $(\vec{r}, \vec{a}) \in V$. Where $T\boxtimes\vec{r}$ denotes the translation of reset vector $\vec{r}$ along $T$, and is defined as $T\boxtimes\vec{r} = r_j$ where $r_j$ is an arbitrary choice of dimensions for which $T_{ij}$ is non-zero. \\ \par
+Let $V$ be a \qvasr with transition relation $\rightarrow_V$, let matrix  $T \in \mathbb{Q}^{e \times d}$ be a coherent to $V$ matrix that has no rows consisting entirely of zeroes, there is a \qvasr $image(V, T)$ of dimension $e$, that has transition relation $\rightarrow_{image(V, T)} = \{(T\vec{u}, T\vec{v})\ |\ (\vec{u}, \vec{v}) \in\rightarrow_V \}$ and is defined as $image(V, T) = \{(T\boxtimes\vec{r}, T\vec{a})\}$ for every transformer $(\vec{r}, \vec{a}) \in V$. Where $T\boxtimes\vec{r}$ denotes the translation of reset vector $\vec{r}$ along $T$, and is defined as $(T\boxtimes\vec{r})_i = r_j$ where $j$ is an arbitrary choice of dimensions for which $T_{ij}$ is non-zero. \\ \par
 \begin{mydef}[\qvasr-Image]
-Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ and matrices $\tilde{S}$, $T_1$, and $T_2$ where $T_1S_1 = \tilde{S} = T_2S_2$, we define the \qvasr $\tilde{V} = image(V_1, T_1) \cup image(V_2, T_2)$ as the \qvasr-image of $V_1$ and $V_2$. The tuple $(\tilde{S}, \tilde{V})$ is the best \qvasr-Abstraction of $(S_1, V_1)$ and $(S_2, V_2)$.
+Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ and matrices $\tilde{S}$, $T_1$, and $T_2$ where $T_1S_1 = \tilde{S} = T_2S_2$, we define the \qvasr $\tilde{V} = image(V_1, T_1) \cup image(V_2, T_2)$ as the \qvasr-image of $V_1$ and $V_2$.
 \end{mydef}
+The tuple $(\tilde{S}, \tilde{V})$ is the best \qvasr-Abstraction of $(S_1, V_1)$ and $(S_2, V_2)$. \\ \par
+We will demonstrate the image calculation to compute \qvasr $\tilde{V}_L$ using:
+\begin{align*}
+	V_G = 
+	\begin{Bmatrix}
+		\begin{pmatrix}
+			\begin{bmatrix}
+				1 \\
+				1 \\
+				1
+			\end{bmatrix},
+			\begin{bmatrix}
+				2 \\
+				-3 \\
+				0
+			\end{bmatrix}
+		\end{pmatrix}
+	\end{Bmatrix} \hspace{1cm}
+	V_H =\begin{Bmatrix}
+		\begin{pmatrix}
+			\begin{bmatrix}
+				0 \\
+				1
+			\end{bmatrix},
+			\begin{bmatrix}
+				1 \\
+				1
+			\end{bmatrix}
+		\end{pmatrix}
+	\end{Bmatrix}
+\end{align*}
 
+and matrices
+\begin{align*}
+	T_G = \begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix} \hspace{1cm} T_H = \begin{bmatrix}  1 & 0 \\  0 & 1\end{bmatrix}
+\end{align*}
+
+We define $\tilde{V}_L = image(V_G, T_G) \cup image(V_H, T_H)$, and begin by computing $image(V_G, T_G)$:
+\begin{align*}
+	image(V_G, T_G) = \{(T_G\boxtimes\vec{r}, T\vec{a})\} \text{ for every transformer } (\vec{r}, \vec{a}) \in V_G
+\end{align*}
+There is only one reset vector $\vec{r}_1 = \begin{bmatrix}1 \\ 1 \end{bmatrix}$ in $V_G$, such that:
+\begin{align*}
+	T_G\boxtimes\vec{r}_1 = \begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix} \boxtimes \begin{bmatrix} 1 \\ 1 \\ 1\end{bmatrix} = \begin{bmatrix}  1 \\ 1\end{bmatrix}
+\end{align*}
+Where $(T_G\boxtimes\vec{r})_1 = r_1 = 1$, because $T_{11}$ is non zero, $(T_G\boxtimes\vec{r}_1)_2 = r_2 = 1$ for the same reason, and, as there is no row 3 in $T$, we stop. \\ \par
+There is only one addition vector $\vec{a}_1 =  \begin{bmatrix}2 \\ -3 \\ 0\end{bmatrix}$ in $V_G$, such that:
+\begin{align*}
+	T_G\vec{a}_1 = \begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix} \begin{bmatrix} 2 \\ -3 \\ 0\end{bmatrix} = \begin{bmatrix} -5 \\ -3 \end{bmatrix}
+\end{align*}
+Resulting in the \qvasr:
+\begin{align*}
+	image(V_G, T_G) = 
+	\begin{Bmatrix}
+		\begin{pmatrix}
+			\begin{bmatrix}
+				1 \\
+				1 
+			\end{bmatrix},
+			\begin{bmatrix}
+				-5 \\
+				-3 
+			\end{bmatrix}
+		\end{pmatrix}
+	\end{Bmatrix}
+\end{align*} \par
+We repeat this procedure for $image(V_H, T_H)$, which results in the \qvasr:
+\begin{align*}
+	image(V_H, T_H) = 
+	\begin{Bmatrix}
+		\begin{pmatrix}
+			\begin{bmatrix}
+				0 \\
+				1 
+			\end{bmatrix},
+			\begin{bmatrix}
+				1 \\
+				1 
+			\end{bmatrix}
+		\end{pmatrix}
+	\end{Bmatrix}
+\end{align*}  	
+Now, we can join the two \qvasr to get $\tilde{V}_L$:
+\begin{align*}
+		\tilde{V}_L = image(V_G, T_G) \cup image(V_H, T_H) = 
+	\begin{Bmatrix}
+		\begin{pmatrix}
+			\begin{bmatrix}
+				1 \\
+				1 
+			\end{bmatrix},
+			\begin{bmatrix}
+				-5 \\
+				-3 
+			\end{bmatrix}
+		\end{pmatrix}
+		\begin{pmatrix}
+			\begin{bmatrix}
+				0 \\
+				1 
+			\end{bmatrix},
+			\begin{bmatrix}
+				1 \\
+				1 
+			\end{bmatrix}
+		\end{pmatrix}
+	\end{Bmatrix}
+\end{align*}
+ 	
 The abstraction $(\tilde{S}, \tilde{V})$ computed by iteratively \textsl{joining} abstractions. Joining two \qvasr-abstractions results in a single abstraction simulating both. Figure \ref{vasr} shows the best \qvasr-abstraction of the loop in $P$, which is the result of joining $G$'s and $H$'s abstractions. \\
 \begin{center}
 	\begin{figure}[H]
