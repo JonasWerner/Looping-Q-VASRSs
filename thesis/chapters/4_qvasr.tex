@@ -258,19 +258,32 @@ The \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ $L$ has to simulate both $(S
 
 Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ to compute a best \qvasr-abstraction $(\tilde{S}, \tilde{V})$ such that $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and $(S_2, V_2) \preceq (\tilde{S}, \tilde{V})$ we use the definition of the preorder, to describe that if $(\tilde{S}, \tilde{V})$ is an upper bound of $(S_1, V_1)$ and $(S_2, V_2)$ then there exists matrices $T_1$ and $T_2$ such that $T_1S_1 = \tilde{S} = T_2S_2$ with $V_1 \vdash_{T_1} \tilde{V}$ and $V_2 \vdash_{T_2} \tilde{V}$. To compute the unknown $T_1$ and $T_2$ we convert the equation $T_1S_1 = \tilde{S} = T_2S_2$ to $T_1S_1 = T_2S_2$. \\
 We have $T_1S_1 = T_2S_2$ if and only if, each pair of rows $(\vec{t}_{1i}\vec{t}_{2i})$ of $T_1$ and $T_2$, is part of the set $\{ (t_1t_2)\ |\  \vec{t}_1S_1 = \vec{t}_2S_2\}$. Observe that this set forms a vector space, a basis for this space form our $(\vec{t}_{1i}\vec{t}_{2i})$. \\ \par
-For example, assume we are given simulation matrices $S_G = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\0 & 0 & 1 \end{bmatrix}$ and $S_H = \begin{bmatrix} -1 & 1 & 1 \\ 0 & 1 & 0 \end{bmatrix}$ from before, to compute $\tilde{S_L}$, we need to calculate a base for the set $\{ (\vec{t}_G\vec{t}_H)\ |\  \vec{t}_GS_G = \vec{t}_GS_H\}$. Because $S_G$ has abstract dimension three and $S_H$ has abstract dimension two, we need to compute vectors of dimension three and two respectively:
+For example, assume we are given simulation matrices: 
+\begin{align*}
+	S_G = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\0 & 0 & 1 \end{bmatrix}
+	S_H = \begin{bmatrix} -1 & 1 & 1 \\ 0 & 1 & 0 \end{bmatrix}
+\end{align*}
+ from before, to compute $\tilde{S}_H$, we need to compute $T_G$ and $T_H$ such that $T_GS_G = \tilde{S}_L = T_HS_H$. We define the set $\{ (\vec{t}_G\vec{t}_H)\ |\  \vec{t}_GS_G = \vec{t}_GS_H\}$ for which we have to solve for $\vec{t}_G$ and $\vec{t}_H$. Because $S_G$ has abstract dimension three and $S_H$ has abstract dimension two, we know that $\vec{t}_G$ is a vector of dimension three and $\vec{t}_H$ of dimension two. We get the following set:
 \begin{align*}
 	\{ (\begin{bmatrix} t_{G1} & t_{G2} & t_{G3} & t_{H1} & t_{H2} \end{bmatrix})\ |\  \begin{bmatrix} t_{G1} & t_{G2} & t_{G3}\end{bmatrix}S_G = \begin{bmatrix} t_{H1} & t_{H2} \end{bmatrix}S_H\}
 \end{align*}
- We get the following equation:
+From which we extract the equation:
 \begin{align*}
 	 \begin{bmatrix} t_{G1} & t_{G2} & t_{G3}\end{bmatrix}\begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\0 & 0 & 1 \end{bmatrix} &= \begin{bmatrix} t_{H1} & t_{H2} \end{bmatrix}\begin{bmatrix} -1 & 1 & 1 \\ 0 & 1 & 0 \end{bmatrix} \\
 \end{align*}
-Solving this equation yields: 
+Solving the equation yields: 
 \begin{align*}
 		 \begin{bNiceMatrix} t_{G1} \\ t_{G2} \\ t_{G3} \end{bNiceMatrix} &= \begin{bNiceMatrix} -t_{H1} \\ t_{H1} + t_{H2} \\ t_{H1} \end{bNiceMatrix}
 \end{align*}
-We get the vector space $\{ \begin{bNiceMatrix} -t_{H1} & t_{H1} + t_{H2} & t_{H1}&  t_{H1} & t_{H2} \end{bNiceMatrix}  \}$, which has vector space basis $\{ \begin{bNiceMatrix} -1 & 1 & 1 &  1 & 0 \end{bNiceMatrix}, \begin{bNiceMatrix} 0 & 1 & 0 & 0 & 1 \end{bNiceMatrix} \}$
+We get the vector space $\{ \begin{bNiceMatrix} -t_{H1} & t_{H1} + t_{H2} & t_{H1}&  t_{H1} & t_{H2} \end{bNiceMatrix}  \}$, which has vector space basis $\{ \begin{bNiceMatrix} -1 & 1 & 1 &  1 & 0 \end{bNiceMatrix}, \begin{bNiceMatrix} 0 & 1 & 0 & 0 & 1 \end{bNiceMatrix} \}$. Combining these basis vectors we get the following matrices: 
+\begin{align*}
+	T_GT_H = \begin{bmatrix}  -1 & 1 & 1 & 1 & 0 \\ 0 & 1 & 0 & 0 & 1\end{bmatrix}\hspace{1cm} T_G = \begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix} \hspace{1cm} T_H = \begin{bmatrix}  1 & 0 \\  0 & 1\end{bmatrix}
+\end{align*}
+Now we insert $T_G$ and $T_H$ into the formula $T_GS_G = \tilde{S}_L = T_HS_H$:
+\begin{align*}
+	\begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\0 & 0 & 1 \end{bmatrix} = \begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix} = \begin{bmatrix}  1 & 0 \\  0 & 1\end{bmatrix}\begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix}
+\end{align*}
+to get the $\tilde{S}_L = \begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix}$
 
 
 
