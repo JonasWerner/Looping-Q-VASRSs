@@ -125,7 +125,7 @@ We want to synthesize a \qvasr $V_H$ and linear simulation $S_H$, such that $H \
 		\vdots & \ddots & \vdots \\
 		s_{m ,1} & \ldots & s_{m, n} \\
 	\end{bmatrix}$ 
-	such that for all transitions $\vec{x} \rightarrow_\trf \vec{x}'$ we have $S\vec{x} \rightarrow_V S\vec{x}'$. Meaning, every transition $\vec{x} \rightarrow_\trf \vec{x}'$ can be represented in $V$ by a matrix multiplication of $S$ and $\vec{x}$ and $\vec{x}'$. We call $n$ the abstraction's concrete, and $d$ the abstraction's abstract dimension. 
+	such that for all transitions $\vec{x} \rightarrow_\trf \vec{x}'$ we have $S\vec{x} \rightarrow_V S\vec{x}'$. Meaning, every transition $\vec{x} \rightarrow_\trf \vec{x}'$ can be represented in $V$ by a matrix multiplication of $S$ and $\vec{x}$ and $\vec{x}'$. We call $n$ the abstraction's concrete, and $m$ the abstraction's abstract dimension. 
 \end{mydef}
 To abstract a transition formula $\trf$ with $n$ variables $\vec{x} = x_1, \ldots, x_n$, we need to calculate both the linear transformation matrix $S$ and the \qvasr $V$. We know that a \qvasr consists of pairs of transformers, which contain reset and addition vectors. Using the formula $S \vec{u} \rightarrow_V S\vec{u}$, we get a transition in $V$ as $S\vec{x}' = \vec{r}*S\vec{x} + \vec{a}$. \\ To get variables that are reset, we consider $\vec{r}$ as the zero vector $\vec{0}$, and get the formula $S\vec{x}' = \vec{a}$ which forms a linear set of equations that models the set of resets:
 \begin{equation*}
@@ -241,22 +241,36 @@ Given a transition formula \trf with variables $\vec{x} = x_1, \ldots, x_n$ and 
 \begin{equation*}
 	\bigvee\limits_{i=1}^m \bigwedge\limits_{j=0}^d S\vec{x}' = S\vec{x} * \vec{r}_j + \vec{a}_j
 \end{equation*}
-The \qvasr-abstractions are overapproximations because they do not model single program variable transitions but, rather, transitions of relations of variables. These relations lead to an overhead of actual program behaviour, as a transition is possible, as long as the conditions to the relations, as described by the \qvasr-abstraction, hold. \\
-For example, the \qvasr-abstraction  $(S_H, V_H)$ of $H$ is an overapproximation, because, for instance, the transition: $\begin{bNiceMatrix}[first-col=1]  x & 1\\ y & 2 \\ z & 3 \end{bNiceMatrix} \rightarrow \begin{bNiceMatrix}[last-col]  -20 & x'\\ 3 & y' \\ 18 & z' \end{bNiceMatrix}$ is possible because $-x' + y' + z' = 1$ and $y' = y + 1$ holds. In $H$ this transition is not possible, because of $z' = x$ and $x' = x + y$. \\ \par
+The \qvasr-abstractions are overapproximations because they do not model single program variable transitions but, rather, transitions of relations of variables. These relations lead to an overhead of actual program behaviour, as a transition is possible, as long as the transition formula, described by the \qvasr-abstraction, holds. \\
+For example, the \qvasr-abstraction  $(S_H, V_H)$ of $H$ is an overapproximation, because, for instance, the transition: $\begin{bNiceMatrix}[first-col=1]  x & 1\\ y & 2 \\ z & 3 \end{bNiceMatrix} \rightarrow \begin{bNiceMatrix}[last-col]  -20 & x'\\ 3 & y' \\ 18 & z' \end{bNiceMatrix}$ is possible because $-x' + y' + z' = 1$ and $y' = y + 1$ hold. In $H$ this transition is not possible, because of $z' = x$ and $x' = x + y$. \\ \par
 For transition formulas with constant increments, such as $G$, the identity matrix $I$ is used as simulation matrix. These \qvasr-abstractions are precise. \par
 
 \subsubsection{\qvasr-Abstraction Join}
-The changes of program variable valuations by the loop in $P$ can be represented by the transition formula: 
+The changes to program states by the loop in $P$ can be represented by the transition formula: 
 \begin{equation*}
 	L = x \leq 20 \land (H \lor G)
 \end{equation*}
-With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the approximation of the whole loop's behavior we need to compute the \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates $L$. \\ \par We impose a partial order to model simulations between \qvasr-abstractions.
+With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the approximation of the whole loop's behavior we need to compute the \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_)$ that simulates $L$. \\ \par We impose a partial order to model simulations between \qvasr-abstractions.
 \begin{mydef}[\qvasr-Abstraction Preorder]
 	Given two \qvasr-abstractions  \qvAbstr{1} and \qvAbstr{2}, with abstract dimensions $e$ and $d$ respectively, we define the preorder \\ of \qvasr-abstractions as \qvAbstr{1} $\preceq$ \qvAbstr{2} if and only if there exists a linear transformation $T \in \valuations^{e \times d}$ where $V_1 \vdash_S V_2$ and $TS_1 = S_2$
 \end{mydef}
-The \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ for the whole loop has to simulate both $(S_G, V_G)$ and $(S_H, V_H)$, consequently $(S_G, V_G) \preceq (\tilde{S}, \tilde{V})$ and $(S_H, V_H) \preceq (\tilde{S}_L, \tilde{V}_L)$ has to hold. Additionally, we want a precise as possible \qvasr-abstraction, we have to define $(\tilde{S}, \tilde{V})$ as the least upper bound with regard to the preorder. The \qvasr-abstraction that represents the least upper bound is called the \textsl{best} \qvasr-abstraction. \\ \par
+The \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ $L$ has to simulate both $(S_G, V_G)$ and $(S_H, V_H)$, consequently $(S_G, V_G) \preceq (\tilde{S}, \tilde{V})$ and $(S_H, V_H) \preceq (\tilde{S}_L, \tilde{V}_L)$ has to hold. Additionally, we want a precise as possible \qvasr-abstraction, we have to define $(\tilde{S}_L, \tilde{V}_L)$ as the least upper bound with regard to the preorder. The \qvasr-abstraction that represents the least upper bound is called the \textsl{best} \qvasr-abstraction. \\ \par
 
-Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ to compute a best \qvasr-abstraction $(\tilde{S}, \tilde{V})$ such that $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and $(S_2, V_2) \preceq (\tilde{S}, \tilde{V})$ we use the definition of the preorder, to describe that if $(\tilde{S}, \tilde{V})$ is an upper bound of $(S_1, V_1)$ and $(S_2, V_2)$ then there exists matrices $T_1$ and $T_2$ such that $T_1S_1 = \tilde{S} = T_2S_2$ with $V_1 \vdash_{T_1} \tilde{V}$ and $V_2 \vdash_{T_2} \tilde{V}$. To compute the unknown $T_1$ and $T_2$ we convert the equation $T_1S_1 = \tilde{S} = T_2S_2$ to $T_1S_1 = T_2S_2$...
+Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ to compute a best \qvasr-abstraction $(\tilde{S}, \tilde{V})$ such that $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and $(S_2, V_2) \preceq (\tilde{S}, \tilde{V})$ we use the definition of the preorder, to describe that if $(\tilde{S}, \tilde{V})$ is an upper bound of $(S_1, V_1)$ and $(S_2, V_2)$ then there exists matrices $T_1$ and $T_2$ such that $T_1S_1 = \tilde{S} = T_2S_2$ with $V_1 \vdash_{T_1} \tilde{V}$ and $V_2 \vdash_{T_2} \tilde{V}$. To compute the unknown $T_1$ and $T_2$ we convert the equation $T_1S_1 = \tilde{S} = T_2S_2$ to $T_1S_1 = T_2S_2$. \\
+We have $T_1S_1 = T_2S_2$ if and only if, each pair of rows $(\vec{t}_{1i}\vec{t}_{2i})$ of $T_1$ and $T_2$, is part of the set $\{ (t_1t_2)\ |\  \vec{t}_1S_1 = \vec{t}_2S_2\}$. Observe that this set forms a vector space, a basis for this space form our $(\vec{t}_{1i}\vec{t}_{2i})$. \\ \par
+For example, assume we are given simulation matrices $S_G = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\0 & 0 & 1 \end{bmatrix}$ and $S_H = \begin{bmatrix} -1 & 1 & 1 \\ 0 & 1 & 0 \end{bmatrix}$ from before, to compute $\tilde{S_L}$, we need to calculate a base for the set $\{ (\vec{t}_G\vec{t}_H)\ |\  \vec{t}_GS_G = \vec{t}_GS_H\}$. Because $S_G$ has abstract dimension three and $S_H$ has abstract dimension two, we need to compute vectors of dimension three and two respectively:
+\begin{align*}
+	\{ (\begin{bmatrix} t_{G1} & t_{G2} & t_{G3} & t_{H1} & t_{H2} \end{bmatrix})\ |\  \begin{bmatrix} t_{G1} & t_{G2} & t_{G3}\end{bmatrix}S_G = \begin{bmatrix} t_{H1} & t_{H2} \end{bmatrix}S_H\}
+\end{align*}
+ We get the following equation:
+\begin{align*}
+	 \begin{bmatrix} t_{G1} & t_{G2} & t_{G3}\end{bmatrix}\begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\0 & 0 & 1 \end{bmatrix} &= \begin{bmatrix} t_{H1} & t_{H2} \end{bmatrix}\begin{bmatrix} -1 & 1 & 1 \\ 0 & 1 & 0 \end{bmatrix} \\
+\end{align*}
+Solving this equation yields: 
+\begin{align*}
+		 \begin{bNiceMatrix} t_{G1} \\ t_{G2} \\ t_{G3} \end{bNiceMatrix} &= \begin{bNiceMatrix} -t_{H1} \\ t_{H1} + t_{H2} \\ t_{H1} \end{bNiceMatrix}
+\end{align*}
+We get the vector space $\{ \begin{bNiceMatrix} -t_{H1} & t_{H1} + t_{H2} & t_{H1}&  t_{H1} & t_{H2} \end{bNiceMatrix}  \}$, which has vector space basis $\{ \begin{bNiceMatrix} -1 & 1 & 1 &  1 & 0 \end{bNiceMatrix}, \begin{bNiceMatrix} 0 & 1 & 0 & 0 & 1 \end{bNiceMatrix} \}$
 
 
 
