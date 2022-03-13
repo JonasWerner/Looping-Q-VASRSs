@@ -286,7 +286,7 @@ With transition formulas we can model state transitions using the strongest post
 		sp(\varphi, \trf) = (\exists V. \varphi \land \tf)[V' \mapsto V]
 	\end{equation*}
 \end{mydef}
-\subsection{Program Verification}
+\subsection{Program Safety}
 This section serves as an introduction to our understanding of program verification. Our goal is to prove whether a program is \textsl{correct} or to find a counterexample to correctness. In the following we define our understanding of safety, model a program's control-flow, and introduce traces.
 \subsubsection{Control-Flow Graph}
  Assume we are given a program \prg, the order in which the program's instructions can be executed is called control-flow. We can construct a directed graph that models this control-flow in form of a control-flow graph.
@@ -339,7 +339,7 @@ For example, when we extend the program $P$ seen in Figure \ref{codeNoAss} with 
 	\end{minipage}
 \end{center}
 For the rest of the thesis, denote control-flow graph with error location as control-flow graph unless stated otherwise.
-\subsubsection{Program Correctness}
+\subsubsection{Reachability}
 The control-flow of a program can now be described by so called traces through the control-flow graph.
 \begin{mydef}
 	Given a program	\prg, its control-flow graph \\ G = \cfg, a trace $\tau = \trf_1, \trf_2, \ldots $ of a program is a finite or infinite sequence of transitions $\trf_1, \trf_2, \ldots$ with $\trf_i \in \Pi$, and $(scr(\trf_i), \trf_i, tgt(\trf_i)) \in \delta$
@@ -355,10 +355,25 @@ This definition only establishes that traces adhere to the graph structure of th
 		\end{cases}
 	\end{align*}
 \end{mydef}
-Given trace $\tau = \pi, \ldots$, if there is a transition $\pi_{\bot}$ where $sp(\varphi_{i-1}, \pi_{\bot}) = \bot$ in a trace $\tau$, $\tau$ is called infeasible. We can now extend the notion of reachability to program locations.
+Given trace $\tau = \pi, \ldots$, if there is a transition $\pi_{\bot}$ where $sp(\varphi_{i-1}, \pi_{\bot}) = \bot$ in a trace $\tau$, $\tau$ is called infeasible. We can now introduce the notion of reachability of program locations.
 \begin{mydef}
-	Given a control-flow graph $\cfg$, we introduce a map $reach: Loc \mapsto \{\varphi\}$ that maps each program location $\ell_i \in Loc$ to a set of states, defined by first order logic formula $\varphi_i$, that are reachable from $\ell_i$. The set of states $\{\varphi_i\}$ is defined as the union $\bigcup\limits_{}^{\tau_j} sp(\varphi_{k-1}, \pi_k)$ for given traces $\tau_j = \pi_1, \ldots, \pi_k$ where $trgt(\pi_k) = \ell_i$. A program location $\ell_i$ is called reachable, if $reach(\ell_i) \neq \{\bot\}$, otherwise $\ell_i$ is called unreachable.
+	Given a control-flow graph $\cfg$, we introduce a map $reach: Loc \mapsto \{\varphi\}$ that maps each program location $\ell_i \in Loc$ to a set of states, defined by first order logic formula $\varphi_i$, that are reachable from $\ell_i$. The set of states $\{\varphi_i\}$ is defined as the union $\bigcup\limits_{}^{\tau_j} sp(\varphi_{k-1}, \pi_k)$ for given traces $\tau_j = \pi_1, \ldots, \pi_k$ where $tgt(\pi_k) = \ell_i$. A program location $\ell_i$ is called reachable, if $reach(\ell_i) \neq \{\bot\}$, otherwise $\ell_i$ is called unreachable.
 \end{mydef}
-
+A program is called safe if and only if every error location in a program's control-flowgraph is unreachable. It is called unsafe if there is a reachable error location.
 
 \subsection{Trace Abstraction}
+To prove safety of a given program we employ trace abstraction \cite{10.1007/978-3-642-03237-0_7, 10.1007/978-3-642-39799-8_2, 10.1145/1706299.1706353}, which is an automaton-theoretic approach used to prove reachability of error traces.
+
+\begin{figure}[H]
+	\centering
+	\input{fig/fig_traceabstraction_schema.tex}
+	\caption{Control-flow graph $G_{P_1}$ for program $P_1$.}
+	\label{traceAbstractionScheme}
+\end{figure}
+
+
+
+
+
+
+

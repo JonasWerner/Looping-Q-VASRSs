@@ -413,7 +413,7 @@ Now, we can join the two \qvasr to get $\tilde{V}_L$:
 		\end{pmatrix}
 	\end{Bmatrix}
 \end{align*}
-Combining $S_L$ and $V_L$, we get the final best \qvasr-abstraction of the loop, represented by its transition formula $L$ as seen in Figure \ref{vasr}.
+Combining $S_L$ and $V_L$, we get the final best \qvasr-abstraction of the loop $(\tilde{S}_L, \tilde{V}_L$ as seen in Figure \ref{vasr}.
 \begin{center}
 	\begin{figure}[H]
 		\input{fig/matrix_ex_p0.tex}
@@ -423,7 +423,7 @@ Combining $S_L$ and $V_L$, we get the final best \qvasr-abstraction of the loop,
 \end{center}
 Give two \qvasr-abstractions $(S_1, V_1)$, and $(S_2, V_2)$, the computation of a best \qvasr-abstraction $(\tilde{S}, \tilde{V})$ with $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and  $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ is called a \qvasr-abstraction \textsl{join}.
 
-\subsubsection{\qvasr Summary}
+\subsubsection{\qvasr Loop Summary}
 Given a \qvasr-abstraction that approximates a given transition formula $\trf$, we know how to compute a formula that models one transition of $\trf$ as the equation \ref{vasrTrans}.
 Using this \qvasr-abstraction we can derive the following transition formula as loop summary:
 \begin{align*}

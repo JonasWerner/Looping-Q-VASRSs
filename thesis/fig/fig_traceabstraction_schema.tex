@@ -1,0 +1,29 @@
+
+\begin{tikzpicture}[%
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=3cm,
+	scale=0.9,
+	transform shape,
+	align=center,
+	smallnode/.style={inner sep=1.4},
+	initial text =,
+	anchor=center]
+	
+	\tikzstyle{my node}=[draw,minimum height=1cm,minimum width=3cm]
+	\node [align=left](input) {\textbf{Input}};
+	\node[my node](1)[below of=input]{$\mathcal{L}(A_P) \subseteq \mathcal{L}(A_D)?$};
+	\node[my node] (2) [below of=1] {$\tau$ feasible?};
+	\node [](corr)[right of=1, right=1cm] {$P$ is correct};
+	\node [](incorr)[right of=2, right=1cm] {$P$ is incorrect};
+	
+	\path (1) edge[bend left] node[align=left, right=0.25cm]{no \\
+	$\tau \in \mathcal{L}(A_P) \backslash \mathcal{L}(A_D)$} (2)
+	(2) edge[bend left] node[align=right, left=0.25cm] {$\mathcal{L}(A_D) := \mathcal{L}(A_D)\ \cup\ $ \textsl{$refine_F$}$(\tau)$ \\  no} (1)
+	(input) edge[] node[align=left, right=0.25cm] {$\mathcal{L}(A_P) := \text{control-flow graph as NWA}$ \\ $\mathcal{L}(A_D) = \emptyset$} (1)
+	(1) edge[] node[above] {yes} (corr)
+	(2) edge[] node[above] {yes} (incorr)
+	;
+\end{tikzpicture}
