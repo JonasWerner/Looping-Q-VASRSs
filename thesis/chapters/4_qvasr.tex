@@ -18,7 +18,7 @@ A program loop, created by, for example, a \texttt{while} statement, can introdu
 \end{equation*}
 and an error location outside of the loop asserting \texttt{x\%2==0}. To check safety we would have to prove, in the worst case, infinitely many program traces as infeasible because there are theoretically infinitely many traces through the loop.
 .\begin{center}
-	\begin{minipage}[t]{0.4\linewidth}
+	\begin{minipage}[b]{0.4\linewidth}
 		\begin{figure}[H]
 			\centering
 			\input{fig/lst_code_mod.tex}
@@ -27,7 +27,7 @@ and an error location outside of the loop asserting \texttt{x\%2==0}. To check s
 		\end{figure}
 	\end{minipage}
 	\hfill
-	\begin{minipage}[t]{0.59\linewidth}
+	\begin{minipage}[b]{0.59\linewidth}
 		\begin{figure}[H]
 			\centering
 			\input{fig/fig_cfg_mod.tex}
@@ -160,7 +160,7 @@ By solving the following equations for $s_1, \ldots, s_n$: \\
 			 &= s_1x_1' + \ldots s_nx_n' = s_1x_1 + \ldots + s_nx_n + a
 \end{align*}
 We get two sets that represent linear combinations of variables that are reset and incremented across \trf. We observe that the two form a vector space. These spaces can be represented using vector space basis vectors, meaning, we have to compute a basis. Assume we have basis for the set of resets:
-$Res_\trf = \{(\vec{s}_1, a_1), \ldots, (\vec{s}_m, a_m)\}$ and basis for the set of additions as: $Inc_\trf = \{(\vec{s}_{m+1}, a_{m+1}), \ldots, (\vec{s}_d, a_d)\}$. \\ We construct the \qvasr-abstraction $(S, V)$ as: \\
+$Res_\trf = \{(\vec{s}_1, a_1), \ldots, (\vec{s}_m, a_m)\}$ and basis for the set of additions as: $Inc_\trf = \{(\vec{s}_{m+1}, a_{m+1}), \ldots, (\vec{s}_d, a_d)\}$. \\ We construct the \qvasr-abstraction $(S, V)$ as:
 \begin{center}
 \begin{minipage}{0.3\linewidth}
 	\begin{equation*}
@@ -295,7 +295,7 @@ Now we insert $T_G$ and $T_H$ into the formula $T_GS_G = \tilde{S}_L = T_HS_H$:
 \end{align*}
 to get $\tilde{S}_L = \begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix}$ \\ \par
 
-Knowing how to compute a simulation matrix, we move on to the calculation of the \qvasr. Firstly, we need to introduce \qvasr coherence 
+Knowing how to compute a simulation matrix, we continue with the calculation of the \qvasr. Firstly, we need to introduce \qvasr coherence.
 
 \begin{mydef}[\qvasr Coherence Classes]
 	Given a \qvasr $V$ of dimension $d$, we say dimensions $i, j \in \{1, \ldots, d\}$ are coherent, if for all transformer $(\vec{r}, \vec{a}) \in V$, $r_i = r_j$ holds. This means that if a transition in $V$ resets $i$ it also resets $j$ and vice versa. We denote coherence as $i \equiv_V j$ and observe that coherence forms an equivalence relation on dimensions $\{1, \ldots, d\}$. We call the equivalence classes coherence classes of $V$.
@@ -413,7 +413,7 @@ Now, we can join the two \qvasr to get $\tilde{V}_L$:
 		\end{pmatrix}
 	\end{Bmatrix}
 \end{align*}
-Combining $S_L$ and $V_L$, we get the final best \qvasr-abstraction of the loop $(\tilde{S}_L, \tilde{V}_L$ as seen in Figure \ref{vasr}.
+Combining $S_L$ and $V_L$, we get the final best \qvasr-abstraction of the loop $(\tilde{S}_L, \tilde{V}_L)$ as seen in Figure \ref{vasr}.
 \begin{center}
 	\begin{figure}[H]
 		\input{fig/matrix_ex_p0.tex}
@@ -421,11 +421,69 @@ Combining $S_L$ and $V_L$, we get the final best \qvasr-abstraction of the loop 
 		\label{vasr}
 	\end{figure}
 \end{center}
-Give two \qvasr-abstractions $(S_1, V_1)$, and $(S_2, V_2)$, the computation of a best \qvasr-abstraction $(\tilde{S}, \tilde{V})$ with $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and  $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ is called a \qvasr-abstraction \textsl{join}.
+Given two \qvasr-abstractions $(S_1, V_1)$, and $(S_2, V_2)$, the computation of a best \qvasr-abstraction $(\tilde{S}, \tilde{V})$ with $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and  $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ is called a \qvasr-abstraction \textsl{join}.
 
 \subsubsection{\qvasr Loop Summary}
-Given a \qvasr-abstraction that approximates a given transition formula $\trf$, we know how to compute a formula that models one transition of $\trf$ as the equation \ref{vasrTrans}.
-Using this \qvasr-abstraction we can derive the following transition formula as loop summary:
+A \qvasr-abstraction only models one iteration of a transition formula, loops, however, are often repeated, such that we need to construct a formula that models every possible iteration. \\ \par
+Given a \qvasr-abstraction $(S, V)$ that approximates a transition formula $\trf$ that is defined over variables $\vec{x} = x_1, \ldots, x_n$,  that consists of $l$ transformer $(\vec{r}^{\,i}, \vec{a}^{\,i}) \in V$, with abstract dimension $m$, meaning that $S$, $\vec{r}^{\, i}$, and $\vec{a}^{\, i}$ have $m$ rows, and concrete dimension $n$, meaning $S$ has $n$ columns, to construct a formula, we firstly introduce new variables for each transformer $k^1, \ldots, k^n$, these variables represent how often each transformer was used. We iterate through every dimension $d \in 1, \ldots, m$, and construct the relations: $S_d\vec{x}'$ and check each transformer's $d$-th entry: $(r_d^i, a_d^i)$ \\
+As we know the relation is either reset, meaning $r_d^i = 0$, incremented by amount $y$, meaning $r_d^i = 1$ and $a_d^i = y$, or reset and incremented to amount $y$, by $r_d^i = 0$ and $a_d^i = y$. Now, when we look at multiple iterations and multiple transformers, these three changes can occur arbitrarily. We need to construct a disjunction for each dimension covering these cases, we present the following approach.
+We start by constructing an empty set of disjuncts $D_d$, then iterate through every transformer:
+\begin{itemize}
+	\item If transformer $i$ resets dimension $d$, i.e. $r_d^i = 0$, construct new disjunct $S_d\vec{x}' = 0$
+	\item If transformer $i$ increments dimension $d$ by amount $y$, i.e. $r_d^i = 1$ and $a_d^i = y$, construct formula $S_d\vec{x}' = S_d\vec{x}\ +\ k^ia_d^i$, if there is already a formula covering increments:  $S_d\vec{x}\ +\ k^ja_d^j\ +\ \ldots\ +\ k^ga_d^g$ add $+\ k^ia_d^i$ to it. There is only one disjunct representing increments.
+	\item If transformer $i$ resets dimension $d$ and increments it to amount $y$, i.e. $r_d^i = 0$ and $a_d^i = y$, construct new disjunct $S_d\vec{x}' = y$
+\end{itemize}
+When every transformer has been processed construct a disjunction using the disjuncts sets $D_j$ generated above. We then create a conjunction over all dimensions consisting of the disjunctions of all transformer, existentially quantify each $k$, and add the disjunct $\vec{x}' = \vec{x}$ representing the case that the transition formula is not used.
+
+\begin{equation*}
+	\exists k_1, \ldots, k_n.\ \vec{x}' = \vec{x} \lor \bigwedge_{i=1}^{m} \bigvee_{j=1}^l D_j 
+\end{equation*}
+This formula is now a loop summary. \\
+To illustrate the construction of a loop summary, we are again given $(\tilde{S}_L, \tilde{V}_L)$ as seen in Figure \ref{nonabbridged}.
+\begin{figure}[H]
+	\centering
+	\input{fig/fig_ex_nonabbridged.tex}
+	\caption{Best \qvasr-abstraction of the transition formula $L$ using the non-abridged notation.}
+	\label{nonabbridged}
+\end{figure}
+
+ With $\tilde{V}$ consisting of two transformers
 \begin{align*}
-	\exists k_1, k_2.\ &((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \land\ y' = y + k_1 - 3k_2)\ \\ &\lor\ x' = x\ \land\ y' = y\ \land\ z' = z
+	(\vec{r}^{\, 1}, \vec{a}^{\, 1}) = 		
+	\begin{pmatrix}
+		\begin{bmatrix}
+			1 \\
+			1 
+		\end{bmatrix},
+		\begin{bmatrix}
+			-5 \\
+			-3 
+		\end{bmatrix}
+	\end{pmatrix} \hspace*{1cm}
+	(\vec{r}^{\, 2}, \vec{a}^{\, 2}) = 		
+	\begin{pmatrix}
+		\begin{bmatrix}
+			0 \\
+			1 
+		\end{bmatrix},
+		\begin{bmatrix}
+			1 \\
+			1 
+		\end{bmatrix}
+	\end{pmatrix}
+\end{align*}
+
+We begin the procedure by introducing fresh variables $k_1$ and $k_2$ representing iterations of each transformer. We the construction of the disjunction for dimension 1, we consider row 1 of $\tilde{S}_L^{\, 1} = 	\begin{bmatrix}
+	-1 & 1 & 1 \\
+\end{bmatrix}$, $(\vec{r}^{\, 1}_1, \vec{a}^{\, 1}_1) = ([1], [-5])$ and $(\vec{r}^{\, 2}_1, \vec{a}^{\, 2}_1) = ([0], [1])$. Now, row 1 models the relation $ r_1 = \tilde{S}_L^{\, 1}\vec{x}' = -x' + y' + z'$, we observe that $(\vec{r}^{\, 1}_1, \vec{a}^{\, 1}_1)$ decrements $r_1$ by 5, we get the formula $-x' + y' + z' = -x + y + z - 5k_1$. On the other hand we see that $(\vec{r}^{\, 2}_1, \vec{a}^{\, 2}_1)$ resets $r_1$ and increments it by 1, we get the formula $-x' + y' + z' = 1$. Constructing the disjunction of both, we get the transition formula for dimension 1 as:
+\begin{equation*}
+	 -x' + y' + z' = -x + y + z - 5k_1 \lor -x' + y' + z' = 1
+\end{equation*}
+If we now proceed to dimension two, we get the relation $r_ 2 = y'$. Both transformer increment $r_2$, yielding the following formula:
+\begin{equation*}
+	y' = y - 3k_1 + k_2
+\end{equation*}
+Using these formulas, we get the loop summary:
+\begin{align*}
+	\exists k_1, k_2.\ &x' = x\ \land\ y' = y\ \land\ z' = z \lor ((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \\&\land\ y' = y - 3k_1 + k_2)\ \\ 
 \end{align*}
