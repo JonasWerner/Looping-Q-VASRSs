@@ -161,33 +161,33 @@ From the evaluation of terms we can derive the evaluation of formulas, which dec
 \begin{mydef}[Evaluation of Formulas]
 		Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, a variable assignment $\rho$, and $\varphi_0, \varphi_1$ being first-order logic formulas over $V$. The evaluation of formulas is a function $\eval{\cdot}$ that is inductively defined as: \\
 		\begin{itemize}
-			\item {\makebox[3cm]{$\eval{\bot} \hfill$}} \textbf{false}
-			\item {\makebox[3cm]{$ \eval{p(t_0, \ldots, t_n)} \hfill$}} 
+			\item {\makebox[3.5cm]{$\eval{\bot} = \hfill$}} = false
+			\item {\makebox[3.5cm]{$ \eval{p(t_0, \ldots, t_n)} \hfill$}} =
 				$
 				\begin{cases}
-					\textbf{true}, & \text{for } (\eval{t_0}, \ldots, \eval{t_n}) \in \interpret(p)\\
-					\textbf{false}, & \text{otherwise}
+					true, & \text{for } (\eval{t_0}, \ldots, \eval{t_n}) \in \interpret(p)\\
+					false, & \text{otherwise}
 				\end{cases}
 				$
-			\item {\makebox[3cm]{$\eval{\neg \varphi_0} \hfill$}}
+			\item {\makebox[3.5cm]{$\eval{\neg \varphi_0} \hfill$}} =
 				$
 				\begin{cases}
-					\textbf{true}, & \text{for } \eval{\varphi_0} \text{ \textbf{false}}\\
-					\textbf{false}, & \text{for } \eval{\varphi_0} \text{ \textbf{true}}\\
+					true & \text{for } \eval{\varphi_0} \text{ \textbf{false}}\\
+					false, & \text{for } \eval{\varphi_0} \text{ \textbf{true}}\\
 				\end{cases}
 				$
-			\item {\makebox[3cm]{$\eval{\varphi_0 \land \varphi_1} \hfill$}}
+			\item {\makebox[3.5cm]{$\eval{\varphi_0 \land \varphi_1} \hfill$}} =
 				$
 				\begin{cases}
-					\textbf{true}, & \text{for } \eval{\varphi_0} \text{ \textbf{true} and } \eval{\varphi_1} \text{ \textbf{true}} \\
-					\textbf{false}, & \text{otherwise} \\
+					true, & \text{for } \eval{\varphi_0} \text{ \textbf{true} and } \eval{\varphi_1} \text{true} \\
+					false, & \text{otherwise} \\
 				\end{cases}
 				$
-			\item {\makebox[3cm]{$\eval{\exists v. \varphi_0} \hfill$}}
+			\item {\makebox[3.5cm]{$\eval{\exists v. \varphi_0} \hfill$}} =
 				$
 				\begin{cases}
-					\textbf{true}, & \text{if there exists } x \in D \text{ where } \eval{\varphi_0 [v \mapsto x]} \text{ \textbf{true}} \\
-					\textbf{false}, & \text{otherwise} \\
+					true, & \text{if there exists } x \in D \text{ where } \eval{\varphi_0 [v \mapsto x]} \text{ true} \\
+					false, & \text{otherwise} \\
 				\end{cases}
 				$
 		\end{itemize}
