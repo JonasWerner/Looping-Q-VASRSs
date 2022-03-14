@@ -439,23 +439,23 @@ There are several additional methods of trace generalization, in this thesis we 
 
 To illustrate the trace abstraction scheme we demonstrate one iteration. Assume we are given program $P$ and its control-flow graph $G_P = \cfg$, as depicted in Figure \ref{codeWithAss} and Figure \ref{cfg:P:Ass}. The automaton $\cfgAutomat{P}$, with states $Q = Loc$, transition relation $\Delta = \delta$, initial state $Q_{init} = \ell_\init$, accepting states $F = \loc{err}$ over alphabet:
 \begin{align*}
-	\Sigma = \Pi = \{ &\st{x:=0;y:=2;z:=3}, \st{x>20}, \st{x==22}, \st{x!=22}, \st{x<=20}, \\ &\st{x<=10}\st{z:=x;x:=x+y;y:=y+1}, \st{x:=x+2;y:=y-3}\}
+	\Sigma = \Pi = \{ &\st{x:=0}, \st{y:=2}, \st{z:=3}, \st{x>20}, \st{x==22}, \st{x!=22}, \st{x<=20}, \\ &\st{x<=10}, \st{z:=x}, \st{x:=x+y}, \st{y:=y+1}, \st{x:=x+2}, \st{y:=y-3}\}
 \end{align*} 
 We extract the trace:
 \begin{align*}
 	\tau_1= \st{x:=0;y:=2;z:=3}, \st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1} \st{x>20}, \st{x!=22}
 \end{align*}
-We consider $\tau_1$ as automaton $\mathcal{A}_1$ as seen in Figure
-
-\begin{minipage}[b]{0.3\linewidth}
+We consider $\tau_1$ as automaton $\mathcal{A}_1$ as seen in Figure \\
+\begin{minipage}[t]{0.3\linewidth}
 	\input{fig/fig_trace_example_no_loop.tex}
 \end{minipage}
-\begin{minipage}[b]{0.3\linewidth}
+\begin{minipage}[t]{0.3\linewidth}
 	\input{fig/fig_trace_example_no_loop_hoare_annot.tex}
 \end{minipage}
-\begin{minipage}[b]{0.3\linewidth}
+\begin{minipage}[t]{0.3\linewidth}
 	\input{fig/fig_trace_example_no_loop_hoare_annot_generalized.tex}
 \end{minipage}
+\\
 \jw{Todo: Proper definition of $\mathcal{A_1}$ and add missing transitions to right side}
 
 

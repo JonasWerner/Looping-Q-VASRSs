@@ -5,20 +5,20 @@
 	shorten >=1pt,
 	auto,
 	node distance=2cm,
-	scale=0.9,
+	scale=0.85,
 	transform shape,
 	align=center,
 	smallnode/.style={inner sep=1.4},
 	initial text =,
 	anchor=center]
 	
-	\node[state, initial above, initial text =, label=right:{\itp{\top}}](1){$q_1$};
-	\node[state](2)[below of=1, label=right:{\itp{x = 0}}] {$q_{2}$};
-	\node[state](3)[below of=2, label=right:{\itp{x = 0}}] {$q_{3}$};
-	\node[state](4)[below of=3, label=right:{\itp{x = 0}}] {$q_{4}$};
-	\node[state](5)[below of=4, label=right:{\itp{x = 2}}] {$q_{5}$};
-	\node[state](6)[below of=5, label=right:{\itp{\bot}}] {$q_{6}$};
-	\node[state, accepting](7)[below of=6, label=right:{\itp{\bot}}] {$q_{7}$};
+	\node[state, initial above, initial text =, label=left:{\itp{\top}}](1){$q_1$};
+	\node[state](2)[below of=1, label=left:{\itp{x = 0}}] {$q_{2}$};
+	\node[state](3)[below of=2, label=left:{\itp{x = 0}}] {$q_{3}$};
+	\node[state](4)[below of=3, label=left:{\itp{x = 0}}] {$q_{4}$};
+	\node[state](5)[below of=4, label=left:{\itp{x = 2}}] {$q_{5}$};
+	\node[state](6)[below of=5, label=left:{\itp{\bot}}] {$q_{6}$};
+	\node[state, accepting](7)[below of=6, label=left:{\itp{\bot}}] {$q_{7}$};
 	
 	\path (1) edge[] node[]{$\st{x:=0;y:=2;z:=3}$} (2)
 	(2) edge[] node[]{$\st{x<=20}$} (3)

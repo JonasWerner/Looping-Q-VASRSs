@@ -5,20 +5,27 @@
 	shorten >=1pt,
 	auto,
 	node distance=2cm,
-	scale=0.9,
+	scale=0.85,
 	transform shape,
 	align=center,
 	smallnode/.style={inner sep=1.4},
 	initial text =,
 	anchor=center]
 	
-	\node[state, initial above, initial text =, label=right:{\itp{\top}}](1){$q_1$};
-	\node[state](2)[below of=1, label=right:{\itp{x = 0}}] {$q_2$};
-	\node[state](5)[below of=4, label=right:{\itp{x = 2}}] {$q_5$};
-	\node[state, accepting](7)[below of=6, label=right:{\itp{\bot}}] {$q_7$};
+	\node[state, initial above, initial text =, label=left:{\itp{\top}}](1){$q_1$};
+	\node[state](2)[below of=1, label=left:{\itp{x = 0}}] {$q_{2}$};
+	\node[](3)[below of=2] {};
+	\node[](4)[below of=3]{};
+	\node[state](5)[below of=4, label=left:{\itp{x = 2}}] {$q_{5}$};
+	\node[](6)[below of=5] {};
+	\node[state, accepting](7)[below of=6, label=left:{\itp{\bot}}] {$q_{7}$};
 	
 	\path (1) edge[] node[]{$\st{x:=0;y:=2;z:=3}$} (2)
 	(2) edge[] node[]{$\st{z:=x;x:=x+y;y:=y+1}$} (5)
 	(5) edge[] node[]{$\st{x>20}$} (7)
+	(1) edge[loop right] node {$\Sigma$} (1)
+	(2) edge[loop right] node {$\Sigma\ \backslash$ \\ \{\st{x:=x+y}\}} (2)
+	(5) edge[loop right] node {$\Sigma\ \backslash$ \\ \{ \st{x:=x+y}\\ \hspace*{0.25cm} \st{x:=0} \}} (5)
+	(7) edge[loop right] node {$\Sigma$} (7)
 	;
 \end{tikzpicture}
