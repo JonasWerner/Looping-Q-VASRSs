@@ -260,7 +260,7 @@ The changes to program states by the loop in $P$ can be represented by the trans
 \begin{equation*}
 	L = x \leq 20 \land (H \lor G)
 \end{equation*}
-With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the approximation of the whole loop's behavior we need to compute the \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_)$ that simulates $L$. \\ \par We impose a partial order to model simulations between \qvasr-abstractions.
+With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the approximation of the whole loop's behavior we need to compute the \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ that simulates $L$. \\ \par We impose a partial order to model simulations between \qvasr-abstractions.
 \begin{mydef}[\qvasr-Abstraction Preorder]
 	Given two \qvasr-abstractions  \qvAbstr{1} and \qvAbstr{2}, with abstract dimensions $e$ and $d$ respectively, we define the preorder \\ of \qvasr-abstractions as \qvAbstr{1} $\preceq$ \qvAbstr{2} if and only if there exists a linear transformation $T \in \valuations^{e \times d}$ where $V_1 \vdash_S V_2$ and $TS_1 = S_2$
 \end{mydef}
@@ -485,5 +485,5 @@ If we now proceed to dimension two, we get the relation $r_ 2 = y'$. Both transf
 \end{equation*}
 Using these formulas we get the loop summary:
 \begin{align*}
-	\exists k_1, k_2.&\ x' = x\ \land\ y' = y\ \land\ z' = z \lor ((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \\ &\land\ y' = y - 3k_1 + k_2)\ \\ 
+	\exists k_1, k_2.&\ x' = x\ \land\ y' = y\ \land\ z' = z \\ &\lor ((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \land\ y' = y - 3k_1 + k_2)\ \\ 
 \end{align*}

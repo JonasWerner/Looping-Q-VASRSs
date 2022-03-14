@@ -368,14 +368,15 @@ Given trace $\tau = \pi_1, \ldots$, if there is a transition $\pi_{\bot}$ where 
 A program is called safe if and only if every error location in a program's control-flowgraph is unreachable. It is called unsafe if there is a reachable error location.
 
 \subsection{Trace Abstraction}
-To prove safety of a given program we employ trace abstraction \cite{10.1007/978-3-642-03237-0_7, 10.1007/978-3-642-39799-8_2, 10.1145/1706299.1706353}, which is an automata-theoretic approach used to prove reachability of error traces. This section will give an introduction to the approach and describe how the scheme works. \\ \par
+To prove safety of a given program we employ trace abstraction \cite{10.1007/978-3-642-03237-0_7, 10.1007/978-3-642-39799-8_2, 10.1145/1706299.1706353}, which is an automata-theoretic approach used to prove reachability of error locations. This section will give an introduction to the approach and describe how the scheme works. \\ \par
 
-Given a program $P$ and its control-flow graph $\cfg$, the control-flow graph can be viewed as an automaton $mathcal{A} = (Q, \Sigma, \Delta, Q_{init}, F)$ , with of states $Q = Loc$, $q_{init} = \loc{init}$ being the initial state, accepting states $F = \loc{err}$ being the error states, alphabet $\Sigma = \Pi$ being the set of transition formulas, and $\Delta \subseteq Q \times \Sigma \times Q$ being the transition relation, derived from $\delta$. By introducing a Floyd-Hoare annotation $\beta$, analogously to control-flow graph's annotations, we get a Floyd-Hoare automaton.
-\begin{mydef}
-	A Floyd-Hoare automaton $\mathcal{A} = (Q, \Sigma, \Delta, q_{init}, F, \beta)$ is a nondeterministic automaton, consisting of, a set of states $Q$, an alphabet of symbols $\Sigma$, a transition relation $\Delta \subseteq Q \times \Sigma \times Q$, an initial state $Q_{init}$, accepting states $F$, and a Floyd-Hoare annotation $\beta: Q \rightarrow \varphi$, where $\varphi$ is a first-order logic formula. It holds that $\beta(q) = \top$ if $q = q_{init}$ and $\beta(q) = \bot$ if $q \in F$.
+Given a program $P$ and its control-flow graph $\cfg$, the control-flow graph can be viewed as a non-deterministic finite automaton $mathcal{A_P} = (Q, \Sigma, \Delta, Q_{init}, F)$ , with of states $Q = Loc$, $q_{init} = \loc{init}$ being the initial state, accepting states $F = \loc{err}$ being the error states, alphabet $\Sigma = \Pi$ being the set of transition formulas, and $\Delta \subseteq Q \times \Sigma \times Q$ being the transition relation, derived from $\delta$. \\ \par 
+Automata can be extended to a Floyd-Hoare automaton by computing a Floyd-Hoare annotation $\beta$, analogously to control-flow graph's annotations.
+\begin{mydef}[Floyd-Hoare Automata]
+	A Floyd-Hoare automaton $\mathcal{A} = (Q, \Sigma, \Delta, q_{init}, F, \beta)$ is a nondeterministic automaton, consisting of, a set of states $Q$, an alphabet of symbols $\Sigma$, a transition relation $\Delta \subseteq Q \times \Sigma \times Q$, an initial state $Q_{init}$, accepting states $F$, and a Floyd-Hoare annotation $\beta: Q \rightarrow \varphi$, where $\varphi$ is a first-order logic formula. It holds that $\beta(q) = \top$ if $q = q_{init}$ and $\beta(q) = \bot$ if $q \in F$. Therefore, every trace that is accepted by a Floyd-Hoare automaton is infeasible.
 \end{mydef}
-Trace abstraction constructs so called Floyd-Hoare automatons.
 
+Trace abstraction considers a given program's $P$ control-flow graph as a nondeterministic finite automaton \cfgAutomat{P}, and uses it to iteratively compute a Floyd-Hoare automaton \cfgAutomatHoare{D} containing all infeasible paths following the paradigm shown in Figure \ref{traceAbstractionScheme}.
 
 \begin{figure}[H]
 	\centering
