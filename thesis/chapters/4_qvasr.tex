@@ -483,7 +483,12 @@ If we now proceed to dimension two, we get the relation $r_ 2 = y'$. Both transf
 \begin{equation*}
 	y' = y - 3k_1 + k_2
 \end{equation*}
-Using these formulas we get the loop summary:
-\begin{align*}
-	\exists k_1, k_2.&\ x' = x\ \land\ y' = y\ \land\ z' = z \\ &\lor ((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \land\ y' = y - 3k_1 + k_2)\ \\ 
-\end{align*}
+Using these formulas we get the loop summary as seen in Figure \ref{loopSummary}.
+\begin{figure}[H]
+	\begin{align*}
+		\exists k_1, k_2.&\ x' = x\ \land\ y' = y\ \land\ z' = z \\ &\lor ((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \land\ y' = y - 3k_1 + k_2)\ \\ 
+	\end{align*}
+	\caption{\\ Summary computed from \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ for transition formula $L$.}
+	\label{loopSummary}
+\end{figure}
+

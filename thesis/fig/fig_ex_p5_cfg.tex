@@ -4,31 +4,30 @@
 	>=stealth',
 	shorten >=1pt,
 	auto,
-	node distance=3cm,
+	node distance=3.25cm,
 	scale=0.9,
 	transform shape,
 	align=center,
 	smallnode/.style={inner sep=1.4},
 	initial text =,
 	anchor=center]
-	
-	\node[state, initial above, initial text =](1){$\loc{1}$};
-	\node[state] (head) [below of=1] {$\loc{4}$};
-	\node[state] (loopEntry)[left of=head] {$\loc{5}$};
-	\node[state] (if)[above of=loopEntry] {$\loc{6}$};
-	
-	\node[state] (else)[below of=loopEntry] {$\loc{10}$};
-	\node[state] (loopExit)[right of=head] {$\loc{13}$};
-	
-	\path (1) edge node []{\st{x:=0}\\ \st{y:=2}\\ \st{z:=3}} (head)
-	(head) edge node []{\st{x<=20}} (loopEntry)
-	(head) edge node []{\st{x>20}} (loopExit)
-	
-	(loopEntry) edge[bend right] node [right]{\st{x<=10}} (if)
-	(if) edge[bend right]node [left]{\\ \st{z:=x}\\ \st{x:=x+y}\\ \st{y:=y+1}} (loopEntry)
-	
-	(loopEntry) edge[bend left] node [right]{\st{x>10}} (else)
-	(else) edge[bend left] node [left]{\st{x:=x+2}\\ \st{y:=y-3}} (loopEntry)
+		\node[state, initial above, initial text =](1){$\loc{1}$};
+		\node[state] (head) [below of=1] {$\loc{4}$};
+		\node[state] (loopEntry)[left of=head] {$\loc{5}$};
+		\node[state] (if)[above of=loopEntry] {$\loc{6}$};
+		
+		\node[state] (else)[below of=loopEntry] {$\loc{10}$};
+		\node[state] (loopExit)[right of=head] {$\loc{13}$};
+		
+		\path (1) edge node []{\st{x:=0;}\\ \st{y:=2;}\\ \st{z:=3;}} (head)
+		(head) edge node []{\st{x<=20}} (loopEntry)
+		(head) edge node []{\st{x>20}} (loopExit)
+		
+		(loopEntry) edge[] node []{\st{x<=10}} (if)
+		(if) edge[]node []{\\ \st{z:=x;}\\ \st{x:=x+y;}\\ \st{y:=y+1}} (head)
+		
+		(loopEntry) edge[]node []{\st{x>10}} (else)
+		(else) edge[] node []{\st{x:=x+2;}\\ \st{y:=y-3}} (head)
 
 	;
 \end{tikzpicture}

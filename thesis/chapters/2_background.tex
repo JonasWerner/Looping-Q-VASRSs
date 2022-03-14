@@ -11,63 +11,105 @@ This chapter will introduce mathematical background, our understanding and notat
 
 \subsection{Mathematical Background}
 In this thesis we utilize various concepts of linear algebra, such as vector spaces, vector space bases, and more. This section will introduce important notations and definitions.
-We define a \textsl{vector} as $\vec{x} = x_1, \ldots, x_n$ that consists of $n$ entries, $n$ is called the dimension of the vector. The vector containing only zeroes is denoted as $\vec{0}$, the vector containing only ones by $\vec{1}$. \\ \par We denote a \textsl{matrix} as
-$S = \begin{bmatrix}
-	s_{1 ,1} & \ldots & s_{1, n} \\
-	\vdots & \ddots & \vdots \\
-	s_{m ,1} & \ldots & s_{m, n} \\
-\end{bmatrix}
-$
-with entries $s_{1, 1}, \ldots, s_{m, n}$. The integers $n$ and $m$ denote the number of columns and the number of rows respectively. A vector can be understood as a matrix of dimensions $1 \times n$, called row vector, or as a matrix of dimension $n \times 1$, called column vector.
+We define a \textsl{vector} as $\vec{x} = x_1, \ldots, x_n$ that consists of $n$ entries, $n$ is called the dimension of the vector. The vector containing only zeroes is denoted as $\vec{0}$, the vector containing only ones by $\vec{1}$. \\ We denote a $m \times n$ \textsl{matrix} $S$ as:
+\begin{equation*}
+	S = \begin{bmatrix}
+		s_{1 ,1} & \ldots & s_{1, n} \\
+		\vdots & \ddots & \vdots \\
+		s_{m ,1} & \ldots & s_{m, n} \\
+	\end{bmatrix}
+\end{equation*}
+with entries $s_{1, 1}, \ldots, s_{m, n}$. The integers $n$ and $m$ denote the number of columns and the number of rows respectively. A vector can be understood as a matrix of dimensions $1 \times n$, called row vector, or as a matrix of dimension $n \times 1$, called column vector. \\
 We define the following operations on vectors and matrices.
 \begin{mydef}[Scalar Multiplication]
-	Given a scalar $a$ and an $m \times n$ matrix \\ $S = 
-	\begin{bmatrix}
-		a_{11} & \ldots & a_{1n} \\
-		\vdots & \ddots & \vdots \\
-		a_{m1} & \ldots & a_{mn} \\
-	\end{bmatrix}$, the scalar multiplication $aS =
-	\begin{bmatrix}
-		c_{11} & \ldots & c_{1p} \\
-		\vdots & \ddots & \vdots \\
-		c_{m1} & \ldots & c_{mp} \\
-	\end{bmatrix}$ produces an $m \times n$ matrix with entries \[c_{ij} =  a \cdot a_{ij} \] for $1 \leq i \leq m$ and $1 \leq j \leq p$.
+	Given a scalar $a$ and an $m \times n$ matrix $S$:
+	\begin{equation*}
+		S = 
+		\begin{bmatrix}
+			a_{11} & \ldots & a_{1n} \\
+			\vdots & \ddots & \vdots \\
+			a_{m1} & \ldots & a_{mn} \\
+		\end{bmatrix}
+		\end{equation*} The scalar multiplication $aS$ is defined as the $m \times n$ matrix:
+		\begin{equation*}
+		aS =
+		\begin{bmatrix}
+			c_{11} & \ldots & c_{1n} \\
+			\vdots & \ddots & \vdots \\
+			c_{m1} & \ldots & c_{mn} \\
+		\end{bmatrix}
+	\end{equation*} 
+\\
+	With entries $c_{ij} =  a \cdot a_{ij}$ for $1 \leq i \leq m$ and $1 \leq j \leq p$.
 \end{mydef}
 \begin{mydef}[Matrix Multiplication]
-	Given the $m \times n$ matrix $A = 
-	\begin{bmatrix}
-		a_{11} & \ldots & a_{1n} \\
-		\vdots & \ddots & \vdots \\
-		a_{m1} & \ldots & a_{mn} \\
-	\end{bmatrix}$, and the $n \times p$ matrix $B = 
-	\begin{bmatrix}
-	b_{11} & \ldots & b_{1p} \\
-	\vdots & \ddots & \vdots \\
-	b_{n1} & \ldots & b_{np} \\
-\end{bmatrix}$, the matrix product $AB = 
-	\begin{bmatrix}
-	c_{11} & \ldots & c_{1p} \\
-	\vdots & \ddots & \vdots \\
-	c_{m1} & \ldots & c_{mp} \\
-	\end{bmatrix}$ produces the $m \times p$ matrix $AB$ with entries \[c_{i,j} = \sum_{k=1}^n a_{ik}\cdot b_{kj}\] for $1 \leq i \leq m$ and $1 \leq j \leq p$.
-\end{mydef}
+	Given the $m \times n$ matrix $A$ and $n \times p$ matrix $B$: \\ \par
+	\begin{minipage}{0.4\linewidth}
+	\begin{equation*}
+		A = 
+		\begin{bmatrix}
+			a_{1 ,1} & \ldots & a_{1, n} \\
+			\vdots & \ddots & \vdots \\
+			a_{m ,1} & \ldots & a_{m, n} \\
+		\end{bmatrix}
+	\end{equation*}
+\end{minipage}	
+\begin{minipage}[b]{0.59\linewidth}
+	\begin{equation*}
+		B = 
+		\begin{bmatrix}
+			b_{1 ,1} & \ldots & b_{1, p} \\
+			\vdots & \ddots & \vdots \\
+			b_{n ,1} & \ldots & b_{n, p} \\
+		\end{bmatrix}
+	\end{equation*}
+\end{minipage}
+\\ \\
+The matrix product $AB$ is defined as the $m \times p$ matrix:
+	\begin{equation*}
+		AB = 
+		\begin{bmatrix}
+			c_{11} & \ldots & c_{1p} \\
+			\vdots & \ddots & \vdots \\
+			c_{m1} & \ldots & c_{mp} \\
+		\end{bmatrix}
+	\end{equation*} 
+	With entries $c_{i,j} = \sum_{k=1}^n a_{ik}\cdot b_{kj}$ for $1 \leq i \leq m$ and $1 \leq j \leq p$.
+	\end{mydef}
+
 \begin{mydef}[Hadamard Product]
-	Given matrices of same dimensions $m \times n$ $A = 
-	\begin{bmatrix}
-		a_{1 ,1} & \ldots & a_{1, n} \\
-		\vdots & \ddots & \vdots \\
-		a_{m ,1} & \ldots & a_{m, n} \\
-	\end{bmatrix}$, and $B = 
-	\begin{bmatrix}
-		b_{1 ,1} & \ldots & b_{1, n} \\
-		\vdots & \ddots & \vdots \\
-		b_{m ,1} & \ldots & b_{m, n} \\
-	\end{bmatrix}$, \\ the hadamard product $A*B = 
+	Given matrices of same dimensions $m \times n$ $A$ and $B$: \\
+	\begin{minipage}{0.4\linewidth}
+		\begin{equation*}
+			A = 
+			\begin{bmatrix}
+				a_{1 ,1} & \ldots & a_{1, n} \\
+				\vdots & \ddots & \vdots \\
+				a_{m ,1} & \ldots & a_{m, n} \\
+			\end{bmatrix}
+		\end{equation*}
+	\end{minipage}	
+	\begin{minipage}[b]{0.59\linewidth}
+		\begin{equation*}
+			B = 
+			\begin{bmatrix}
+				b_{1 ,1} & \ldots & b_{1, n} \\
+				\vdots & \ddots & \vdots \\
+				b_{m ,1} & \ldots & b_{m, n} \\
+			\end{bmatrix}
+		\end{equation*}
+	\end{minipage}	
+\\ \\
+	The hadamard product $A*B$ is defined as a  $m \times n$ matrix:
+	\begin{equation*}
+	 A*B = 
 	\begin{bmatrix}
 		c_{1 ,1} & \ldots & c_{1, p} \\
 		\vdots & \ddots & \vdots \\
 		c_{m ,1} & \ldots & c_{m, p} \\
-	\end{bmatrix}$  produces an $m \times n$ matrix with entries $c_{i,j} = a_{ij} \cdot b_{ij}$ for $1 \leq i \leq m$ and $1 \leq j \leq p$.
+	\end{bmatrix}
+	\end{equation*}
+	With entries $c_{i,j} = a_{ij} \cdot b_{ij}$ for $1 \leq i \leq m$ and $1 \leq j \leq p$.
 \end{mydef}
 \begin{mydef}[Linear Dependence]
 	The sequence of vectors $\vec{x_1}, \ldots, \vec{x_n}$ of same dimension $d$, is linear independent, if and only if there exists no non zero scalars $a_1, \ldots, a_d$ such that $a_1\vec{x_1} + \ldots + a_n\vec{x_n} = \vec{0}$
@@ -165,29 +207,29 @@ From the evaluation of terms we can derive the evaluation of formulas, which dec
 			\item {\makebox[3.5cm]{$ \eval{p(t_0, \ldots, t_n)} \hfill$}} =
 				$
 				\begin{cases}
-					true, & \text{for } (\eval{t_0}, \ldots, \eval{t_n}) \in \interpret(p)\\
-					false, & \text{otherwise}
+					\textbf{true}, & \text{for } (\eval{t_0}, \ldots, \eval{t_n}) \in \interpret(p)\\
+					\textbf{false}, & \text{otherwise}
 				\end{cases}
 				$
 			\item {\makebox[3.5cm]{$\eval{\neg \varphi_0} \hfill$}} =
 				$
 				\begin{cases}
-					true & \text{for } \eval{\varphi_0} \text{ \textbf{false}}\\
-					false, & \text{for } \eval{\varphi_0} \text{ \textbf{true}}\\
+					\textbf{true} & \text{for } \eval{\varphi_0} \text{ \textbf{false}}\\
+					\textbf{false}, & \text{for } \eval{\varphi_0} \text{ \textbf{true}}\\
 				\end{cases}
 				$
 			\item {\makebox[3.5cm]{$\eval{\varphi_0 \land \varphi_1} \hfill$}} =
 				$
 				\begin{cases}
-					true, & \text{for } \eval{\varphi_0} \text{ \textbf{true} and } \eval{\varphi_1} \text{true} \\
-					false, & \text{otherwise} \\
+					\textbf{true}, & \text{for } \eval{\varphi_0} \text{ \textbf{true} and } \eval{\varphi_1} \textbf{ true} \\
+					\textbf{false}, & \text{otherwise} \\
 				\end{cases}
 				$
 			\item {\makebox[3.5cm]{$\eval{\exists v. \varphi_0} \hfill$}} =
 				$
 				\begin{cases}
-					true, & \text{if there exists } x \in D \text{ where } \eval{\varphi_0 [v \mapsto x]} \text{ true} \\
-					false, & \text{otherwise} \\
+					\textbf{true}, & \text{if there exists } x \in D \text{ where } \eval{\varphi_0 [v \mapsto x]} \textbf{ true} \\
+					\textbf{false}, & \text{otherwise} \\
 				\end{cases}
 				$
 		\end{itemize}
@@ -263,20 +305,22 @@ The change from one program state to another is called a \textsl{transition}. To
 \end{mydef}
  We specify for each of the atomic program statements the following \textsl{transition formulas}: 
  \begin{center}
-\begin{itemize}
-	\item \st{assume $\langle Expr \rangle$}: 
-	\begin{equation*}
-		Expr\ \land \bigwedge\limits_{v \in V} v' = v 
-	\end{equation*}
-	\item \st{v := $\langle Expr \rangle$}:
-	\begin{equation*}
-		v' = Expr\ \land \bigwedge\limits_{v \in V, v \not= x} v' = v 
-	\end{equation*}
-	\item \st{havoc v}: 
-	\begin{equation*}
+	\st{assume $\langle Expr \rangle$}:
+	\begin{align*}
+		Expr \land \bigwedge\limits_{v \in V} v' = v
+	\end{align*}
+	\vspace*{0.5cm}
+
+	\st{v := $\langle Expr \rangle$}:
+	\begin{align*}
+		v' = Expr \land \bigwedge\limits_{v \in V, v \not= x} v' = v 
+	\end{align*}
+	\vspace*{0.5cm}
+	
+	\st{havoc v}: 
+	\begin{align*}
 			\bigwedge\limits_{v \in V, v \not= x} v' = v 
-	\end{equation*}
-\end{itemize} 
+	\end{align*}
  \end{center}
 For brevity's sake we will use the notation \st{$\langle Expr \rangle$} for assumptions, and omit $\bigwedge\limits_{v \in V} v' = v$ in assumptions and assignments. \\
 With transition formulas we can model state transitions using the strongest postcondition. The strongest postcondition applied on a program state $\sigma$, that satisfies a given first-order logic formula $\varphi$, and a transition formula \trf results in a formula $\psi$ that the follower states after the transition have to satisfy.
@@ -370,7 +414,7 @@ A program is called safe if and only if every error location in a program's cont
 \subsection{Trace Abstraction}
 To prove safety of a given program we employ trace abstraction \cite{10.1007/978-3-642-03237-0_7, 10.1007/978-3-642-39799-8_2, 10.1145/1706299.1706353}, which is an automata-theoretic approach used to prove reachability of error locations. This section will give an introduction to the approach and describe how the scheme works. \\ \par
 
-Given a program $P$ and its control-flow graph $\cfg$, the control-flow graph can be interpreted as a non-deterministic finite automaton \\ $mathcal{A_P} = (Q, \Sigma, \Delta, Q_{init}, F)$ , with of states $Q = Loc$, $q_{init} = \loc{init}$ being the initial state, accepting states $F = \loc{err}$ being the error states, alphabet $\Sigma = \Pi$ being the set of transition formulas, and $\Delta \subseteq Q \times \Sigma \times Q$ being the transition relation, derived from $\delta$. \\ \par 
+Given a program $P$ and its control-flow graph $\cfg$, the control-flow graph can be interpreted as a non-deterministic finite automaton \\ $\mathcal{A_P} = (Q, \Sigma, \Delta, Q_{init}, F)$ , with of states $Q = Loc$, $q_{init} = \loc{init}$ being the initial state, accepting states $F = \loc{err}$ being the error states, alphabet $\Sigma = \Pi$ being the set of transition formulas, and $\Delta \subseteq Q \times \Sigma \times Q$ being the transition relation, derived from $\delta$. \\ \par 
 Automata can be extended to a Floyd-Hoare automaton by computing a Floyd-Hoare annotation $\beta$, analogously to control-flow graph's annotations.
 \begin{mydef}[Floyd-Hoare Automata]
 	A Floyd-Hoare automaton \\$\mathcal{A} = (Q, \Sigma, \Delta, q_{init}, F, \beta)$ is a nondeterministic automaton, consisting of, a set of states $Q$, an alphabet of symbols $\Sigma$, a transition relation $\Delta \subseteq Q \times \Sigma \times Q$, an initial state $Q_{init}$, accepting states $F$, and a Floyd-Hoare annotation $\beta: Q \rightarrow \varphi$, where $\varphi$ is a first-order logic formula. It holds that $\beta(q) = \top$ if $q = q_{init}$ and $\beta(q) = \bot$ if $q \in F$. Therefore, every trace that is accepted by a Floyd-Hoare automaton is infeasible.
@@ -391,8 +435,27 @@ We give a program $P$'s control-flow graph $G_P$  as input, which is interpreted
 	\item 2. If $\tau$ is proven infeasible, we construct a new automaton for that specific trace and compute a Floyd-Hoare annotation for it. This automaton now only accepts $\tau$, we can, however, model more traces by generalizing the automaton: We firstly add transitions $\pi_i \in \Sigma$ for which $\{sp(\trf_i, \varphi_i)\} \subseteq \{\varphi_j\}$ for annotations $\varphi_i$ and $\varphi_j$. Consequently, we merge states sharing the same annotation. This generalization is done in $\texttt{refine}_F(\tau)$.
 	\item 3. We update the traces of the Floyd-Hoare automaton $\mathcal{A}_D$ by adding traces of the refinement. The algorithm begins anew, by computing the set of remaining traces for which infeasibility has not yet been proven. If there are no traces left, we know that all traces to the error location are infeasible, terminating the algorithm, which returns that $P$ is safe.
 \end{itemize}
-There are several additional methods of trace generalization, in this thesis we present a technique using loop summaries, in accelerated interpolation.
+There are several additional methods of trace generalization, in this thesis we present a technique using loop summaries, in accelerated interpolation. \\ \par
 
+To illustrate the trace abstraction scheme we demonstrate one iteration. Assume we are given program $P$ and its control-flow graph $G_P = \cfg$, as depicted in Figure \ref{codeWithAss} and Figure \ref{cfg:P:Ass}. The automaton $\cfgAutomat{P}$, with states $Q = Loc$, transition relation $\Delta = \delta$, initial state $Q_{init} = \ell_\init$, accepting states $F = \loc{err}$ over alphabet:
+\begin{align*}
+	\Sigma = \Pi = \{ &\st{x:=0;y:=2;z:=3}, \st{x>20}, \st{x==22}, \st{x!=22}, \st{x<=20}, \\ &\st{x<=10}\st{z:=x;x:=x+y;y:=y+1}, \st{x:=x+2;y:=y-3}\}
+\end{align*} 
+We extract the trace:
+\begin{align*}
+	\tau_1= \st{x:=0;y:=2;z:=3}, \st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1} \st{x>20}, \st{x!=22}
+\end{align*}
+We consider $\tau_1$ as automaton $\mathcal{A}_1$ as seen in Figure
 
+\begin{minipage}[b]{0.3\linewidth}
+	\input{fig/fig_trace_example_no_loop.tex}
+\end{minipage}
+\begin{minipage}[b]{0.3\linewidth}
+	\input{fig/fig_trace_example_no_loop_hoare_annot.tex}
+\end{minipage}
+\begin{minipage}[b]{0.3\linewidth}
+	\input{fig/fig_trace_example_no_loop_hoare_annot_generalized.tex}
+\end{minipage}
+\jw{Todo: Proper definition of $\mathcal{A_1}$ and add missing transitions to right side}
 
 
