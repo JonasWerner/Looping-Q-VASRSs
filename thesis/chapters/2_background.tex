@@ -161,7 +161,7 @@ From the evaluation of terms we can derive the evaluation of formulas, which dec
 \begin{mydef}[Evaluation of Formulas]
 		Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, a variable assignment $\rho$, and $\varphi_0, \varphi_1$ being first-order logic formulas over $V$. The evaluation of formulas is a function $\eval{\cdot}$ that is inductively defined as: \\
 		\begin{itemize}
-			\item {\makebox[3.5cm]{$\eval{\bot} = \hfill$}} = false
+			\item {\makebox[3.5cm]{$\eval{\bot} = \hfill$}} = \ \ false
 			\item {\makebox[3.5cm]{$ \eval{p(t_0, \ldots, t_n)} \hfill$}} =
 				$
 				\begin{cases}
@@ -362,7 +362,7 @@ Given trace $\tau = \pi_1, \ldots$, if there is a transition $\pi_{\bot}$ where 
 	\end{mydef}
 \end{comment}
 \begin{mydef}[Reachability using Floyd-Hoare Annotations]
-	Given a control-flow graph $\cfg$, we introduce a map $reach: Loc \mapsto \{\varphi\}$ that annotates each program location $\ell_i \in Loc$ to a set of states $\{\varphi_i\}$, defined by first order logic formula $\varphi_i$, this annotation is called Floyd-Hoare annotation. Such that for all edges $(\ell_i, \trf_i, \ell_j) \delta$ it holds that $\{sp(\trf_i, \phi_i)\} \subseteq \{\phi_j\}$, with $\phi_j$ being the annotation of $\ell_j$.
+	Given a control-flow graph $\cfg$, we introduce a map $reach: Loc \mapsto \{\varphi\}$ that annotates each program location $\ell_i \in Loc$ to a set of states $\{\varphi_i\}$, defined by first order logic formula $\varphi_i$, this annotation is called Floyd-Hoare annotation. Such that for all edges $(\ell_i, \trf_i, \ell_j) \delta$ it holds that $\{sp(\trf_i, \varphi_i)\} \subseteq \{\varphi_j\}$, with $\phi_j$ being the annotation of $\ell_j$.
 	 A program location $\ell_i$ is called reachable, if $reach(\ell_i) \neq \{\bot\}$, otherwise $\ell_i$ is called unreachable.
 \end{mydef}
 A program is called safe if and only if every error location in a program's control-flowgraph is unreachable. It is called unsafe if there is a reachable error location.
@@ -370,13 +370,13 @@ A program is called safe if and only if every error location in a program's cont
 \subsection{Trace Abstraction}
 To prove safety of a given program we employ trace abstraction \cite{10.1007/978-3-642-03237-0_7, 10.1007/978-3-642-39799-8_2, 10.1145/1706299.1706353}, which is an automata-theoretic approach used to prove reachability of error locations. This section will give an introduction to the approach and describe how the scheme works. \\ \par
 
-Given a program $P$ and its control-flow graph $\cfg$, the control-flow graph can be viewed as a non-deterministic finite automaton $mathcal{A_P} = (Q, \Sigma, \Delta, Q_{init}, F)$ , with of states $Q = Loc$, $q_{init} = \loc{init}$ being the initial state, accepting states $F = \loc{err}$ being the error states, alphabet $\Sigma = \Pi$ being the set of transition formulas, and $\Delta \subseteq Q \times \Sigma \times Q$ being the transition relation, derived from $\delta$. \\ \par 
+Given a program $P$ and its control-flow graph $\cfg$, the control-flow graph can be interpreted as a non-deterministic finite automaton \\ $mathcal{A_P} = (Q, \Sigma, \Delta, Q_{init}, F)$ , with of states $Q = Loc$, $q_{init} = \loc{init}$ being the initial state, accepting states $F = \loc{err}$ being the error states, alphabet $\Sigma = \Pi$ being the set of transition formulas, and $\Delta \subseteq Q \times \Sigma \times Q$ being the transition relation, derived from $\delta$. \\ \par 
 Automata can be extended to a Floyd-Hoare automaton by computing a Floyd-Hoare annotation $\beta$, analogously to control-flow graph's annotations.
 \begin{mydef}[Floyd-Hoare Automata]
-	A Floyd-Hoare automaton $\mathcal{A} = (Q, \Sigma, \Delta, q_{init}, F, \beta)$ is a nondeterministic automaton, consisting of, a set of states $Q$, an alphabet of symbols $\Sigma$, a transition relation $\Delta \subseteq Q \times \Sigma \times Q$, an initial state $Q_{init}$, accepting states $F$, and a Floyd-Hoare annotation $\beta: Q \rightarrow \varphi$, where $\varphi$ is a first-order logic formula. It holds that $\beta(q) = \top$ if $q = q_{init}$ and $\beta(q) = \bot$ if $q \in F$. Therefore, every trace that is accepted by a Floyd-Hoare automaton is infeasible.
+	A Floyd-Hoare automaton \\$\mathcal{A} = (Q, \Sigma, \Delta, q_{init}, F, \beta)$ is a nondeterministic automaton, consisting of, a set of states $Q$, an alphabet of symbols $\Sigma$, a transition relation $\Delta \subseteq Q \times \Sigma \times Q$, an initial state $Q_{init}$, accepting states $F$, and a Floyd-Hoare annotation $\beta: Q \rightarrow \varphi$, where $\varphi$ is a first-order logic formula. It holds that $\beta(q) = \top$ if $q = q_{init}$ and $\beta(q) = \bot$ if $q \in F$. Therefore, every trace that is accepted by a Floyd-Hoare automaton is infeasible.
 \end{mydef}
 
-Trace abstraction considers a given program's $P$ control-flow graph as a nondeterministic finite automaton \cfgAutomat{P}, and uses it to iteratively compute a Floyd-Hoare automaton \cfgAutomatHoare{D} containing all infeasible paths following the paradigm shown in Figure \ref{traceAbstractionScheme}.
+Given a program $P$, trace abstraction considers $P$'s control-flow graph $G_P$ as a nondeterministic finite automaton \cfgAutomat{P}. The automaton \\ \cfgAutomat{P} is used to iteratively compute a Floyd-Hoare automaton \cfgAutomatHoare{D} whose language is infeasible traces. Trace abstraction implements the paradigm shown in Figure \ref{traceAbstractionScheme}.
 
 \begin{figure}[H]
 	\centering
@@ -385,8 +385,13 @@ Trace abstraction considers a given program's $P$ control-flow graph as a nondet
 	\label{traceAbstractionScheme}
 \end{figure}
 
-
-
+We give a program $P$'s control-flow graph $G_P$  as input, which is interpreted as a non-deterministic automaton $\mathcal{A}_P$. The Floyd-Hoare automaton $\mathcal{A}_D$ is initialized as the empty set of traces. Then the following steps are repeated: 
+\begin{itemize}
+	\item 1. Construct a trace $\tau = \pi_1, \ldots, \pi_n$ and decide its feasibility. If $\tau$ is feasible, then we found an actual counterexample, returning that the $P$ is unsafe.
+	\item 2. If $\tau$ is proven infeasible, we construct a new automaton for that specific trace and compute a Floyd-Hoare annotation for it. This automaton now only accepts $\tau$, we can, however, model more traces by generalizing the automaton: We firstly add transitions $\pi_i \in \Sigma$ for which $\{sp(\trf_i, \varphi_i)\} \subseteq \{\varphi_j\}$ for annotations $\varphi_i$ and $\varphi_j$. Consequently, we merge states sharing the same annotation. This generalization is done in $\texttt{refine}_F(\tau)$.
+	\item 3. We update the traces of the Floyd-Hoare automaton $\mathcal{A}_D$ by adding traces of the refinement. The algorithm begins anew, by computing the set of remaining traces for which infeasibility has not yet been proven. If there are no traces left, we know that all traces to the error location are infeasible, terminating the algorithm, which returns that $P$ is safe.
+\end{itemize}
+There are several additional methods of trace generalization, in this thesis we present a technique using loop summaries, in accelerated interpolation.
 
 
 
