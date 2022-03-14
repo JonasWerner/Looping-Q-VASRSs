@@ -16,8 +16,8 @@
 	\node [align=center](input) {\textbf{Input}: \\ Control-flow graph $G_P$ of program $P$};
 	\node[my node](1)[below of=input]{$\mathcal{L}(A_P) \subseteq \mathcal{L}(A_D)?$};
 	\node[my node] (2) [below of=1] {$\tau$ feasible?};
-	\node [](corr)[right of=1, right=1cm] {\textbf{return}: $P$ is correct};
-	\node [](incorr)[right of=2, right=1cm] {\textbf{return}: $P$ is incorrect};
+	\node [](corr)[right of=1, right=1cm] {\textbf{return}: $P$ is Safe};
+	\node [](incorr)[right of=2, right=1cm] {\textbf{return}: $P$ is Unsafe};
 	
 	\path (1) edge[bend left] node[align=left, right=0.25cm]{no \\
 	$\tau \in \mathcal{L}(A_P) \backslash \mathcal{L}(A_D)$} (2)
