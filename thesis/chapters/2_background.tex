@@ -201,9 +201,9 @@ Assume we are given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, 
 From the evaluation of terms we can derive the evaluation of formulas, which decides whether a formula is \textsl{true} or \textsl{false}.
 
 \begin{mydef}[Evaluation of Formulas]
-		Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, a variable assignment $\rho$, and $\varphi_0, \varphi_1$ being first-order logic formulas over $V$. The evaluation of formulas is a function $\eval{\cdot}$ that is inductively defined as: \\
+		Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, a variable assignment $\rho$, and $\varphi_0,\  \varphi_1$ being first-order logic formulas over $V$. The evaluation of formulas is a function $\eval{\cdot}$ that is inductively defined as: \\
 		\begin{itemize}
-			\item {\makebox[3.5cm]{$\eval{\bot} = \hfill$}} = \ \ false
+			\item {\makebox[3.5cm]{$\eval{\bot} = \hfill$}} = \ \ \textbf{false}
 			\item {\makebox[3.5cm]{$ \eval{p(t_0, \ldots, t_n)} \hfill$}} =
 				$
 				\begin{cases}
@@ -247,7 +247,7 @@ Assume we are given the example program as seen in Figure \ref{codeNoAss}. We ca
 	\caption{Context-free grammar $\Sigma$ detailing program instructions.}
 	\label{grmr}
 \end{figure}
-We call words derived from $\langle Stmt \rangle$ program statements, words derived from $\langle Expr \rangle$ expressions, and $v \in V$ represents a program variable or a constant in a fitting model.
+We call words derived from $\langle Stmt \rangle$ program statements, words derived from $\langle Expr \rangle$ expressions, and $v$ represents a program variable or a constant in a fitting model.
 We define programs as follows:
 
 \begin{mydef}[Programs]
@@ -443,17 +443,29 @@ To illustrate the trace abstraction scheme we demonstrate one iteration. Assume 
 \end{align*} 
 We extract the trace:
 \begin{align*}
-	\tau_1= \st{x:=0;y:=2;z:=3}, \st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1} \st{x>20}, \st{x!=22}
+	\tau_1= \st{x:=0;y:=2;z:=3}, \st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}, \st{x>20}, \st{x!=22}
 \end{align*}
 We consider $\tau_1$ as automaton $\mathcal{A}_1$ as seen in Figure \\
 \begin{minipage}[t]{0.3\linewidth}
-	\input{fig/fig_trace_example_no_loop.tex}
+	\begin{figure}[H]
+		\input{fig/fig_trace_example_no_loop.tex}
+		\caption{The trace $\tau_1$.}
+		\label{traceNoAnnot}
+	\end{figure}
 \end{minipage}
+	\begin{minipage}[t]{0.3\linewidth}
+		\begin{figure}[H]
+		\input{fig/fig_trace_example_no_loop_hoare_annot.tex}
+		\caption{The trace $\tau_1$ with Floyd-Hoare annotation $\beta$.}
+		\label{traceAnnot}
+		\end{figure}
+	\end{minipage}
 \begin{minipage}[t]{0.3\linewidth}
-	\input{fig/fig_trace_example_no_loop_hoare_annot.tex}
-\end{minipage}
-\begin{minipage}[t]{0.3\linewidth}
+	\begin{figure}[H]
 	\input{fig/fig_trace_example_no_loop_hoare_annot_generalized.tex}
+	\caption{The refined trace of $\tau_1$.}
+	\label{traceAnnotGeneral}
+	\end{figure}
 \end{minipage}
 \\
 \jw{Todo: Proper definition of $\mathcal{A_1}$ and add missing transitions to right side}

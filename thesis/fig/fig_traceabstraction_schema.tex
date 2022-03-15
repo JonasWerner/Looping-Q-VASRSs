@@ -21,7 +21,7 @@
 	
 	\path (1) edge[bend left] node[align=left, right=0.25cm]{no \\
 	$\tau \in \mathcal{L}(A_P) \backslash \mathcal{L}(A_D)$} (2)
-	(2) edge[bend left] node[align=right, left=0.25cm] {$\mathcal{L}(A_D) := \mathcal{L}(A_D)\ \cup\ $ \textsl{$\texttt{refine}_F$}$(\tau)$ \\  no} (1)
+	(2) edge[bend left] node[align=right, left=0.25cm] {$A_D := A_D\ \cup\ $ \textsl{$\texttt{refine}_F$}$(\tau)$ \\  no} (1)
 	(input) edge[] node[align=left, right=0.25cm] {$A_P := \text{control-flow graph as automaton}$ \\ $A_D = \emptyset$} (1)
 	(1) edge[] node[above] {yes} (corr)
 	(2) edge[] node[above] {yes} (incorr)
