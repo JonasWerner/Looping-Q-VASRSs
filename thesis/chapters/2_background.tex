@@ -382,7 +382,7 @@ For example, when we extend the program $P$ seen in Figure \ref{codeNoAss} with 
 		\end{figure}
 	\end{minipage}
 \end{center}
-For the rest of the thesis, denote control-flow graph with error location as control-flow graph unless stated otherwise.
+For the rest of the thesis, denote control-flow graphs with error locations as control-flow graphs unless stated otherwise.
 \subsubsection{Reachability}
 The control-flow of a program can now be described by so called traces through the control-flow graph.
 \begin{mydef}[Program Trace]
@@ -432,21 +432,21 @@ Given a program $P$, trace abstraction considers $P$'s control-flow graph $G_P$ 
 We give a program $P$'s control-flow graph $G_P$  as input, which is interpreted as a non-deterministic automaton $\mathcal{A}_P$. The Floyd-Hoare automaton $\mathcal{A}_D$ is initialized as the empty set of traces. Then the following steps are repeated: 
 \begin{itemize}
 	\item 1. Construct a trace $\tau = \pi_1, \ldots, \pi_n$ and decide its feasibility. If $\tau$ is feasible, then we found an actual counterexample, returning that the $P$ is unsafe.
-	\item 2. If $\tau$ is proven infeasible, we construct a new automaton for that specific trace and compute a Floyd-Hoare annotation for it. This automaton now only accepts $\tau$, we can, however, model more traces by generalizing the automaton: We firstly add transitions $\pi_i \in \Sigma$ for which $\{sp(\trf_i, \varphi_i)\} \subseteq \{\varphi_j\}$ for annotations $\varphi_i$ and $\varphi_j$. Consequently, we merge states sharing the same annotation. This generalization is done in $\texttt{refine}_F(\tau)$.
-	\item 3. We update the traces of the Floyd-Hoare automaton $\mathcal{A}_D$ by adding traces of the refinement. The algorithm begins anew, by computing the set of remaining traces for which infeasibility has not yet been proven. If there are no traces left, we know that all traces to the error location are infeasible, terminating the algorithm, which returns that $P$ is safe.
+	\item 2. If $\tau$ is proven infeasible, we construct a new automaton for that specific trace and compute a Floyd-Hoare annotation for it. This automaton now only accepts $\tau$, we can, however, model more traces by generalizing the automaton: We firstly add transitions $\pi_i \in \Sigma$ for which $\{sp(\trf_i, \varphi_i)\} \subseteq \{\varphi_j\}$ for annotations $\varphi_i$ and $\varphi_j$. Consequently, we merge states sharing the same annotation. This generalization is done in $\texttt{abstract}_F(\tau)$.
+	\item 3. We update the traces of the Floyd-Hoare automaton $\mathcal{A}_D$ by adding traces of the abstraction. The algorithm begins anew, by computing the set of remaining traces for which infeasibility has not yet been proven. If there are no traces left, we know that all traces to the error location are infeasible, terminating the algorithm, which returns that $P$ is safe.
 \end{itemize}
 There are several additional methods of trace generalization, in this thesis we present a technique using loop summaries, in accelerated interpolation. \\ \par
 
-To illustrate the trace abstraction scheme we demonstrate one iteration. Assume we are given program $P$ and its control-flow graph $G_P = \cfg$, as depicted in Figure \ref{codeWithAss} and Figure \ref{cfg:P:Ass}. The automaton $\cfgAutomat{P}$, with states $Q = Loc$, transition relation $\Delta = \delta$, initial state $Q_{init} = \ell_\init$, accepting states $F = \loc{err}$ over alphabet:
+To illustrate the trace abstraction scheme we demonstrate one iteration in the following. Assume we are given program $P$ and its control-flow graph \\ $G_P = \cfg$, as depicted in Figure \ref{codeWithAss} and Figure \ref{cfg:P:Ass}. The automaton $\cfgAutomat{P}$, with states $Q = Loc$, transition relation $\Delta = \delta$, initial state $Q_{init} = \ell_\init$, accepting states $F = \loc{err}$ over alphabet:
 \begin{align*}
 	\Sigma = \Pi = \{ &\st{x:=0}, \st{y:=2}, \st{z:=3}, \st{x>20}, \st{x==22}, \st{x!=22}, \st{x<=20}, \\ &\st{x<=10}, \st{z:=x}, \st{x:=x+y}, \st{y:=y+1}, \st{x:=x+2}, \st{y:=y-3}\}
 \end{align*} 
-We extract the trace:
+From $G_P$, we extract the trace:
 \begin{align*}
 	\tau_1= \st{x:=0;y:=2;z:=3}, \st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}, \st{x>20}, \st{x!=22}
 \end{align*}
-We consider $\tau_1$ as automaton $\mathcal{A}_1$ as seen in Figure \\
-\begin{minipage}[t]{0.3\linewidth}
+We consider $\tau_1$ as automaton $\mathcal{A}_1$ as seen in Figure \ref{traceNoAnnot}. From $\tau_1$ we compute a Floyd-Hoare annotation, by labeling $q_1$ with $\top$, and repeatedly applying the strongest post condition, as depicted in \ref{traceAnnot}.\\
+\begin{minipage}[t]{0.29\linewidth}
 	\begin{figure}[H]
 		\input{fig/fig_trace_example_no_loop.tex}
 		\caption{The trace $\tau_1$.}
@@ -460,14 +460,13 @@ We consider $\tau_1$ as automaton $\mathcal{A}_1$ as seen in Figure \\
 		\label{traceAnnot}
 		\end{figure}
 	\end{minipage}
-\begin{minipage}[t]{0.3\linewidth}
+\begin{minipage}[t]{0.39\linewidth}
 	\begin{figure}[H]
 	\input{fig/fig_trace_example_no_loop_hoare_annot_generalized.tex}
-	\caption{The refined trace of $\tau_1$.}
+	\caption{The abstracted trace of $\tau_1$.}
 	\label{traceAnnotGeneral}
 	\end{figure}
-\end{minipage}
-\\
-\jw{Todo: Proper definition of $\mathcal{A_1}$ and add missing transitions to right side}
+\end{minipage} \\
+We observe that the error state $q_7$ is labeled with $\bot$, proving that this trace is infeasible. This annotation only proves that the specific trace $\tau_1$ is infeasible, to exclude more that one trace at a time, we construct an \textsl{abstraction}. We firstly add transitions $ \pi_i \in \Sigma$ to each state $q_i$ with annotation $\varphi_i$, such that $sp(\varphi_i, \pi) \subseteq \{\varphi_i\}$ holds. After the addition of new transitions, we merge states with the same annotation, resulting in the abstracted trace as illustrated in \ref{traceAnnotGeneral}. We extend the Floyd-Hoare automaton $\mathcal{A}_D$ by $\mathcal{A}_1$.
 
 

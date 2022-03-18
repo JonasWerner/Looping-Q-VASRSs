@@ -1,128 +1,19 @@
 
-\begin{comment}
-	\jw{Accelerated Interpolation as an extension of trace abstraction is introduced $\rightarrow$ Show how to utilize loop summaries within trace abstraction \\
-	- Error traces  $\rightarrow$ loop relations  $\rightarrow$ reflexive transitive closures  $\rightarrow$ meta traces  $\rightarrow$ interpolation on meta traces \\
-	- "We implemented accelerated interpolation in an earlier project using a myriad of loop summarization techniques... " $\rightarrow$ Introduce various loop summarization techniques (FastUPR, Jordan, Werner) NOT in-depth, only their ideas, but show their pros and cons  $\rightarrow$ The cons build a bridge to the next chapter \\
-	- running example will be transformed to a meta trace WITHOUT actual loop summarizations on edges \\
-	\vspace{1cm}
-	22 pages $\rightarrow$ recycled from earlier}
-\end{comment}
+Given a program $P$ and its control-flow graph \cfg, we have seen earlier that to determine safety of $P$ we need to prove infeasibility of every trace leading to an error-location. We translate $P's$ control-flow graph into a non-deterministic finite automata $\cfgAutomat{P}$, and try to compute a Floyd-Hoare automaton $\cfgAutomatHoare{D}$, whose language are the infeasible traces. If $\mathcal{L(A_P)} \subseteq \mathcal{L(A_D)}$ we know that $P$ is safe, if there exists a feasible error trace it is unsafe. \\ To construct the Floyd-Hoare annotation of $\mathcal{L(A_D)}$, we have to iteratively prove traces infeasible, and then, to exclude as many error traces as possible, compute an abstraction. In the example from earlier, given trace $\tau = \pi_1, \ldots, \pi_n$, we utilized the abstraction method of adding traces from $\Sigma$, such that the condition $sp(\varphi_i, \pi_i) \subseteq \{\varphi\}$, with $\varphi_i$ being the annotation of state $q_i$ and $pi_i \in \tau$, holds. \\
+In this section we introduce an abstraction technique that utilizes loop summaries to refute whole loops with one trace abstraction iteration. \\
 
-Reconsider program $P$ \ref{codeWithAss} from the previous chapter.
-To prove its safety \traceabstraction finds error trace $\tau_1$, as before, we detect a loop with $\loc{3}$ and minimal loop trace $\tau_{L_1}$ from which we construct the loop relation $\psi_{L_1}$.
-It is evident that there is only one path through the loop, resulting in a loop without branching.
-We consequently compute the loop acceleration $\psi^*_{L_1}$.
-
-The loop acceleration contains every looping trace, meaning it is possible to replace the whole loop in the error trace by that acceleration, modelling a relation consisting of every loop trace.
-\dd{Why not explain the idea of meta trace first and then give a definition?}
-
-\begin{mydef}
-	Given an error trace $\tau: s_0, s_1, \ldots, s_n$ containing loop $\tau_L: s_i, s_{i+1}, \ldots, s_j$ with loop head $\loc{L}$.
-	A meta trace $\bar{\tau}$ is derived from $\tau$ by replacing $\tau_L$ with the loop acceleration.
-	Furthermore, the last occurrence of $\loc{L}$ is replaced by a new loop exit $\loc{L}'$.
-\end{mydef}
-\ts{Now you have a mixture of statements and relations. Do you want to allow this (explanation required) or use transformulas in general?}
-\dd{Which loop acceleration? Will you talk about properties of loop accelerations? What is a loop acceleration? Is it "the closure"? Or is it \emph{some} relation over program states that has some properties relative to a closure?}
-
-\begin{comment}
-The error trace $\tau_1$ creates the meta trace $\bar{\tau_1}$:
-\begin{figure}[H]
-\begin{tikzpicture}[%
-->,
->=stealth', shorten >=1pt, auto,
-node distance=2.5cm, scale=1,
-transform shape, align=center,
-smallnode/.style={inner sep=1.4}
-initial text =]
-
-\node[state](1){$\loc{1}$};
-
-\node[state] (2) [right of=1] {$\loc{2}$};
-
-\node[state] (3) [right of=2] {$\loc{3}$};
-
-\node[state] (4) [right of=3] {$\loc{3}'$};
-
-\node[state] (5) [right of=4, xshift=0.5cm] {$\loc{6}$};
-
-\node[state] (6) [right of=5, xshift=0.5cm] {$\loc{7}$};
-
-\path (1) edge node {\texttt{x := 0}} (2); \\
-\path (2) edge node {\texttt{y := 1}} (3); \\
-\path (3) edge node {$\psi^*_{L_1}$} (4);\\
-\path (4) edge node[] {\texttt{!x <= 50}} (5); \\
-\path (5) edge node {\texttt{y != 103}} (6); \\
-;
-\end{tikzpicture}
-\captionof{figure}{Meta trace $\bar{\tau_1}$ generated from $\tau_1$ using $\psi^*_{L_1}$.}
-\end{figure}
-\end{comment}
-
-\begin{figure}[H]
-	\begin{center}
-		\begin{tabular}{ccccccccccc}
-			\loc{1} & \st{x:=0} & \loc{2} & \st{y:=1} & \loc{3} & \accel{1} & $\loc{3}'$ & \st{x>50} & \loc{6} & \st{y!=103} & \loc{7} \\
-		\end{tabular}
-	\end{center}
-	\captionof{figure}{Meta trace $\bar{\tau_1}$ generated from $\tau_1$ using $\psi^*_{L_1}$.}
-\end{figure}
-We can now analyze this meta trace for feasibility using an SMT-solver such as SMTInterpol\cite{Zitat03} or z3\cite{z3}. We get the following labelling:
-
-\begin{figure}[H]
-	\centering
-	\input{fig/fig_metatrace_and_proof.tex}
-\end{figure}
-\captionof{figure}{Meta trace $\bar{\tau_1}$ generated from $\tau_1$ and $\psi^*_{L_1}$ and its infeasibility proof.}
-\label{fig:ex:t0:infproof}
-%\dd{Do not capitalize captions. They are just normal sentences.}
-
-
-\dd{Do you still need the line above?}
-
-We cannot, however, use $I_{\bar{\tau_1}}$ to disprove $\tau_1$ as we need an interpolant for each location in the original trace.
-\dd{say which one is missing ;)}
-To remedy this, we derive an inductive interpolant sequence $I_{\tau_1}$ by applying the post operator.
-\dd{Explain why we need post for the before-location, use the example here}
-
-\newcommand{\accels}[1]{\ensuremath{\psi^{*}_{#1}}}
-Given
-\begin{itemize}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
-	\item an error trace $\tau: s_0 s_1 \ldots s_i \ldots s_j \ldots s_n$ where \loc{i} is a loop head for the loop $L$ spanning from $s_i$ to $s_j$,
-	\item a loop relation $\psi_L$ for loop $L$,
-	\item a corresponding loop acceleration \accels{L},
-	\item the meta trace $\bar{\tau}: s_0 s_1 \ldots s_{i-1} \ \accels{L} \ s_{j+1} \ldots s_n$ derived from $\tau$ and \accels{L}, and
-	\item the infeasibility proof $I_{\bar{\tau}}: \{\top, I_1, I_2, \ldots , I_i, I_{\psi^*_{L}}, \ldots , I_{n-1}, \bot \}$ for $\bar{\tau}$.
-\end{itemize}
-\dd{Fix indices s.t. we have the interpolant (sic!) before and after the loop acceleration}
-
-To construct an inductive proof of infeasibility for $\tau$ we need inductive interpolants for the loop statements $s_i, \ldots , s_j$ that were replaced by $\psi^*_{L}$.
-
-Firstly, compute post($I_{\psi^*_L}$, $\psi^*_L$) as the loop entry interpolant $I_{\loc{L}}$.
-From there keep applying the post operator with the previous location's interpolant and the following program statement.
-
-We get the inductive interpolant sequence
+Assume we are give a program $P$ and its control-flow graph \\ $G_P$ = \cfg, and assume we employ trace abstraction that computes the program trace $\tau$:
 \begin{equation*}
-	I_\tau: \{\top,I_1,I_2, \ldots ,\ \underbrace{post(I_i, \accels{L})}_{I_{i}^*},\ \ \underbrace{post(I_{i}^*, s_i)}_{I_{i+1}^*},\ \ldots ,\ \underbrace{post(I_{j-1}^*, s_j)}_{I_{j}^*},I_{j+1}, \ldots ,I_{n-1}, \bot \}
+	\tau = \pi_1, \ldots, \underbrace{\pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j}_{\text{m times}}, \ldots, \pi_n
 \end{equation*}
-which can now be used by trace abstraction to refine the interpolant automaton.
-\ts{Explain why this works and why it is necessary.}
+We observe that the sequence of transitions $\pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j$ is repeated $m$ times, indicating that the sequence is a loop in the program, iterated repeatedly. We construct a transition formula $\bar{\pi} = \pi_i; \ldots; \pi_j$ representing one loop iteration by concatenating formulas $\pi_i, \ldots, \pi_j$. \\
+Using $\bar{\pi}$ we compute a \qvasr loop summary $\psi$ following the earlier presented summarization paradigm. The loop summary $\psi$ now represents an overapproximation of all changes to program variables by the loop. We can now transform $\tau$ by replacing the sequence $\pi_i \ldots \pi_j$ with $\psi$, yielding a so called \textsl{meta trace}.
 
-We compute the missing interpolants for example program trace $\tau_1$ as follows:
-\dd{Strange wording. This is just the continuaton of the example, right?}
-\begin{comment}
-\begin{figure}[H]
-\centering
-\input{fig/fig_iip.tex}
-\captionof{figure}{Program trace $\tau_1$ of $P_1$ with inductive infeasibility proof.}
-\end{figure}
-\end{comment}
-
-\begin{figure}[H]
-	\begin{center}
-		\input{fig/fig_iip_new.tex}
-	\end{center}
-\end{figure}
-\captionof{figure}{Program trace $\tau_1$ of $P_1$ with inductive infeasibility proof.}
-\label{fig:ex:t0:infproof2}
-
-% \ts{The simplification of the interpolant at $\loc{6}$ is wrong.}
+\begin{mydef}[Meta Trace]
+	Given a trace \\ $\tau = \pi_1, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_n$ that contains a repeating sequence of transition formulas $\pi_i, \ldots, \pi_j$ that can be represented by the formula $\bar{\pi} = \pi_i; \ldots; \pi_j$ by concatenating each $\pi_l$. Assume further that we are given a \qvasr summary for formula $\bar{pi}$, we construct the meta trace $\bar{tau} = \pi_1, \ldots, \psi, \ldots, \pi_n$ by replacing the sequence $\pi_1, \ldots, \pi_j$ by $\psi$.
+\end{mydef}
+For $\tau$ we get the following meta trace:
+\begin{equation*}
+	\bar{tau} = \pi_1, \ldots, \psi, \ldots, \pi_n
+\end{equation*}
+The meta trace $\bar{\tau}$ now contains every trace that begins with $\pi, \ldots, \pi_{i-1}$ and ends with $\pi_{j+1}$ going through the looping sequence $\pi_i, \ldots, \pi_j$.
