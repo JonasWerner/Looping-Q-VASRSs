@@ -10,10 +10,29 @@ We observe that the sequence of transitions $\pi_i, \ldots, \pi_j, \ldots, \pi_i
 Using $\bar{\pi}$ we compute a \qvasr loop summary $\psi$ following the earlier presented summarization paradigm. The loop summary $\psi$ now represents an overapproximation of all changes to program variables by the loop. We can now transform $\tau$ by replacing the sequence $\pi_i \ldots \pi_j$ with $\psi$, yielding a so called \textsl{meta trace}.
 
 \begin{mydef}[Meta Trace]
-	Given a trace \\ $\tau = \pi_1, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_n$ that contains a repeating sequence of transition formulas $\pi_i, \ldots, \pi_j$ that can be represented by the formula $\bar{\pi} = \pi_i; \ldots; \pi_j$ by concatenating each $\pi_l$. Assume further that we are given a \qvasr summary for formula $\bar{pi}$, we construct the meta trace $\bar{tau} = \pi_1, \ldots, \psi, \ldots, \pi_n$ by replacing the sequence $\pi_1, \ldots, \pi_j$ by $\psi$.
+	Given a trace \\ $\tau = \pi_1, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_n$ that contains a repeating sequence of transition formulas $\pi_i, \ldots, \pi_j$ that can be represented by the formula \\ $\bar{\pi} = \pi_i; \ldots; \pi_j$ by concatenating each $\pi_l$. Assume further that we are given a \qvasr summary for formula $\bar{pi}$, we construct the meta trace $\bar{tau} = \pi_1, \ldots, \psi, \ldots, \pi_n$ by replacing the sequence $\pi_1, \ldots, \pi_j$ by $\psi$.
 \end{mydef}
 For $\tau$ we get the following meta trace:
 \begin{equation*}
-	\bar{tau} = \pi_1, \ldots, \psi, \ldots, \pi_n
+	\bar{\tau} = \pi_1, \ldots, \psi, \ldots, \pi_n
 \end{equation*}
-The meta trace $\bar{\tau}$ now contains every trace that begins with $\pi, \ldots, \pi_{i-1}$ and ends with $\pi_{j+1}$ going through the looping sequence $\pi_i, \ldots, \pi_j$.
+The meta trace $\bar{\tau}$ now contains every trace that begins with $\pi, \ldots, \pi_{i-1}$ and ends with $\pi_{j+1}$ going through the looping sequence $\pi_i, \ldots, \pi_j$. \\ \par
+
+For example, consider again the program depicted in Figure \ref{codeWithAss} and its control-flow graph in Figure \ref{cfg:P:Ass}, and assume trace abstraction extracted the following program trace: 
+\begin{align*}
+	\tau_1= &\st{x:=0;y:=2;z:=3}, \\ &\st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}, \st{x<=20} \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}, \\ & \st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3}, \st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3}, \\ &\st{x>20}, \st{x!=22}
+\end{align*}
+We see that the sequence of transitions 
+\begin{align*}
+	1: &\st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1} \\
+	2: &\st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3}
+\end{align*}
+occur in the trace multiple times. We compute the transition formula $L$, which coincides with the transition formula seen in Figure \ref{loopTF}.
+\begin{equation*}
+	L: x \leq 20 \land ((x \leq 10 \land z' = x \land x' = x + y \land y' = y + 1) \lor (x > 10 \land x' = x + 2 \land y' = y - 3)
+\end{equation*}
+We already computed a \qvasr summary $\psi$ for $L$, depicted in Figure \ref{loopSummary}. By replacing sequences $1$ and $2$ with $\psi$, we get meta trace $\bar{\tau}_1:$
+
+\begin{align*}
+	\bar{\tau}_1: \st{x:=0;y:=2;z:=3}, \psi, \st{x>20}, \st{x!=22}
+\end{align*}
