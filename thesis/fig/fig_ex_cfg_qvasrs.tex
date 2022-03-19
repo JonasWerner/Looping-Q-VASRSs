@@ -1,0 +1,33 @@
+
+\begin{tikzpicture}[%
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=3.25cm,
+	scale=0.9,
+	transform shape,
+	align=center,
+	smallnode/.style={inner sep=1.4},
+	initial text =,
+	anchor=center]
+	
+	\node[state, initial above, initial text =](1){$\loc{1}$};
+   	\node[draw, ellipse](vasrs1) [below of=1] {$x \leq 10$};
+	\node[draw, ellipse](vasrs2) [left of=vasrs1, xshift=-4cm] {$10 < x \land x \leq 20$};
+	\node[state] (loopExit)[right of=head,  xshift=2cm] {$\loc{13}$};
+	\node[state] (assertTrue)[below left of=loopExit] {$\loc{14}$};
+	\node[state, accepting] (assertFalse)[below of=loopExit] {$\loc{err}$};
+	
+	\path (1) edge node []{\st{x:=0;}\\ \st{y:=2;}\\ \st{z:=3;}} (head)
+	(vasrs1) edge node []{\st{x>20}} (loopExit)
+	(vasrs2) edge[bend left] node {\st{-x+y+z:=1;} \\ \st{y:=y+1}} (vasrs1)
+	(vasrs1) edge[bend left] node[] {\st{-x+y+z:=-x+y+z-5;}\\\st{y:=y-3}} (vasrs2)
+	(loopExit) edge node []{\st{x==22}} (assertTrue)
+	(loopExit) edge node []{\st{x!=22}} (assertFalse)
+	
+	(vasrs1) edge[loop below] node[] {\st{-x+y+z:=-x+y+z-5;}\\ \st{y:=y-3}}(vasrs1)
+	(vasrs2) edge[loop above] node[] {\st{-x+y+z:=1;}\\ \st{y:=y+1}}(vasrs2)
+	;
+	
+\end{tikzpicture}
