@@ -3,11 +3,11 @@ In this thesis we have shown a technique to compute a loop summary using \qvasr,
 \subsection{Using \qvasrs}
 In chapter \ref{qvasrs} we have shown that there is an extension to \qvasr that factor in assumptions in a loop's transition formula, such as the expressions of the loop guard and if else statements. It is possible to integrate \qvasrs into our implemented summary utilization schemes, accelerated interpolation and control-flow graph transformation, as follows: \\ \par
 For accelerated interpolation, assume we are given a trace $\tau$ with a loop, whose transition formula we extract as $\tau_L$, we compute a \qvasrs $\mathcal{V} = (P, E)$ for $\tau_L$, now because a \qvasrs is a graph structure, we need to compute its reachability relation to summarize the loop. To solve this task, we can utilize Haase and Halfon \cite{DBLP:conf/rp/HaaseH14} proposed polytime procedure that computes a series of formulas from generalized Parikh images that, as conjunction, form a summary of the \qvasrs. \\ \par
-For \qvasrs usage in control-flow graph transformation, we adapt our approach by, instead of replacing the whole loop by its computed summary, inserting the \qvasrs instead. We illustrate this approach by transforming the given example program $P$ as seen in Figure \ref{codeWithAss} with its control-flow graph $G_P$ as depicted in Figure \ref{cfg:P:Ass}, to the control-flow graph, seen in Figure \ref{qvasrs_cfg}
+For \qvasrs usage in control-flow graph transformation, we adapt our approach by, instead of replacing the whole loop by its computed summary, inserting the \qvasrs instead. We illustrate this approach by transforming the given example program $P$ as seen in Figure \ref{codeWithAss} with its control-flow graph $G_P$ as depicted in Figure \ref{cfg:P:Ass}, to the control-flow graph, seen in Figure \ref{qvasrs_cfg}:
 \begin{figure}[H]
 	\input{fig/fig_ex_cfg_qvasrs.tex}
-	\label{qvasrs_cfg}
 	\caption{Control-flow graph $\bar{G}_P$ created from \ref{cfg:P:Ass} by replacing the loop with a \qvasrs.}
+	\label{qvasrs_cfg}
 \end{figure}
 From this transformed control-flow graph we can now construct state assertions that adhere to assumptions in the program.
 \subsection{Heuristics in Accelerated Interpolation}
