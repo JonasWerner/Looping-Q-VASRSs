@@ -23,7 +23,7 @@ Another approach of utilizing \qvasr summarization is, instead applying it to tr
 \end{enumerate}
 After the search, the set of traces $T$ contains all loops in program $P$. As there can be multiple traces from a loop entry location $\ell_i$, we have to construct a disjunction of the transition formulas beginning in $\ell_i$:
 Assume we have two traces $\tau_1 = \pi_{11}, \ldots, \pi_{1n}$ and $\tau_2 = \pi_{21}, \ldots \pi_{2m}$ in $T$, where $src(\pi_{11}) = scr(\pi_{21})$, we construct the formula $\tau_1 \lor \tau_2$ to represent the loop.
-This disjunction can now be used in the \qvasr summarization scheme, as defined before.  \\ \par
+This disjunction can now be used in the \qvasr summarization scheme, as defined before.  \par
 Recall the program $P$ and its control-flow graph $G_P$ as illustrated in \ref{codeWithAss} and \ref{cfg:P:Ass}, using $G_P$ and the loop detection scheme, we extract the following loop traces for loop entry $\ell_4$: 
 \begin{align*}
 	\tau_1 &= \st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y} \\

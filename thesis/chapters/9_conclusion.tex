@@ -1,15 +1,10 @@
-
-\begin{comment}
-	\jw{What have we done in this project? What have we learned? What can there still be done to boost performance/fix errors/etc \\
-	Give an outlook on the future \\
-	\vspace{1cm} 
-	2 pages}
-\end{comment}
-
 In this thesis we have introduced a loop summarization scheme using rational vector addition systems with resets based on the findings by Kincaid et al. \cite{DBLP:conf/cav/SilvermanK19}, adapted it to be used in the automata-theoretic trace abstraction scheme \cite{10.1007/978-3-642-03237-0_7, 10.1007/978-3-642-39799-8_2, 10.1145/1706299.1706353} for proving unreachability of error states in programs. We integrated our \qvasr approach on two distinct levels in trace abstraction:
 \begin{itemize}
-	\item We use \qvasr summarization directly on traces in the accelerated interpolation library as a method of abstracting traces by finding repeating sequences of transitions and summarizing them
-	\item We implemented a control-flow graph transformer that uses \qvasr summarization to find loops in a given program's control-flow graph and replacing them with the summary. The transformed control-flow graph is then used in trace abstraction. 
+	\item We use \qvasr summarization directly on traces in the accelerated interpolation library as a method of abstracting traces by finding repeating sequences of transitions and summarizing them.
+	\item We implemented a control-flow graph transformer that uses \qvasr summarization to find loops in a given program's control-flow graph and replacing them with the summary. The transformed control-flow graph is then used in trace abstraction.
 \end{itemize} 
-We evaluated our techniques using the program verification framework \ultimate \cite{Zitat02} and compared it to other loop summarization techniques. \jw{Something about evaluation}
+
+We evaluated our techniques using the program verification framework \ultimate \cite{Zitat02} and compared it to other loop summarization techniques.
 Furthermore, we presented possible improvements to the \qvasr summarization scheme, such as extending \qvasr to \qvasrs to improve precision of our approximations. We proposed further improvements for accelerated interpolation in the form of possible heuristics that dictate when to summarize a loop and whether it is advantageous to split disjunctive loops, that are loops with branching, into separate summaries.
+
+\jw{Something about evaluation}

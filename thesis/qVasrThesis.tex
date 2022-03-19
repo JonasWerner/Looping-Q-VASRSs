@@ -1,14 +1,34 @@
-\documentclass[11pt]{article}
-
+\documentclass[11pt,
+a4paper,
+parskip=half, % This is some extra vertical space between paragraphs, the suggestion is 2cm which is really ugly, so we use what koma script gives us
+% you can also set it to full for even more space. But there is a bad tex style decision: parskip also changes the spacing between listitems such as
+% enumerate and itemize. For this purpose we include the enumitem package and set itemsep=.5em, of course you can change this
+BCOR=10mm, % BCOR is binding correction
+ngerman, english
+% if you'd rather have a one sided thesis, add `oneside' to the documentclass
+% oneside,
+% ngerman is needed for hyphenation if the thesis contains parts written in German, switch order with english if you write mainly in English.
+% Remember to change order in the babel package (below) as well.
+% Last language is the preferred one.
+]{scrbook}
+\usepackage[english]{babel} % If you write mainly in English change order to ngerman, english. Also change that in the documentclass options above.
+% Include of titling must happen before \title etc.
+% that's why it's not in setup.tex
+\usepackage{titling}
 \input{chapters/0_preamble.tex}
 
 \begin{document}
+	\setlength{\abovedisplayskip}{0.25cm}
+	\setlength{\belowdisplayskip}{0.25cm}
+	\setlength{\abovedisplayshortskip}{0.25cm}
+	\setlength{\belowdisplayshortskip}{0.25cm}
+	 \raggedbottom
 \newcommand{\HorizontalLine}{\rule{\linewidth}{0.3mm}}
 
 \input{chapters/0_0-titlepage_en.tex}
 \pagebreak
 
-\pagenumbering{roman} 
+\frontmatter
 \input{chapters/0_1-declaration.tex}
 \pagebreak
 
@@ -17,21 +37,21 @@
 \tableofcontents
 \pagebreak
 
-\pagenumbering{arabic} 
-\section{Introduction}
+\mainmatter
+\chapter{Introduction}
 \label{intro}
 \input{chapters/1_introduction.tex}
 
-\section{Related Work}
+\chapter{Related Work}
 \label{relWork}
 \input{chapters/x_relatedWork.tex}
 \pagebreak
 
-\section{Preliminaries}
+\chapter{Preliminaries}
 \label{background}
 \input{chapters/2_background.tex}
 
-\section{Loop Summarization using \qvasr}
+\chapter{Loop Summarization using \qvasr}
 \label{qvasr}
 \input{chapters/4_qvasr.tex}
 
@@ -41,25 +61,30 @@
 	\input{chapters/5_qvasrs.tex}
 \end{comment}
 
-\section{Trace Abstraction with \qvasr}
+\chapter{Trace Abstraction with \qvasr}
 A loop in a program could potentially introduce infinitely many program traces that the trace abstraction scheme would have to prove infeasible. In this chapter we will introduce methods of utilizing \qvasr-based loop summarization to minimize the number of traces created by loops. We present two approaches, the first being an implementation of the \textsl{abstract} step of trace abstraction as seen in Figure \ref{traceAbstractionScheme} utilizing loop summaries directly in traces, the second being a way of transforming a given program's control-flow graph to replace loops entirely by loop summaries.
 \label{qvasrAbstracion}
-\subsection{Accelerated Interpolation}
+\section{Accelerated Interpolation}
 \input{chapters/3_accelerated_interpolation.tex}
 \label{accelInterpol}
-\subsection{Control-Flow Graph Transformation}
+
+\section{Control-Flow Graph Transformation}
 \input{chapters/6_implementation.tex}
 \label{icfgTransformation}
 
-\section{Evaluation}
+\chapter{Evaluation}
 \label{eval}
 \input{chapters/7_evaluation.tex}
 
-\section{Outlook and Future Work}
+\chapter{Outlook and Future Work}
 \label{futrWork}
 \input{chapters/8_outlook.tex}
 
-\section{Conclusion}
+	\setlength{\abovedisplayskip}{0.25cm}
+\setlength{\belowdisplayskip}{0.25cm}
+\setlength{\abovedisplayshortskip}{0.25cm}
+\setlength{\belowdisplayshortskip}{0.25cm}
+\chapter{Conclusion}
 \label{concl}
 \input{chapters/9_conclusion.tex}
 
@@ -67,5 +92,7 @@ A loop in a program could potentially introduce infinitely many program traces t
 \pagebreak
 \bibliographystyle{ieeetr}
 \bibliography{bib/bib}
+
+\listoffigures
 
 \end{document}

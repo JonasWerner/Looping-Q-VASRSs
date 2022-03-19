@@ -9,7 +9,7 @@
 
 This chapter will introduce mathematical background, our understanding and notation of logic and formulas, programs, control-flow, and other needed background definitions. Furthermore, we will give an overview of the \traceabstraction \cite{10.1007/978-3-642-03237-0_7} counterexample-guided abstraction refinement scheme used in \ultimate.
 
-\subsection{Mathematical Background}
+\section{Mathematical Background}
 In this thesis we utilize various concepts of linear algebra, such as vector spaces, vector space bases, and more. This section will introduce important notations and definitions.
 We define a \textsl{vector} as $\vec{x} = x_1, \ldots, x_n$ that consists of $n$ entries, $n$ is called the dimension of the vector. The vector containing only zeroes is denoted as $\vec{0}$, the vector containing only ones by $\vec{1}$. \\ We denote a $m \times n$ \textsl{matrix} $S$ as:
 \begin{equation*}
@@ -43,9 +43,9 @@ We define the following operations on vectors and matrices.
 	With entries $c_{ij} =  a \cdot a_{ij}$ for $1 \leq i \leq m$ and $1 \leq j \leq p$.
 \end{mydef}
 \begin{mydef}[Matrix Multiplication]
-	Given the $m \times n$ matrix $A$ and $n \times p$ matrix $B$: \\ \par
+	Given the $m \times n$ matrix $A$ and $n \times p$ matrix $B$:
 	\begin{minipage}{0.4\linewidth}
-	\begin{equation*}
+		\begin{equation*}
 		A = 
 		\begin{bmatrix}
 			a_{1 ,1} & \ldots & a_{1, n} \\
@@ -66,7 +66,7 @@ We define the following operations on vectors and matrices.
 \end{minipage}
 \\ \\
 The matrix product $AB$ is defined as the $m \times p$ matrix:
-	\begin{equation*}
+\begin{equation*}
 		AB = 
 		\begin{bmatrix}
 			c_{11} & \ldots & c_{1p} \\
@@ -78,7 +78,7 @@ The matrix product $AB$ is defined as the $m \times p$ matrix:
 	\end{mydef}
 
 \begin{mydef}[Hadamard Product]
-	Given matrices of same dimensions $m \times n$ $A$ and $B$: \\
+	Given matrices of same dimensions $m \times n$ $A$ and $B$:
 	\begin{minipage}{0.4\linewidth}
 		\begin{equation*}
 			A = 
@@ -125,10 +125,10 @@ The matrix product $AB$ is defined as the $m \times p$ matrix:
 \end{mydef}
 
 
-\subsection{Logical Background}
+\section{Logical Background}
 To represent programs formally, we make use of first-order logic. This chapter will introduce our definitions and notations used throughout this thesis.
 
-\subsubsection{Notation}
+\subsection{Notation}
 We utilize the standard logical notations: We represent boolean values as $\bot$, meaning \textsl{false}, and $\top$, meaning \textsl{true}. \\ Logical connectives are defined as:
 \begin{itemize}
 	\item Negation (\textsl{not}) denoted by: $\neg$
@@ -143,7 +143,7 @@ Formulas can be quantified, we define quantifiers as:
 	\item Universal quantification (\textsl{for all}) denoted by: $\forall$
 \end{itemize}
 
-\subsubsection{Syntax}
+\subsection{Syntax}
 We firstly introduce our first-order logic syntax.
 Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$ be a vocabulary consisting of the countable sets:
 \begin{itemize}
@@ -188,7 +188,7 @@ Using a model, we can now assign concrete values to variables.
 \end{mydef}
 Assume $f \in \vocab{Fun}$ is a function defined as $f: X \mapsto Y$ with some domain $X$ and range $Y$. Let $x \in X$ and $y \in Y$, we use $f[x \mapsto y]$  to denote the function that maps all $\bar{x} \in X \backslash \{ x \}$ to $f(\bar{x})$ and $x$ to $y$.
 
-\subsubsection{Semantics}
+\subsection{Semantics}
 Assume we are given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$, we know how to assign values using models and variable assignments. The task now is to understand how to interpret them. This section serves to introduce semantics of fist-order logic.
 \begin{mydef}[Evaluation of Terms]
 	Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, and $\rho$ a variable assignment. The evaluation of terms is a function $\eval{\cdot}$ that is inductively defined as:
@@ -203,29 +203,29 @@ From the evaluation of terms we can derive the evaluation of formulas, which dec
 \begin{mydef}[Evaluation of Formulas]
 		Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$ be a vocabulary, $\mathcal{M} = (D, \interpret)$ a model, a variable assignment $\rho$, and $\varphi_0,\  \varphi_1$ being first-order logic formulas over $V$. The evaluation of formulas is a function $\eval{\cdot}$ that is inductively defined as: \\
 		\begin{itemize}
-			\item {\makebox[3.5cm]{$\eval{\bot} = \hfill$}} = \ \ \textbf{false}
-			\item {\makebox[3.5cm]{$ \eval{p(t_0, \ldots, t_n)} \hfill$}} =
+			\item {\makebox[3.25cm]{$\eval{\bot} = \hfill$}} = \ \ \textbf{false}
+			\item {\makebox[3.25cm]{$ \eval{p(t_0, \ldots, t_n)} \hfill$}} =
 				$
 				\begin{cases}
 					\textbf{true}, & \text{for } (\eval{t_0}, \ldots, \eval{t_n}) \in \interpret(p)\\
 					\textbf{false}, & \text{otherwise}
 				\end{cases}
 				$
-			\item {\makebox[3.5cm]{$\eval{\neg \varphi_0} \hfill$}} =
+			\item {\makebox[3.25cm]{$\eval{\neg \varphi_0} \hfill$}} =
 				$
 				\begin{cases}
 					\textbf{true} & \text{for } \eval{\varphi_0} \text{ \textbf{false}}\\
 					\textbf{false}, & \text{for } \eval{\varphi_0} \text{ \textbf{true}}\\
 				\end{cases}
 				$
-			\item {\makebox[3.5cm]{$\eval{\varphi_0 \land \varphi_1} \hfill$}} =
+			\item {\makebox[3.25cm]{$\eval{\varphi_0 \land \varphi_1} \hfill$}} =
 				$
 				\begin{cases}
 					\textbf{true}, & \text{for } \eval{\varphi_0} \text{ \textbf{true} and } \eval{\varphi_1} \textbf{ true} \\
 					\textbf{false}, & \text{otherwise} \\
 				\end{cases}
 				$
-			\item {\makebox[3.5cm]{$\eval{\exists v. \varphi_0} \hfill$}} =
+			\item {\makebox[3.25cm]{$\eval{\exists v. \varphi_0} \hfill$}} =
 				$
 				\begin{cases}
 					\textbf{true}, & \text{if there exists } x \in D \text{ where } \eval{\varphi_0 [v \mapsto x]} \textbf{ true} \\
@@ -235,10 +235,10 @@ From the evaluation of terms we can derive the evaluation of formulas, which dec
 		\end{itemize}
 \end{mydef}
 A formula $\varphi$ is called satisfiable if there exists a model $\mathcal{M} = (D, \interpret)$ and a variable assignment $\rho$ such that $\eval{\varphi}$ is true. A formula is valid if there is no model $\mathcal{M} = (D, \interpret)$, such $\eval{\varphi}$ is false.
-\subsection{Programs}
+\section{Programs}
 In this chapter we will introduce our understanding on how to model programs using first-order logic. We will begin with our syntax of programs, then explain program statement semantics.
 
-\subsubsection{Program Syntax}
+\subsection{Program Syntax}
 Assume we are given the example program as seen in Figure \ref{codeNoAss}. We can see that the code contains various typed variables such as \texttt{x:int} and instructions over these variables. \\ These instructions use the following context-free grammar $\Sigma$ that is a derived and simplified version of the grammar of the intermediate verification language Boogie\cite{Boogie}.
 \setlength{\grammarparsep}{20pt plus 1pt minus 1pt} % increase separation between rules
 \setlength{\grammarindent}{12em} % increase separation between LHS/RHS
@@ -253,7 +253,7 @@ We define programs as follows:
 \begin{mydef}[Programs]
 	A program is a triple \prg, with $V$ being a set of variables, a function $\mu: V \rightarrow \{ \mathbb{Z}, \mathbb{R}, \mathbb{B} \}$ that maps variables $v \in V$ to a domain, which is either the set of integers, the rational numbers, or boolean values $\mathbb{B} = \{\textbf{true}, \textbf{false}\}$. Furthermore, $st$ is a derived word from $\Sigma$ representing the program instructions.
 \end{mydef}
-\subsubsection{Program Semantics}
+\subsection{Program Semantics}
 We consider five kinds of program statements in the grammar $\Sigma$: An assumption over variables \texttt{assume}, an assignment to variables \texttt{:=}, a non deterministic assignment \texttt{havoc}, a program loop \texttt{while}, that repeats a statement until its loop guard, the $\langle WildcardExpr \rangle$, no longer holds, and an conditional branching, in form of an \texttt{if else} statement. With the first three: \st{assume $\langle Expr \rangle$ }, \st{v := $\langle Expr \rangle$}, and \st{havoc v}, being atomic statements. Whereas \texttt{while} and \texttt{if else} are a compound of atomic statements.
 We regard expressions $\langle Expr \rangle$ as logical formulas. Most program statements change the assignment of variables and with that changes the state a program is in. 
 \begin{mydef}[Program State]
@@ -330,9 +330,9 @@ With transition formulas we can model state transitions using the strongest post
 		sp(\varphi, \trf) = (\exists V. \varphi \land \tf)[V' \mapsto V]
 	\end{equation*}
 \end{mydef}
-\subsection{Program Safety}
+\section{Program Safety}
 This section serves as an introduction to our understanding of program verification. Our goal is to prove whether a program is \textsl{correct} or to find a counterexample to correctness. In the following we define our understanding of safety, model a program's control-flow, and introduce traces.
-\subsubsection{Control-Flow Graph}
+\subsection{Control-Flow Graph}
  Assume we are given a program \prg, the order in which the program's instructions can be executed is called control-flow. We can construct a directed graph that models this control-flow in form of a control-flow graph.
  
  \begin{mydef}[Control-Flow Graph]
@@ -383,7 +383,7 @@ For example, when we extend the program $P$ seen in Figure \ref{codeNoAss} with 
 	\end{minipage}
 \end{center}
 For the rest of the thesis, denote control-flow graphs with error locations as control-flow graphs unless stated otherwise.
-\subsubsection{Reachability}
+\subsection{Reachability}
 The control-flow of a program can now be described by so called traces through the control-flow graph.
 \begin{mydef}[Program Trace]
 	Given a program	\prg, its control-flow graph \\ G = \cfg, a trace $\tau = \trf_1, \trf_2, \ldots $ of a program is a finite or infinite sequence of transition formulas $\trf_1, \trf_2, \ldots$ with $\trf_i \in \Pi$, and $(scr(\trf_i), \trf_i, tgt(\trf_i)) \in \delta$
@@ -411,7 +411,7 @@ Given trace $\tau = \pi_1, \ldots$, if there is a transition $\pi_{\bot}$ where 
 \end{mydef}
 A program is called safe if and only if every error location in a program's control-flowgraph is unreachable. It is called unsafe if there is a reachable error location.
 
-\subsection{Trace Abstraction}
+\section{Trace Abstraction}
 To prove safety of a given program we employ trace abstraction \cite{10.1007/978-3-642-03237-0_7, 10.1007/978-3-642-39799-8_2, 10.1145/1706299.1706353}, which is an automata-theoretic approach used to prove reachability of error locations. This section will give an introduction to the approach and describe how the scheme works. \\ \par
 
 Given a program $P$ and its control-flow graph $\cfg$, the control-flow graph can be interpreted as a non-deterministic finite automaton \\ $\mathcal{A_P} = (Q, \Sigma, \Delta, Q_{init}, F)$ , with of states $Q = Loc$, $q_{init} = \loc{init}$ being the initial state, accepting states $F = \loc{err}$ being the error states, alphabet $\Sigma = \Pi$ being the set of transition formulas, and $\Delta \subseteq Q \times \Sigma \times Q$ being the transition relation, derived from $\delta$. \\ \par 
@@ -437,36 +437,43 @@ We give a program $P$'s control-flow graph $G_P$  as input, which is interpreted
 \end{enumerate}
 There are several additional methods of trace generalization, in this thesis we present a technique using loop summaries, in accelerated interpolation. \\ \par
 
-To illustrate the trace abstraction scheme we demonstrate one iteration in the following. Assume we are given program $P$ and its control-flow graph \\ $G_P = \cfg$, as depicted in Figure \ref{codeWithAss} and Figure \ref{cfg:P:Ass}. The automaton $\cfgAutomat{P}$, with states $Q = Loc$, transition relation $\Delta = \delta$, initial state $Q_{init} = \ell_\init$, accepting states $F = \loc{err}$ over alphabet:
-\begin{align*}
-	\Sigma = \Pi = \{ &\st{x:=0}, \st{y:=2}, \st{z:=3}, \st{x>20}, \st{x==22}, \st{x!=22}, \st{x<=20}, \\ &\st{x<=10}, \st{z:=x}, \st{x:=x+y}, \st{y:=y+1}, \st{x:=x+2}, \st{y:=y-3}\}
-\end{align*} 
+To illustrate the trace abstraction scheme we demonstrate one iteration in the following. Assume we are given program $P$ and its control-flow graph \\ $G_P = \cfg$, as depicted in Figure \ref{codeWithAss} and Figure \ref{cfg:P:Ass}. The automaton $\cfgAutomat{P}$, with states $Q = Loc$, transition relation $\Delta = \delta$, initial state $Q_{init} = \ell_\init$, accepting states $F = \loc{err}$ over alphabet: 
+\begin{eqnarray} \Sigma = \Pi = \{ &\st{x:=0}, \st{y:=2}, \st{z:=3}, \st{x>20}, \st{x==22}, \st{x!=22}, \st{x<=20}, \\ &\st{x<=10}, \st{z:=x}, \st{x:=x+y}, \st{y:=y+1}, \st{x:=x+2}, \st{y:=y-3}\} 
+\end{eqnarray} 
 From $G_P$, we extract the trace:
-\begin{align*}
+\begin{eqnarray*}
 	\tau_1= \st{x:=0;y:=2;z:=3}, \st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}, \st{x>20}, \st{x!=22}
-\end{align*}
+\end{eqnarray*}
 We consider $\tau_1$ as automaton $\mathcal{A}_1$ as seen in Figure \ref{traceNoAnnot}. From $\tau_1$ we compute a Floyd-Hoare annotation, by labeling $q_1$ with $\top$, and repeatedly applying the strongest post condition, as depicted in Figure \ref{traceAnnot}.\\
-\begin{minipage}[t]{0.29\linewidth}
+\begin{minipage}[t]{0.5\linewidth}
 	\begin{figure}[H]
+		\begin{centering}
 		\input{fig/fig_trace_example_no_loop.tex}
 		\caption{The trace $\tau_1$.}
 		\label{traceNoAnnot}
+		\end{centering}
 	\end{figure}
 \end{minipage}
-	\begin{minipage}[t]{0.3\linewidth}
+	\begin{minipage}[t]{0.4\linewidth}
 		\begin{figure}[H]
+		\begin{centering}
 		\input{fig/fig_trace_example_no_loop_hoare_annot.tex}
-		\caption{The trace $\tau_1$ with Floyd-Hoare annotation $\beta$.}
+		\caption{Trace $\tau_1$ with Floyd-Hoare annotation $\beta$.}
 		\label{traceAnnot}
+		\end{centering}
 		\end{figure}
 	\end{minipage}
-\begin{minipage}[t]{0.39\linewidth}
-	\begin{figure}[H]
+
+\begin{figure}[H]
+	\begin{centering}
 	\input{fig/fig_trace_example_no_loop_hoare_annot_generalized.tex}
 	\caption{The abstracted trace of $\tau_1$.}
 	\label{traceAnnotGeneral}
-	\end{figure}
-\end{minipage} \\
+	\end{centering}
+\end{figure}
+
+
+
 We observe that the error state $q_7$ is labeled with $\bot$, proving that this trace is infeasible. This annotation only proves that the specific trace $\tau_1$ is infeasible, to exclude more that one trace at a time, we construct an \textsl{abstraction}. We firstly add transitions $ \pi_i \in \Sigma$ to each state $q_i$ with annotation $\varphi_i$, such that $sp(\varphi_i, \pi) \subseteq \{\varphi_i\}$ holds. After the addition of new transitions, we merge states with the same annotation, resulting in the abstracted trace as illustrated in \ref{traceAnnotGeneral}. We extend the Floyd-Hoare automaton $\mathcal{A}_D$ by $\mathcal{A}_1$.
 
 

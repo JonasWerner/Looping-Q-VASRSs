@@ -11,9 +11,8 @@
 	20 pages}
 \end{comment}
 
-This chapter will firstly give an overview of the challenges program loops introduce, then we will define our understanding of the loop summarization technique based on rational vector addition systems with resets (\qvasr), which will then be extended to \qvasr-abstractions, and lastly we introduce rational vector addition systems with resets and states (\qvasrs). \\ \par
-A program loop, created by, for example, a \texttt{while} statement, can introduce up to infinitely many program traces. Let us, for instance, assume we have a non deterministic loop:
-\begin{equation*}
+This chapter will firstly give an overview of the challenges program loops introduce, then we will define our understanding of the loop summarization technique based on rational vector addition systems with resets (\qvasr), which will then be extended to \qvasr-abstractions, and lastly we introduce rational vector addition systems with resets and states (\qvasrs). \par
+A program loop, created by, for example, a \texttt{while} statement, can introduce up to infinitely many program traces. Let us, for instance, assume we have a non deterministic loop: \begin{equation*}
 	\texttt{while (*); x:=2*x}
 \end{equation*}
 and an error location outside of the loop asserting \texttt{x\%2==0}. To check safety we would have to prove, in the worst case, infinitely many program traces as infeasible because there are theoretically infinitely many traces through the loop.
@@ -38,9 +37,8 @@ and an error location outside of the loop asserting \texttt{x\%2==0}. To check s
 \end{center}
 Instead, we can compute a loop summarization that characterizes changes to variables as a first-order logic formula. Loop summaries are not guaranteed to be precise, meaning they can over- or underapproximate the loop's behavior. Feasible error traces, found using underapproximative loop summaries, are guaranteed to be feasible. But due to the underapproximate nature of the summaries they can miss other feasible counterexample as they model only a subset of the actual loop behavior \cite{DBLP:journals/fmsd/KroeningLW15}. Loop summaries that overapproximate the loop's behaviour, on the other hand, form a superset of the actual loop behavior, resulting in possible spurious feasible error traces. The quality of overapproximative loop summaries depend on the degree of overapproximation of the actual loop behavior.
 Kincaid et al. \cite{DBLP:conf/cav/SilvermanK19} devised an overapproximative loop summarization method that guarantees a certain degree of precision by utilizing rational vector addition systems with resets. In the following we present our adaption of that summarization technique.
-\subsection{\qvasr}
+\section{\qvasr}
 To summarize a loop, we make use vector addition systems. Vector additions systems are a class of infinite-state transition systems.
-
 \begin{mydef}[Transition System]
 	A transition system \transSys{} is a tuple, consisting of a finite or infinite set of states $S$ and a transition relation $\rightarrow \subseteq S \times S$.
 \end{mydef}
@@ -108,10 +106,10 @@ We will introduce the following, more intuitive notation that shows relations be
 		\end{bmatrix}
 	\end{Bmatrix}
 \end{equation*}
-\subsection{\qvasr Summarization}
+\section{\qvasr Summarization}
 \qvasr can only model the aforementioned three transitions: increment, reset, and reset and increment. Increments, and resets and increments, however, are tied to constant variable changes. Updates that reference, for example, other variables, cannot be modeled as a \qvasr. When we look at the example program \ref{cfg:P:Ass}, we can see that in the \texttt{if} branch there are increments that reference other variables, such as \st{z:=x} and \st{x:=x+y}. \\
 
-\subsubsection{\qvasr-Abstraction}
+\subsection{\qvasr-Abstraction}
 We extract the transition formula $H$ of the if branch:
 \begin{equation*}
 	H= \ (x \leq 10 \land x' = x + y\ \land\ y' = y + 1 \land z' = x)
@@ -255,7 +253,7 @@ The \qvasr-abstractions are overapproximations because they do not model single 
 For example, the \qvasr-abstraction  $(S_H, V_H)$ of $H$ is an overapproximation, because, for instance, the transition: $\begin{bNiceMatrix}[first-col=1]  x & 1\\ y & 2 \\ z & 3 \end{bNiceMatrix} \rightarrow \begin{bNiceMatrix}[last-col]  -20 & x'\\ 3 & y' \\ 18 & z' \end{bNiceMatrix}$ is possible because $-x' + y' + z' = 1$ and $y' = y + 1$ hold. In $H$ this transition is not possible, because of $z' = x$ and $x' = x + y$. \\ \par
 For transition formulas with constant increments, such as $G$, the identity matrix $I$ is used as simulation matrix. These \qvasr-abstractions are precise. \par
 
-\subsubsection{\qvasr-Abstraction Join}
+\subsection{\qvasr-Abstraction Join}
 The changes to program states by the loop in $P$ can be represented by the transition formula: 
 \begin{figure}[H]
 	\begin{equation*}
@@ -267,12 +265,12 @@ The changes to program states by the loop in $P$ can be represented by the trans
 
 With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the approximation of the whole loop's behavior we need to compute the \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ that simulates $L$. \\ \par We impose a partial order to model simulations between \qvasr-abstractions.
 \begin{mydef}[\qvasr-Abstraction Preorder]
-	Given two \qvasr-abstractions  \qvAbstr{1} and \qvAbstr{2}, with abstract dimensions $e$ and $d$ respectively, we define the preorder \\ of \qvasr-abstractions as \qvAbstr{1} $\preceq$ \qvAbstr{2} if and only if there exists a linear transformation $T \in \valuations^{e \times d}$ where $V_1 \vdash_S V_2$ and $TS_1 = S_2$
+	Given two \qvasr-abstractions \\ \qvAbstr{1} and \qvAbstr{2}, with abstract dimensions $e$ and $d$ respectively, we define the preorder of \qvasr-abstractions as \qvAbstr{1} $\preceq$ \qvAbstr{2} if and only if there exists a linear transformation $T \in \valuations^{e \times d}$ where $V_1 \vdash_S V_2$ and $TS_1 = S_2$
 \end{mydef}
-The \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ has to simulate both $(S_G, V_G)$ and $(S_H, V_H)$, consequently $(S_G, V_G) \preceq (\tilde{S}, \tilde{V})$ and $(S_H, V_H) \preceq (\tilde{S}_L, \tilde{V}_L)$ has to hold. Additionally, we want a precise as possible \qvasr-abstraction, we have to define $(\tilde{S}_L, \tilde{V}_L)$ as the least upper bound with regard to the preorder. The \qvasr-abstraction that represents the least upper bound is called the \textsl{best} \qvasr-abstraction. \\ \par
+The \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ has to simulate both $(S_G, V_G)$ and $(S_H, V_H)$, consequently $(S_G, V_G) \preceq (\tilde{S}, \tilde{V})$ and $(S_H, V_H) \preceq (\tilde{S}_L, \tilde{V}_L)$ has to hold. Additionally, we want a precise as possible \qvasr-abstraction, we have to define $(\tilde{S}_L, \tilde{V}_L)$ as the least upper bound with regard to the preorder. The \qvasr-abstraction that represents the least upper bound is called the \textsl{best} \qvasr-abstraction. \par
 
 Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ to compute a best \\ \qvasr-abstraction $(\tilde{S}, \tilde{V})$ such that $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and $(S_2, V_2) \preceq (\tilde{S}, \tilde{V})$ we use the definition of the preorder, to describe that if $(\tilde{S}, \tilde{V})$ is an upper bound of $(S_1, V_1)$ and $(S_2, V_2)$ then there exists matrices $T_1$ and $T_2$ such that $T_1S_1 = \tilde{S} = T_2S_2$ with $V_1 \vdash_{T_1} \tilde{V}$ and $V_2 \vdash_{T_2} \tilde{V}$. To compute the unknown $T_1$ and $T_2$ we convert the equation $T_1S_1 = \tilde{S} = T_2S_2$ to $T_1S_1 = T_2S_2$. \\
-We have $T_1S_1 = T_2S_2$ if and only if, each pair of rows $(\vec{t}_{1i}\vec{t}_{2i})$ of $T_1$ and $T_2$, is part of the set $\{ (t_1t_2)\ |\  \vec{t}_1S_1 = \vec{t}_2S_2\}$. Observe that this set forms a vector space, a basis for this space form our $(\vec{t}_{1i}\vec{t}_{2i})$. \\ \par
+We have $T_1S_1 = T_2S_2$ if and only if, each pair of rows $(\vec{t}_{1i}\vec{t}_{2i})$ of $T_1$ and $T_2$, is part of the set $\{ (t_1t_2)\ |\  \vec{t}_1S_1 = \vec{t}_2S_2\}$. Observe that this set forms a vector space, a basis for this space form our $(\vec{t}_{1i}\vec{t}_{2i})$. \par
 For example, assume we are given simulation matrices: 
 \begin{align*}
 	S_G = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\0 & 0 & 1 \end{bmatrix} \hspace{1cm}
@@ -347,7 +345,7 @@ and matrices
 	T_G = \begin{bmatrix}  -1 & 1 & 1 \\ 0 & 1 & 0\end{bmatrix} \hspace{1cm} T_H = \begin{bmatrix}  1 & 0 \\  0 & 1\end{bmatrix}
 \end{align*}
 
-We define $\tilde{V}_L = image(V_G, T_G) \cup image(V_H, T_H)$, and begin by computing $image(V_G, T_G)$:
+We define $\tilde{V}_L = image(V_G, T_G)\ \cup\ image(V_H, T_H)$, we begin with the computing of $image(V_G, T_G)$ as shown in the following:
 \begin{align*}
 	image(V_G, T_G) = \{(T_G\boxtimes\vec{r}, T\vec{a})\} \text{ for every transformer } (\vec{r}, \vec{a}) \in V_G
 \end{align*}
@@ -426,9 +424,9 @@ Combining $S_L$ and $V_L$, we get the final best \qvasr-abstraction of the loop 
 		\label{vasr}
 	\end{figure}
 \end{center}
-Given two \qvasr-abstractions $(S_1, V_1)$, and $(S_2, V_2)$, the computation of a best \qvasr-abstraction $(\tilde{S}, \tilde{V})$ with $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and  $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ is called a \qvasr-abstraction \textsl{join}.
+Given two \qvasr-abstractions $(S_1, V_1)$, and $(S_2, V_2)$, the computation of a best \\ \qvasr-abstraction $(\tilde{S}, \tilde{V})$ with $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and  $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ is called a \qvasr-abstraction \textsl{join}.
 
-\subsubsection{\qvasr Loop Summary}
+\subsection{\qvasr Loop Summary}
 A \qvasr-abstraction only models one iteration of a transition formula, loops, however, are often repeated, such that we need to construct a formula that models every possible iteration. \\ \par
 Given a \qvasr-abstraction $(S, V)$ that approximates a transition formula $\trf$ that is defined over variables $\vec{x} = x_1, \ldots, x_n$,  that consists of $l$ transformer $(\vec{r}^{\,i}, \vec{a}^{\,i}) \in V$, with abstract dimension $m$, meaning that $S$, $\vec{r}^{\, i}$, and $\vec{a}^{\, i}$ have $m$ rows, and concrete dimension $n$, meaning $S$ has $n$ columns, to construct a formula, we firstly introduce new variables for each transformer $k^1, \ldots, k^n$, these variables represent how often each transformer was used. We iterate through every dimension $d \in 1, \ldots, m$, and construct the relations: $S_d\vec{x}'$ and check each transformer's $d$-th entry: $(r_d^i, a_d^i)$ \\
 As we know the relation is either reset, meaning $r_d^i = 0$, incremented by amount $y$, meaning $r_d^i = 1$ and $a_d^i = y$, or reset and incremented to amount $y$, by $r_d^i = 0$ and $a_d^i = y$. Now, when we look at multiple iterations and multiple transformers, these three changes can occur arbitrarily. We need to construct a disjunction for each dimension covering these cases, we present the following approach.
@@ -497,7 +495,7 @@ Using these formulas we get the loop summary as seen in Figure \ref{loopSummary}
 	\label{loopSummary}
 \end{figure}
 
-\subsection{Extension to \qvasrs}
+\section{Extension to \qvasrs}
 \begin{comment}
 \jw{Introduction qvasrs $\rightarrow$ summary precision improvement \\
 - What are qvasr? How to compute their reachability relation $\rightarrow$ Parikh image? \\ 
@@ -509,7 +507,7 @@ How do they improve precision? \\
 In the previous section, we have seen how to compute a summary for a given transition formula using \qvasr-abstractions. However, these summaries are representing transitions nondeterministically.
 We see in the summary, depicted in Figure \ref{loopSummary}, that neither the loop guard \texttt{x <= 20} nor the expressions of the \texttt{if else} statement, \texttt{x <= 10} and \texttt{x > 10}, are considered in the \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$, leading to the inclusion of transitions that would violate these conditions in the actual loop and would therefore not exist. \\
 To exclude such transitions, and with that improve precision of the summary, we constrain \qvasr: We only allow transitions that satisfy a set of constraints $C$ modeled by first-order formulas. Using the constraints in $C$ as control states, we can construct a nondeterministic finite automaton that represents all allowed transitions. This automaton is called a \qvasr with states (\qvasrs), where each transition is labeled by a reset, addition vector pair $(\vec{r}, \vec{a})$. The predicates are pairwise unsatisfiable, minimizing the automaton's possible successor state space. A vector $\vec{x}$ can only transition to $\vec{x}'$ if there is an edge $(p, (\vec{r}, \vec{a}), q)$, with $\vec{x}' = \vec{r} * \vec{x} + \vec{a}$ and $p, q \in P$.
-Figure \ref{vasrs} shows the \qvasrs of $P$'s loop, it was constructed using $(\tilde{S}_L, \tilde{V}_L)$, seen in Figure \ref{vasr}, and the predicates $x \leq 10$ and $10 < x \land x \leq 20$ as states.
+Figure \ref{qvasrs_ex} shows the \qvasrs of $P$'s loop, it was constructed using $(\tilde{S}_L, \tilde{V}_L)$, seen in Figure \ref{vasr}, and the predicates $x \leq 10$ and $10 < x \land x \leq 20$ as states.
 \begin{figure}[H]
 	\input{fig/qvasrs_ex_p0.tex}
 	\caption{\\ \qvasrs of the loop of $P$.}

@@ -1,6 +1,5 @@
 
 Next to rational vector addition systems with resets, there are a multitude of other loop summarization techniques:
-
 \begin{itemize}
 	\item \textsl{Fast Acceleration using Ultimately Periodic Relations}\cite{10.1007/978-3-642-14295-6_23}\\ Bozga et al. propose an overapproximative loop summarization scheme that tries to compute an ultimately periodic relation from a given loop's transition relation. A transition relation is ultimately periodic if and only if there exists a bound from which on previous transitions keep getting repeated in the same manner. There are three classes of relations that are proven to be ultimately periodic: Difference bounds, octagonal and finite monoid affine relations. The paper introduces techniques of verifying whether a given loop relation is ultimately periodic and assigning it to one of the classes. The drawback, however, is that this loop summarization scheme can only be applied to loop relations belonging to one of these three classes. Other, non periodic loops, for instance, a loop with a non deterministic branching, created for example by \st{if (*)}, cannot be summarized, whereas \qvasr can deal with that.
 	
@@ -9,5 +8,4 @@ Next to rational vector addition systems with resets, there are a multitude of o
 	
 	\item \textsl{Under-approximating loops}\cite{DBLP:conf/cav/KroeningLW13} \\
 	Kroening et al. propose an underapproximating loop summarization schemes, that utilizes so called auxiliary paths that represent, with the purpose of modeling the effect of a range of loop iterations. Their approach deals with non-determinism, for instance loops containing conditionals like \st{if (*)}, by existentially quantifying each path in that branching. This may lead to performance problems, if there is big branching and long paths.
-	
 \end{itemize}

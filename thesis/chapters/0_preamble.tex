@@ -209,12 +209,6 @@ text depth=.6ex,
 
 \algrenewcommand\alglinenumber[1]{\footnotesize #1}
 
-\usepackage{regexpatch}
-
-\makeatletter
-\xpatchcmd{\algorithmic}{\labelsep 0.5em}{\labelsep 1.5em}{\typeout{Success!}}{\typeout{Oh dear!}}
-\makeatother
-
 %%%%%%%%%%%% Comments
 \newif\iffinal
 %\finaltrue % comment out to remove comments

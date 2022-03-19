@@ -1,7 +1,6 @@
 
 Given a program $P$ and its control-flow graph $G_P = $ \cfg, we have seen earlier that to determine safety of $P$ we need to prove infeasibility of every trace leading to an error-location. We translate $P's$ control-flow graph into a non-deterministic finite automata $\cfgAutomat{P}$, and try to compute a Floyd-Hoare automaton $\cfgAutomatHoare{D}$, whose language are the infeasible traces. If $\mathcal{L(A_P)} \subseteq \mathcal{L(A_D)}$ we know that $P$ is safe, if there exists a feasible error trace it is unsafe. \\ To construct the Floyd-Hoare annotation of $\mathcal{L(A_D)}$, we have to iteratively prove traces infeasible, and then, to exclude as many error traces as possible, compute an abstraction. In the example from earlier, given trace $\tau = \pi_1, \ldots, \pi_n$, we utilized the abstraction method of adding traces from $\Sigma$, such that the condition $sp(\varphi_i, \pi_i) \subseteq \{\varphi\}$, with $\varphi_i$ being the annotation of state $q_i$ and $pi_i \in \tau$, holds. \\
-In this section we introduce an abstraction technique that utilizes loop summaries to refute whole loops with one trace abstraction iteration. \\
-
+In this section we introduce an abstraction technique that utilizes loop summaries to refute whole loops with one trace abstraction iteration. \par
 Assume we are give a program $P$ and its control-flow graph \\ $G_P$ = \cfg, and assume we employ trace abstraction that computes the program trace $\tau$:
 \begin{equation*}
 	\tau = \pi_1, \ldots, \underbrace{\pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j}_{\text{m times}}, \ldots, \pi_n
