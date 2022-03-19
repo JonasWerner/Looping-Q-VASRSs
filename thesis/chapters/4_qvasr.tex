@@ -261,8 +261,8 @@ The changes to program states by the loop in $P$ can be represented by the trans
 	\begin{equation*}
 		L = x \leq 20 \land (H \lor G)
 	\end{equation*}
-	\label{loopTF}
 	\caption{Transition formula representing the loop in program $P$.}
+	\label{loopTF}
 \end{figure}
 
 With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the approximation of the whole loop's behavior we need to compute the \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ that simulates $L$. \\ \par We impose a partial order to model simulations between \qvasr-abstractions.
@@ -513,7 +513,7 @@ Figure \ref{vasrs} shows the \qvasrs of $P$'s loop, it was constructed using $(\
 \begin{figure}[H]
 	\input{fig/qvasrs_ex_p0.tex}
 	\caption{\\ \qvasrs of the loop of $P$.}
-	\label{vasrs}
+	\label{qvasr_cfg}
 \end{figure}
 We see that there are no transitions that violate the \texttt{if else} conditions. \par
 \label{qvasrs}

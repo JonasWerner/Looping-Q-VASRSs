@@ -11,6 +11,9 @@ For \qvasrs usage in control-flow graph transformation, we adapt our approach by
 \end{figure}
 From this transformed control-flow graph we can now construct state assertions that adhere to assumptions in the program.
 \subsection{Heuristics in Accelerated Interpolation}
+Accelerated interpolation can be configured to summarize loops after they repeat a certain time in a given trace, called delay. As loop summarization itself is costly, we can try to find heuristics that decide when to summarize. Another possibility is to check the length of a loop in conjunction with the delay, as lengthier loops are costlier to summarize. \\
+Accelerated Interpolation also features a way to split disjunctive loops, such as ones with if else branching, like the example $L$, seen in \ref{loopTF}, by summarizing each disjunct and with that branch individually and then construct a meta trace in which each branch's summary is one transition. This constructs a underapproximation, because we assume we take, for example, an if branch a finite amount of times, followed by a finite amount of else branch iterations. This is advantageous for sequential loops, but not for nondeterministic loops. We could develop a heuristic on when to split a loop for performance increases. 
+\jw{todo example}
 
 \begin{comment}
 	To compute a loop summary from a \qvasrs, one has to calculate the reachability relation of the automaton. Haase and Halfon \cite{DBLP:conf/rp/HaaseH14} proposed a polytime procedure that computes a series of formulas from computed Parikh images that, as conjunction, form a summary of the system. This procedure can be adapted to work with \qvasrs

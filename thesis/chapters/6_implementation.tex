@@ -29,7 +29,7 @@ Recall the program $P$ and its control-flow graph $G_P$ as illustrated in \ref{c
 	\tau_1 &= \st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y} \\
 	\tau_2 &= \st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3}
 \end{align*}
-Using \qvasr summarization, we get the summary $\psi$ shown before in Figure \ref{loopTF}, which we can now use to replace the every transition occuring in either $\tau_1$ and $\tau_2$. We get transformed control-flow graph $\bar{G}_P$:
+Using \qvasr summarization, we get the summary $\psi$ shown before in Figure \ref{loopTF}, which we can now use to replace every transition occurring in either $\tau_1$ and $\tau_2$. We get transformed control-flow graph $\bar{G}_P$:
 
 \begin{figure}[H]
 	\centering
@@ -37,7 +37,6 @@ Using \qvasr summarization, we get the summary $\psi$ shown before in Figure \re
 	\label{cfg_trans}
 	\caption{The transformed control-flow graph $\bar{G}_P$ that is the result of the control-flow graph transformation of $G_P$}
 \end{figure}
-
-
+Which we can now put into trace abstraction.
 
 
