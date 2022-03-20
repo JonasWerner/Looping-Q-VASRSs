@@ -9,7 +9,11 @@ We observe that the sequence of transitions $\pi_i, \ldots, \pi_j, \ldots, \pi_i
 Using $\bar{\pi}$ we compute a \qvasr loop summary $\psi$ following the earlier presented summarization paradigm. The loop summary $\psi$ now represents an overapproximation of all changes to program variables by the loop. We can now transform $\tau$ by replacing the sequence $\pi_i \ldots \pi_j$ with $\psi$, yielding a so called \textsl{meta trace}.
 
 \begin{mydef}[Meta Trace]
-	Given a trace \\ $\tau = \pi_1, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_n$ that contains a repeating sequence of transition formulas $\pi_i, \ldots, \pi_j$ that can be represented by the concatenation of all $\pi_l \{\pi_i, \ldots, \pi_j\}$: $\bar{\pi} = \pi_i; \ldots; \pi_j$. Assume further that we are given a \qvasr summary for formula $\bar{pi}$, we call the trace  $\bar{tau} = \pi_1, \ldots, \psi, \ldots, \pi_n$ the meta trace of $\tau$, which is constructed by replacing the sequence $\pi_1, \ldots, \pi_j$ by $\psi$.
+	Given a trace $\tau$:
+	\begin{equation*}
+		\tau = \pi_1, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_n
+	\end{equation*}
+	Where $\tau$ contains a repeating sequence of transition formulas $\pi_i, \ldots, \pi_j$ that can be represented by the concatenation of all $\pi_l \{\pi_i, \ldots, \pi_j\}$: $\bar{\pi} = \pi_i; \ldots; \pi_j$. Assume further that we are given a \qvasr summary for formula $\bar{\pi}$, we call the trace  $\bar{\tau} = \pi_1, \ldots, \psi, \ldots, \pi_n$ the meta trace of $\tau$, which is constructed by replacing the sequence $\pi_1, \ldots, \pi_j$ by $\psi$.
 \end{mydef}
 \begin{comment}
 	\begin{equation*}
@@ -33,10 +37,8 @@ We compute the transition formula $L$ as $G \lor H$, which coincides with the tr
 \begin{equation*}
 	L: x \leq 20 \land ((x \leq 10 \land z' = x \land x' = x + y \land y' = y + 1) \lor (x > 10 \land x' = x + 2 \land y' = y - 3)
 \end{equation*}
-We already computed a \qvasr summary $\psi$ for $L$, depicted in Figure \ref{loopSummary}. By replacing sequences $1$ and $2$ with $\psi$, we get meta trace $\bar{\tau}_1:$
-
+As we have already computed a \qvasr summary $\psi_L$ for transition formula $L$, depicted in Figure \ref{loopSummary}, we replace sequences $G$ and $H$ with $\psi_L$ to get meta trace $\bar{\tau}_1:$
 \begin{align*}
-	\bar{\tau}_1: \st{x:=0;y:=2;z:=3}, \psi, \st{x>20}, \st{x!=22}
+	\bar{\tau}_1: \st{x:=0;y:=2;z:=3}, \psi_L, \st{x>20}, \st{x!=22}
 \end{align*}
-
-\jw{Todo}
+This meta trace now contains every trace through the loop, from which we can now construct an approximation.

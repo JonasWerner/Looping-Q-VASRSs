@@ -7,7 +7,7 @@
 	15 pages
 \end{comment}
 
-This chapter will introduce mathematical background, our understanding and notation of logic and formulas, programs, control-flow, and other needed background definitions. Furthermore, we will give an overview of the \traceabstraction \cite{10.1007/978-3-642-03237-0_7} counterexample-guided abstraction refinement scheme used in \ultimate.
+This chapter will introduce mathematical background, our understanding and notation of logic and formulas, programs, control-flow, and other needed background definitions. Furthermore, we will give an overview of the trace abstraction \cite{10.1007/978-3-642-03237-0_7} counterexample-guided abstraction refinement scheme used in \ultimate.
 
 \section{Mathematical Background}
 In this thesis we utilize various concepts of linear algebra, such as vector spaces, vector space bases, and more. This section will introduce important notations and definitions.
@@ -126,7 +126,7 @@ The matrix product $AB$ is defined as the $m \times p$ matrix:
 
 
 \section{Logical Background}
-To represent programs formally, we make use of first-order logic. This chapter will introduce our definitions and notations used throughout this thesis.
+To represent programs formally, we make use of first-order logic. This Chapter will introduce definitions and notations used throughout this thesis.
 
 \subsection{Notation}
 We utilize the standard logical notations: We represent boolean values as $\bot$, meaning \textsl{false}, and $\top$, meaning \textsl{true}. \\ Logical connectives are defined as:
@@ -149,7 +149,7 @@ Let $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$ be a vocabular
 \begin{itemize}
 	\item $\vocab{Var}$ containing all \textsl{variables}
 	\item $\vocab{Const}$ containing all \textsl{constant symbols}
-	\item $\vocab{Fun} $ containing all \textsl{function symbols}. Each symbol $f \in \vocab{Fun}$ has a natural number $\geq 1$ called arity of $f$
+	\item $\vocab{Fun} $ containing all \textsl{function symbols}. Each symbol $f \in \vocab{Fun}$ where as a natural number $\geq 1$ called arity of $f$
  	\item $\vocab{Pred}$ containing all \textsl{predicate symbols}. Each symbol $p \in \vocab{Pred}$ has a natural number $\geq 0$ called arity of $p$
 \end{itemize}
 Assume we are given such a vocabulary, we can construct first-order logic terms using the symbols in the vocabulary.
@@ -158,7 +158,7 @@ Assume we are given such a vocabulary, we can construct first-order logic terms 
 	\begin{itemize}
 		\item Every $x \in \vocab{Var}$ is a term.
 		\item Every $c \in \vocab{Const}$ is a term.
-		\item If $t_0, \ldots, t_n$ are terms and $f \in \vocab{Fun}$ being a function symbol with arity $n$, then $f(t_0, \ldots, t_n)$ is a term.
+		\item If $t_0, \ldots, t_n$ are terms and $f \in \vocab{Fun}$ is a function symbol with arity $n$, then $f(t_0, \ldots, t_n)$ is a term.
 	\end{itemize}
 \end{mydef}
 Using first-order logic terms, we can introduce first-order logic formulas.
@@ -184,9 +184,9 @@ To give variables, constants, functions, and predicates concrete values, we can 
 \end{mydef}
 Using a model, we can now assign concrete values to variables.
 \begin{mydef}[Assignment of Variables]
-	Given vocabulary \\c $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$, and model $\mathcal{M} = (D, \interpret)$, an assignment of variable $v \in \vocab{Var}$ is a function $\rho: v \rightarrow D$. Mapping each variable a value in domain $D$.
+	Given vocabulary \\ $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$, and model $\mathcal{M} = (D, \interpret)$, an assignment of variable $v \in \vocab{Var}$ is a function $\rho: v \rightarrow D$, that maps each variable to a value in domain $D$.
 \end{mydef}
-Assume $f \in \vocab{Fun}$ is a function defined as $f: X \mapsto Y$ with some domain $X$ and range $Y$. Let $x \in X$ and $y \in Y$, we use $f[x \mapsto y]$  to denote the function that maps all $\bar{x} \in X \backslash \{ x \}$ to $f(\bar{x})$ and $x$ to $y$.
+Assume $f \in \vocab{Fun}$ is a function defined as $f: X \rightarrow Y$ with some domain $X$ and range $Y$. Let $x \in X$ and $y \in Y$, we use $f[x \mapsto y]$  to denote the function that maps all $\bar{x} \in X \backslash \{ x \}$ to $f(\bar{x})$ and $x$ to $y$.
 
 \subsection{Semantics}
 Assume we are given a vocabulary $V = (\vocab{Var}, \vocab{Const}, \vocab{Fun}, \vocab{Pred})$, we know how to assign values using models and variable assignments. The task now is to understand how to interpret them. This section serves to introduce semantics of fist-order logic.

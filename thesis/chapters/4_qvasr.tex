@@ -11,10 +11,9 @@
 	20 pages}
 \end{comment}
 
-This chapter will firstly give an overview of the challenges program loops introduce, then we will define our understanding of the loop summarization technique based on rational vector addition systems with resets (\qvasr), which will then be extended to \qvasr-abstractions, and lastly we introduce rational vector addition systems with resets and states (\qvasrs). \par
-A program loop, created by, for example, a \texttt{while} statement, can introduce up to infinitely many program traces. Let us, for instance, assume we have a non deterministic loop: 
-\begin{equation*}
-\texttt{while (*); x:=2*x}
+This chapter will firstly give an overview of the challenges program loops introduce, then we will define our understanding of the loop summarization technique based on rational vector addition systems with resets (\qvasr), which will then be extended to \qvasr abstractions, and lastly we introduce rational vector addition systems with resets and states (\qvasrs). \par
+A program loop, created by, for example, a \texttt{while} statement, can introduce up to infinitely many program traces. Let us, for instance, assume we have a non deterministic loop: \begin{equation*}
+	\texttt{while (*); x:=2*x}
 \end{equation*}
 and an error location outside of the loop asserting \texttt{x\%2==0}. To check safety we would have to prove, in the worst case, infinitely many program traces as infeasible because there are theoretically infinitely many traces through the loop.
 .\begin{center}
@@ -110,7 +109,7 @@ We will introduce the following, more intuitive notation that shows relations be
 \section{\qvasr Summarization}
 \qvasr can only model the aforementioned three transitions: increment, reset, and reset and increment. Increments, and resets and increments, however, are tied to constant variable changes. Updates that reference, for example, other variables, cannot be modeled as a \qvasr. When we look at the example program \ref{cfg:P:Ass}, we can see that in the \texttt{if} branch there are increments that reference other variables, such as \st{z:=x} and \st{x:=x+y}. \\
 
-\subsection{\qvasr-Abstraction}
+\subsection{\qvasr Abstraction}
 We extract the transition formula $H$ of the if branch:
 \begin{equation*}
 	H= \ (x \leq 10 \land x' = x + y\ \land\ y' = y + 1 \land z' = x)
@@ -120,8 +119,8 @@ It is possible to overapproximate $H$ using a \qvasr using linear simulations.
 \begin{mydef}[Linear Simulation]
 	Given two transition systems $T_1 = (\valuations^n, \rightarrow_1)$ and $T_2 = (\valuations^m, \rightarrow_2)$, operating over the vector space containing rational numbers, a linear simulation from $T_1$ to $T_2$ is a linear transformation $S: \valuations^{m \times n}$ such that for all vectors $\vec{u}$, $\vec{v} \in \valuations^n$ with $\vec{u} \rightarrow_1 \vec{v}$, we have $S\vec{u} \rightarrow_2 S\vec{v}$. We denote the linear simulation from $T_1$ to $T_2$ as $T_1 \vdash_S T_2$
 \end{mydef}
-We want to synthesize a \qvasr $V_H$ and linear simulation $S_H$, such that $H \vdash_S V$. The tuple $(S_H, V_H)$ is called a \qvasr-abstraction.
-\begin{mydef}[\qvasr-Abstraction]
+We want to synthesize a \qvasr $V_H$ and linear simulation $S_H$, such that $H \vdash_S V$. The tuple $(S_H, V_H)$ is called a \qvasr abstraction.
+\begin{mydef}[\qvasr Abstraction]
 	Given a transition formula \trf of dimension $n$ and a \qvasr $V$ of dimension $m$, a linear simulation from \trf to $V$ is a linear transformation matrix: 
 	$S = 
 	\begin{bmatrix}
@@ -159,7 +158,7 @@ By solving the following equations for $s_1, \ldots, s_n$: \\
 			 &= s_1x_1' + \ldots s_nx_n' = s_1x_1 + \ldots + s_nx_n + a
 \end{align*}
 We get two sets that represent linear combinations of variables that are reset and incremented across \trf. We observe that the two form a vector space. These spaces can be represented using vector space basis vectors, meaning, we have to compute a basis. Assume we have basis for the set of resets:
-$Res_\trf = \{(\vec{s}_1, a_1), \ldots, (\vec{s}_m, a_m)\}$ and basis for the set of additions as: $Inc_\trf = \{(\vec{s}_{m+1}, a_{m+1}), \ldots, (\vec{s}_d, a_d)\}$. \\ We construct the \qvasr-abstraction $(S, V)$ as:
+$Res_\trf = \{(\vec{s}_1, a_1), \ldots, (\vec{s}_m, a_m)\}$ and basis for the set of additions as: $Inc_\trf = \{(\vec{s}_{m+1}, a_{m+1}), \ldots, (\vec{s}_d, a_d)\}$. \\ We construct the \qvasr abstraction $(S, V)$ as:
 \begin{center}
 \begin{minipage}{0.3\linewidth}
 	\begin{equation*}
@@ -222,7 +221,7 @@ $Res_H$ and $Inc_H$ form a vector space, and, because we want to construct a lin
 		\end{equation*}
 	\end{minipage}
 \end{center}
-Each column of the basis corresponds to a variable in the formula such that we can derive relations between variables. From the reset base we can deduce that the sum $-x + y + z$ is reset and incremented by $1$, meaning that after each transition of $H$ we know that $-x + y + z = 1$ holds. From the basis of additions we derive that $y$ is not reset and incremented by $1$. To form the linear transformation matrix $S_H$ we combine these rows to one coherent matrix. We see that the basis of resets and additions contain only one vector each, resulting in only one reset addition pair for $V_H$. As we have seen $-x + y + z$ is reset and $y$ is not. We get reset vector $\vec{r} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$ and because $-x + y + z$ is incremented by $1$, same as $y$, we get addition vector $\vec{a} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$. Resulting in the \qvasr-abstraction depicted in figure \ref{vasr  H}.
+Each column of the basis corresponds to a variable in the formula such that we can derive relations between variables. From the reset base we can deduce that the sum $-x + y + z$ is reset and incremented by $1$, meaning that after each transition of $H$ we know that $-x + y + z = 1$ holds. From the basis of additions we derive that $y$ is not reset and incremented by $1$. To form the linear transformation matrix $S_H$ we combine these rows to one coherent matrix. We see that the basis of resets and additions contain only one vector each, resulting in only one reset addition pair for $V_H$. As we have seen $-x + y + z$ is reset and $y$ is not. We get reset vector $\vec{r} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$ and because $-x + y + z$ is incremented by $1$, same as $y$, we get addition vector $\vec{a} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$. Resulting in the \qvasr abstraction depicted in figure \ref{vasr  H}.
 \vspace*{-2em}
 \begin{figure}[H]
 	\begin{center}
@@ -236,25 +235,25 @@ Each column of the basis corresponds to a variable in the formula such that we c
 				V_H = \begin{Bmatrix} \begin{bmatrix} -x' + y' + z' = 1\\ y' = y + 1 \end{bmatrix} \end{Bmatrix}
 			\end{equation*}
 		\end{minipage}
-		\caption{\qvasr-abstraction of transition formula $H$.}
+		\caption{\qvasr abstraction of transition formula $H$.}
 		\label{vasr H}
 	\end{center}
 \end{figure}
 \vspace*{-2em}
-Given a transition formula \trf with variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ a \qvasr-abstraction $(S, V)$ that simulates \trf, with transformer $(\vec{r}_1, \vec{a}_1), \ldots, (\vec{r}_m, \vec{a}_m) \in V$ where each $\vec{r}_i, \vec{a}_i$ has $d$ entries, we compute a transition formula overapproximating one transition of \trf by constructing the following disjunction:
+Given a transition formula \trf with variables $\vec{x} = x_1, \ldots, x_n$ and $\vec{x}' = x_1', \ldots, x_n'$ a \qvasr abstraction $(S, V)$ that simulates \trf, with transformer $(\vec{r}_1, \vec{a}_1), \ldots, (\vec{r}_m, \vec{a}_m) \in V$ where each $\vec{r}_i, \vec{a}_i$ has $d$ entries, we compute a transition formula overapproximating one transition of \trf by constructing the following disjunction:
 \begin{figure}[H]
 	\begin{equation*}
 		\bigvee\limits_{i=1}^m \bigwedge\limits_{j=0}^d S\vec{x}' = S\vec{x} * \vec{r}_j + \vec{a}_j
 	\end{equation*}
 	\label{vasrTrans}
-	\caption{\qvasr-abstraction formula.}
+	\caption{\qvasr abstraction formula.}
 \end{figure}
 
-The \qvasr-abstractions are overapproximations because they do not model single program variable transitions but, rather, transitions of relations of variables. These relations lead to an overhead of actual program behaviour, as a transition is possible, as long as the transition formula, described by the \qvasr-abstraction, holds. \\
-For example, the \qvasr-abstraction  $(S_H, V_H)$ of $H$ is an overapproximation, because, for instance, the transition: $\begin{bNiceMatrix}[first-col=1]  x & 1\\ y & 2 \\ z & 3 \end{bNiceMatrix} \rightarrow \begin{bNiceMatrix}[last-col]  -20 & x'\\ 3 & y' \\ 18 & z' \end{bNiceMatrix}$ is possible because $-x' + y' + z' = 1$ and $y' = y + 1$ hold. In $H$ this transition is not possible, because of $z' = x$ and $x' = x + y$. \\ \par
-For transition formulas with constant increments, such as $G$, the identity matrix $I$ is used as simulation matrix. These \qvasr-abstractions are precise. \par
+The \qvasr abstractions are overapproximations because they do not model single program variable transitions but, rather, transitions of relations of variables. These relations lead to an overhead of actual program behaviour, as a transition is possible, as long as the transition formula, described by the \qvasr abstraction, holds. \\
+For example, the \qvasr abstraction  $(S_H, V_H)$ of $H$ is an overapproximation, because, for instance, the transition: $\begin{bNiceMatrix}[first-col=1]  x & 1\\ y & 2 \\ z & 3 \end{bNiceMatrix} \rightarrow \begin{bNiceMatrix}[last-col]  -20 & x'\\ 3 & y' \\ 18 & z' \end{bNiceMatrix}$ is possible because $-x' + y' + z' = 1$ and $y' = y + 1$ hold. In $H$ this transition is not possible, because of $z' = x$ and $x' = x + y$. \\ \par
+For transition formulas with constant increments, such as $G$, the identity matrix $I$ is used as simulation matrix. These \qvasr abstractions are precise. \par
 
-\subsection{\qvasr-Abstraction Join}
+\subsection{\qvasr Abstraction Join}
 The changes to program states by the loop in $P$ can be represented by the transition formula: 
 \begin{figure}[H]
 	\begin{equation*}
@@ -264,13 +263,13 @@ The changes to program states by the loop in $P$ can be represented by the trans
 	\label{loopTF}
 \end{figure}
 
-With $x \leq 20$ being the loop guard. We have already computed \qvasr-abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the approximation of the whole loop's behavior we need to compute the \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ that simulates $L$. \\ \par We impose a partial order to model simulations between \qvasr-abstractions.
-\begin{mydef}[\qvasr-Abstraction Preorder]
-	Given two \qvasr-abstractions \\ \qvAbstr{1} and \qvAbstr{2}, with abstract dimensions $e$ and $d$ respectively, we define the preorder of \qvasr-abstractions as \qvAbstr{1} $\preceq$ \qvAbstr{2} if and only if there exists a linear transformation $T \in \valuations^{e \times d}$ where $V_1 \vdash_S V_2$ and $TS_1 = S_2$
+With $x \leq 20$ being the loop guard. We have already computed \qvasr abstractions for $G$ and $H$. These, however, only model the effect on variables in their respective branch of the \texttt{if else} statement. To get the approximation of the whole loop's behavior we need to compute the \qvasr abstraction $(\tilde{S}_L, \tilde{V}_L)$ that simulates $L$. \\ \par We impose a partial order to model simulations between \qvasr abstractions.
+\begin{mydef}[\qvasr abstraction Preorder]
+	Given two \qvasr abstractions \\ \qvAbstr{1} and \qvAbstr{2}, with abstract dimensions $e$ and $d$ respectively, we define the preorder of \qvasr abstractions as \qvAbstr{1} $\preceq$ \qvAbstr{2} if and only if there exists a linear transformation $T \in \valuations^{e \times d}$ where $V_1 \vdash_S V_2$ and $TS_1 = S_2$
 \end{mydef}
-The \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ has to simulate both $(S_G, V_G)$ and $(S_H, V_H)$, consequently $(S_G, V_G) \preceq (\tilde{S}, \tilde{V})$ and $(S_H, V_H) \preceq (\tilde{S}_L, \tilde{V}_L)$ has to hold. Additionally, we want a precise as possible \qvasr-abstraction, we have to define $(\tilde{S}_L, \tilde{V}_L)$ as the least upper bound with regard to the preorder. The \qvasr-abstraction that represents the least upper bound is called the \textsl{best} \qvasr-abstraction. \par
+The \qvasr abstraction $(\tilde{S}_L, \tilde{V}_L)$ has to simulate both $(S_G, V_G)$ and $(S_H, V_H)$, consequently $(S_G, V_G) \preceq (\tilde{S}, \tilde{V})$ and $(S_H, V_H) \preceq (\tilde{S}_L, \tilde{V}_L)$ has to hold. Additionally, we want a precise as possible \qvasr abstraction, we have to define $(\tilde{S}_L, \tilde{V}_L)$ as the least upper bound with regard to the preorder. The \qvasr abstraction that represents the least upper bound is called the \textsl{best} \qvasr abstraction. \par
 
-Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ to compute a best \\ \qvasr-abstraction $(\tilde{S}, \tilde{V})$ such that $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and $(S_2, V_2) \preceq (\tilde{S}, \tilde{V})$ we use the definition of the preorder, to describe that if $(\tilde{S}, \tilde{V})$ is an upper bound of $(S_1, V_1)$ and $(S_2, V_2)$ then there exists matrices $T_1$ and $T_2$ such that $T_1S_1 = \tilde{S} = T_2S_2$ with $V_1 \vdash_{T_1} \tilde{V}$ and $V_2 \vdash_{T_2} \tilde{V}$. To compute the unknown $T_1$ and $T_2$ we convert the equation $T_1S_1 = \tilde{S} = T_2S_2$ to $T_1S_1 = T_2S_2$. \\
+Given two \qvasr abstractions $(S_1, V_1)$ and $(S_2, V_2)$ to compute a best \\ \qvasr abstraction $(\tilde{S}, \tilde{V})$ such that $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and $(S_2, V_2) \preceq (\tilde{S}, \tilde{V})$ we use the definition of the preorder, to describe that if $(\tilde{S}, \tilde{V})$ is an upper bound of $(S_1, V_1)$ and $(S_2, V_2)$ then there exists matrices $T_1$ and $T_2$ such that $T_1S_1 = \tilde{S} = T_2S_2$ with $V_1 \vdash_{T_1} \tilde{V}$ and $V_2 \vdash_{T_2} \tilde{V}$. To compute the unknown $T_1$ and $T_2$ we convert the equation $T_1S_1 = \tilde{S} = T_2S_2$ to $T_1S_1 = T_2S_2$. \\
 We have $T_1S_1 = T_2S_2$ if and only if, each pair of rows $(\vec{t}_{1i}\vec{t}_{2i})$ of $T_1$ and $T_2$, is part of the set $\{ (t_1t_2)\ |\  \vec{t}_1S_1 = \vec{t}_2S_2\}$. Observe that this set forms a vector space, a basis for this space form our $(\vec{t}_{1i}\vec{t}_{2i})$. \par
 For example, assume we are given simulation matrices: 
 \begin{align*}
@@ -307,9 +306,9 @@ Knowing how to compute a simulation matrix, we continue with the calculation of 
 Given a matrix $T \in \mathbb{Q}^{e \times d}$ and a \qvasr $V$ of dimension $d$ with $k$ coherence classes $C = \{c_1, \ldots, c_k\}$, we say that $T$ is coherent to $V$ if and only if each of its rows have non-zero values only in the dimensions corresponding to a single coherence class of $c_i \in C$. \\ \par
 Let $V$ be a \qvasr with transition relation $\rightarrow_V$, let matrix  $T \in \mathbb{Q}^{e \times d}$ be a coherent to $V$ matrix that has no rows consisting entirely of zeroes, there is a \qvasr $image(V, T)$ of dimension $e$, that has transition relation $\rightarrow_{image(V, T)} = \{(T\vec{u}, T\vec{v})\ |\ (\vec{u}, \vec{v}) \in\rightarrow_V \}$ and is defined as $image(V, T) = \{(T\boxtimes\vec{r}, T\vec{a})\}$ for every transformer $(\vec{r}, \vec{a}) \in V$. Where $T\boxtimes\vec{r}$ denotes the translation of reset vector $\vec{r}$ along $T$, and is defined as $(T\boxtimes\vec{r})_i = r_j$ where $j$ is an arbitrary choice of dimensions for which $T_{ij}$ is non-zero. \\ \par
 \begin{mydef}[\qvasr-Image]
-Given two \qvasr-abstractions $(S_1, V_1)$ and $(S_2, V_2)$ and matrices $\tilde{S}$, $T_1$, and $T_2$ where $T_1S_1 = \tilde{S} = T_2S_2$, we define the \qvasr $\tilde{V} = image(V_1, T_1) \cup image(V_2, T_2)$ as the \qvasr-image of $V_1$ and $V_2$.
+Given two \qvasr abstractions $(S_1, V_1)$ and $(S_2, V_2)$ and matrices $\tilde{S}$, $T_1$, and $T_2$ where $T_1S_1 = \tilde{S} = T_2S_2$, we define the \qvasr $\tilde{V} = image(V_1, T_1) \cup image(V_2, T_2)$ as the \qvasr-image of $V_1$ and $V_2$.
 \end{mydef}
-The tuple $(\tilde{S}, \tilde{V})$ is the best \qvasr-Abstraction of $(S_1, V_1)$ and $(S_2, V_2)$. \\ \par
+The tuple $(\tilde{S}, \tilde{V})$ is the best \qvasr abstraction of $(S_1, V_1)$ and $(S_2, V_2)$. \\ \par
 We will demonstrate the image calculation to compute \qvasr $\tilde{V}_L$ using:
 \begin{align*}
 	V_G = 
@@ -417,19 +416,19 @@ Now, we can join the two \qvasr to get $\tilde{V}_L$:
 		\end{pmatrix}
 	\end{Bmatrix}
 \end{align*}
-Combining $S_L$ and $V_L$, we get the final best \qvasr-abstraction of the loop $(\tilde{S}_L, \tilde{V}_L)$ as seen in Figure \ref{vasr}.
+Combining $S_L$ and $V_L$, we get the final best \qvasr abstraction of the loop $(\tilde{S}_L, \tilde{V}_L)$ as seen in Figure \ref{vasr}.
 \begin{center}
 	\begin{figure}[H]
 		\input{fig/matrix_ex_p0.tex}
-		\caption{Best \qvasr-abstraction of the transition formula $L$.}
+		\caption{Best \qvasr abstraction of the transition formula $L$.}
 		\label{vasr}
 	\end{figure}
 \end{center}
-Given two \qvasr-abstractions $(S_1, V_1)$, and $(S_2, V_2)$, the computation of a best \\ \qvasr-abstraction $(\tilde{S}, \tilde{V})$ with $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and  $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ is called a \qvasr-abstraction \textsl{join}.
+Given two \qvasr abstractions $(S_1, V_1)$, and $(S_2, V_2)$, the computation of a best \\ \qvasr abstraction $(\tilde{S}, \tilde{V})$ with $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ and  $(S_1, V_1) \preceq (\tilde{S}, \tilde{V})$ is called a \qvasr abstraction \textsl{join}.
 
 \subsection{\qvasr Loop Summary}
-A \qvasr-abstraction only models one iteration of a transition formula, loops, however, are often repeated, such that we need to construct a formula that models every possible iteration. \\ \par
-Given a \qvasr-abstraction $(S, V)$ that approximates a transition formula $\trf$ that is defined over variables $\vec{x} = x_1, \ldots, x_n$,  that consists of $l$ transformer $(\vec{r}^{\,i}, \vec{a}^{\,i}) \in V$, with abstract dimension $m$, meaning that $S$, $\vec{r}^{\, i}$, and $\vec{a}^{\, i}$ have $m$ rows, and concrete dimension $n$, meaning $S$ has $n$ columns, to construct a formula, we firstly introduce new variables for each transformer $k^1, \ldots, k^n$, these variables represent how often each transformer was used. We iterate through every dimension $d \in 1, \ldots, m$, and construct the relations: $S_d\vec{x}'$ and check each transformer's $d$-th entry: $(r_d^i, a_d^i)$ \\
+A \qvasr abstraction only models one iteration of a transition formula, loops, however, are often repeated, such that we need to construct a formula that models every possible iteration. \\ \par
+Given a \qvasr abstraction $(S, V)$ that approximates a transition formula $\trf$ that is defined over variables $\vec{x} = x_1, \ldots, x_n$,  that consists of $l$ transformer $(\vec{r}^{\,i}, \vec{a}^{\,i}) \in V$, with abstract dimension $m$, meaning that $S$, $\vec{r}^{\, i}$, and $\vec{a}^{\, i}$ have $m$ rows, and concrete dimension $n$, meaning $S$ has $n$ columns, to construct a formula, we firstly introduce new variables for each transformer $k^1, \ldots, k^n$, these variables represent how often each transformer was used. We iterate through every dimension $d \in 1, \ldots, m$, and construct the relations: $S_d\vec{x}'$ and check each transformer's $d$-th entry: $(r_d^i, a_d^i)$ \\
 As we know the relation is either reset, meaning $r_d^i = 0$, incremented by amount $y$, meaning $r_d^i = 1$ and $a_d^i = y$, or reset and incremented to amount $y$, by $r_d^i = 0$ and $a_d^i = y$. Now, when we look at multiple iterations and multiple transformers, these three changes can occur arbitrarily. We need to construct a disjunction for each dimension covering these cases, we present the following approach.
 We start by constructing an empty set of disjuncts $D_d$, then iterate through every transformer:
 \begin{itemize}
@@ -447,7 +446,7 @@ To illustrate the construction of a loop summary, we are again given $(\tilde{S}
 \begin{figure}[H]
 	\centering
 	\input{fig/fig_ex_nonabbridged.tex}
-	\caption{Best \qvasr-abstraction of the transition formula $L$ using the non-abridged notation.}
+	\caption{Best \qvasr abstraction of the transition formula $L$ using the non-abridged notation.}
 	\label{nonabbridged}
 \end{figure}
 
@@ -492,7 +491,7 @@ Using these formulas we get the loop summary as seen in Figure \ref{loopSummary}
 	\begin{align*}
 		\psi: \exists k_1, k_2.&\ x' = x\ \land\ y' = y\ \land\ z' = z \\ &\lor ((-x' + y' + z' = 1\ \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \\ & \land\ y' = y - 3k_1 + k_2)\
 	\end{align*}
-	\caption{\\ Summary $\psi$ computed from \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$ for transition formula $L$.}
+	\caption{\\ Summary $\psi$ computed from \qvasr abstraction $(\tilde{S}_L, \tilde{V}_L)$ for transition formula $L$.}
 	\label{loopSummary}
 \end{figure}
 
@@ -505,8 +504,8 @@ How do they improve precision? \\
 \vspace{1cm}
 15 pages}
 \end{comment}
-In the previous section, we have seen how to compute a summary for a given transition formula using \qvasr-abstractions. However, these summaries are representing transitions nondeterministically.
-We see in the summary, depicted in Figure \ref{loopSummary}, that neither the loop guard \texttt{x <= 20} nor the expressions of the \texttt{if else} statement, \texttt{x <= 10} and \texttt{x > 10}, are considered in the \qvasr-abstraction $(\tilde{S}_L, \tilde{V}_L)$, leading to the inclusion of transitions that would violate these conditions in the actual loop and would therefore not exist. \\
+In the previous section, we have seen how to compute a summary for a given transition formula using \qvasr abstractions. However, these summaries are representing transitions nondeterministically.
+We see in the summary, depicted in Figure \ref{loopSummary}, that neither the loop guard \texttt{x <= 20} nor the expressions of the \texttt{if else} statement, \texttt{x <= 10} and \texttt{x > 10}, are considered in the \qvasr abstraction $(\tilde{S}_L, \tilde{V}_L)$, leading to the inclusion of transitions that would violate these conditions in the actual loop and would therefore not exist. \\
 To exclude such transitions, and with that improve precision of the summary, we constrain \qvasr: We only allow transitions that satisfy a set of constraints $C$ modeled by first-order formulas. Using the constraints in $C$ as control states, we can construct a nondeterministic finite automaton that represents all allowed transitions. This automaton is called a \qvasr with states (\qvasrs), where each transition is labeled by a reset, addition vector pair $(\vec{r}, \vec{a})$. The predicates are pairwise unsatisfiable, minimizing the automaton's possible successor state space. A vector $\vec{x}$ can only transition to $\vec{x}'$ if there is an edge $(p, (\vec{r}, \vec{a}), q)$, with $\vec{x}' = \vec{r} * \vec{x} + \vec{a}$ and $p, q \in P$.
 Figure \ref{qvasrs_ex} shows the \qvasrs of $P$'s loop, it was constructed using $(\tilde{S}_L, \tilde{V}_L)$, seen in Figure \ref{vasr}, and the predicates $x \leq 10$ and $10 < x \land x \leq 20$ as states.
 \begin{figure}[H]
