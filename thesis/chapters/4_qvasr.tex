@@ -12,8 +12,9 @@
 \end{comment}
 
 This chapter will firstly give an overview of the challenges program loops introduce, then we will define our understanding of the loop summarization technique based on rational vector addition systems with resets (\qvasr), which will then be extended to \qvasr-abstractions, and lastly we introduce rational vector addition systems with resets and states (\qvasrs). \par
-A program loop, created by, for example, a \texttt{while} statement, can introduce up to infinitely many program traces. Let us, for instance, assume we have a non deterministic loop: \begin{equation*}
-	\texttt{while (*); x:=2*x}
+A program loop, created by, for example, a \texttt{while} statement, can introduce up to infinitely many program traces. Let us, for instance, assume we have a non deterministic loop: 
+\begin{equation*}
+\texttt{while (*); x:=2*x}
 \end{equation*}
 and an error location outside of the loop asserting \texttt{x\%2==0}. To check safety we would have to prove, in the worst case, infinitely many program traces as infeasible because there are theoretically infinitely many traces through the loop.
 .\begin{center}

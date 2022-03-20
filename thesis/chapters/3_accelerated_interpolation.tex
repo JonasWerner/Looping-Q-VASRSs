@@ -5,28 +5,31 @@ Assume we are give a program $P$ and its control-flow graph \\ $G_P$ = \cfg, and
 \begin{equation*}
 	\tau = \pi_1, \ldots, \underbrace{\pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j}_{\text{m times}}, \ldots, \pi_n
 \end{equation*}
-We observe that the sequence of transitions $\pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j$ is repeated $m$ times, indicating that the sequence is a loop in the program, iterated repeatedly. We construct a transition formula $\bar{\pi} = \pi_i; \ldots; \pi_j$ representing one loop iteration by concatenating formulas $\pi_i, \ldots, \pi_j$. \\
+We observe that the sequence of transitions $\pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j$ is repeated $m$ times, indicating that the sequence is a loop in the program which is iterated repeatedly. We construct a transition formula $\bar{\pi} = \pi_i; \ldots; \pi_j$ representing one loop iteration by concatenating formulas $\pi_i, \ldots, \pi_j$. \\
 Using $\bar{\pi}$ we compute a \qvasr loop summary $\psi$ following the earlier presented summarization paradigm. The loop summary $\psi$ now represents an overapproximation of all changes to program variables by the loop. We can now transform $\tau$ by replacing the sequence $\pi_i \ldots \pi_j$ with $\psi$, yielding a so called \textsl{meta trace}.
 
 \begin{mydef}[Meta Trace]
-	Given a trace \\ $\tau = \pi_1, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_n$ that contains a repeating sequence of transition formulas $\pi_i, \ldots, \pi_j$ that can be represented by the formula \\ $\bar{\pi} = \pi_i; \ldots; \pi_j$ by concatenating each $\pi_l$. Assume further that we are given a \qvasr summary for formula $\bar{pi}$, we construct the meta trace $\bar{tau} = \pi_1, \ldots, \psi, \ldots, \pi_n$ by replacing the sequence $\pi_1, \ldots, \pi_j$ by $\psi$.
+	Given a trace \\ $\tau = \pi_1, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_n$ that contains a repeating sequence of transition formulas $\pi_i, \ldots, \pi_j$ that can be represented by the concatenation of all $\pi_l \{\pi_i, \ldots, \pi_j\}$: $\bar{\pi} = \pi_i; \ldots; \pi_j$. Assume further that we are given a \qvasr summary for formula $\bar{pi}$, we call the trace  $\bar{tau} = \pi_1, \ldots, \psi, \ldots, \pi_n$ the meta trace of $\tau$, which is constructed by replacing the sequence $\pi_1, \ldots, \pi_j$ by $\psi$.
 \end{mydef}
-For $\tau$ we get the following meta trace:
-\begin{equation*}
+\begin{comment}
+	\begin{equation*}
 	\bar{\tau} = \pi_1, \ldots, \psi, \ldots, \pi_n
-\end{equation*}
-The meta trace $\bar{\tau}$ now contains every trace that begins with $\pi, \ldots, \pi_{i-1}$ and ends with $\pi_{j+1}$ going through the looping sequence $\pi_i, \ldots, \pi_j$. \\ \par
+	\end{equation*}
+	The meta trace $\bar{\tau}$ now contains every trace that begins with $\pi, \ldots, \pi_{i-1}$ and ends with $\pi_{j+1}$ going through the looping sequence $\pi_i, \ldots, \pi_j$. \par
+\end{comment}
+Following this definition, we get the following meta trace for $\tau$:
 
-For example, consider again the program depicted in Figure \ref{codeWithAss} and its control-flow graph in Figure \ref{cfg:P:Ass}, and assume trace abstraction extracted the following program trace: 
+
+For example, consider again the program depicted in Figure \ref{codeWithAss} and its control-flow graph in Figure \ref{cfg:P:Ass}, and assume trace abstraction computed the following program trace: 
 \begin{align*}
-	\tau_1= &\st{x:=0;y:=2;z:=3}, \\ &\st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}, \st{x<=20} \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}, \\ & \st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3}, \st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3}, \\ &\st{x>20}, \st{x!=22}
+	\tau_1= &\st{x:=0;y:=2;z:=3}, \\ &\st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}, \\ &\st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}, \\ & \st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3}, \\ &\st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3}, \\ &\st{x>20}, \st{x!=22}
 \end{align*}
-We see that the sequence of transitions 
+We see that the following sequence of transitions occur in the trace multiple times:
 \begin{align*}
-	1: &\st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1} \\
-	2: &\st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3}
+	G: &\st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3} \\
+	H: &\st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}
 \end{align*}
-occur in the trace multiple times. We compute the transition formula $L$, which coincides with the transition formula seen in Figure \ref{loopTF}.
+We compute the transition formula $L$ as $G \lor H$, which coincides with the transition formula portrayed earlier in Figure \ref{loopTF}:
 \begin{equation*}
 	L: x \leq 20 \land ((x \leq 10 \land z' = x \land x' = x + y \land y' = y + 1) \lor (x > 10 \land x' = x + 2 \land y' = y - 3)
 \end{equation*}
