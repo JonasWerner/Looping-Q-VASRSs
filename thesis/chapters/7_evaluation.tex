@@ -1,6 +1,18 @@
 
+We have implemented a \qvasr based loop summarization library in the software verification framework \ultimate, that uses trace abstraction to prove safety, as an adaption of the previously defined methods. We implemented \qvasr usage as an abstraction method in  accelerated interpolation and as a control-flow graph transformer. To test performance of our \qvasr based loop summarization, we used a set of 1766 example $C$ programs, which are part of the \texttt{sv-comp} \cite{svcomp} program set. Furthermore, we compared it to another summarization scheme, based on transforming transition formulas into a Jordan normal form matrix \cite{DBLP:conf/popl/JeannetSS14}. \par
+We used \ultimate Automizer version 0.2.2-d966a43b, with time limit: 900 seconds, memory limit: 8000 MB, using two CPU cores of type AMD Ryzen Threadripper 3970X 32-Core Processor, on Linux-5.11.22-4-pve-x86\_64-with-glibc2.31, with frequency: 4549 MHz and using 137439 MB of RAM. In this Chapter we show the and interpret the results. We begin by showing our trace abstraction with accelerated interpolation results:
 
-\jw{compare accelerated inteprolation with qvasr vs qvasrs vs jordan vs FastUPR vs (maybe Werner) vs trace abstraction vanilla \\
-	- explain discrepancies and other results $\rightarrow$ Why does qvasr timeout here? Why error there? \\
-	- Gernerally: interpret the results \\
-	2 pages}
+\section{Results of using Accelerated Interpolation}
+We present in this Section our results on applying accelerated interpolation using either the Jordan based loop summarization or \qvasr versus trace abstraction without accelerated interpolation.
+\begin{table}[H]
+		\begin{tabular}{cccc}
+			\toprule
+			& No summarization & Jordan & \qvasr \\
+			\cmidrule{1-4}
+			Correct & 508/859 & 355/859 & 356/859\\
+			Solve Time &  274000s & 255000s & 349000s\\
+		\end{tabular}
+\end{table}
+Using accelerated interpolation, our \qvasr library was able to solve 20 programs that neither trace abstraction without summarization, nor the Jordan based summarization could solve. These programs are mostly containing variable assigments of the form \st{x:=x+y}. We derive that trace abstraction without summarization is unrolling each loop iteration, leading to infinitely many traces, and that Jordan is not able to compute a matrix needed for the technique, falling back to unrolling as well. Our \qvasr based implementation however can construct a summary in able time.
+
+\section{Results of using Control-Flow Graph Transformation}
