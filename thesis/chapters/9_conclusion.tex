@@ -4,7 +4,5 @@ In this thesis we have introduced a loop summarization scheme using rational vec
 	\item We implemented a control-flow graph transformer that uses \qvasr summarization to find loops in a given program's control-flow graph and replacing them with the summary. The transformed control-flow graph is then used in trace abstraction.
 \end{itemize} 
 
-We evaluated our techniques using the program verification framework \ultimate \cite{Zitat02} and compared it to other loop summarization techniques.
+We evaluated our techniques using the program verification framework \ultimate \cite{Zitat02} and compared it to a loop summarization techniques using Jordan normal form computation and trace abstraction without summarization. The \qvasr library performed admirably, solving 20 programs that neither method could solve in the accelerated interpolation framework, and 16 when used as a control-flow graph transformer.
 Furthermore, we presented possible improvements to the \qvasr summarization scheme, such as extending \qvasr to \qvasrs to improve precision of our approximations. We proposed further improvements for accelerated interpolation in the form of possible heuristics that dictate when to summarize a loop and whether it is advantageous to split disjunctive loops, that are loops with branching, into separate summaries.
-
-\jw{Something about evaluation}

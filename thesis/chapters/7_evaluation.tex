@@ -3,25 +3,25 @@ We have implemented a \qvasr based loop summarization library in the software ve
 We used \ultimate Automizer version 0.2.2-d966a43b, with time limit: 900 seconds, memory limit: 8000 MB, using two CPU cores of type AMD Ryzen Threadripper 3970X 32-Core Processor, on Linux-5.11.22-4-pve-x86\_64-with-glibc2.31, with frequency: 4549 MHz and using 137439 MB of RAM. In this Chapter we show the and interpret the results. We begin with the evaluation of trace abstraction using accelerated interpolation, followed by trace abstraction with control-flow graph transformation.
 
 \section{Results of using Accelerated Interpolation}
-We present in this Section our results on applying accelerated interpolation using either the Jordan based loop summarization or \qvasr versus trace abstraction without accelerated interpolation. We produce the results as portrayed in Figure \ref{table_acc}
+We present in this Section our results on applying accelerated interpolation using either the Jordan based loop summarization or \qvasr versus trace abstraction without accelerated interpolation. We computed the results as portrayed in Figure \ref{table_acc}
 \begin{figure}[H]
 	\centering
 		\begin{tabular}{cccc}
 			\toprule
 			& No summarization & Jordan & \qvasr \\
 			\cmidrule{1-4}
-			Correct & 508/859 & 355/859 & 356/859\\
-			Incorrect & 0/859 & 0/859 & 14/859\\
+			Correct Results & 508/859 & 355/859 & 356/859\\
+			Wrong Results & 0/859 & 0/859 & 14/859\\
 			Timeout & 268/859 & 247/859 & 348/859 \\
 			Solve Time &  274000s & 255000s & 349000s
 		\end{tabular}
-	\label{table_acc}
 	\caption{Results of benchmarking trace abstraction using accelerated interpolation without loop summarization, with Jordan based loop summarization, and \qvasr loop summarization}
+	\label{table_acc}
 \end{figure}
-Using accelerated interpolation, our \qvasr library was able to solve 20 programs that neither trace abstraction without summarization, nor the Jordan based summarization could solve. These programs are mostly containing variable assigments of the form \st{x:=x+y}. We derive that trace abstraction without summarization is unrolling each loop iteration, leading to infinitely many traces, and that Jordan is not able to compute a matrix needed for the technique, falling back to unrolling as well. Our \qvasr based implementation however can construct a summary in able time. We see, nonetheless, that the \qvasr summarization technique produces a few incorrect results, these are caused by $C$ programs whose variables are unsigned, as they produce a formula containing modulo operations, with which our \qvasr implementation struggles in some cases, such as inherit issues with the accelerated interpolation library.
+Using accelerated interpolation, our \qvasr library was able to solve 20 programs that neither trace abstraction without summarization, nor the Jordan based summarization could solve. These programs are mostly containing variable assigments of the form \st{x:=x+y}. We derive that trace abstraction without summarization is unrolling each loop iteration, leading to infinitely many traces, and that Jordan is not able to compute a matrix needed for the technique, falling back to unrolling as well. Our \qvasr based implementation however can construct a summary in able time. We see, nonetheless, that the \qvasr summarization technique produces a few wrong results, these are caused by $C$ programs whose variables are unsigned, as they produce a formula containing modulo operations, with which our \qvasr implementation struggles in some cases, such as inherit issues with the accelerated interpolation library.
 
 \section{Results of using Control-Flow Graph Transformation}
-In contrast to accelerated interpolation, which uses traces for computing Floyd-Hoare annotations, we also implemented the \qvasr summarization library as a preprocessor that transforms a given program's control-flow graph by replacing loops with their summary.
+In contrast to accelerated interpolation, which uses traces for computing Floyd-Hoare annotations, we also implemented the \qvasr summarization library as a preprocessor that transforms a given program's control-flow graph by replacing loops with their summary. The results are depicted in Figure \ref{table_tff}.
 \begin{figure}[H]
 	\centering
 	\begin{tabular}{cccc}
@@ -29,10 +29,11 @@ In contrast to accelerated interpolation, which uses traces for computing Floyd-
 		& No summarization & Jordan & \qvasr \\
 		\cmidrule{1-4}
 		Correct & 508/859 & 516/859 & 518/859 \\
-		Incorrect & 0/859 & 0/859 & 6/859 \\
+		Wrong & 0/859 & 0/859 & 6/859 \\
 		Timeout & 268/859 & 234/859 & 232/859 \\
 		Solve Time &  274000s & 241000s & 242000s
 	\end{tabular}
-	\label{table_tff}
 	\caption{Results of benchmarking trace abstraction using control-flow graph transformation without loop summarization, with Jordan based loop summarization, and \qvasr loop summarization}
+	\label{table_tff}
 \end{figure}
+We see that in this test case set, that both loop summarization techniques solved more programs than trace abstraction alone, whereas our \qvasr summarization contributed to solving 16 programs that neither trace abstraction solo nor the Jordan based summarization could solve. Though, there are again wrong solutions, that are caused by the same reasons as before. \par 
