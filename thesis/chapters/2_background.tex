@@ -425,7 +425,7 @@ Automata can be extended to a Floyd-Hoare automaton by computing a Floyd-Hoare a
 	A Floyd-Hoare automaton \\$\mathcal{A} = (Q, \Sigma, \Delta, q_{init}, F, \beta)$ is a nondeterministic automaton consisting of, a set of states $Q$, an alphabet of symbols $\Sigma$, a transition relation $\Delta \subseteq Q \times \Sigma \times Q$, an initial state $q_{init}$, accepting states $F$, and a Floyd-Hoare annotation $\beta: Q \rightarrow \varphi$, where $\varphi$ is a first-order logic formula.
 \end{mydef}
  It holds that $\beta(q) = \top$ if $q = q_{init}$ and $\beta(q) = \bot$ if $q \in F$. Therefore, every trace that is accepted by a Floyd-Hoare automaton is infeasible. \par
-Given a program $P$, trace abstraction considers $P$'s control-flow graph $G_P$ as a nondeterministic finite automaton \cfgAutomat{P}. The automaton \\ \cfgAutomat{P} is used to iteratively compute a Floyd-Hoare automaton \cfgAutomatHoare{D} whose language is infeasible traces. Trace abstraction implements the paradigm shown in Figure \ref{traceAbstractionScheme}.
+Given a program $P$, trace abstraction considers $P$'s control-flow graph $G_P$ as a nondeterministic finite automaton \cfgAutomat{P}. The automaton \\ \cfgAutomat{P} is used to iteratively compute a Floyd-Hoare automaton \\ \cfgAutomatHoare{D} with its language consisting of infeasible traces. Trace abstraction implements the paradigm shown in Figure \ref{traceAbstractionScheme}.
 
 \begin{figure}[H]
 	\centering
@@ -442,7 +442,7 @@ We give a program $P$'s control-flow graph $G_P$  as input, which is interpreted
 \end{enumerate}
 There are several additional methods of trace generalization, in this thesis we present a technique using loop summaries, in accelerated interpolation. \\ \par
 
-To illustrate the trace abstraction scheme we demonstrate one iteration in the following. Assume we are given program $P$ and its control-flow graph \\ $G_P = \cfg$, as depicted in Figure \ref{codeWithAss} and Figure \ref{cfg:P:Ass}. The automaton $\cfgAutomat{P}$, with states $Q = Loc$, transition relation $\Delta = \delta$, initial state $Q_{init} = \ell_\init$, accepting states $F = \loc{err}$ over alphabet: 
+To illustrate the trace abstraction scheme we demonstrate one iteration in the following. Assume we are given program $P$ and its control-flow graph \\ $G_P = \cfg$, as depicted in Figure \ref{codeWithAss} and Figure \ref{cfg:P:Ass}. The automaton $\cfgAutomat{P}$, with states $Q = Loc$, transition relation $\Delta = \delta$, initial state $Q_{init} = \ell_\init$, accepting states $F = \loc{err}$ is defined over alphabet: 
 \begin{eqnarray} \Sigma = \Pi = \{ &\st{x:=0}, \st{y:=2}, \st{z:=3}, \st{x>20}, \st{x==22}, \st{x!=22}, \st{x<=20}, \\ &\st{x<=10}, \st{z:=x}, \st{x:=x+y}, \st{y:=y+1}, \st{x:=x+2}, \st{y:=y-3}\} 
 \end{eqnarray} 
 From $G_P$, we extract the trace:
@@ -479,6 +479,6 @@ We consider $\tau_1$ as automaton $\mathcal{A}_1$ as seen in Figure \ref{traceNo
 
 
 
-We observe that the error state $q_7$ is labeled with $\bot$, proving that this trace is infeasible. This annotation only proves that the specific trace $\tau_1$ is infeasible, to exclude more that one trace at a time, we construct an \textsl{abstraction}. We firstly add transitions $ \pi_i \in \Sigma$ to each state $q_i$ with annotation $\varphi_i$, such that $sp(\varphi_i, \pi) \subseteq \{\varphi_i\}$ holds. After the addition of new transitions, we merge states with the same annotation, resulting in the abstracted trace as illustrated in \ref{traceAnnotGeneral}. We extend the Floyd-Hoare automaton $\mathcal{A}_D$ by $\mathcal{A}_1$.
+We observe that the error state $q_7$ is labeled with $\bot$ proving that this trace is infeasible. This annotation only proves that the specific trace $\tau_1$ is infeasible, to exclude more that one trace at a time, we construct an \textsl{abstraction} of $\tau$. We firstly add transitions $ \pi_i \in \Sigma$ to each state $q_i$ with annotation $\varphi_i$, such that $sp(\varphi_i, \pi_i) \subseteq \{\varphi_i\}$ holds. After the addition of new transitions, we merge states with the same annotation, resulting in the abstracted trace as illustrated in Figure \ref{traceAnnotGeneral}. We extend the Floyd-Hoare automaton $\mathcal{A}_D$ by $\mathcal{A}_1$.
 
 
