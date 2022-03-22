@@ -11,7 +11,7 @@ This chapter will introduce mathematical background, our understanding and notat
 
 \section{Mathematical Background}
 In this thesis we utilize various concepts of linear algebra, such as vector spaces, vector space bases, and more. This section will introduce important notations and definitions.
-We define a \textsl{vector} as $\vec{x} = x_1, \ldots, x_n$ that consists of $n$ entries, $n$ is called the dimension of the vector. The vector containing only zeroes is denoted as $\vec{0}$, the vector containing only ones by $\vec{1}$. \\ We denote a $m \times n$ \textsl{matrix} $S$ as:
+We define a \textsl{vector} as $\vec{x} = x_1, \ldots, x_n$ that consists of $n$ entries, where $n$ is called the dimension of the vector. The vector containing only zeroes is denoted as $\vec{0}$, the vector containing only ones by $\vec{1}$. \\ We denote an $m \times n$ \textsl{matrix} $S$ as
 \begin{equation*}
 	S = \begin{bmatrix}
 		s_{1 ,1} & \ldots & s_{1, n} \\
@@ -19,10 +19,10 @@ We define a \textsl{vector} as $\vec{x} = x_1, \ldots, x_n$ that consists of $n$
 		s_{m ,1} & \ldots & s_{m, n} \\
 	\end{bmatrix}
 \end{equation*}
-with entries $s_{1, 1}, \ldots, s_{m, n}$. The integers $n$ and $m$ denote the number of columns and the number of rows respectively. A vector can be understood as a matrix of dimensions $1 \times n$, called row vector, or as a matrix of dimension $n \times 1$, called column vector. \\
+with entries $s_{1, 1}, \ldots, s_{m, n}$. The integers$m$ and $n$ denote the number of columns and the number of rows respectively. A vector can be understood as a matrix of dimensions $1 \times n$, called row vector, or as a matrix of dimension $n \times 1$, called column vector. \\
 We define the following operations on vectors and matrices.
 \begin{mydef}[Scalar Multiplication]
-	Given a scalar $a$ and an $m \times n$ matrix $S$:
+	Given a scalar $a$ and an $m \times n$ matrix $S$
 	\begin{equation*}
 		S = 
 		\begin{bmatrix}
@@ -30,7 +30,7 @@ We define the following operations on vectors and matrices.
 			\vdots & \ddots & \vdots \\
 			a_{m1} & \ldots & a_{mn} \\
 		\end{bmatrix}
-		\end{equation*} The scalar multiplication $aS$ is defined as the $m \times n$ matrix:
+		\end{equation*} define the scalar multiplication $aS$ is defined as the $m \times n$ matrix:
 		\begin{equation*}
 		aS =
 		\begin{bmatrix}
@@ -40,7 +40,7 @@ We define the following operations on vectors and matrices.
 		\end{bmatrix}
 	\end{equation*} 
 \\
-	With entries $c_{ij} =  a \cdot a_{ij}$ for $1 \leq i \leq m$ and $1 \leq j \leq p$.
+	consisting of entries $c_{ij} =  a \cdot a_{ij}$ for $1 \leq i \leq m$ and $1 \leq j \leq n$.
 \end{mydef}
 \begin{mydef}[Matrix Multiplication]
 	Given the $m \times n$ matrix $A$ and $n \times p$ matrix $B$:
@@ -65,7 +65,7 @@ We define the following operations on vectors and matrices.
 	\end{equation*}
 \end{minipage}
 \\ \\
-The matrix product $AB$ is defined as the $m \times p$ matrix:
+we define the matrix product $AB$ as the $m \times p$ matrix:
 \begin{equation*}
 		AB = 
 		\begin{bmatrix}
@@ -74,7 +74,7 @@ The matrix product $AB$ is defined as the $m \times p$ matrix:
 			c_{m1} & \ldots & c_{mp} \\
 		\end{bmatrix}
 	\end{equation*} 
-	With entries $c_{i,j} = \sum_{k=1}^n a_{ik}\cdot b_{kj}$ for $1 \leq i \leq m$ and $1 \leq j \leq p$.
+	consisting of entries $c_{i,j} = \sum_{k=1}^n a_{ik}\cdot b_{kj}$ for $1 \leq i \leq m$ and $1 \leq j \leq p$.
 	\end{mydef}
 
 \begin{mydef}[Hadamard Product]
@@ -100,7 +100,7 @@ The matrix product $AB$ is defined as the $m \times p$ matrix:
 		\end{equation*}
 	\end{minipage}	
 \\ \\
-	The hadamard product $A*B$ is defined as a  $m \times n$ matrix:
+	we define the Hadamard product $A*B$ as a  $m \times n$ matrix:
 	\begin{equation*}
 	 A*B = 
 	\begin{bmatrix}
@@ -111,14 +111,14 @@ The matrix product $AB$ is defined as the $m \times p$ matrix:
 	\end{equation*}
 	With entries $c_{i,j} = a_{ij} \cdot b_{ij}$ for $1 \leq i \leq m$ and $1 \leq j \leq p$.
 \end{mydef}
-\begin{mydef}[Linear Dependence]
-	The sequence of vectors $\vec{x_1}, \ldots, \vec{x_n}$ of same dimension $d$, is linear independent, if and only if there exists no non zero scalars $a_1, \ldots, a_d$ such that $a_1\vec{x_1} + \ldots + a_n\vec{x_n} = \vec{0}$
+\begin{mydef}[Linear Independence]
+	The sequence of vectors $\vec{x_1}, \ldots, \vec{x_n}$ of same dimension $d$, is linear independent, if and only if there exists no non-zero scalars $a_1, \ldots, a_d$ such that $a_1\vec{x_1} + \ldots + a_n\vec{x_n} = \vec{0}$.
 \end{mydef}
 \begin{mydef}[Vector Spaces]
-	The set of vectors $S = \{\vec{x_1}, \ldots, \vec{x_n}\}$ is called a vector space.
+	Given vectors $\vec{x_1}, \ldots, \vec{x_n}$, the set of vectors $S = \{\vec{x_1}, \ldots, \vec{x_n}\}$ is called a vector space.
 \end{mydef}
 \begin{mydef}[Linear Combination]
-	Given a vector space $S = S = \{\vec{x_1}, \ldots, \vec{x_n}\}$ and a sequence of scalars $a_1, \ldots, a_n$, a linear combination of vectors and scalars is the sum $a_1\vec{x_1} + \ldots + a_n\vec{n}$
+	Given a vector space $S = \{\vec{x_1}, \ldots, \vec{x_n}\}$ and a sequence of scalars $a_1, \ldots, a_n$, a linear combination of vectors and scalars is the sum $a_1\vec{x_1} + \ldots + a_n\vec{n}$.
 \end{mydef}
 \begin{mydef}[Vector Space Basis]
 	Given a vector space $S$, a set of vectors $B \subseteq S$ is a basis for vector space $S$ if its elements are linearly independent and every element of $S$ is a linear combination of elements of B.
@@ -395,7 +395,7 @@ The control-flow of a program can now be described by so called traces through t
 \end{mydef}
 This definition only establishes that traces adhere to the graph structure of the control-flow graph. We need to set which traces are actually feasible.
 \begin{mydef}[Feasible Traces]
-	Given a trace $\tau = \trf_1, \trf_2, \ldots $ of a program given program $\prg$, $\tau$ is called feasible, if for all transitions $\pi_i$: $sp(\varphi_{i-1}, \pi_i) \neq \bot$, $\varphi_i$ is recursively defined as: 
+	Given a trace $\tau = \trf_1, \trf_2, \ldots $ of a given program $\prg$, we call trace $\tau$ feasible, if for all transitions $\pi_i$ holds that $sp(\varphi_{i-1}, \pi_i) \neq \bot$. The formula $\varphi_i$ is recursively defined as: 
 	\begin{align*}
 		\varphi_i = 
 		\begin{cases}
@@ -404,27 +404,27 @@ This definition only establishes that traces adhere to the graph structure of th
 		\end{cases}
 	\end{align*}
 \end{mydef}
-Given trace $\tau = \pi_1, \ldots$, if there is a transition $\pi_{\bot}$ where $sp(\varphi_{i-1}, \pi_{\bot}) = \bot$ , $\tau$ is called infeasible. We can now introduce the notion of reachability of program locations.
+Given trace $\tau = \pi_1, \ldots$ if there is a transition $\pi_{\bot}$ such that $sp(\varphi_{i-1}, \pi_{\bot}) = \bot$ holds, we call $\tau$ infeasible. We can now introduce the notion of reachability of program locations.
 \begin{comment}
 	\begin{mydef}[Reachability]
 	Given a control-flow graph $\cfg$, we introduce a map $reach: Loc \mapsto \{\varphi\}$ that maps each program location $\ell_i \in Loc$ to a set of states, defined by first order logic formula $\varphi_i$, that are reachable from $\ell_i$. The set of states $\{\varphi_i\}$ is defined as the union $\bigcup\limits_{}^{\tau_j} sp(\varphi_{k-1}, \pi_k)$ for given traces $\tau_j = \pi_1, \ldots, \pi_k$ where $tgt(\pi_k) = \ell_i$. A program location $\ell_i$ is called reachable, if $reach(\ell_i) \neq \{\bot\}$, otherwise $\ell_i$ is called unreachable.
 	\end{mydef}
 \end{comment}
 \begin{mydef}[Reachability using Floyd-Hoare Annotations]
-	Given a control-flow graph $\cfg$, we introduce a map $reach: Loc \mapsto \{\varphi\}$ that annotates each program location $\ell_i \in Loc$ to a set of states $\{\varphi_i\}$, defined by first order logic formula $\varphi_i$, this annotation is called Floyd-Hoare annotation. Such that for all edges $(\ell_i, \trf_i, \ell_j) \delta$ it holds that $\{sp(\trf_i, \varphi_i)\} \subseteq \{\varphi_j\}$, with $\phi_j$ being the annotation of $\ell_j$.
+	Given a control-flow graph $\cfg$, we introduce a map $reach: Loc \rightarrow \{\varphi\}$ that annotates each program location $\ell_i \in Loc$ with a set of states $\{\varphi_i\}$, defined by first order logic formula $\varphi_i$, this annotation is called Floyd-Hoare annotation. Such that for all edges $(\ell_i, \trf_i, \ell_j) \in \delta$ it holds that $\{sp(\trf_i, \varphi_i)\} \subseteq \{\varphi_j\}$, with $\varphi_j$ being the annotation of $\ell_j$.
 	 A program location $\ell_i$ is called reachable, if $reach(\ell_i) \neq \{\bot\}$, otherwise $\ell_i$ is called unreachable.
 \end{mydef}
-A program is called safe if and only if every error location in a program's control-flowgraph is unreachable. It is called unsafe if there is a reachable error location.
+A program is called safe if and only if every error location in a program's control-flow graph is unreachable. It is called unsafe if there is a reachable error location.
 
 \section{Trace Abstraction}
-To prove safety of a given program we employ trace abstraction \cite{10.1007/978-3-642-03237-0_7, 10.1007/978-3-642-39799-8_2, 10.1145/1706299.1706353}, which is an automata-theoretic approach used to prove reachability of error locations. This section will give an introduction to the approach and describe how the scheme works. \\ \par
+To prove safety of a given program we employ trace abstraction \cite{10.1007/978-3-642-03237-0_7, 10.1007/978-3-642-39799-8_2, 10.1145/1706299.1706353}, which is an automata-theoretic approach used to prove reachability of error locations. This section will give an introduction to the approach and describe how the scheme works. \par
 
-Given a program $P$ and its control-flow graph $\cfg$, the control-flow graph can be interpreted as a non-deterministic finite automaton \\ $\mathcal{A_P} = (Q, \Sigma, \Delta, Q_{init}, F)$ , with of states $Q = Loc$, $q_{init} = \loc{init}$ being the initial state, accepting states $F = \loc{err}$ being the error states, alphabet $\Sigma = \Pi$ being the set of transition formulas, and $\Delta \subseteq Q \times \Sigma \times Q$ being the transition relation, derived from $\delta$. \\ \par 
-Automata can be extended to a Floyd-Hoare automaton by computing a Floyd-Hoare annotation $\beta$, analogously to control-flow graph's annotations.
+Given a program $P$ and its control-flow graph $\cfg$, the control-flow graph can be interpreted as a non-deterministic finite automaton \\ $\mathcal{A_P} = (Q, \Sigma, \Delta, Q_{init}, F)$ , with set of states $Q = Loc$, $q_{init} = \loc{init}$ being the initial state, accepting states $F = \loc{err}$ being the error state, alphabet $\Sigma = \Pi$ being the set of transition formulas, and $\Delta \subseteq Q \times \Sigma \times Q$ being the transition relation, derived from $\delta$. \par 
+Automata can be extended to a Floyd-Hoare automaton by computing a Floyd-Hoare annotation $\beta$. This annotation is defined analogously to control-flow graph's annotations.
 \begin{mydef}[Floyd-Hoare Automata]
-	A Floyd-Hoare automaton \\$\mathcal{A} = (Q, \Sigma, \Delta, q_{init}, F, \beta)$ is a nondeterministic automaton, consisting of, a set of states $Q$, an alphabet of symbols $\Sigma$, a transition relation $\Delta \subseteq Q \times \Sigma \times Q$, an initial state $Q_{init}$, accepting states $F$, and a Floyd-Hoare annotation $\beta: Q \rightarrow \varphi$, where $\varphi$ is a first-order logic formula. It holds that $\beta(q) = \top$ if $q = q_{init}$ and $\beta(q) = \bot$ if $q \in F$. Therefore, every trace that is accepted by a Floyd-Hoare automaton is infeasible.
+	A Floyd-Hoare automaton \\$\mathcal{A} = (Q, \Sigma, \Delta, q_{init}, F, \beta)$ is a nondeterministic automaton consisting of, a set of states $Q$, an alphabet of symbols $\Sigma$, a transition relation $\Delta \subseteq Q \times \Sigma \times Q$, an initial state $q_{init}$, accepting states $F$, and a Floyd-Hoare annotation $\beta: Q \rightarrow \varphi$, where $\varphi$ is a first-order logic formula.
 \end{mydef}
-
+ It holds that $\beta(q) = \top$ if $q = q_{init}$ and $\beta(q) = \bot$ if $q \in F$. Therefore, every trace that is accepted by a Floyd-Hoare automaton is infeasible. \par
 Given a program $P$, trace abstraction considers $P$'s control-flow graph $G_P$ as a nondeterministic finite automaton \cfgAutomat{P}. The automaton \\ \cfgAutomat{P} is used to iteratively compute a Floyd-Hoare automaton \cfgAutomatHoare{D} whose language is infeasible traces. Trace abstraction implements the paradigm shown in Figure \ref{traceAbstractionScheme}.
 
 \begin{figure}[H]

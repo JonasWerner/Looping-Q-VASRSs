@@ -436,7 +436,6 @@ We start by constructing an empty set of disjuncts $D_d$, then iterate through e
 	\item If transformer $i$ resets dimension $d$ and increments it to amount $y$, i.e. $r_d^i = 0$ and $a_d^i = y$, construct new disjunct $S_d\vec{x}' = y$
 \end{itemize}
 When every transformer has been processed construct a disjunction using the disjuncts sets $D_j$ generated above. We then create a conjunction over all dimensions consisting of the disjunctions of all transformer, existentially quantify each $k$, and add the disjunct $\vec{x}' = \vec{x}$ representing the case that the transition formula is not used.
-
 \begin{equation*}
 	\exists k_1, \ldots, k_n.\ \vec{x}' = \vec{x} \lor \bigwedge_{i=1}^{m} \bigvee_{j=1}^l D_j 
 \end{equation*}
@@ -512,5 +511,5 @@ Figure \ref{qvasrs_ex} shows the \qvasrs of $P$'s loop, it was constructed using
 	\caption{\\ \qvasrs of the loop of $P$.}
 	\label{qvasrs_ex}
 \end{figure}
-We see that there are no transitions that violate the \texttt{if else} conditions. \par
+We see that in this \qvasrs there are no transitions possible that violate the expressions of the \texttt{if else} conditions. \par
 \label{qvasrs}
