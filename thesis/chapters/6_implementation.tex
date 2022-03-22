@@ -8,10 +8,10 @@
 	15 pages}
 \end{comment}
 
-Another approach of utilizing \qvasr summarization is, instead applying it to traces, to change trace abstraction's input control-flow graph, such that computed error traces already contain summaries. Given a program $P$ and its control-flow graph $G_P$, we devise a depth-first search algorithm to find loops. We introduce a marking function $\alpha: Loc \rightarrow \{nv, v\}$, where over the control-flow graphs's locations, with $nv$ meaning not visited, $v$ meaning visited. We initialize a stack $\Gamma$, an empty set of traces $T$, and start the search with $\ell_{init}$, we add each transition $\pi_i$, where $src(\pi_i) = \ell_{init}$ to $\Gamma$. The location $\ell_{init}$ is now marked $v$ and we repeat the following loop detection scheme until $\Gamma$ is empty:
+Another approach of utilizing \qvasr summarization is, instead of applying it to traces, to change trace abstraction's input control-flow graph, such that computed error traces already contain summaries. Given a program $P$ and its control-flow graph $G_P$, we devise a depth-first search algorithm to find loops. We introduce a marking function $\alpha: Loc \rightarrow \{nv, v\}$, over the control-flow graph's locations, with $nv$ meaning not visited, $v$ meaning visited. We initialize a stack $\Gamma$, an empty set of traces $T$, and start the search with the initial location $\ell_{init}$, adding each transition $\pi_i$, where $src(\pi_i) = \ell_{init}$ to $\Gamma$. The location $\ell_{init}$ is now marked $v$ and we repeat the following loop detection scheme until $\Gamma$ is empty:
 
 \begin{enumerate}
-	\item Pop new transition $\pi_j$ from $\Gamma$
+	\item Pop new transition $\pi_j$ from $\Gamma$.
 	\item Check if $\ell_j = tgt(\pi_j)$ is marked.
 	\item If yes, we have found a loop, with $\ell_j$ being the entry point.
 		We begin to backtrack by initializing a new stack $\Gamma_j$, pushing every transition $\pi_k$ where $tgt(\pi_k) = src(\pi_j)$ to it and construct the new trace $\tau = \pi_j$ . For finding the loop entry and with that the trace of the loop, we repeat the following steps: While $\Gamma_j$ is not empty, pop new transition $\pi_h$ from $\Gamma_j$ and check if $src(\pi_h) = \ell_j$:
@@ -24,7 +24,7 @@ Another approach of utilizing \qvasr summarization is, instead applying it to tr
 After the search, the set of traces $T$ contains all loops in program $P$. As there can be multiple traces from a loop entry location $\ell_i$, we have to construct a disjunction of the transition formulas beginning in $\ell_i$:
 Assume we have two traces $\tau_1 = \pi_{11}, \ldots, \pi_{1n}$ and $\tau_2 = \pi_{21}, \ldots \pi_{2m}$ in $T$, where $src(\pi_{11}) = scr(\pi_{21})$, we construct the formula $\tau_1 \lor \tau_2$ to represent the loop.
 This disjunction can now be used in the \qvasr summarization scheme, as defined before.  \par
-Recall the program $P$ and its control-flow graph $G_P$ as illustrated in \ref{codeWithAss} and \ref{cfg:P:Ass}, using $G_P$ and the loop detection scheme, we extract the following loop traces for loop entry $\ell_4$: 
+Recall the program $P$ and its control-flow graph $G_P$ as illustrated in \ref{codeWithAss} and \ref{cfg:P:Ass}. Using $G_P$ and the loop detection scheme, we extract the following loop traces for loop entry $\ell_4$: 
 \begin{align*}
 	\tau_1 &= \st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y} \\
 	\tau_2 &= \st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3}

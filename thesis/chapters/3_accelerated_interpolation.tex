@@ -1,7 +1,7 @@
 
-We implemented the \qvasr based loop summarization into a framework that uses loop summaries as an abstraction in trace abstraction, called accelerated interpolation. This scheme is based on the findings by \cite{10.1007/978-3-642-33386-6_16}, in the following we will introduce the idea behind it. \par Given a program $P$ and its control-flow graph $G_P = $ \cfg, we have seen earlier that to determine safety of $P$ we need to prove infeasibility of every trace leading to an error-location. We translate $P's$ control-flow graph into a non-deterministic finite automata $\cfgAutomat{P}$, and try to compute a Floyd-Hoare automaton $\cfgAutomatHoare{D}$, whose language are the infeasible traces. If $\mathcal{L(A_P)} \subseteq \mathcal{L(A_D)}$ we know that $P$ is safe, if there exists a feasible error trace it is unsafe. \\ To construct the Floyd-Hoare annotation of $\mathcal{L(A_D)}$, we have to iteratively prove traces infeasible, and then, to exclude as many error traces as possible, compute an abstraction. In the example from earlier, given trace $\tau = \pi_1, \ldots, \pi_n$, we utilized the abstraction method of adding traces from $\Sigma$, such that the condition $sp(\varphi_i, \pi_i) \subseteq \{\varphi\}$, with $\varphi_i$ being the annotation of state $q_i$ and $pi_i \in \tau$, holds. \\
+We implemented the \qvasr based loop summarization into a framework that uses loop summaries as an abstraction in trace abstraction, called accelerated interpolation. This scheme is based on the findings by \cite{10.1007/978-3-642-33386-6_16}, in the following we will introduce the idea behind it. \par Given a program $P$ and its control-flow graph $G_P = $ \cfg, we have seen earlier that to determine safety of $P$ we need to prove infeasibility of every trace leading to an error-location. We translate the control-flow graph $G_P$ into a non-deterministic finite automaton $\cfgAutomat{P}$, and try to compute a Floyd-Hoare automaton $\cfgAutomatHoare{D}$, whose language are the infeasible traces. If $\mathcal{L(A_P)} \subseteq \mathcal{L(A_D)}$ we know that $P$ is safe, if there exists a feasible error trace it is unsafe. \\ To construct the Floyd-Hoare annotation of $\mathcal{L(A_D)}$, we have to iteratively prove traces infeasible, and then, to exclude as many error traces as possible, compute an abstraction. In the example from earlier, given trace $\tau = \pi_1, \ldots, \pi_n$, we utilized the abstraction method of adding traces from $\Sigma$, such that the condition $sp(\varphi_i, \pi_i) \subseteq \{\varphi\}$, with $\varphi_i$ being the annotation of state $q_i$ and $\pi_i \in \tau$, holds. \\
 In this section we introduce an abstraction technique that utilizes loop summaries to refute whole loops with one trace abstraction iteration. \par
-Assume we are give a program $P$ and its control-flow graph \\ $G_P$ = \cfg, and assume we employ trace abstraction that computes the program trace $\tau$:
+Assume we are given a program $P$ and its control-flow graph \\ $G_P$ = \cfg, and assume we employ trace abstraction that computes the program trace $\tau$:
 \begin{equation*}
 	\tau = \pi_1, \ldots, \underbrace{\pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j}_{m \text{ times}}, \ldots, \pi_n
 \end{equation*}
@@ -13,7 +13,7 @@ Using $\bar{\pi}$ we compute a \qvasr loop summary $\psi$ following the earlier 
 	\begin{equation*}
 		\tau = \pi_1, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_i, \ldots, \pi_j, \ldots, \pi_n
 	\end{equation*}
-	Where $\tau$ contains a repeating sequence of transition formulas $\pi_i, \ldots, \pi_j$ that can be represented by the concatenation of all $\pi_l \{\pi_i, \ldots, \pi_j\}$: $\bar{\pi} = \pi_i; \ldots; \pi_j$. Assume further that we are given a \qvasr summary for formula $\bar{\pi}$, we call the trace  $\bar{\tau} = \pi_1, \ldots, \psi, \ldots, \pi_n$ the meta trace of $\tau$, which is constructed by replacing the sequence $\pi_1, \ldots, \pi_j$ by $\psi$.
+	The trace $\tau$ contains a repeating sequence of transition formulas $\pi_i, \ldots, \pi_j$ that can be represented by the concatenation of all $\bar{\pi} = \pi_i; \ldots; \pi_j$. Assume further that we are given a \qvasr summary for formula $\bar{\pi}$, we call the trace  $\bar{\tau} = \pi_1, \ldots, \psi, \ldots, \pi_n$ the meta trace of $\tau$, which is constructed by replacing the sequence $\pi_1, \ldots, \pi_j$ by $\psi$.
 \end{mydef}
 \begin{comment}
 	\begin{equation*}
@@ -28,14 +28,14 @@ For example, consider again the program depicted in Figure \ref{codeWithAss} and
 \begin{align*}
 	\tau_1= &\st{x:=0;y:=2;z:=3}, \\ &\st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}, \\ &\st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}, \\ & \st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3}, \\ &\st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3}, \\ &\st{x>20}, \st{x!=22}
 \end{align*}
-We see that the following sequence of transitions occur in the trace multiple times:
+We see that the following sequences of transitions occur in the trace multiple times:
 \begin{align*}
 	G: &\st{x<=20}, \st{x>10}, \st{x:=x+2;y:=y-3} \\
 	H: &\st{x<=20}, \st{x<=10}, \st{z:=x;x:=x+y;y:=y+1}
 \end{align*}
 We compute the transition formula $L$ as $G \lor H$, which coincides with the transition formula portrayed earlier in Figure \ref{loopTF}:
 \begin{equation*}
-	L: x \leq 20 \land ((x \leq 10 \land z' = x \land x' = x + y \land y' = y + 1) \lor (x > 10 \land x' = x + 2 \land y' = y - 3)
+	L: x \leq 20 \land (x \leq 10 \land z' = x \land x' = x + y \land y' = y + 1) \lor (x > 10 \land x' = x + 2 \land y' = y - 3)
 \end{equation*}
 As we have already computed a \qvasr summary $\psi_L$ for transition formula $L$, depicted in Figure \ref{loopSummary}, we replace sequences $G$ and $H$ with $\psi_L$ to get meta trace $\bar{\tau}_1:$
 \begin{align*}
