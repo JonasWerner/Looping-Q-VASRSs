@@ -1,0 +1,286 @@
+\usepackage[utf8]{inputenc}
+\usepackage{xspace}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{cite}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.geometric, arrows.meta ,automata, decorations.pathreplacing, calc, fit, backgrounds, quotes, tikzmark, calc}
+\usepackage{pgf}
+\usepackage{slantsc}
+\usepackage{geometry}
+\usepackage{amssymb}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{pgf}
+\usepackage{slashbox}
+\usepackage{pgfgantt}
+\usepackage{wrapfig}
+\usepackage{pdflscape}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{xparse}
+\usepackage[%disable,%
+colorinlistoftodos,%
+color=cyan!50!white,%
+bordercolor=cyan!50!black]{todonotes}
+
+\usepackage{varwidth}
+\usepackage[most]{tcolorbox}% http://ctan.org/pkg/tcolorbox
+\tcbuselibrary{skins,breakable}
+\usepackage{comment}
+\usepackage{makecell}
+\usepackage{stmaryrd}
+\usepackage{nicematrix}
+\usepackage{mathtools}
+
+
+\DeclareSymbolFont{matha}{OML}{txmi}{m}{it}% txfonts
+\DeclareMathSymbol{\varv}{\mathord}{matha}{118}
+
+\lstset{ %
+	backgroundcolor=\color{white}, 
+	basicstyle=\footnotesize,       
+	breakatwhitespace=false,        
+	breaklines=true,                 
+	captionpos=b,                    
+	commentstyle=\color{mygreen},   
+	escapeinside={\%*}{*)},        
+	extendedchars=true,              
+	frame=single,                  
+	keywordstyle=\color{blue},       
+	language=Prolog,                
+	numbers=left,                    
+	numbersep=5pt,                   
+	rulecolor=\color{black},        
+	showspaces=false,               
+	showstringspaces=false,          
+	showtabs=false,                  
+	stringstyle=\color{mymauve},   
+	tabsize=2,                      
+	title=\lstname,                  
+	morekeywords={not,\},\{,preconditions,effects },            
+	deletekeywords={time}            
+}
+
+\usetheme{Madrid}
+\usecolortheme{freiburg}
+
+%%%%%%%%%%%% Colors
+%generic colors
+\definecolor{myyellow}		{RGB}{242,226,149} 
+\definecolor{orange}   		{RGB}{255,128,0}
+\definecolor{lightorange}   {RGB}{255,183,112}
+\definecolor{darkred}  		{RGB}{128,0,0}
+\definecolor{darkgreen}		{RGB}{0,128,0}
+\definecolor{dirtgreen}		{RGB}{180,210,180}
+\definecolor{mixgreen}		{RGB}{34,139,34}
+\definecolor{darkblue} 		{RGB}{0,0,128}
+\definecolor{darkpurple}	{RGB}{160,32,240}
+\definecolor{lightpurple}	{RGB}{180,180,210}
+\definecolor{bl1}   		{RGB}{204,204,255}
+\definecolor{bl2}   		{RGB}{128,128,255}
+\definecolor{bl3}   		{RGB}{140,160,255}
+
+
+%generic grays
+\definecolor{gr1}		{RGB}{250, 250, 250}
+\definecolor{gr2}		{RGB}{229, 229, 229}
+\definecolor{gr3}		{RGB}{212, 212, 212}
+\definecolor{gr4}		{RGB}{204, 204, 204}
+
+%% a somewhat friendly scheme for 5 different colors 
+\definecolor{g1}		{RGB}{215,25,28} % a kind of red
+\definecolor{g2}		{RGB}{253,174,97} % a kind of orange
+\definecolor{g3}		{RGB}{255,255,191} % a kind of yellow
+\definecolor{g4}		{RGB}{171,217,233} % a kind of light blue 
+\definecolor{g5}		{RGB}{44,123,182} % a kind of dark blue 
+
+%% possibly the closest color scheme for 9 different colors -- use it with extreme caution 
+\definecolor{s1}		{RGB}{228,26,28}
+\definecolor{s2}		{RGB}{55,126,184}
+\definecolor{s3}		{RGB}{77,175,74}
+\definecolor{s4}		{RGB}{152,78,163}
+\definecolor{s5}		{RGB}{255,127,0}
+\definecolor{s6}		{RGB}{255,255,51}
+\definecolor{s7}		{RGB}{166,86,40}
+\definecolor{s8}		{RGB}{247,129,191}
+\definecolor{s9}		{RGB}{153,153,153}
+
+% colors for boxes
+\colorlet{workflowbg}		{lightorange}
+
+% colors for syntax highlighting in listings 
+\colorlet{codegreen}		{mixgreen}
+\colorlet{codepurple}		{darkpurple}
+\colorlet{codehighlight}	{gr2}
+
+% color for statements throughout the thesis 
+\colorlet{stmtcolor}		{gr2} %default statement color
+\colorlet{prg}				{gr2} %bp: from program
+\colorlet{ltl}				{g4} %bp: from ltl
+\colorlet{notIC}			{bl3} %tip: not in unsat core
+\colorlet{stateass}			{g2}
+\colorlet{stateassH}		{ALUblue}
+
+%color for emphasis 
+\colorlet{emred}			{ALUred}
+\colorlet{emgreen}			{darkgreen}
+\colorlet{emblue}			{ALUblue}
+\colorlet{highlight}		{g3}
+
+%colors for matthias-style 
+\colorlet{memsafety}		{darkpurple}
+\colorlet{reachability}		{ALUred}
+\colorlet{termination}		{darkgreen}
+\colorlet{overflows}		{g2}
+\colorlet{concurrency}		{g3!80!black}
+
+
+\colorlet{colProg}			{darkpurple}
+\colorlet{colInv}			{stateass}
+\colorlet{colCov}			{g4}
+\colorlet{colFH}			{ALUred!80!white}
+\colorlet{colTr}			{g4}
+
+
+% \definecolor{colProg}{rgb}{1,0,1}
+% \definecolor{colInv}{rgb}{0,1,0}
+% \definecolor{colCov}{rgb}{1,0,0}
+% \definecolor{colFH}{rgb}{0,0.7,0}
+% \definecolor{colTr}{rgb}{1,0.2,0}
+
+
+\colorlet{v1fill}{white}
+\colorlet{v2fill}{white}
+\colorlet{v3fill}{white}
+
+
+
+%color for pictures
+\colorlet{outlineblue}		{g5}
+\colorlet{fillblue}			{g4}
+\colorlet{darkback}			{gr2}
+\colorlet{lightback}		{gr1}
+\colorlet{blockback}		{ALUblue!10!bg}
+
+
+% colors for different ultimate plugins
+\colorlet{source}			{gr1}
+\colorlet{controller}		{gr1}
+\colorlet{thirdparty}		{gr1} 
+\colorlet{core}				{gr1}
+\colorlet{libs}				{gr1}
+\colorlet{source}			{gr1}
+\colorlet{analyzer}			{gr1}
+\colorlet{generator}		{gr1}
+\colorlet{output}			{gr1}
+
+
+
+
+%%%%%%%%%%%%% Statements and labels Trace Abstraction Style
+\tikzstyle{st} = [%
+font=\ttfamily,%
+shape=rectangle,%
+rounded corners=.5em,%
+fill=stmtcolor,%
+inner xsep=.3em,%
+inner ysep=0em, %
+text height=2ex, %
+text depth=.6ex,
+]
+
+
+\newcommand{\tikzstmt}[3]{{%
+		\tikz[baseline]{%
+			\node[st,fill=#2] at (0,.64ex){%
+				\hspace{.3em}\texttt{\strut#3#1}\hspace{.3em}\strut};}
+}}
+
+\newcommand{\stcol}[2]{\tikzstmt{#1}{#2}{}}
+\newcommand{\stsmcol}[2]{\tikzstmt{#1}{#2}{\small}}
+\newcommand{\stfootcol}[2]{\tikzstmt{#1}{#2}{\footnotesize}}
+
+\newcommand{\stnorm}[1]{\stcol{#1}{stmtcolor}}
+\newcommand{\stsm}[1]{\stsmcol{#1}{stmtcolor}}
+\newcommand{\stfoot}[1]{\stfootcol{#1}{stmtcolor}}
+
+\newcommand{\st}[1]{\stfoot{#1}}
+\newcommand{\lab}[1]{\stfoot{\ensuremath{#1}}}
+\newcommand{\lan}[1]{\stnorm{\ensuremath{#1}}}
+\newcommand{\stn}[1]{\stnorm{#1}}
+
+\newcommand{\formula}[2]{\tikz[baseline]{\node[shape=rectangle,line width=1pt,draw=#2,fill=#2!30,inner sep=1pt, align=center] at (0,.64ex){\hspace{.2em}\texttt{\strut#1}\hspace{.1em}\strut};}}
+\newcommand{\itp}[1]{\formula{\ensuremath{#1}}{itp}}
+
+\newcommand{\tf}{\ensuremath{\varphi}}
+\newcommand{\ctf}{\ensuremath{\widehat{\varphi}}}
+\newcommand{\invars}{\ensuremath{In}}
+\newcommand{\outvars}{\ensuremath{Out}}
+\newcommand{\auxvars}{\ensuremath{Aux}}
+
+\newcommand{\Var}{\ensuremath{\mathit{Var}}}
+\newcommand{\stmt}{\ensuremath{\mathit{Stmt}}}
+\newcommand{\Loc}{\ensuremath{\mathit{Loc}}}
+\newcommand{\err}{\ensuremath{\mathit{err}}}
+\newcommand{\init}{\ensuremath{\mathit{init}}}
+
+\newcommand{\abst}[1]{\ensuremath{\mathit{(S^{#1}, V^{#1})}}}
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+
+\newcommand{\pq}[1]{\ensuremath{#1_{p, q}}}
+\newcommand{\pqvasr}{\ensuremath{(\pq{S}, \pq{V})}}
+\newcommand{\pqformula}{\ensuremath{\pq{\Gamma}}}
+
+%%%%%%%%%%%% Numbered example environment
+% \newcounter{example}[section]
+% \newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
+%    \noindent \textbf{Example~\theexample. #1} \rmfamily}{\medskip}
+
+
+\usepackage{regexpatch}
+
+\makeatletter
+\xpatchcmd{\algorithmic}{\labelsep 0.5em}{\labelsep 1.5em}{\typeout{Success!}}{\typeout{Oh dear!}}
+\makeatother
+
+%%%%%%%%%%%% Comments
+\newif\iffinal
+%\finaltrue % comment out to remove comments
+
+\iffinal
+\newcommand\mycom[1]{}
+\else
+\newcommand\mycom[1]{#1}
+\overfullrule=1mm
+\fi
+\setlength\parindent{0pt}
+
+\newcommand{\jw}[1]{\mycom{\todo[color=blue!40,inline]{\small JW: #1}}}
+\newcommand{\dd}[1]{\mycom{\todo[color=orange!40,inline]{\small DD: #1}}}
+\newcommand{\ts}[1]{\mycom{\todo[color=green!40,inline]{\small TS: #1}}}
+
+
+\newcommand{\all}[1]{\mycom{\todo[color=green!40,inline]{\small #1}}}
+\newcommand{\meta}[1]{\mycom{\todo[color=blue!10,inline,caption={Beschreibung},nolist]{\setlist{nolistsep}\small #1}}}
+\newcommand{\xxx}{\mycom{\stfootcol{Placeholder}{blue!20}}}
+\newcommand{\cn}{\mycom{\stfootcol{Cite}{blue!20}}}
+
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\entails}[1]{\vdash_{#1}}
+
+\newcommand{\qvasr}{\ensuremath{\mathit{\mathbb{Q} \text{-}VASR}}}
+\newcommand{\qvasrs}{\ensuremath{\mathit{\mathbb{Q} \text{-}VASRS}}}
+
+\newcommand{\tranFormula}{\ensuremath{F(\vec{x}, \vec{x}')}}
+\newcommand{\coherent}{\ensuremath{\equiv_{\mathit{V}}}}
+\newcommand{\conjunctTF}{\ensuremath{C(\vec{x}, \vec{x}')}}
+\newcommand{\GammaTF}{\ensuremath{\Gamma(\vec{x}, \vec{x}')}}

@@ -1,0 +1,92 @@
+\begin{frame}[t]
+	\frametitle{\qvasr\ Example}
+	\begin{columns}
+		\begin{column}{0.4\textwidth}
+			\begin{figure}[h]
+				\vspace*{0.5cm}
+				\resizebox{0.6\textwidth}{!}{\input{fig/lst_ex_p0.tex}}
+				\vspace{-0.5cm}
+				\caption*{Program containing a loop.}
+			\end{figure}
+		\end{column} \pause
+		\begin{column}{0.6\textwidth}
+			\begin{figure}[h]
+				\begin{equation*}
+					G: x \leq 20 \land x > 10 \land x' = {\color<4>{red}{x}} + {\color<5>{red}{2}} \land y' = {\color<4>{red}{y}} {\color<5>{red}{-3}}
+				\end{equation*}
+				\caption*{Transition formula $G$ of the else branch.}
+			\end{figure}
+		\end{column}
+	\end{columns}
+	\begin{columns}
+		\begin{column}{0.4\textwidth} \uncover<6>{
+				\begin{figure}
+					$V_G = 
+					\begin{Bmatrix}
+						\begin{bmatrix}
+							x \\
+							y
+						\end{bmatrix} \rightarrow_{V_G}
+						\begin{bmatrix}
+							x + 2 \\
+							y - 3
+						\end{bmatrix}
+					\end{Bmatrix}
+					$
+					\caption*{Intuitive notation of $V_G$.}
+				\end{figure}
+			}
+		\end{column}
+		\begin{column}{0.4\textwidth} \uncover<3->{
+				\begin{figure}
+					$V_G = 
+					\begin{Bmatrix}
+						\begin{pmatrix}
+							\begin{bmatrix}
+								{\color<4>{red}{1}} \\
+								{\color<4>{red}{1}}
+							\end{bmatrix},
+							\begin{bmatrix}
+								{\color<5>{red}{2}} \\
+								{\color<5>{red}{-3}}
+							\end{bmatrix}
+						\end{pmatrix}
+					\end{Bmatrix}
+					$
+					\caption*{\qvasr\ $V_G$.}
+				\end{figure}
+			}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% new frame
+\begin{frame}[t]
+	\frametitle{\qvasr\ Example}
+	\begin{columns}
+		\begin{column}{0.4\textwidth}
+			\begin{figure}[h]
+				\vspace*{0.5cm}
+				\resizebox{0.6\textwidth}{!}{\input{fig/lst_ex_p0.tex}}
+				\vspace{-0.5cm}
+				\caption*{Program containing a loop.}
+			\end{figure}
+		\end{column} \pause
+		\begin{column}{0.6\textwidth}
+			\begin{figure}[h]
+				\begin{equation*}
+					H: x \leq 10 \land x' = x + {\color<3->{red}{y}} \land y' = y + 1 \land z' = {\color<3->{red}{x}}
+				\end{equation*}
+				\caption*{Transition formula $H$ of the if branch.}
+			\end{figure}
+		\end{column}
+	\end{columns}
+	\pause
+	\vspace*{1cm}
+	\only<4->{
+		\begin{center}
+			\item \alert{\qvasr\ can only model constant additions!} \pause \pause
+			\item We can overapproximate $H$ by computing a \qvasr-abstraction
+		\end{center}		
+	}
+\end{frame}

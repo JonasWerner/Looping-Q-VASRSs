@@ -1,0 +1,40 @@
+\begin{frame}[t]
+	\frametitle{\qvasr-Abstraction Partial Order}
+	\begin{columns}
+		\begin{column}{0.4\textwidth}
+			\begin{figure}[h]
+				\vspace*{0.5cm}
+				\resizebox{0.6\textwidth}{!}{\input{fig/lst_ex_p0.tex}}
+				\vspace{-0.5cm}
+				\caption*{Program containing a loop.}
+			\end{figure}
+		\end{column} \pause
+		\begin{column}{0.6\textwidth}
+			\begin{itemize}
+				\item The transition formula of the loop: 
+				\begin{equation*}
+					F = H \lor G
+				\end{equation*}
+				\pause
+				\item We need a \qvasr-abstraction $(\tilde{S}, \tilde{V})$ that simulates both $(S_H, V_H)$ and $(S_G, V_G)$ 
+				\pause
+				\begin{equation*}
+					\rightarrow T_HS_H = \tilde{S} = T_GS_G 
+				\end{equation*}
+				\pause
+				\begin{equation*}
+					\text{Solve:}\ \tilde{S} = \begin{bmatrix} t^{H}_1 & t^{H}_2  \end{bmatrix} S_H  = \begin{bmatrix} t^{G}_1 & t^{G}_2\end{bmatrix} S_G
+				\end{equation*}
+			\end{itemize}
+		\end{column}
+	\end{columns}
+	\pause
+	\vspace{0.5cm}
+	\begin{itemize}
+		\item Compute new changes on relations as $\tilde{V}$
+		\begin{equation*}
+			\tilde{V} = \{(T_H \times \vec{r}_H, T\vec{a}_H) \cup (T_G\times \vec{r}_G, T_G\vec{a}_G)\}
+		\end{equation*}
+		Where $(T \times \vec{r})_i = r_j$ is a translation of $r_i$ to a non-zero $r_j \in T$
+	\end{itemize}
+\end{frame}

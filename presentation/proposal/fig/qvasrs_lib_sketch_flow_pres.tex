@@ -1,0 +1,65 @@
+% Define block styles
+\tikzstyle{block} = [rectangle, draw, rounded corners, minimum height=5em, minimum width={width("predicate transformer")+15pt},
+]
+\tikzstyle{group} = [rectangle, draw, rounded corners, minimum height=5em
+]
+\begin{tikzpicture}[%
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=3.25cm and 4.5cm,
+	scale=0.9,
+	transform shape,
+	align=center,
+	smallnode/.style={inner sep=1.4},
+	initial text =,
+	anchor=center]
+	% Place nodes
+	\node [align=left](input) {\textbf{Input}};
+	\node [block, align=left, below=of input](predtransformer) {\texttt{predicate transformer}};
+	\node [block, align=center, right=of predtransformer](vasrs) {Are there $p, q \in P$ with no \\ \qvasr-abstraction \\ \pqvasr $\in \mathcal{A}$?};
+	\node [block, align=left, right=of vasrs](reach) {\texttt{reach}};
+	\node [block, align=left, below=of vasrs, yshift=1cm](H) {\pqformula\ satisfiable?};
+	\node [block, align=center, right=of H](abstr) {\texttt{\qvasr-abstractor}};
+	\node [block, align=left, below=of abstr, fill=white, yshift=1cm](pushout) {\texttt{pushout}};
+	\node [block, align=left, below=of H, fill=white, yshift=1cm](image) {\texttt{image}};
+	\node [align=left, above= of reach](output) {\textbf{Output}};
+	\begin{scope}[on background layer]
+		\node[group, draw=black,fill=stmtcolor,fit=(pushout) (image), label=below :{\texttt{\qvasr-join}}](FIt1) {};
+	\end{scope}
+	
+	% Draw edges
+	\draw (input) to node[above] {} node[right] {$F :=$ transition formula of a loop} (predtransformer);
+	%\draw (predtransformer) to node[right] {} node[right, align=left] {$F$\\ $P$ := set of predicates \\ $\mathcal{V} := \emptyset$} (vasrs);
+	\draw (reach) to node[above] {} node[left] {\texttt{reach($\mathcal{V}$)} is \\ loop summary of $F$} (output);
+	\draw [bend right]  (vasrs) to node[above left, align=right, yshift=-0.5cm] {\textbf{yes} \\ $\pqformula := p \land F \land q'$ \\ $\pqvasr := (\mathit{I},\emptyset)$} node[right, align=left] {} (H);
+	\draw (H) to node[above, xshift=-1.5cm] {\textbf{yes}} node[below] {$c :=$ cube in $\mathit{DNF(\pqformula)}$} (abstr);
+	\draw (abstr) to node[above] {} node[left] {$(S_c, V_c) :=$ \\ \texttt{abstraction(c)}} (pushout);
+	\draw (pushout) to node[below] {$\pq{S}$ simulates $(S_c, V_c)$} node[above] {$\pq{S}$ := \texttt{pushout($\pq{S}, S_c$)} } (image);
+	
+	%\draw (image) to node[above] {} node[left, align=left] {$\pqformula :=$ refine$(\pqformula)$ \\ $\pq{V} :=$ \texttt{image(\pq{V})} \\ $\cup$ \texttt{image$(V_c)$}} (H);
+	
+	\draw (image) to node[above] {} node[right, align=left] {%
+		{\begin{varwidth}{3.5cm}
+				\vspace*{-0.5cm}
+				\begin{align*}
+					\pqformula :=&\ \texttt{refine}(\pqformula) \\ \bigskip
+					\pq{V} :=&\ \texttt{image}(\pq{V}) \\
+					&\cup \texttt{image}(V_c)
+		\end{align*}\end{varwidth}}
+	} (H);
+	
+	
+	\draw (predtransformer) to node[above] {} node[above, align=left] {%
+		{\begin{varwidth}{3.75cm}
+				\begin{align*}
+					F \\
+					P &:= \text{set of predicates} \\
+					\mathcal{A} &:= \emptyset
+		\end{align*}\end{varwidth}}
+	} (vasrs);
+	
+	\draw [bend right]  (H) to node[above] {} node[right, align=left, yshift=-0.25cm] {$\mathcal{A} := \mathcal{A} \cup \{\pqvasr\}$ \vspace{0.5cm} \\ \pqvasr is best abstraction\\ \textbf{no}} (vasrs);
+	\draw (vasrs) to node[below] {$\mathcal{V} :=\ $\texttt{qvasrs($\mathcal{A}, P$)}} node[above, xshift=-1.5cm] {\textbf{no}} (reach);
+\end{tikzpicture}

@@ -1,0 +1,57 @@
+\begin{frame}[t]
+	\frametitle{\qvasr-Abstraction}
+	\begin{center}
+		$H: x \leq 10 \land x' = x + y \land y' = y + 1 \land z' = x$ \pause
+	\end{center}
+	\vspace*{0.5cm}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{equation*} \only<2-4, 6->{
+					Res_H = \left\{ (\begin{bmatrix} {\color<3>{red}{-1}} & {\color<3>{red}{1}} & {\color<3>{red}{1}} \end{bmatrix}, {\color<4>{red}{1}}) \right\}\ 
+				}
+				\only<5>{
+					Res_H = \underbrace{\left\{ (\begin{bmatrix} -1 & 1 & 1 \end{bmatrix}, 1) \right\}\ }_{\color{red}{1}\ reset}
+				}
+			\end{equation*}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{equation*}
+				\only<2-5, 7>{
+					Inc_H = \left\{ (\begin{bmatrix} {\color<3>{red}{0}} & {\color<3>{red}{1}} & {\color<3>{red}{0}} \end{bmatrix}, {\color<4>{red}{1}}) \right\}\
+				}
+				\only<6>{
+					Inc_H = \underbrace{\left\{ (\begin{bmatrix} 0 & 1 & 0 \end{bmatrix}, 1) \right\}\}}_{\color{red}{1}\ addition}
+				}
+			\end{equation*}
+		\end{column}
+	\end{columns}
+	\only<2->{
+		\begin{figure}
+			\begin{equation*}
+				S_H = \begin{bmatrix} {\color<3>{red}{-1}} & {\color<3>{red}{1}} & {\color<3>{red}{1}} \\ {\color<3>{red}{0}} & {\color<3>{red}{1}} & {\color<3>{red}{0}} \end{bmatrix} \hspace*{0.5cm}
+				V_H = 
+				\begin{Bmatrix}
+					\begin{pmatrix}
+						\begin{bmatrix}
+							\color<5>{red}{0} \\
+							\color<6>{red}{1}
+						\end{bmatrix},
+						\begin{bmatrix}
+							{\color<4>{red}{1}} \\
+							{\color<4>{red}{1}}
+						\end{bmatrix}
+					\end{pmatrix}
+				\end{Bmatrix}
+			\end{equation*}
+			\caption*{\qvasr-abstraction of $H$}
+		\end{figure}
+	} 
+	\only<7>{
+		\begin{figure}
+			\begin{equation*}
+				V_H = \begin{Bmatrix} \begin{bmatrix} - x + y + z \\ y \end{bmatrix} \rightarrow_{V_H} \begin{bmatrix}	1 \\ y + 1 	\end{bmatrix} \end{Bmatrix}
+			\end{equation*}
+			\caption*{Intuitive view of \qvasr-abstraction} 
+		\end{figure}
+	}
+\end{frame}

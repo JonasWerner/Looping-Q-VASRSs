@@ -1,0 +1,42 @@
+
+    \centering
+    \begin{tikzpicture}[%
+    ->,
+    >=stealth',
+    shorten >=1pt,
+    auto,
+    node distance=8cm,
+    scale=0.9,
+    transform shape,
+    align=center,
+    smallnode/.style={inner sep=1.2},
+    initial text =,
+    anchor=center]
+
+    	\node[draw, ellipse, initial left, initial text =](1){$x \leq 10$};
+    	\node[draw, ellipse](2) [right of=1] {$10 < x \land x \leq 20$};
+    	% \node[draw, ellipse, accepting] (3) [right of=2] {$x > 20$};
+
+    	\path (1) edge node [above]{ $
+					\begin{bmatrix}
+						- x + y + z - 5 \\
+						y - 3
+					\end{bmatrix}
+                     $ } (2)
+	
+	    	 (1) edge[loop above] node { $
+					\begin{bmatrix}
+						- x + y + z - 5 \\
+					 	y - 3
+					\end{bmatrix}
+	         $ } (1)
+	
+	    	 (2) edge[loop above] node { $
+	               \begin{bmatrix}
+						1 \\
+						y + 1
+					\end{bmatrix}
+	                     $ } (2)
+	    	;
+    \end{tikzpicture}
+    %\caption{\qvasrs abstraction $\mathcal{A}$ of program $P$.}

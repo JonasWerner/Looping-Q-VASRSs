@@ -1,0 +1,13 @@
+\lstset{escapeinside={<@}{@>}}
+\begin{lstlisting}[language=C++,basicstyle=\ttfamily,keywordstyle=\color{blue}]  % Start your code-block
+	
+<@\ttfamily\textcolor{red}{while x <= 20}@> {
+	if x <= 10 {
+		z := x;
+		x := x + y;
+		y := y + 1;
+	} <@\textcolor{red}{else {
+		x := x + 2;
+		y := y - 3;} }@>
+	}
+\end{lstlisting}

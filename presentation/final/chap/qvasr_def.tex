@@ -1,0 +1,54 @@
+\begin{frame}[t]
+	\frametitle{\qvasr}
+	\begin{definition}
+		A \qvasr\ $V$ is a transition system, consisting of a set of transformers: \\
+		\begin{center}
+			$ V = 
+			\begin{Bmatrix}
+				\begin{pmatrix}
+					\underbrace{
+						\begin{bmatrix}
+							r_1 \\
+							\vdots \\
+							r_n
+					\end{bmatrix}}_{reset \in \{0,1\}^n},
+					\underbrace{
+						\begin{bmatrix}
+							a_1 \\
+							\vdots \\
+							a_n
+					\end{bmatrix}}_{addition \in \mathbb{Q}^n}
+				\end{pmatrix}
+			\end{Bmatrix}
+			$
+		\end{center}
+	\end{definition}
+	\begin{definition}
+		Given a \qvasr\ $V$ and a transformer $(\vec{r}, \vec{a}) \in V$, transitions between two states $\vec{x} \rightarrow_V \vec{x}'$ are defined as: \\
+		\begin{equation*}
+			\begin{bmatrix}
+				x_1' \\
+				\vdots \\
+				x_n'
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				x_1 \\
+				\vdots \\
+				x_n
+			\end{bmatrix}
+			*
+			\begin{bmatrix}
+				r_1 \\
+				\vdots \\
+				r_n
+			\end{bmatrix}
+			+
+			\begin{bmatrix}
+				a_1 \\
+				\vdots \\
+				a_n
+			\end{bmatrix}		
+		\end{equation*}
+	\end{definition}
+\end{frame}

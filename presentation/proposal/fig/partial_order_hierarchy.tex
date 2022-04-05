@@ -1,0 +1,27 @@
+% Define block styles
+\begin{tikzpicture}[%
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=2cm,
+	scale=0.9,
+	transform shape,
+	align=center,
+	smallnode/.style={inner sep=1.4},
+	initial text =,
+	anchor=center]
+	% Place nodes
+	\node [draw, ellipse](tf) {F};
+	\node [draw, ellipse](best)[right of=tf, xshift=1cm]  {$\tilde{V}$};
+	\node [draw, ellipse](vas1)[above right of=best] {$V_G$};
+	\node [draw, ellipse](vas2)[below right of=best] {$V_H$};
+
+	\draw (tf) to node[above] {} node[above] {$\tilde{S}$} (best);
+	\draw (best) to node[above] {} node[left, xshift=-0.25cm] {$\tilde{S}$} (vas1);
+	\draw (best) to node[above] {} node[left, xshift=-0.25cm] {$\tilde{S}$} (vas2);
+	
+	\draw[bend left] (tf) to node[above] {} node[left, xshift=-0.5cm] {$S_H$} (vas1);
+	\draw[bend right] (tf) to node[above] {} node[left, xshift=-0.5cm] {$S_G$} (vas2);
+	
+\end{tikzpicture}

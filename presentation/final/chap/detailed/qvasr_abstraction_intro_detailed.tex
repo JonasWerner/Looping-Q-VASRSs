@@ -1,0 +1,88 @@
+\begin{frame}
+	\frametitle{\qvasr-Abstraction}
+	\newcommand{\s}{\ensuremath{\begin{bmatrix} s_x & s_y & s_z \end{bmatrix}}}
+	\newcommand{\p}{\ensuremath{\begin{bmatrix} x' \\ y' \\ z' \end{bmatrix}}}
+	\newcommand{\up}{\ensuremath{\begin{bmatrix} x \\ y \\ z \end{bmatrix}}}
+	\begin{definition}
+		Given a transition formula $F$, a \qvasr-abstraction for $F$ is a tuple $(S_F, V_F)$ consisting of a matrix $S_F$ and a \qvasr\ $V_F$. The matrix $S_F$ acts as a linear transformation of $F$ to $V_F$. Meaning, for every transition \\
+		$
+		\begin{bmatrix}
+			x_1 \\
+			\vdots \\
+			x_n
+		\end{bmatrix}
+		\rightarrow_F
+		\begin{bmatrix}
+			x_1' \\
+			\vdots \\
+			x_n'
+		\end{bmatrix}
+		$
+		in $F$, there is: \ \
+		$ S_F \cdot
+		\begin{bmatrix}
+			x_1' \\
+			\vdots \\
+			x_n'
+		\end{bmatrix}
+		=
+		S_F \cdot
+		\begin{bmatrix}
+			x_1 \\
+			\vdots \\
+			x_n
+		\end{bmatrix}
+		*
+		%%%%%%%%%%%%%%%%%%%% RESET
+		\only<3-5>{
+			\begin{bmatrix}
+				\color{red}{0} \\
+				\color{red}{\vdots} \\
+				\color{red}{0}
+			\end{bmatrix}	
+		}
+		%%%%%%%%%%%%%%%%%%%%% VANILLA
+		\only<1-2>{
+			\begin{bmatrix}
+				r_1 \\
+				\vdots \\
+				r_n
+			\end{bmatrix}
+		}
+		%%%%%%%%%%%%%%%%%%%%%% NOT RESET
+		\only<6->{
+			\begin{bmatrix}
+				\color{red}{1} \\
+				\color{red}{\vdots} \\
+				\color{red}{1}
+			\end{bmatrix}
+		}
+		+
+		\begin{bmatrix}
+			a_1 \\
+			\vdots \\
+			a_n
+		\end{bmatrix}	
+		$
+		in $V_F$
+	\end{definition}
+	\pause
+	\begin{center}
+		$H: x \leq 10 \land x' = x + y \land y' = y + 1 \land z' = x$ \pause
+		\only<2-5>{
+			\begin{equation*}
+				Res_H = \left\{ (\s, a) : H \models \underbrace{\s}_{solve} \cdot \p = \underbrace{a}_{solve} \right\} 	
+			\end{equation*} \pause
+			$Res_H = \left\{ (\begin{bmatrix} -a & a & a \end{bmatrix}, a) \right\}\ \pause \xrightarrow{\text{Base}}\ Res_H = \left\{ (\begin{bmatrix} -1 & 1 & 1 \end{bmatrix}, 1) \right\}\ $
+		}
+		\only<7->{
+			\resizebox{0.9\textwidth}{!}{
+				$Inc_H = \left\{(\s, a) : H \models \s \cdot \p = \s \cdot \up + a\right\}$
+			}
+			\uncover<8->{
+				$Inc_H = \left\{ (\begin{bmatrix} 0 & a & 0 \end{bmatrix}, a) \right\}\ $} 
+			\uncover<9->
+			{$\xrightarrow{\text{Base}}\ Inc_H = \left\{ (\begin{bmatrix} 0 & 1 & 0 \end{bmatrix}, 1) \right\}\ $}
+		}
+	\end{center}
+\end{frame}

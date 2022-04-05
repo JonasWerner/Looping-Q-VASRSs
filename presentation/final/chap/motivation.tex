@@ -1,0 +1,47 @@
+\begin{frame}[t]
+	\frametitle{Motivation}
+	\begin{itemize}
+		\item Loop analysis is one of the most challenging parts of software verification \\
+		$\rightarrow$ "Archilles Heel of program verification" \cite{DBLP:journals/fmsd/KroeningSTTW13} \pause
+		\vspace*{1cm}
+		\begin{columns}[t]
+			\begin{column}{0.4\textwidth}
+				\begin{figure}[h]
+					\vspace*{0.5cm}
+					\resizebox{0.6\textwidth}{!}{\input{fig/lst_ex_p0.tex}}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.6\textwidth}
+				\pause
+				\only<3> {
+					Loop Unwinding:
+					\begin{itemize}
+						\item Quite simple
+						\item {\color{red}{But:}} \\
+						Cannot reason about loop behavior beyond unwinding bound
+				\end{itemize} }
+				\only<4> {
+					Loop Invariants:
+					\begin{itemize}
+						\item Loop invariants hold before and after the loop
+						\item {\color{red}{But:}} \\
+						Usefulness is tied to how strong they are \\
+						$\rightarrow$ Finding strong loop invariants "is an art" \cite{DBLP:journals/fmsd/KroeningSTTW13}
+				\end{itemize} }				
+				\only<5> {
+					Loop Summarization:
+					\begin{itemize}
+						\item Models relation between input and output as a set of constrains
+						\item {\color{red}{But:}} \\
+						Not guaranteed to be precise \\
+						$\rightarrow$ Over- or underapproximation of loop behavior
+				\end{itemize} }	
+				\only<6> { }	
+			\end{column}
+		\end{columns}
+		\only<6>{
+			Overapproximative loop summary using rational vector addition systems (\qvasr) \cite{DBLP:conf/cav/SilvermanK19} \\
+			$\rightarrow$ Overapproximation with a \textsl{guaranteed} degree of precision
+		}
+	\end{itemize}
+\end{frame}

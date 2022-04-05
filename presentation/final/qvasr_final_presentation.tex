@@ -1,0 +1,155 @@
+
+\documentclass[%
+10pt,
+dvipsnames,
+]{beamer}
+
+\input{chap/preamble.tex}
+
+\title[\qvasr]{\textbf{Adapting Loop Summarization \\ Using Rational Vector Addition Systems \\ with Resets for Trace Abstraction}}
+
+% For short you could for example use the last name only, it's optional as is
+% the short title
+\author[Jonas Werner]{\color{emblue} \textbf{Master's Thesis} \\ Jonas Werner \\ \vspace*{0.5cm} \textbf{Advisers} \\ Dr. Daniel Dietsch, Tanja Schindler}
+
+% Can be set, for students usually not required
+%\institute{}
+
+\date{\today}
+
+% removes the navigation symbols
+% often they don't work and I find them rather annoying
+\beamertemplatenavigationsymbolsempty{}
+
+% You can have a logo to appear on all slides
+% \logo{\includegraphics[height=1.5cm]{logo}}
+
+% If you want that at the beginning of each section the table of contents
+% is shown, I don't like it for short presentations
+\AtBeginSection[]{
+	\begin{frame}
+		\vfill
+		\centering
+		\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+			\usebeamerfont{title}\insertsectionhead\par%
+		\end{beamercolorbox}
+		\vfill
+	\end{frame}
+}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% motivation
+
+\input{chap/motivation.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% qvasr introduction
+
+\input{chap/qvasr_def.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% qvasr example
+
+\input{chap/qvasr_example.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% qvasr abstraction 
+
+\input{chap/qvasr_abstraction_example.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% trace abstraction
+
+\input{chap/traceabstraction.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% accelInterpol
+
+\input{chap/accelerated_Interpolation.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% cfg transformer
+
+\input{chap/cfgtransformer.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% evaluation
+
+\input{chap/evaluation.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% conclusion
+
+\input{chap/conlusion.tex}
+
+\begin{frame}
+	\label{slide:bibliography}
+	\frametitle{Bibliography}
+	\fontsize{10}{10}\selectfont
+	\bibliographystyle{apalike}
+	\nocite{DBLP:conf/cav/SilvermanK19} \nocite{DBLP:conf/cav/SilvermanK19}
+	\bibliography{bib/bib}
+\end{frame}
+
+\begin{comment}
+\begin{frame}{Bibliography}
+	\frametitle{References}
+	\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
+	\bibitem[DBLP:conf/rp/HaaseH14]{p1} Christoph Haase and	Simon Halfon
+	\newblock Integer Vector Addition Systems with States
+	\newblock \href{https://doi.org/10.1007/978-3-319-11439-2\_9}{Lecture Notes in Computer Science, 2014}
+	
+	\bibitem[DBLP:journals/fmsd/KroeningLW15]{p2} Daniel Kroening and
+	Matt Lewis and Georg Weissenbacher
+	\newblock Under-approximating Loops in C Programs for Fast Counterexample Detection
+	\newblock \href{https://doi.org/10.1007/s10703-015-0228-1}{Reachability Problems - 8th International Workshop, 2014}
+	
+	\bibitem[DBLP:journals/fmsd/KroeningSTTW13]{p3} Daniel Kroening and
+	Natasha Sharygina and Stefano Tonetta and Aliaksei Tsitovich and Christoph M. Wintersteiger
+	\newblock Loop Summarization using State and Transition Invariants
+	\newblock \href{https://doi.org/10.1007/s10703-012-0176-y}{Formal Methods Syst. Des., 2013}
+	
+	\bibitem[DBLP:conf/cav/SilvermanK19]{p4} Jake Silverman and Zachary Kincaid
+	\newblock Loop Summarization with Rational Vector Addition Systems
+	\newblock \href{https://doi.org/10.1007/978-3-030-25543-5\_7}{CAV, 2019}
+	
+	\bibitem[DBLP:journals/tse/XieCZLLL19]{p5} Xiaofei Xie and
+	Bihuan Chen and	Liang Zou and Yang Liu and Wei Le and Xiaohong Li
+	\newblock Automatic Loop Summarization via Path Dependency Analysis
+	\newblock \href{https://doi.org/10.1109/TSE.2017.2788018}{{IEEE} Trans. Software Eng., 2019}
+
+	\end{thebibliography}
+
+\end{frame}
+\end{comment}
+
+\begin{frame}[plain,c]
+	%\frametitle{A first slide}
+	
+	\begin{center}
+		\Huge \color{emblue}Addendum
+	\end{center}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%Todo: Less detailed -> this one can be used as a backup slide
+
+\input{chap/detailed/qvasr_abstraction_intro_detailed.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+
+\input{chap/detailed/qvasr_abstraction_example_detailed.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\input{chap/detailed/qvasr_abstraction_partial_order_detailed.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\input{chap/detailed/qvasrs_intro_detailed.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\input{chap/detailed/approach.tex}
+
+\end{document}

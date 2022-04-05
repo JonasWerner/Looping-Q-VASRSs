@@ -1,0 +1,53 @@
+% Define block styles
+\begin{tikzpicture}[%
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=5cm,
+	scale=0.75,
+	transform shape,
+	align=center,
+	smallnode/.style={inner sep=1.4},
+	initial text =,
+	anchor=center]
+	% Place nodes
+	\node [](G) {
+		$V_G = 
+		\begin{Bmatrix}
+			\begin{bmatrix}
+				x \\
+				y
+			\end{bmatrix} \rightarrow_{V_G}
+			\begin{bmatrix}
+				x + 2 \\
+				y - 3
+			\end{bmatrix}
+		\end{Bmatrix}
+		$};
+	\node [](H)[right of=G, xshift=1cm]  {$V_H = \begin{Bmatrix} \begin{bmatrix} - x + y + z \\ y \end{bmatrix} \rightarrow_{V_H} \begin{bmatrix}	1 \\ y + 1 	\end{bmatrix} \end{Bmatrix}$};
+	\node (best) at ($(G)!0.5!(H)$) [yshift=-3cm] {		    
+		$V_F = \begin{Bmatrix}
+			\begin{bmatrix}
+				- x + y + z \\
+				y
+			\end{bmatrix} \rightarrow_{V_F}
+			\begin{bmatrix}
+				1 \\
+				y + 1
+			\end{bmatrix}, \\ \\
+			\begin{bmatrix}
+				- x + y + z \\
+				y
+			\end{bmatrix} \rightarrow_{V_F}
+			\begin{bmatrix}
+				- x + y + z - 5 \\
+				y - 3
+			\end{bmatrix}
+			\end{Bmatrix}
+			$};
+
+	\draw (G) to node[above] {} node[above] {} (best);
+	\draw (H) to node[above] {} node[left] {} (best);
+	
+\end{tikzpicture}
