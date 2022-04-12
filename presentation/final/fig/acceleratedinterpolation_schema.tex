@@ -1,0 +1,40 @@
+
+\begin{tikzpicture}[%
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=1.5cm,
+	scale=0.75,
+	transform shape,
+	align=center,
+	smallnode/.style={inner sep=1.4},
+	initial text =,
+	anchor=center]
+	
+	\tikzstyle{my node}=[draw,minimum height=1cm,minimum width=3cm]
+	\node [align=center](input) {\textbf{Input}: \\ Program trace $\tau$};
+	\node[my node, fill=white](1)[below of=input]{$\tau$ contains a loop?};
+
+	\node[my node,  fill=white](2)[below of=1, xshift=1.5cm]{Loop \\ Summarization};
+	\node[my node, fill=white](3)[below of=2]{Meta-Trace \\ Construction};
+	
+	\node[my node, fill=white](4)[below of=3]{Meta-Interpolant \\ Computation};
+	\node[my node, fill=white](interpolants)[below of=4, xshift=-1.5cm]{Inductive Interpolants \\ Computation};
+	
+	\node[](6)[below of=interpolants]{Output:};
+
+	\begin{scope}[on background layer]
+		\node[group, draw=emblue, fill=emblue!20, fill opacity=0.2, fit=(1) (interpolants) (3), xscale=1.15](FIt1) {};
+	\end{scope}
+
+	\path (input) edge[] node[]{} (1)
+	(1) edge[bend right] node[left=0.25cm]{\textbf{no}} (interpolants)
+	(1.east) edge[bend left] node[right=0.25cm]{\textbf{yes}} ([xshift=0.5cm] 2.north)
+	
+	(2.east) edge[bend left=60] node[left=0.25cm]{} ([yshift=0.25cm]3.east)
+	([yshift=-0.25cm]3.east) edge[bend left=60] node[left=0.25cm]{} (4.east)
+	([xshift=0.5cm]4.south) edge[bend left] node[left=0.25cm]{} (interpolants.east)
+	(interpolants.south) edge[] node[]{} (6)
+	;
+\end{tikzpicture}
