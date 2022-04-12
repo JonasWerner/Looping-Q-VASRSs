@@ -11,7 +11,7 @@
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{tikz}
-\usetikzlibrary{positioning,shapes.geometric, arrows.meta ,automata, decorations.pathreplacing, calc, fit, backgrounds, quotes, tikzmark, calc}
+\usetikzlibrary{positioning,shapes.geometric, arrows.meta ,automata,decorations, decorations.text, decorations.pathreplacing, calc, fit, backgrounds, quotes, tikzmark, calc}
 \usepackage{pgf}
 \usepackage{slantsc}
 \usepackage{geometry}
@@ -284,3 +284,7 @@ text depth=.6ex,
 \newcommand{\coherent}{\ensuremath{\equiv_{\mathit{V}}}}
 \newcommand{\conjunctTF}{\ensuremath{C(\vec{x}, \vec{x}')}}
 \newcommand{\GammaTF}{\ensuremath{\Gamma(\vec{x}, \vec{x}')}}
+\newcommand{\tabitem}{%
+\usebeamertemplate{itemize item}\hspace*{\labelsep}}
+
+\renewcommand{\arraystretch}{1.7}
