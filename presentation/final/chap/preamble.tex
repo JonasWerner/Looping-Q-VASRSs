@@ -5,6 +5,7 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage{cite}
+\usepackage{appendixnumberbeamer}
 \usepackage{booktabs}
 \usepackage{url}
 \usepackage{listings}
@@ -94,6 +95,7 @@ bordercolor=cyan!50!black]{todonotes}
 \definecolor{gr2}		{RGB}{229, 229, 229}
 \definecolor{gr3}		{RGB}{212, 212, 212}
 \definecolor{gr4}		{RGB}{204, 204, 204}
+\definecolor{itpGreen}  {rgb}{0,1,0}
 
 %% a somewhat friendly scheme for 5 different colors 
 \definecolor{g1}		{RGB}{215,25,28} % a kind of red
@@ -128,6 +130,7 @@ bordercolor=cyan!50!black]{todonotes}
 \colorlet{notIC}			{bl3} %tip: not in unsat core
 \colorlet{stateass}			{g2}
 \colorlet{stateassH}		{ALUblue}
+\colorlet{itp}              {itpGreen}
 
 %color for emphasis 
 \colorlet{emred}			{ALUred}
@@ -290,3 +293,10 @@ text depth=.6ex,
 \renewcommand{\arraystretch}{1.7}
 \tikzstyle{group} = [rectangle, draw, rounded corners, minimum height=5em
 ]
+\newcommand{\backupbegin}{
+	\newcounter{finalframe}
+	\setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+	\setcounter{framenumber}{\value{finalframe}}
+}
