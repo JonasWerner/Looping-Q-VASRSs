@@ -4,7 +4,7 @@
 	>=stealth',
 	shorten >=1pt,
 	auto,
-	node distance=3cm,
+	node distance=2.5cm,
 	scale=0.9,
 	transform shape,
 	align=center,
@@ -13,17 +13,21 @@
 	anchor=center]
 	
 	\tikzstyle{my node}=[draw,minimum height=1cm,minimum width=3cm]
-	\node [align=center](input) {\textbf{Input}: \\ Control-flow graph $G_P$ of program $P$};
-	\node[my node](1)[below of=input]{$\mathcal{L}(A_P) \subseteq \mathcal{L}(A_D)?$};
-	\node[my node] (2) [below of=1] {$\tau$ feasible?};
-	\node [](corr)[right of=1, right=1cm] {\textbf{return}: $P$ is Safe};
-	\node [](incorr)[right of=2, right=1cm] {\textbf{return}: $P$ is Unsafe};
+	\node [align=center](tainput) {\textbf{Input}: \\ A program $P$};
+	\node[my node] (cfg) [below of=tainput, yshift=1cm] {Control-Flow Graph \\ Builder};
+	\node[my node](ta1)[below of=cfg]{$\mathcal{L}(A_P) \subseteq \mathcal{L}(A_D)?$};
+	\node[my node] (ta2) [below of=ta1, yshift=-1cm] {$\tau$ feasible?};
+	\node[my node] (ta3) [below left of=ta1, xshift=-1cm]{\texttt{generalize($\tau$)}};
+	\node [](corr)[right of=ta1, right=0.5cm] {\textbf{return}: $P$ is Safe};
+	\node [](incorr)[right of=ta2, right=0.5cm] {\textbf{return}: $P$ is Unsafe};
 	
-	\path (1) edge[bend left] node[align=left, right=0.25cm]{no \\
-	$\tau \in \mathcal{L}(A_P) \backslash \mathcal{L}(A_D)$} (2)
-	(2) edge[bend left] node[align=right, left=0.25cm] {$A_D := A_D\ \cup\ $ \textsl{$\texttt{abstract}_F$}$(\tau)$ \\  no} (1)
-	(input) edge[] node[align=left, right=0.25cm] {$A_P := \text{control-flow graph as automaton}$ \\ $A_D = \emptyset$} (1)
-	(1) edge[] node[above] {yes} (corr)
-	(2) edge[] node[above] {yes} (incorr)
+	\path (ta1) edge[bend left] node[align=left, right=0.25cm]{no \\
+		$\tau \in \mathcal{L}(A_P) \backslash \mathcal{L}(A_D)$} (ta2)
+	(ta3.north) edge[bend left] node[align=right, left=0.25cm] {$A_D := A_D\ \cup$ $\texttt{generalize} (\tau)$} (ta1.west)
+	(ta2.west) edge[bend left] node[left=0.25cm] {no} (ta3.south)
+	(cfg) edge[] node[align=left, right=0.25cm] {$A_P := \text{control-flow graph as automaton}$ \\ 		$A_D = \emptyset$} (ta1)
+	(ta1) edge[] node[above] {yes} (corr)
+	(ta2) edge[] node[above] {yes} (incorr)
+	(tainput) edge[] node[] {} (cfg)
 	;
 \end{tikzpicture}

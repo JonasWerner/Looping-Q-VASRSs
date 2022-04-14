@@ -1,0 +1,69 @@
+
+\begin{tikzpicture}[%
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=2.5cm,
+	scale=0.9,
+	transform shape,
+	align=center,
+	smallnode/.style={inner sep=1.4},
+	initial text =,
+	anchor=center]
+	
+	\tikzstyle{my node}=[draw,minimum height=1cm,minimum width=3cm]
+	\begin{scope}
+	\node [align=center](tainput) {\textbf{Input}: \\ A program $P$};
+	\node[my node] (cfg) [below of=tainput, yshift=1cm] {Control-Flow Graph \\ Builder};
+	\node[my node](ta1)[below of=cfg]{$\mathcal{L}(A_P) \subseteq \mathcal{L}(A_D)?$};
+	\node[my node] (ta2) [below of=ta1, yshift=-1cm] {$\tau$ feasible?};
+	\node[my node] (ta3) [below left of=ta1, xshift=-1cm]{\texttt{generalize($\tau$)}};
+	\node [](corr)[right of=ta1, right=0.5cm] {\textbf{return}: $P$ is Safe};
+	\node [](incorr)[right of=ta2, right=0.5cm] {\textbf{return}: $P$ is Unsafe};
+	
+	\path (ta1) edge[bend left] node[align=left, right=0.25cm]{no \\
+		$\tau \in \mathcal{L}(A_P) \backslash \mathcal{L}(A_D)$} (ta2)
+	(ta3.north) edge[bend left] node[align=right, left=0.25cm] {$A_D := A_D\ \cup$ $\texttt{generalize} (\tau)$} (ta1.west)
+	(ta2.west) edge[bend left] node[left=0.25cm] {no} (ta3.south)
+	(cfg) edge[] node[align=left, right=0.25cm] {$A_P := \text{control-flow graph as automaton}$ \\ 		$A_D = \emptyset$} (ta1)
+	(ta1) edge[] node[above] {yes} (corr)
+	(ta2) edge[] node[above] {yes} (incorr)
+	(tainput) edge[] node[] {} (cfg)
+	;
+	\end{scope}
+
+
+	\begin{scope}[xshift=10cm]
+	\tikzstyle{in node}=[draw,minimum height=1cm,minimum width=5cm]
+	\node [align=center](input) {\textbf{Input}: \\ Program trace $\tau$};
+	\node[in node, fill=white](1)[below of=input, yshift=1cm]{Does $\tau$ contain a loop?};
+	
+	\node[my node,  fill=white](2)[below of=1, xshift=1cm]{Loop \\ Summarization};
+	\node[my node, fill=white](3)[below of=2]{Meta-Trace \\ Construction};
+	
+	\node[my node, fill=white](4)[below of=3]{Meta-Interpolant \\ Computation};
+	\node[my node, fill=white](interpolants)[below of=4, xshift=-1cm]{Inductive Interpolant  Computation};
+	
+	\node[](6)[below of=interpolants, yshift=1cm]{\textbf{Output}: \\ Inductive Sequence of Interpolants for $\tau$};
+	
+	\begin{scope}[on background layer]
+		\node[group, line width=0.3mm, draw=emblue, fill=emblue!20, fill opacity=0.2, fit=(1) (interpolants) (3), yscale=1.025](FIt1) {};
+	\end{scope}
+	
+	\path (input) edge[] node[]{} (1)
+	([xshift=-1cm] 1.south) edge[] node[left=0.1cm]{\textbf{no}} ([xshift=-1cm]interpolants.north)
+	;
+	\draw [->] ([xshift=1cm]1.south) -- node[right] {\textbf{yes}} ([xshift=1cm]1.south |-2.north); 
+	\draw [->] (2.south) -- (2.south |-3.north);
+	\draw [->] (3.south) -- (3.south |-4.north); 
+	\draw [->] (4.south) -- (4.south |-interpolants.north); 
+	\draw [->] (interpolants.south) -- (6.north); 
+	\end{scope}
+
+	%\draw [Circle - Circle, color=emblue, line width=0.3mm] (ta3) -- (ta3 -| FIt1.west); 
+	\draw [-, color=emblue, line width=0.3mm] (ta3.north east) -- ([xshift=0.15cm]FIt1.north west); 
+	\draw [-, color=emblue, line width=0.3mm] (ta3.south east) -- ([xshift=0.15cm]FIt1.south west);
+	%\draw [-, color=emblue, line width=0.3mm] (ta3.south east) -- (FIt1.south east); 
+	%\draw [-, color=emblue, line width=0.3mm] (ta3.south west) -- (FIt1.south west);
+\end{tikzpicture}

@@ -4,7 +4,7 @@
 	>=stealth',
 	shorten >=1pt,
 	auto,
-	node distance=1.5cm,
+	node distance=2.5cm,
 	scale=0.75,
 	transform shape,
 	align=center,
@@ -13,28 +13,29 @@
 	anchor=center]
 	
 	\tikzstyle{my node}=[draw,minimum height=1cm,minimum width=3cm]
+	\tikzstyle{in node}=[draw,minimum height=1cm,minimum width=5cm]
 	\node [align=center](input) {\textbf{Input}: \\ Program trace $\tau$};
-	\node[my node, fill=white](1)[below of=input]{$\tau$ contains a loop?};
-
-	\node[my node,  fill=white](2)[below of=1, xshift=1.5cm]{Loop \\ Summarization};
+	\node[in node, fill=white](1)[below of=input, yshift=1cm]{Does $\tau$ contain a loop?};
+	
+	\node[my node,  fill=white](2)[below of=1, xshift=1cm]{Loop \\ Summarization};
 	\node[my node, fill=white](3)[below of=2]{Meta-Trace \\ Construction};
 	
 	\node[my node, fill=white](4)[below of=3]{Meta-Interpolant \\ Computation};
-	\node[my node, fill=white](interpolants)[below of=4, xshift=-1.5cm]{Inductive Interpolants \\ Computation};
+	\node[my node, fill=white](interpolants)[below of=4, xshift=-1cm]{Inductive Interpolant  Computation};
 	
-	\node[](6)[below of=interpolants]{\textbf{Output}: \\ Inductive Sequence of Interpolants for $\tau$};
-
+	\node[](6)[below of=interpolants, yshift=1cm]{\textbf{Output}: \\ Inductive Sequence of Interpolants for $\tau$};
+	
 	\begin{scope}[on background layer]
-		\node[group, draw=emblue, fill=emblue!20, fill opacity=0.2, fit=(1) (interpolants) (3), xscale=1.15](FIt1) {};
+		\node[group, line width=0.3mm, draw=emblue, fill=emblue!20, fill opacity=0.2, fit=(1) (interpolants) (3), yscale=1.025](FIt1) {};
 	\end{scope}
-
-	\path (input) edge[] node[]{} (1)
-	(1) edge[bend right] node[left=0.25cm]{\textbf{no}} (interpolants)
-	(1.east) edge[bend left] node[right=0.25cm]{\textbf{yes}} ([xshift=0.5cm] 2.north)
 	
-	(2.east) edge[bend left=60] node[left=0.25cm]{} ([yshift=0.25cm]3.east)
-	([yshift=-0.25cm]3.east) edge[bend left=60] node[left=0.25cm]{} (4.east)
-	([xshift=0.5cm]4.south) edge[bend left] node[left=0.25cm]{} (interpolants.east)
-	(interpolants.south) edge[] node[]{} (6)
+	\path (input) edge[] node[]{} (1)
+	([xshift=-1cm] 1.south) edge[] node[left=0.1cm]{\textbf{no}} ([xshift=-1cm]interpolants.north)
+	;
+	\draw [->] ([xshift=1cm]1.south) -- node[right] {\textbf{yes}} ([xshift=1cm]1.south |-2.north); 
+	\draw [->] (2.south) -- (2.south |-3.north);
+	\draw [->] (3.south) -- (3.south |-4.north); 
+	\draw [->] (4.south) -- (4.south |-interpolants.north); 
+	\draw [->] (interpolants.south) -- (6.north); 
 	;
 \end{tikzpicture}
