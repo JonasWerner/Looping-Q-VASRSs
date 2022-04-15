@@ -4,7 +4,7 @@
 	>=stealth',
 	shorten >=1pt,
 	auto,
-	node distance=2.5cm,
+	node distance=2cm,
 	scale=0.9,
 	transform shape,
 	align=center,
@@ -39,13 +39,15 @@
 	\node [align=center](input) {\textbf{Input}: \\ Program trace $\tau$};
 	\node[in node, fill=white](1)[below of=input, yshift=0.25cm]{Does $\tau$ contain a loop?};
 	
-	\node[my node,  fill=white](2)[below of=1, xshift=1cm]{Loop \\ Summarization};
+	\node[my node,  fill=white](2)[below of=1, xshift=1cm]{Loop summarizable?};
 	\node[my node, fill=white](3)[below of=2]{Meta-Trace \\ Construction};
 	
 	\node[my node, fill=white](4)[below of=3]{Meta-Interpolant \\ Computation};
 	\node[my node, fill=white](interpolants)[below of=4, xshift=-1cm]{Inductive Interpolant  Computation};
 	
 	\node[](6)[below of=interpolants, yshift=0.25cm]{\textbf{Output}: \\ Inductive Sequence of Interpolants for $\tau$};
+	
+	\node[my node](7)[right of=2, xshift=2.5cm]{Divide Loop};
 	
 	\begin{scope}[on background layer]
 		\node[group, line width=0.3mm, draw=emblue, fill=emblue!20, fill opacity=0.2, fit=(1) (interpolants) (3), yscale=1.05, xscale=1.025](FIt1) {};
@@ -55,10 +57,13 @@
 	([xshift=-1cm] 1.south) edge[] node[left=0.1cm]{\textbf{no}} ([xshift=-1cm]interpolants.north)
 	;
 	\draw [->] ([xshift=1cm]1.south) -- node[right] {\textbf{yes}} ([xshift=1cm]1.south |-2.north); 
-	\draw [->] (2.south) -- (2.south |-3.north);
+	\draw [->] (2.south) --  node[right] {\textbf{yes}} (2.south |-3.north);
 	\draw [->] (3.south) -- (3.south |-4.north); 
 	\draw [->] (4.south) -- (4.south |-interpolants.north); 
 	\draw [->] (interpolants.south) -- (6.north); 
+	
+	\draw[->] ([yshift=0.2cm]2.east) -- node[above] {\textbf{no}} ([yshift=0.2cm]7.west);
+	\draw[->] ([yshift=-0.2cm]7.west) -- ([yshift=-0.2cm]2.east);
 	\end{scope}
 
 	%\draw [Circle - Circle, color=emblue, line width=0.3mm] (ta3) -- (ta3 -| FIt1.west); 
