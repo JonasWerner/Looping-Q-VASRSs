@@ -6,7 +6,6 @@
 				\vspace*{0.5cm}
 				\resizebox{0.6\textwidth}{!}{\input{fig/lst_ex_p0.tex}}
 				\vspace{-0.5cm}
-				\caption*{Program containing a loop.}
 			\end{figure}
 		\end{column} \pause
 		\begin{column}{0.6\textwidth}
@@ -24,13 +23,9 @@
 					$V_G = 
 					\begin{Bmatrix}
 						\begin{bmatrix}
-							x \\
-							y
-						\end{bmatrix} \rightarrow_{V_G}
-						\begin{bmatrix}
-							x + 2 \\
-							y - 3
-						\end{bmatrix}
+							x' = x + 2 \\
+							y' = y - 3
+						\end{bmatrix} 
 					\end{Bmatrix}
 					$
 					\caption*{Intuitive notation of $V_G$.}
@@ -80,7 +75,7 @@
 			\end{figure}
 		\end{column}
 	\end{columns}
-	\begin{center}
-			\qvasr\ cannot model assignments of variable amount!
+	\begin{center} 	\onslide<4-> \vspace*{0.5cm}
+			\qvasr\ can model only assignments of constant amounts!
 	\end{center}
 \end{frame}

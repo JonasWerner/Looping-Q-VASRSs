@@ -20,16 +20,21 @@
 	\frametitle{Loop Unwinding}
 	Todo: Maybe show an endless long trace or something
 \end{frame}
+
 \begin{frame}[t]
 	\frametitle{Loop Invariants}
 	\begin{center}
+		\onslide<+->
+		Conditions that hold before and after each loop iteration		
 		\begin{columns}[c]
 		\begin{column}{0.35\textwidth}
+			\onslide<+->
 			\begin{figure}[h]
 				\vspace*{0.5cm}
 				\resizebox{0.7\textwidth}{!}{\input{fig/motivation/loop_invariants_strong.tex}}
 			\end{figure}
 		\end{column}
+			\onslide<+->
 		\begin{column}{0.05\textwidth}
 				But:
 		\end{column}
@@ -40,7 +45,9 @@
 			\end{figure}
 		\end{column}
 	\end{columns}
-	Usefulness is tied to how strong the invariants are \\
+	\onslide<+->
+	Usefulness is tied to how strong the invariants are! \\
+	\onslide<+->
 	Finding strong loop invariants "\color{emblue}is an art in itself \color{black}" \cite{DBLP:journals/fmsd/KroeningSTTW13}
 	\end{center}
 \end{frame}
@@ -48,28 +55,43 @@
 \begin{frame}[t]
 	\frametitle{Loop Summarization}
 	\begin{center}
-		\begin{tikzpicture}
-			\node[] at (0 ,3.25) {\color{emblue}{Actual Loop Behaviour}};
-			\draw[emblue, fill=emblue!20, fill opacity=0.2] (0,0) circle (3);
-			\node[] at (0,0) {\color{green}{Underapproximation}};
-			\draw [rounded corners, green,thick,dashed] (-2,-2) -- (0, -2.75) -- (1.25, -2.5) -- (2.5, -0.5) -- (1.25, 1.5) -- (0.25, 2.8) -- (-2, 2) -- (-2.8, 0) -- cycle;
-			\node at (5, 3) (head) []{Missed Counterexample};
-			\node at (2, 1.5) (dot) [circle,fill,inner sep=1.5pt]{};
-			\path (head) edge node []{} (dot);
-		\end{tikzpicture}
+		There are two kinds of loop summarization: \\
+		\onslide<+-> Underapproximative and Overapproximative Summarization
+		\begin{columns}[t]
+			\begin{column}{0.35\textwidth}
+				\vspace*{0.5cm} \\
+				\onslide<+-> Underapproximation:
+				\begin{itemize}
+					\onslide<+-> \item Summary forms a subset of actual loop behaviour
+					\item Not every counterexample is covered!
+				\end{itemize}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\vspace*{0.5cm}
+				\resizebox{\textwidth}{!}{\input{fig/underapprox_scheme.tex}}
+			\end{column}
+		\end{columns}
 	\end{center}
 \end{frame}
 
 \begin{frame}[t]
 	\frametitle{Loop Summarization}
 	\begin{center}
-		  \begin{tikzpicture}
-		  \node[] at (2.7,2) {\color{emblue}{Actual Loop Behaviour}};
-		  \draw [rounded corners,red,thick,dashed] (0,0) -- (3, -1) -- (5.5,0.5) -- (6, 3.5) -- (4, 5)-- (0.25, 4) node [midway, sloped, above] {Overapproximation} -- cycle;
-		  \draw[emblue, fill=emblue!20, fill opacity=0.2] (2.7,2) circle (2.5);
-		  \node at (7, 5) (head) []{Spurious Counterexample};
-		  \node at (5.5, 3.25) (dot) [circle,fill,inner sep=1.5pt]{};
-		  \path (head) edge node []{} (dot);
-		\end{tikzpicture}
+		There are two kinds of loop summarization: \\
+		\onslide<+-> Underapproximative and Overapproximative Summarization
+		\begin{columns}[t]
+			\begin{column}{0.35\textwidth}
+				\vspace*{0.5cm} \\
+				\onslide<+-> Overapproximation:
+				\begin{itemize}
+					\onslide<+-> \item Summary forms a superset of actual loop behaviour
+					\item Covers spurious counterexamples!
+				\end{itemize}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\vspace*{0.5cm}
+				\resizebox{\textwidth}{!}{\input{fig/overapprox_scheme.tex}}
+			\end{column}
+		\end{columns}
 	\end{center}
 \end{frame}
