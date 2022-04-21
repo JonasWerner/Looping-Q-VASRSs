@@ -15,10 +15,11 @@
 	\tikzstyle{my node}=[draw,minimum height=1cm,minimum width=3cm]
 	\tikzstyle{in node}=[draw,minimum height=1cm,minimum width=5cm]
 	\tikzstyle{dashed node}=[draw,minimum height=1cm,minimum width=3cm, dashed]
-	\node [align=center](input) {\textbf{Input}: \\ Program trace $\tau$};
-	\node[in node, fill=white](1)[below of=input, yshift=0.25cm]{Does $\tau$ contain a loop?};
 	
-	\node[my node,  fill=white](2)[below of=1, xshift=1cm]{Loop summarizable?};
+	\node [align=center](input) {\textbf{Input}: \\ \color<2>{emblue} Program trace $\tau$ \color<2>{black}};
+	\node[in node, fill=white](1)[below of=input, yshift=0.25cm]{\color<3-4>{emblue} Does $\tau$ contain a loop?};
+	
+	\node[my node, fill=white](2)[below of=1, xshift=1cm]{\color<5>{emblue}Loop summarizable?};
 	\node[my node, fill=white](3)[below of=2]{Meta-Trace \\ Construction};
 	
 	\node[my node, fill=white](4)[below of=3]{Meta-Interpolant \\ Computation};
@@ -33,7 +34,7 @@
 	\path (input) edge[] node[]{} (1)
 	([xshift=-1cm] 1.south) edge[] node[left=0.1cm]{\textbf{no}} ([xshift=-1cm]interpolants.north)
 	;
-	\draw [->] ([xshift=1cm]1.south) -- node[right] {\textbf{yes}} ([xshift=1cm]1.south |-2.north); 
+	\draw [->] ([xshift=1cm]1.south) -- node[right] {\color<4>{emblue} \textbf{yes}} ([xshift=1cm]1.south |-2.north); 
 	\draw [->] (2.south) --  node[right] {\textbf{yes}} (2.south |-3.north);
 	\draw [->] (3.south) -- (3.south |-4.north); 
 	\draw [->] (4.south) -- (4.south |-interpolants.north); 

@@ -10,5 +10,67 @@
 
 \begin{frame}[t]
 	\frametitle{Accelerated Interpolation using \qvasr}
-	\resizebox{0.5\textwidth}{!}{\input{fig/traceabstraction_schema_accelInterpol_short.tex}}
-	\end{frame}
+	\begin{columns}
+		\begin{column}{0.35\textwidth}
+			\resizebox{0.8\textwidth}{!}{\input{fig/traceabstraction_schema_accelInterpol_short_red.tex}}
+		\end{column}
+		\begin{column}{0.55\textwidth}
+			\onslide<2-5>
+			\resizebox{0.4\textwidth}{!}{\input{fig/fig_trace_tau.tex}}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[t]
+	\frametitle{Accelerated Interpolation using \qvasr}
+	\begin{columns}
+		\begin{column}{0.35\textwidth}
+			\resizebox{0.8\textwidth}{!}{\input{fig/traceabstraction_schema_accelInterpol_short_red_2.tex}}
+		\end{column}
+		\begin{column}{0.55\textwidth}
+			Single Loop Iterations: \vspace*{0.25cm}\\
+			\st{x<=10} \st{z:=x; x:=x+y; y:=y+1}
+			\onslide<2->
+			{\small 
+			\begin{align*}
+			&\rightarrow x \leq 10\ \land\ x' = x + y\ \land\ y' = y + 1\ \land\ z' = x \\
+			&\rightarrow \text{Transition Formula}\ H 
+			\end{align*}
+			}%
+			\onslide<1-> \\
+			\vspace*{1cm}\st{x>10} \st{x:=x+1; y:=y-3}
+			\onslide<2->
+			\begin{align*}
+			&\rightarrow	x \leq 20\ \land\ x > 10\ \land\ x' = x + 2\ \land\ y' = y -3 \\
+			&\rightarrow \text{Transition Formula}\ G
+			\end{align*}
+			\onslide<3-> \\
+			\vspace*{1cm}
+			$\rightarrow F = G \lor H$ \onslide<4-> with loop summary \color<4->{emblue} $\psi$
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[t]
+	\frametitle{Accelerated Interpolation using \qvasr}
+	\begin{columns}
+		\begin{column}{0.35\textwidth}
+			\resizebox{0.8\textwidth}{!}{\input{fig/traceabstraction_schema_accelInterpol_short_red_3.tex}}
+		\end{column}
+		\begin{column}{0.55\textwidth}
+			\resizebox{0.77\textwidth}{!}{\input{fig/fig_trace_tau_2.tex}}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[t]
+	\frametitle{Accelerated Interpolation using \qvasr}
+	\begin{columns}
+		\begin{column}{0.35\textwidth}
+			\resizebox{0.8\textwidth}{!}{\input{fig/traceabstraction_schema_accelInterpol_short_red_3.tex}}
+		\end{column}
+		\begin{column}{0.55\textwidth}
+			\resizebox{0.4\textwidth}{!}{\input{fig/fig_trace_tau_meta.tex}}
+		\end{column}
+	\end{columns}
+\end{frame}

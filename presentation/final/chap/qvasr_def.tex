@@ -1,6 +1,6 @@
 \begin{frame}[t]
 	\frametitle{\qvasr}
-	\begin{definition}
+	\begin{definition}[\qvasr]
 		A rational vector addition system with resets (\qvasr)\ $V$ is a transition system, consisting of a set of pairs of vectors $(\vec{r}, \vec{a})$:\\
 		\begin{center}
 			$ V = 
@@ -11,45 +11,45 @@
 							r_1 \\
 							\vdots \\
 							r_n
-					\end{bmatrix}}_{reset \in \{0,1\}^n},
+					\end{bmatrix}}_{\vec{r}\ \in\ \{0,1\}^n},
 					\underbrace{
 						\begin{bmatrix}
 							a_1 \\
 							\vdots \\
 							a_n
-					\end{bmatrix}}_{addition \in \mathbb{Q}^n}
+					\end{bmatrix}}_{\vec{a}\ \in\ \mathbb{Q}^n}
 				\end{pmatrix}
 			\end{Bmatrix}
 			$
 		\end{center}
 	\end{definition}
-	\onslide<+->
-	\begin{definition}
-		Given a \qvasr\ $V$ and pair $(\vec{r}, \vec{a}) \in V$, transitions $\vec{x} \rightarrow_V \vec{x}'$ are defined as: \\
-		\begin{equation*}
-			\begin{bmatrix}
-				x_1' \\
-				\vdots \\
-				x_n'
-			\end{bmatrix}
-			=
-			\begin{bmatrix}
-				x_1 \\
-				\vdots \\
-				x_n
-			\end{bmatrix}
-			*
-			\begin{bmatrix}
-				r_1 \\
-				\vdots \\
-				r_n
-			\end{bmatrix}
-			+
-			\begin{bmatrix}
-				a_1 \\
-				\vdots \\
-				a_n
-			\end{bmatrix}		
-		\end{equation*}
-	\end{definition}
+	\begin{center}
+	\onslide<2->
+		Given a \qvasr\ $V$ with pair $(\vec{r}, \vec{a}) \in V$, transitions $\vec{x} \rightarrow_V \vec{x}'$ are defined as: \\
+			\begin{equation*}
+				\begin{bmatrix}
+					x_1' \\
+					\vdots \\
+					x_n'
+				\end{bmatrix}
+				=
+				\begin{bmatrix}
+					x_1 \\
+					\vdots \\
+					x_n
+				\end{bmatrix}
+				*
+				\begin{bmatrix}
+					r_1 \\
+					\vdots \\
+					r_n
+				\end{bmatrix}
+				+
+				\begin{bmatrix}
+					a_1 \\
+					\vdots \\
+					a_n
+				\end{bmatrix}		
+			\end{equation*}
+		\end{center}
 \end{frame}
