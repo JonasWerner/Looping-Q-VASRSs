@@ -14,16 +14,17 @@
 	\node [](t) {$\tau$:};
 	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{\top}}}](1)[below of=t] {\st{x:=0;}};
 	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x = 0}}}](13)[below of=1] {\st{y:=2; z:=3}};
-	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 22}}}](2)[below of=13] {\st{x<=21; x<=10}};
-	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 10}}}](4)[below of=2]{\st{z:=x; x:=x+y; y:=y+1}};
-	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 10 + y}}}](5)[below of=4]{\st{x<=21; x<=10}};
-	\node [](6)[below of=5] {\st{z:=x; x:=x+y; y:=y+1}};
-	\node [](7)[below of=6] {\st{x<=21; x>10}};
-	\node [](8)[below of=7] {\st{x:=x+1; y:=y-3}};
-	\node [](9)[below of=8] {\st{x<=21; x>10}};
-	\node [](10)[below of=9] {\st{x:=x+1; y:=y-3}};
-	\node [](11)[below of=10] {\st{x>21}};
-	\node [](12)[below of=11] {\st{x!=22}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 22 \land y \leq 6}}}](2)[below of=13] {\st{x<=21; x<=10}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 10 \land y \leq 6}}}](4)[below of=2]{\st{z:=x; x:=x+y; y:=y+1}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 16 \land y \leq 7}}}](5)[below of=4]{\st{x<=21; x<=10}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 10 \land y \leq 7}}}](6)[below of=5] {\st{z:=x; x:=x+y; y:=y+1}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 16 \land y \leq 7}}}](7)[below of=6] {\st{x<=21; x>10}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 16 \land y \leq 7}}}](8)[below of=7] {\st{x:=x+1; y:=y-3}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 17 \land y \leq 4}}}](9)[below of=8] {\st{x<=21; x>10}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 17 \land y \leq 4}}}](10)[below of=9] {\st{x:=x+1; y:=y-3}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 18 \land y \leq 1}}}](11)[below of=10] {\st{x>21}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{\bot}}}](12)[below of=11] {\st{x!=22}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\itp{\bot}}](13)[below of=12] {};
 	;
 \end{tikzpicture}
 

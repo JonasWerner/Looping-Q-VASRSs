@@ -12,8 +12,8 @@
 	anchor=center]
 	\node [](t) {$\bar{\tau}$:};
 	\node [label={[yshift=0cm, xshift=1.5cm, right]:\itp{\top}}] (1)[below of=t] {\st{x:=0; y:=2; z:=3}};
-	\node [label={[yshift=0cm, xshift=1.5cm, right]:\itp{x = 0}}](7)[below of=1] {\st{$\psi$}};
-	\node [label={[yshift=0cm, xshift=1.5cm, right]:\itp{x \leq 22 \land x > 11 \land y \leq 6}}](11)[below of=7] {\st{x>21}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\itp{x = 0 \land y = 2}}](7)[below of=1] {\st{$\psi$}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\itp{x \leq 22 \land y \leq 6}}](11)[below of=7] {\st{x>21}};
 	\node [label={[yshift=0cm, xshift=1.5cm, right]:\itp{x = 22}}](12)[below of=11] {\st{x!=22}};
 	\node [label={[yshift=0cm, xshift=1.5cm, right]:\itp{\bot}}](13)[below of=12] {};
 	;
