@@ -1,0 +1,20 @@
+\begin{tikzpicture}[%
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=0.75cm,
+	scale=0.6,
+	transform shape,
+	align=center,
+	smallnode/.style={inner sep=1.4},
+	initial text =,
+	anchor=center]
+	\node [](t) {$\bar{\tau}$:};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<3->{\itp{\top}}}] (1)[below of=t] {\st{x:=0; y:=2; z:=3}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<4->{\itp{x \leq 0 \land y \leq 2}}}](7)[below of=1] {\color<1>{emblue}\st{$\psi$}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<5->{\itp{x = 22 \land y = -6}}}](11)[below of=7] {\color<1->{black}\st{x>20}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<6->{\itp{x = 22 \land y = -6}}}](12)[below of=11] {\st{x!=22}};
+	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<7->{\itp{\bot}}}](13)[below of=12] {};
+	;
+\end{tikzpicture}
