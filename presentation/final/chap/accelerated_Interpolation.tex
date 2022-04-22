@@ -28,7 +28,7 @@
 			\resizebox{0.8\textwidth}{!}{\input{fig/traceabstraction_schema_accelInterpol_short_red_2.tex}}
 		\end{column}
 		\begin{column}{0.55\textwidth}
-			Single Loop Iterations: \vspace*{0.25cm}\\
+			Single loop iterations: \vspace*{0.25cm}\\
 			\st{x<=10} \st{z:=x; x:=x+y; y:=y+1}
 			\onslide<2->
 			{\small 
@@ -71,6 +71,37 @@
 		\end{column}
 		\begin{column}{0.55\textwidth}
 			\resizebox{0.4\textwidth}{!}{\input{fig/fig_trace_tau_meta.tex}}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[t]
+	\frametitle{Accelerated Interpolation using \qvasr}
+	\begin{columns}
+		\begin{column}{0.35\textwidth}
+			\resizebox{0.8\textwidth}{!}{\input{fig/traceabstraction_schema_accelInterpol_short_red_4.tex}}
+		\end{column}
+		\begin{column}{0.55\textwidth}
+				\resizebox{0.5\textwidth}{!}{\input{fig/fig_trace_tau_meta_red.tex}}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[t]
+	\frametitle{Accelerated Interpolation using \qvasr}
+	\begin{columns}
+		\begin{column}{0.35\textwidth}
+			\resizebox{0.8\textwidth}{!}{\input{fig/traceabstraction_schema_accelInterpol_short_red_5.tex}}
+		\end{column}
+		\begin{column}{0.3\textwidth}
+			\resizebox{\textwidth}{!}{\input{fig/fig_trace_tau_meta_red_2.tex}}
+			\vspace*{1cm}
+			\only<1>{$post(x = 0, \psi)$ = $x \leq 22$}
+		\end{column}
+		\begin{column}{0.3\textwidth}
+			\begin{center}
+				\resizebox{0.75\textwidth}{!}{\input{fig/fig_trace_tau_interpolants.tex}}
+			\end{center}
 		\end{column}
 	\end{columns}
 \end{frame}
