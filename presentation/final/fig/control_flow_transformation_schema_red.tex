@@ -14,9 +14,9 @@
 	
 	\tikzstyle{my node}=[draw,minimum height=1cm,minimum width=3cm]
 	\tikzstyle{in node}=[draw,minimum height=1cm,minimum width=5cm]
-	\node[align=center](input) {\color<2-3>{emblue} \textbf{Input}: \\ \color<1-3>{emblue} Program $P$};
-	\node[in node, fill=white](5)[below of=input, yshift=0.25cm]{\color<4->{emblue}Construct Control-Flow Graph $G$};
-	\node[in node, fill=white](1)[below of=5]{Does $G$ contain a loop?};
+	\node[align=center](input) {\textbf{Input}: \\ Program $P$};
+	\node[in node, fill=white](5)[below of=input, yshift=0.25cm]{Construct Control-Flow Graph $G$};
+	\node[in node, fill=white](1)[below of=5]{\color<2->{emblue}Does $G$ contain a loop?};
 	\node[my node, fill=white](2)[below of=1, xshift=1cm]{Loop \\ Summarization};
 	\node[my node, fill=white](3)[below of=2]{Loop \\ Replacement};
 	% \node[in node, fill=white](4)[below of=3, xshift=-1cm]{Control-Flow Graph \\ Construction};
