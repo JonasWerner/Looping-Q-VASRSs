@@ -25,6 +25,10 @@
 	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{x \leq 18 \land y \leq 1}}}](11)[below of=10] {\st{x>21}};
 	\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\itp{\bot}}}](12)[below of=11] {\st{x!=22}};
 	\node [label={[yshift=0cm, xshift=1.5cm, right]:\itp{\bot}}](13)[below of=12] {};
+	
+	\draw [-] ([xshift=-1cm]2.north) -- ([xshift=1cm]2.north); 
+	\draw [-] ([xshift=-1cm]7.north) -- ([xshift=1cm]7.north); 
+	\draw [-] ([xshift=-1cm]11.north) -- ([xshift=1cm]11.north); 
 	;
 \end{tikzpicture}
 
