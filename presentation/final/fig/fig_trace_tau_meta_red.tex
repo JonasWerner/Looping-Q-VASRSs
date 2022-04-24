@@ -16,11 +16,11 @@
 	\node [] (7k)[below of=13k] {\color<1>{emblue}\st{$\psi$}};
 	\node [] (11k)[below of=7k] {\color<1->{black}\st{x>21}};
 	\node [] (12k)[below of=11k] {\st{x!=21}};
-	\node<+(3)-> [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{\top}}}] (1)[below of=t] {\st{x:=0;}};
-	\node<+(4)->  [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{x = 0}}}] (13)[below of=1] {\st{y:=2; z:=3}};
-	\node<+(5)-> [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{x = 0 \land y = 2}}}](7)[below of=13] {\color<1>{emblue}\st{$\psi$}};
-	\node<+(6)-> [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{x \leq 22 \land y \leq 6}}}](11)[below of=7] {\color<1->{black}\st{x>21}};
-	\node<+(7)-> [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{x = 22}}}](12)[below of=11] {\st{x!=22}};
-	\node<+(8)-> [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{\bot}}}](13)[below of=12] {};
+	\onslide<3-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{\top}}}] (1)[below of=t] {\st{x:=0;}};
+	\onslide<4->  \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{x = 0}}}] (13)[below of=1] {\st{y:=2; z:=3}};
+	\onslide<5-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{x = 0 \land y = 2}}}](7)[below of=13] {\color<1>{emblue}\st{$\psi$}};
+	\onslide<6-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{x \leq 22 \land y \leq 6}}}](11)[below of=7] {\color<1->{black}\st{x>21}};
+	\onslide<7-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{x = 22}}}](12)[below of=11] {\st{x!=22}};
+	\onslide<8-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{\bot}}}](13)[below of=12] {};
 	;
 \end{tikzpicture}
