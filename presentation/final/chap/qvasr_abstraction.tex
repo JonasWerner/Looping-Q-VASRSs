@@ -1,0 +1,72 @@
+\begin{frame}
+	\frametitle{\qvasr-Abstraction}
+	\newcommand{\s}{\ensuremath{\begin{bmatrix} s_x & s_y & s_z \end{bmatrix}}}
+	\newcommand{\p}{\ensuremath{\begin{bmatrix} x' \\ y' \\ z' \end{bmatrix}}}
+	\newcommand{\up}{\ensuremath{\begin{bmatrix} x \\ y \\ z \end{bmatrix}}}
+	\begin{definition}
+		A \qvasr-abstraction is a tuple $(S, V)$ consisting of a matrix $S$ and a \qvasr\ $V$ with $S_F$ being called a linear transformation.
+	\end{definition}
+	\begin{center}
+	Given a \qvasr-abstraction $(S, V)$, transitions $\vec{x} \rightarrow \vec{x}'$ are defined as: \\
+		$ 
+		S_F \cdot
+		\begin{bmatrix}
+			x_1' \\
+			\vdots \\
+			x_n'
+		\end{bmatrix}
+		=
+		S_F \cdot
+		\begin{bmatrix}
+			x_1 \\
+			\vdots \\
+			x_n
+		\end{bmatrix}
+		*
+			\begin{bmatrix}
+				r_1 \\
+				\vdots \\
+				r_n
+			\end{bmatrix}
+		+
+		\begin{bmatrix}
+			a_1 \\
+			\vdots \\
+			a_n
+		\end{bmatrix}	
+		$
+	\end{center}
+\end{frame}
+
+
+\begin{frame}[t]
+	\frametitle{\qvasr-Abstraction Example}
+	\begin{center}
+		$H: x \leq 10 \land x' = x + y \land y' = y + 1 \land z' = x$
+	\end{center}
+		\begin{figure}
+			\begin{equation*}
+				S_H = \begin{bmatrix} -1 & 1 & 1 \\ 0 &1 &0 \end{bmatrix} \hspace*{0.5cm}
+				V_H = 
+				\begin{Bmatrix}
+					\begin{pmatrix}
+						\begin{bmatrix}
+							0 \\
+							1
+						\end{bmatrix},
+						\begin{bmatrix}
+							1 \\
+							1
+						\end{bmatrix}
+					\end{pmatrix}
+				\end{Bmatrix}
+			\end{equation*}
+			\caption*{\qvasr-abstraction of $H$}
+		\end{figure}
+		\begin{figure}
+			\begin{equation*}
+				V_H = \begin{Bmatrix} \begin{bmatrix} -x' + y' + z' = 1 \\ y' = y + 1 \end{bmatrix} \end{Bmatrix}
+			\end{equation*}
+			\caption*{Intuitive view of \qvasr-abstraction} 
+		\end{figure}
+\end{frame}
