@@ -12,18 +12,18 @@
 	initial text =,
 	anchor=center]
 	\node [](t) {\color<2-3>{emblue} $\tau$:};
-	\node [](1)[below of=t] {\st{x:=0;}};
-	\node [](13)[below of=1] {\st{y:=2; z:=3}};
-	\node [](2)[below of=13] {\color<4-5>{emblue} \st{x<=21; x<=10}};
-	\node [](4)[below of=2]{\color<4-5>{emblue}\st{z:=x; x:=x+y; y:=y+1}};
-	\node [](5)[below of=4]{\color<4-5>{emblue}\st{x<=21; x<=10}};
-	\node [](6)[below of=5] {\color<4-5>{emblue}\st{z:=x; x:=x+y; y:=y+1}};
-	\node [](7)[below of=6] {\color<4-5>{emblue}\st{x<=21; x>10}};
-	\node [](8)[below of=7] {\color<4-5>{emblue}\st{x:=x+1; y:=y-3}};
-	\node [](9)[below of=8] {\color<4-5>{emblue}\st{x<=21; x>10}};
-	\node [](10)[below of=9] {\color<4-5>{emblue}\st{x:=x+1; y:=y-3}};
-	\node [](11)[below of=10] {\color<4-5>{emblue}\st{x>20}};
-	\node [](12)[below of=11] {\st{x!=22}};
+	\node [](1)[below of=t] {\st{x:=0}};
+	\node [](13)[below of=1] {\st{y:=2; z:= 3}};
+	\node [](2)[below of=13] {\color<4-5>{red} \st{x<=20; x<=10}};
+	\node [](4)[below of=2]{\color<4-5>{red}\st{z:=x; x:=x+y; y:=y+1}};
+	\node [](5)[below of=4]{\color<4-5>{red}\st{x<=20; x<=10}};
+	\node [](6)[below of=5] {\color<4-5>{red}\st{z:=x; x:=x+y; y:=y+1}};
+	\node [](7)[below of=6] {\color<4-5>{red}\st{x<=20; x>10}};
+	\node [](8)[below of=7] {\color<4-5>{red}\st{x:=x+1; y:=y-3}};
+	\node [](9)[below of=8] {\color<4-5>{red}\st{x<=20; x>10}};
+	\node [](10)[below of=9] {\color<4-5>{red}\st{x:=x+1; y:=y-3}};
+	\node [](11)[below of=10] {\st{x>20}};
+	\node [](12)[below of=11] {\st{x!=21}};
 	
 	\onslide<4-5>\draw [-] ([xshift=-1cm]2.north) -- ([xshift=1cm]2.north); 
 	\onslide<4-5>\draw [-] ([xshift=-1cm]7.north) -- ([xshift=1cm]7.north); 

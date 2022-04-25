@@ -28,7 +28,7 @@
 		\end{column}
 		\begin{column}{0.55\textwidth}
 			Single loop iterations: \vspace*{0.25cm}\\
-			\st{x<=21; x<=10} \st{z:=x; x:=x+y; y:=y+1}
+			\st{x<=20; x<=10} \st{z:=x; x:=x+y; y:=y+1}
 			\onslide<2->
 			{\small 
 			\begin{align*}
@@ -37,7 +37,7 @@
 			\end{align*}
 			}%
 			\onslide<1-> \\
-			\vspace*{1cm}\st{x<=21; x>10} \st{x:=x+1; y:=y-3}
+			\vspace*{1cm}\st{x<=20; x>10} \st{x:=x+1; y:=y-3}
 			\onslide<2->
 			\begin{align*}
 			&\rightarrow	x \leq 21\ \land\ x > 10\ \land\ x' = x + 2\ \land\ y' = y -3 \\
@@ -45,7 +45,7 @@
 			\end{align*}
 			\onslide<3-> \\
 			\vspace*{1cm}
-			$\rightarrow F = G \lor H$ \onslide<4-> with loop summary \color<4->{emblue} $\psi$
+			$\rightarrow F = G \lor H$ \onslide<4-> with loop summary \color<4->{red} $\psi$
 		\end{column}
 	\end{columns}
 \end{frame}

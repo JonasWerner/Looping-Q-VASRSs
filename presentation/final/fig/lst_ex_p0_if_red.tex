@@ -4,12 +4,12 @@
 	int y := 2;
 	int z := 3;
 	while x <= 20:
-		|\color<1->{emblue} if x <= 10:|
-			|\color<1->{emblue} z := x;|
-			|\color<1->{emblue} x := x + y;|
-			|\color<1->{emblue} y := y + 1; |
+		|\color<1->{red} if x <= 10:|
+			|\color<1->{red} z := x;|
+			|\color<1->{red} x := x + y;|
+			|\color<1->{red} y := y + 1; |
 		else:
 			x := x + 2;
 			y := y - 3;
-	assert x == 22;
+	assert x == 21;
 	\end{lstlisting}
