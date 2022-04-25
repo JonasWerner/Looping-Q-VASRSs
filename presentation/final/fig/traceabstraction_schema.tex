@@ -25,7 +25,7 @@
 		$\tau \in \mathcal{L}(A_P) \backslash \mathcal{L}(A_D)$} (ta2)
 	(ta3.north) edge[bend left] node[align=right, left=0.25cm] {$A_D := A_D\ \cup$ $\texttt{generalize} (\tau)$} (ta1.west)
 	(ta2.west) edge[bend left] node[left=0.25cm] {no} (ta3.south)
-	(cfg) edge[] node[align=left, right=0.25cm] {$A_P := \text{control-flow graph as automaton}$ \\ 		$A_D = \emptyset$} (ta1)
+	(cfg) edge[] node[align=left, right=0.25cm] {$A_P := \text{control-flow graph as automaton}$ \\ 		$A_D := \emptyset$} (ta1)
 	(ta1) edge[] node[above] {yes} (corr)
 	(ta2) edge[] node[above] {yes} (incorr)
 	(tainput) edge[] node[] {} (cfg)
