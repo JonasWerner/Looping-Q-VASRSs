@@ -13,29 +13,29 @@
 	anchor=center]
 	
 	\node[state, initial above, initial text =](1){$\loc{1}$};
-	\node[state] (head) [below of=1] {$\loc{4}$};
-	\node[state] (loopEntry)[left of=head] {$\loc{5}$};
-	\node[state] (if)[above of=loopEntry] {$\loc{6}$};
+	\node[state, red] (head) [below of=1] {$\loc{4}$};
+	\node[state, red] (loopEntry)[left of=head] {$\loc{5}$};
+	\node[state, red] (if)[above of=loopEntry] {$\loc{6}$};
 	
- 	\node[state] (else)[below of=loopEntry] {$\loc{10}$};
+ 	\node[state, red] (else)[below of=loopEntry] {$\loc{10}$};
 	\node[state] (loopExit)[right of=head] {$\loc{13}$};
 	
 	\node[state] (assertTrue)[below left of=loopExit] {$\loc{14}$};
 	\node[state, accepting] (assertFalse)[below of=loopExit] {$\loc{err}$};
 	
-	\path (1) edge node []{\st{x:=0;}\\ \st{y:=2;}\\ \st{z:=3;}} (head)
+	\path (1) edge node []{\st{x:=0}\\ \st{y:=2}\\ \st{z:=3}} (head)
 	
-	(head) edge node []{\color<3>{emblue}\st{x<=21}} (loopEntry)
-	(head) edge node []{\color<3>{emblue}\st{x>21}} (loopExit)
+	(head) edge[red] node {\color{red}\st{x<=20}} (loopEntry)
+	(head) edge node []{\st{x>20}} (loopExit)
 	
-	(loopEntry) edge[] node []{\color<3>{emblue}\st{x<=10}} (if)
-	(if) edge[]node []{\\ \color<3>{emblue} \st{z:=x;}\\ \color<3>{emblue}\st{x:=x+y;}\\\color<3>{emblue} \st{y:=y+1}} (head)
+	(loopEntry) edge[red] node []{\color{red}\st{x<=10}} (if)
+	(if) edge[red]node []{\\ \color{red} \st{z:=x}\\ \color{red}\st{x:=x+y}\\\color{red} \st{y:=y+1}} (head)
 	
-	(loopEntry) edge[]node []{\color<3>{emblue}\st{x>10}} (else)
-	(else) edge[] node []{\color<3>{emblue}\st{x:=x+2;}\\ \color<3>{emblue}\st{y:=y-3}} (head)
+	(loopEntry) edge[red]node []{\color{red}\st{x>10}} (else)
+	(else) edge[red] node []{\color{red}\st{x:=x+2;}\\ \color{red}\st{y:=y-3}} (head)
 	
-	(loopExit) edge node []{\st{x==22}} (assertTrue)
-	(loopExit) edge node []{\st{x!=22}} (assertFalse)
+	(loopExit) edge node []{\st{x==21}} (assertTrue)
+	(loopExit) edge node []{\st{x!=21}} (assertFalse)
 	;
 \end{tikzpicture}
 

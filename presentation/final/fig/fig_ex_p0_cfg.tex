@@ -23,17 +23,17 @@
 	\node[state] (assertTrue)[below left of=loopExit] {$\loc{14}$};
 	\node[state, accepting] (assertFalse)[below of=loopExit] {$\loc{err}$};
 	
-	\path (1) edge node []{\st{x:=0;}\\ \st{y:=2;}\\ \st{z:=3;}} (head)
-	(head) edge node []{\st{x<=21}} (loopEntry)
-	(head) edge node []{\st{x>21}} (loopExit)
+	\path (1) edge node []{\st{x:=0}\\ \st{y:=2}\\ \st{z:=3}} (head)
+	(head) edge node []{\st{x<=20}} (loopEntry)
+	(head) edge node []{\st{x>20}} (loopExit)
 	
 	(loopEntry) edge[] node []{\st{x<=10}} (if)
-	(if) edge[]node []{\\ \st{z:=x;}\\ \st{x:=x+y;}\\ \st{y:=y+1}} (head)
+	(if) edge[]node []{\\ \st{z:=x}\\ \st{x:=x+y}\\ \st{y:=y+1}} (head)
 	
 	(loopEntry) edge[]node []{\st{x>10}} (else)
-	(else) edge[] node []{\st{x:=x+2;}\\ \st{y:=y-3}} (head)
+	(else) edge[] node []{\st{x:=x+2}\\ \st{y:=y-3}} (head)
 	
-	(loopExit) edge node []{\st{x==22}} (assertTrue)
-	(loopExit) edge node []{\st{x!=22}} (assertFalse)
+	(loopExit) edge node []{\st{x==21}} (assertTrue)
+	(loopExit) edge node []{\st{x!=21}} (assertFalse)
 	;
 \end{tikzpicture}

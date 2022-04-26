@@ -83,7 +83,7 @@
 		\begin{column}{0.3\textwidth}
 			\resizebox{0.8\textwidth}{!}{\input{fig/traceabstraction_schema_accelInterpol_short_red_4.tex}}
 		\end{column}
-		\begin{column}{0.3\textwidth}
+		\begin{column}{0.35\textwidth}
 				\resizebox{\textwidth}{!}{\input{fig/fig_trace_tau_meta_red.tex}}
 		\end{column}
 		\begin{column}{0.3\textwidth}
@@ -106,19 +106,20 @@
 		\end{column}
 		\begin{column}{0.45\textwidth}
 			\begin{center}
-				\resizebox{0.9\textwidth}{!}{\input{fig/fig_trace_tau_interpolants.tex}}
+				\resizebox{0.8\textwidth}{!}{\input{fig/fig_trace_tau_interpolants.tex}}
 			\end{center}
 		\end{column}
 	\end{columns}
 	\begin{center}
-		\only<5>{post(\color{red} $(x = 0 \land y = 2)$, \color{black}\st{$\psi$}) = \color{red} \itp{x \leq y + 9}}
-		\only<6>{post(\color{red} $(x \leq y + 9)$, \color{black}\st{x<=20; x<=10}) = \color{red}\itp{x \leq y + 9}}
-		\only<7>{post(\color{red} $(x \leq y + 8)$, \color{black}\st{$\psi$}) = \color{red}\itp{(x \leq 21 \land x > 11) \lor x \leq y + 8}}
-		\only<8>{post(\color{red} $(x \leq 21 \land x > 11) \lor x \leq y + 8$, \color{black}\st{x<=20; x<=10}) = \color{red}\itp{x \leq y + 8}}
-		\only<9>{post(\color{red} $(x \leq y + 8)$, \color{black}\st{$\psi$}) = \color{red}\itp{(x \leq 21 \land x > 11) \lor x \leq y + 7}}
-		\only<10>{post(\color{red} $(x \leq y + 8)$, \color{black} \st{x<=20; x>10}) = \color{red}\itp{x \leq 20 \land x > 10}}
-		\only<11>{post(\color{red} $x \leq 20 \land x > 10$, \color{black} \st{$\psi$}) = \color{red}\itp{x \leq 21 \land x > 11}}
-		\only<12>{post(\color{red} $x \leq 21 \land x > 11$, \color{black} \st{x<=20; x>10}) = \color{red}\itp{x \leq 20 \land x > 10}}
-		\only<13>{post(\color{red} $x \leq 20 \land x > 10$, \color{black} \st{x=x+1; y=y-3}) = \color{red}\itp{x \leq 21 \land x > 11}}
+		\only<5>{post(\color{red} $(x = 0 \land y = 2)$, \color{black}\st{$\psi$}) = \color{red} \itp{x \leq y + 9 \land x = 0 \land y = 2}}
+		\only<6>{post(\color{red} $x \leq y + 9 \land x = 0 \land y= 2$, \color{black}\st{x<=20; x<=10}) = \color{red}\itp{x \leq y + 9 \land x = 0 \land y = 2}}
+		\only<7>{post(\color{red} $x \leq y + 8 \land x = 2 \land y= 3$, \color{black}\st{$\psi$}) = \color{red}\itp{x \leq y + 8 \land x = 2 \land y = 3}}
+		\only<8>{post(\color{red} $x \leq y + 8 \land x = 2 \land y = 3$, \color{black}\st{x<=20; x<=10}) = \color{red}\itp{x \leq y + 8 \land x = 2 \land y = 3}}
+		\only<9>{post(\color{red} $x \leq y + 7 \land x = 5 \land y = 4$, \color{black}\st{$\psi$}) = \color{red}\itp{x \leq y + 7 \land x = 5 \land y = 4}}
+		\only<10>{post(\color{red} $x \leq y + 7 \land x = 5 \land y = 3$, \color{black} \st{x<=20; x>10}) = \color{red}\itp{\bot}}
+		\only<11>{post(\color{red} $\bot$, \color{black} \st{$\psi$}) = \color{red}\itp{\bot}}
+		\only<12>{post(\color{red} $\bot$, \color{black} \st{x<=20; x>10}) = \color{red}\itp{\bot}}
+		\only<13>{post(\color{red} $\bot$, \color{black} \st{x=x+1; y=y-3}) = \color{red}\itp{\bot}}
+		\only<14>{post(\color{red} $\bot$, \color{black} \st{x=x+1; y=y-3}) = \color{red}\itp{\bot}}
 	\end{center}
 \end{frame}

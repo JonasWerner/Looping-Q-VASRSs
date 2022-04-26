@@ -13,8 +13,9 @@
 	anchor=center]
 	\node [](t) {\color<2-3>{emblue} $\tau$:};
 	\node [](1)[below of=t] {\st{x:=0}};
-	\node [](13)[below of=1] {\st{y:=2; z:= 3}};
-	\node [](2)[below of=13] {\color<4-5>{red} \st{x<=20; x<=10}};
+	\node [](13)[below of=1] {\st{y:=2}};
+	\node [](14)[below of=13] {\st{z:= 3}};
+	\node [](2)[below of=14] {\color<4-5>{red} \st{x<=20; x<=10}};
 	\node [](4)[below of=2]{\color<4-5>{red}\st{z:=x; x:=x+y; y:=y+1}};
 	\node [](5)[below of=4]{\color<4-5>{red}\st{x<=20; x<=10}};
 	\node [](6)[below of=5] {\color<4-5>{red}\st{z:=x; x:=x+y; y:=y+1}};
