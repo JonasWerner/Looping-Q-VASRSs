@@ -12,19 +12,22 @@
 	initial text =,
 	anchor=center]
 	
-	\tikzstyle{my node}=[draw,minimum height=1cm,minimum width=3cm]
+	\tikzstyle{my node}=[draw,minimum height=1cm,minimum width=2.5cm]
 	\tikzstyle{in node}=[draw,minimum height=1cm,minimum width=5cm]
 	\tikzstyle{dashed node}=[draw,minimum height=1cm,minimum width=3cm, dashed]
+	
 	\node [align=center](input) {\textbf{Input}: \\ Program trace $\tau$};
 	\node[in node, fill=white](1)[below of=input, yshift=0.25cm]{Does $\tau$ contain a loop?};
 	
-	\node[my node,  fill=white](2)[below of=1, xshift=1cm]{Loop summarizable?};
+	\node[my node,  fill=white](2)[below of=1, xshift=1cm]{Loop \\ summarizable?};
 	\node[my node, fill=white](3)[below of=2]{Meta-Trace \\ Construction};
 	
-	\node[my node, fill=white](4)[below of=3]{Meta-Interpolant \\ Computation};
-	\node[my node, fill=white](interpolants)[below of=4, xshift=-1cm]{Inductive Interpolant  Computation};
+	\node[my node, fill=white](4)[below of=3]{Meta-Proof \\ Computation};
 	
-	\node[](6)[below of=interpolants, yshift=0.25cm]{\textbf{Output}: \\ Inductive Sequence of Interpolants for $\tau$};
+	\node[my node, fill=white](interpolants)[below of=4, xshift=-2.25cm]{Proof \\ Computation};
+	\node[my node, fill=white](post)[right of=interpolants, xshift=0.25cm]{Post \\ Processing};
+	
+	\node[](6)[below of=interpolants, yshift=-0.2cm, xshift=1cm]{\textbf{Output}: \\ Inductive Sequence of \\ State Assertions for $\tau$};
 	
 	\node[dashed node](7)[right of=2, xshift=2.5cm]{Divide Loop};
 	
@@ -33,13 +36,13 @@
 	\end{scope}
 	
 	\path (input) edge[] node[]{} (1)
-	([xshift=-1cm] 1.south) edge[] node[left=0.1cm]{\textbf{no}} ([xshift=-1cm]interpolants.north)
+	([xshift=-1.25cm] 1.south) edge[] node[left=0.1cm]{\textbf{no}} ([]interpolants.north)
 	;
 	\draw [->] ([xshift=1cm]1.south) -- node[right] {\textbf{yes}} ([xshift=1cm]1.south |-2.north); 
 	\draw [->] (2.south) --  node[right] {\textbf{yes}} (2.south |-3.north);
 	\draw [->] (3.south) -- (3.south |-4.north); 
 	\draw [->] (4.south) -- (4.south |-interpolants.north); 
-	\draw [->] (interpolants.south) -- (6.north); 
+	\draw [->] ([xshift=1cm]interpolants.south) -- (6.north); 
 	
 	\draw[->, dashed] ([yshift=0.2cm]2.east) -- node[above] {\textbf{no}} ([yshift=0.2cm]7.west);
 	\draw[->, dashed] ([yshift=-0.2cm]7.west) -- ([yshift=-0.2cm]2.east);

@@ -24,10 +24,11 @@
 	\path (ta1) edge[bend left] node[align=left, right=0.25cm]{no \\
 		$\tau \in \mathcal{L}(A_P) \backslash \mathcal{L}(A_D)$} (ta2)
 	(ta3.north) edge[bend left] node[align=right, left=0.25cm] {$A_D := A_D\ \cup$ $\texttt{generalize} (\tau)$} (ta1.west)
-	(ta2.west) edge[bend left] node[left=0.25cm] {no} (ta3.south)
 	(cfg) edge[] node[align=left, right=0.25cm] {$A_P := \text{control-flow graph as automaton}$ \\ 		$A_D := \emptyset$} (ta1)
 	(ta1) edge[] node[above] {yes} (corr)
 	(ta2) edge[] node[above] {yes} (incorr)
-	(tainput) edge[] node[] {} (cfg)
+	(tainput) edge[] node[] {} (cfg);
+	
+	\draw [->, bend left] (ta2.west) to node[align=right, left=0.5cm] {state assertions \\ as proof} node[align=right, yshift=-0.5cm] {no} (ta3.south); 
 	;
 \end{tikzpicture}

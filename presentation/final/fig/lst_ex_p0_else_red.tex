@@ -1,4 +1,4 @@
-\begin{lstlisting}[language=C++,basicstyle=\ttfamily,keywordstyle=\color{blue}, escapechar={|}]  % Start your code-block
+\begin{lstlisting}[language=C++, style=withAssert]  % Start your code-block
 	
 	int x := 0;
 	int y := 2;
@@ -8,8 +8,8 @@
 			z := x;
 			x := x + y;
 			y := y + 1;
-		|\color<2-> {red} else:|
-			|\color<2-> {red} x := x + 2;|
-			|\color<2-> {red} y := y - 3;|
+		%\color<2-> {red} else:%
+			%\color<2-> {red} x := x + 2;%
+			%\color<2-> {red} y := y - 3;%
 	assert x == 21;
 	\end{lstlisting}

@@ -17,10 +17,10 @@
 	\node[align=center](input) {\textbf{Input}: \\Program $P$};
 	\node[in node, fill=white](5)[below of=input, yshift=0.25cm]{Construct Control-Flow Graph $G$};
 	\node[in node, fill=white](1)[below of=5]{Does $G$ contain a loop?};
-	\node[my node, fill=white](2)[below of=1, xshift=1cm]{Loop \\ Summarization};
-	\node[my node, fill=white](3)[below of=2]{Loop \\ Replacement};
+	\node[my node, fill=white](2)[below of=1, xshift=1cm]{\color{emblue}Loop \\ \color{emblue}Summarization};
+	\node[my node, fill=white](3)[below of=2]{\color{emblue} Loop \\ \color{emblue} Replacement};
 	% \node[in node, fill=white](4)[below of=3, xshift=-1cm]{Control-Flow Graph \\ Construction};
-	\node[](output)[below of=3, xshift=-2cm, yshift=0.25cm]{\textbf{Output}: \\ Loop-Free Control-Flow Graph};
+	\node[](output)[below of=3, xshift=-2cm, yshift=0.25cm]{\textbf{Output}: \\ Transformed Control-Flow Graph};
 	
 	\begin{scope}[on background layer]
 		\node[group, line width=0.3mm, draw=emblue, fill=emblue!20, fill opacity=0.2, fit=(5) (3), xscale=1.25, yscale=1.025](FIt2) {};

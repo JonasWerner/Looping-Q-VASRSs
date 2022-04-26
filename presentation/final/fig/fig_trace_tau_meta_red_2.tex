@@ -15,7 +15,11 @@
 	\node [label={[yshift=0cm, xshift=0.7cm, right]:\color<3>{red}\itp{x = 0}}] (13)[below of=1] {\st{y:=2}};
 	\node [label={[yshift=0cm, xshift=0.7cm, right]:\color<4>{red}\itp{x = 0 \land y = 2}}] (14)[below of=13] {\st{z:=3}};
 	\node [label={[yshift=0cm, xshift=0.7cm, right]:\itp{x = 0 \land y = 2}}](7)[below of=14] {\st{$\psi$}};
-	\node [label={[yshift=0cm, xshift=0.7cm, right]:\itp{(x \leq 21 \land x > 11) \lor (x \leq y + 9 \land x \leq 11)}}](11)[below of=7] {\st{x>20}};
+	\node [label={[yshift=0.5cm, xshift=0.7cm, right]:{\itp{
+			\begin{array}{ll}
+				&(x \leq 21 \land x > 11) \\ 
+				&\lor (x \leq y + 9 \land x \leq 11)			
+	\end{array}}}}](11)[below of=7, yshift=-1cm] {\color<1->{black}\st{x>20}};
 	\node [label={[yshift=0cm, xshift=0.7cm, right]:\itp{x = 21}}](12)[below of=11] {\st{x!=21}};
 	\node [label={[yshift=0cm, xshift=0.7cm, right]:\color<15>{red}\itp{\bot}}](13)[below of=12] {};
 	;
