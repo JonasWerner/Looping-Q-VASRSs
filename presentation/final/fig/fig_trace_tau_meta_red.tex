@@ -17,10 +17,10 @@
 	\node [] (7k)[below of=14k] {\color<1>{red}\st{$\psi$}};
 	\node [] (11k)[below of=7k] {\color<1->{black}\st{x>21}};
 	\node [] (12k)[below of=11k] {\st{x!=21}};
-	\onslide<3-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{\top}}}] (1)[below of=t] {\st{x:=0;}};
+	\onslide<3-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{\top}}}] (1)[below of=t] {\st{x:=0}};
 	\onslide<4-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{x = 0}}}] (13)[below of=1] {\st{y:=2}};
-	\onslide<4-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{y = 2}}}] (13)[below of=1] {\st{z:=3}};
-	\onslide<5-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{x = 0 \land y = 2}}}](7)[below of=13] {\color<1>{red}\st{$\psi$}};
+	\onslide<4-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{y = 2}}}] (14)[below of=13] {\st{z:=3}};
+	\onslide<5-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{x = 0 \land y = 2}}}](7)[below of=14] {\color<1>{red}\st{$\psi$}};
 	\onslide<6-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{(x \leq 20 \land x > 11) \lor x \leq y + 9}}}](11)[below of=7] {\color<1->{black}\st{x>20}};
 	\onslide<7-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{x = 21}}}](12)[below of=11] {\st{x!=21}};
 	\onslide<8-> \node [label={[yshift=0cm, xshift=0.7cm, right]:{\itp{\bot}}}](13)[below of=12] {};
