@@ -4,7 +4,7 @@
 	>=stealth',
 	shorten >=1pt,
 	auto,
-	node distance=0.75cm,
+	node distance=1.2cm,
 	scale=0.6,
 	transform shape,
 	align=center,
@@ -36,16 +36,32 @@
 	\onslide<2->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<2>{red}\itp{\top}}}](1)[below of=t] {\st{x:=0;}};
 	\onslide<3->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<3>{red}\itp{x = 0}}}](14)[below of=1] {\st{y:=2;}};
 	\onslide<4->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<4-5>{red}\itp{x = 0 \land y = 2}}}](13)[below of=14] {\st{z:=3}};
-	\onslide<5->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<5-6>{red}\itp{x \leq y + 9 \land x = 0 \land y = 2}}}](2)[below of=13] {\st{x<=20; x<=10}};
-	\onslide<6->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<6-7>{red}\itp{x \leq y + 9 \land x = 0 \land y = 2}}}](4)[below of=2]{\st{z:=x; x:=x+y; y:=y+1}};
-	\onslide<7->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<7-8>{red}\itp{x \leq y + 8 \land x = 2 \land y = 3}}}](5)[below of=4]{\st{x<=20; x<=10}};
-	\onslide<8->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<8-9>{red}\itp{x \leq y + 8 \land x = 2 \land y = 3}}}](6)[below of=5] {\st{z:=x; x:=x+y; y:=y+1}};
-	\onslide<9->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<9-10>{red}\itp{x \leq y + 7 \land x = 5 \land y = 4}}}](7)[below of=6] {\st{x<=20; x>10}};
-	\onslide<10->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<10-11>{red}\itp{\bot}}}](8)[below of=7] {\st{x:=x+1; y:=y-3}};
-	\onslide<11->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<11-12>{red}\itp{\bot}}}](9)[below of=8] {\st{x<=20; x>10}};
-	\onslide<12->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<12-13>{red}\itp{\bot}}}](10)[below of=9] {\st{x:=x+1; y:=y-3}};
-	\onslide<13->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<13>{red}\itp{\bot}}}](11)[below of=10] {\st{x>20}};
-	\onslide<14->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<14>{red}\itp{\bot}}}](12)[below of=11] {\st{x!=21}};
+	\onslide<5->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<5-6>{red}\itp{
+					\begin{array}{ll}
+						&(x \leq 21 \land x > 11) \\ 
+						&\lor (x \leq y + 9 \land x \leq 11)			
+					\end{array}}}}](2)[below of=13] {\st{x<=20; x<=10}};
+	\onslide<6->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<6-7>{red}\itp{x \leq y + 9 \land x \leq 10}}}](4)[below of=2]{\st{z:=x; x:=x+y; y:=y+1}};
+	\onslide<7->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<5-6>{red}\itp{
+				\begin{array}{ll}
+					&(x \leq 21 \land x > 11) \\ 
+					&\lor (x \leq y + 9 \land x \leq 11)			
+	\end{array}}}}](5)[below of=4]{\st{x<=20; x<=10}};
+	\onslide<8->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<8-9>{red}\itp{x \leq y + 9 \land x \leq 10}}}](6)[below of=5] {\st{z:=x; x:=x+y; y:=y+1}};
+	\onslide<9->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<5-6>{red}\itp{
+				\begin{array}{ll}
+					&(x \leq 21 \land x > 11) \\ 
+					&\lor (x \leq y + 9 \land x \leq 11)			
+	\end{array}}}}](7)[below of=6] {\st{x<=20; x>10}};
+	\onslide<10->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<10-11>{red}\itp{x \leq 20 \land x < 10}}}](8)[below of=7] {\st{x:=x+1; y:=y-3}};
+	\onslide<11->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<5-6>{red}\itp{
+				\begin{array}{ll}
+					&(x \leq 21 \land x > 11) \\ 
+					&\lor (x \leq y + 9 \land x \leq 11)			
+	\end{array}}}}](9)[below of=8] {\st{x<=20; x>10}};
+	\onslide<12->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<12-13>{red}\itp{x \leq 20 \land x > 10}}}](10)[below of=9] {\st{x:=x+1; y:=y-3}};
+	\onslide<13->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<13>{red}\itp{x \leq 21 \land x > 11}}}](11)[below of=10] {\st{x>20}};
+	\onslide<14->\node [label={[yshift=0cm, xshift=1.5cm, right]:\only<1->{\color<14>{red}\itp{x = 21}}}](12)[below of=11] {\st{x!=21}};
 	\onslide<15->\node [label={[yshift=0cm, xshift=1.5cm, right]:\color<15>{red}\itp{\bot}}](13)[below of=12] {};
 
 	;

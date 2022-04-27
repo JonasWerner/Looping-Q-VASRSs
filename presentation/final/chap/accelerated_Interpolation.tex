@@ -103,16 +103,16 @@
 		\end{column}
 		\begin{column}{0.45\textwidth}
 			\begin{center}
-				\resizebox{0.8\textwidth}{!}{\input{fig/fig_trace_tau_interpolants.tex}}
+				\resizebox{0.6\textwidth}{!}{\input{fig/fig_trace_tau_interpolants.tex}}
 			\end{center}
 		\end{column}
 	\end{columns}
 	\begin{center}
-		\only<5>{post(\color{red} $(x = 0 \land y = 2)$, \color{black}\st{$\psi$}) = \color{red} \itp{x \leq y + 9 \land x = 0 \land y = 2}}
-		\only<6>{post(\color{red} $x \leq y + 9 \land x = 0 \land y= 2$, \color{black}\st{x<=20; x<=10}) = \color{red}\itp{x \leq y + 9 \land x = 0 \land y = 2}}
-		\only<7>{post(\color{red} $x \leq y + 8 \land x = 2 \land y= 3$, \color{black}\st{$\psi$}) = \color{red}\itp{x \leq y + 8 \land x = 2 \land y = 3}}
-		\only<8>{post(\color{red} $x \leq y + 8 \land x = 2 \land y = 3$, \color{black}\st{x<=20; x<=10}) = \color{red}\itp{x \leq y + 8 \land x = 2 \land y = 3}}
-		\only<9>{post(\color{red} $x \leq y + 7 \land x = 5 \land y = 4$, \color{black}\st{$\psi$}) = \color{red}\itp{x \leq y + 7 \land x = 5 \land y = 4}}
+		\only<5>{post(\color{red} $(x = 0 \land y = 2)$, \color{black}\st{$\psi$}) = \color{red} \itp{x \leq y + 9 \land x \leq 11}}
+		\only<6>{post(\color{red} $x \leq y + 9 \land x \leq 11$, \color{black}\st{x<=20; x<=10}) = \color{red}\itp{x \leq y + 9 \land x \leq 10}}
+		\only<7>{post(\color{red} $x \leq y + 8 \land x \leq 12$, \color{black}\st{$\psi$}) = \color{red}\itp{x \leq y + 9 \land x \leq 11}}
+		\only<8>{post(\color{red} $x \leq y + 9 \land x \leq 10$, \color{black}\st{x<=20; x<=10}) = \color{red}\itp{x \leq y + 9 \land x \leq 10}}
+		\only<9>{post(\color{red} $x \leq y + 8 \land x \leq 12$, \color{black}\st{$\psi$}) = \color{red}\itp{x \leq y + 9 \land x \leq 11}}
 		\only<10>{post(\color{red} $x \leq y + 7 \land x = 5 \land y = 3$, \color{black} \st{x<=20; x>10}) = \color{red}\itp{\bot}}
 		\only<11>{post(\color{red} $\bot$, \color{black} \st{$\psi$}) = \color{red}\itp{\bot}}
 		\only<12>{post(\color{red} $\bot$, \color{black} \st{x<=20; x>10}) = \color{red}\itp{\bot}}

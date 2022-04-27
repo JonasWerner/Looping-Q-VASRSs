@@ -18,7 +18,21 @@
 
 \begin{frame}[t]
 	\frametitle{Loop Unwinding}
-	Todo: Maybe show an endless long trace or something
+		\frametitle{Motivation}
+	\begin{center}
+		Loop analysis is one of the most challenging parts of software verification \\
+		"\color{emblue}Archilles Heel of program verification \color{black}" \cite{DBLP:journals/fmsd/KroeningSTTW13} \pause
+		\begin{minipage}{0.35\textwidth}
+			\vspace*{0.5cm}
+			\resizebox{0.7\textwidth}{!}{\input{fig/lst_ex_p0.tex}}
+		\end{minipage}
+		\pause
+		\begin{tabular}{@{}l@{}}
+			\onslide<2->\tabitem Unrolls a loop until a certain bound \\
+			\onslide<3->\tabitem  Simplest Approach \\
+			\onslide<4->\tabitem \color{red} Cannot argue beyond bound!
+		\end{tabular}
+	\end{center} 
 \end{frame}
 
 \begin{frame}[t]
