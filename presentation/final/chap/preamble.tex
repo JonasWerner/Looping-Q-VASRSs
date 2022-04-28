@@ -14,6 +14,14 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning,shapes.geometric, arrows.meta ,automata,decorations, decorations.text, decorations.pathreplacing, calc, fit, backgrounds, quotes, tikzmark, spy}
 \usepackage{pgf}
+\usepackage{pgfplots}
+\pgfplotsset{
+	compat=1.9,
+	log ticks with fixed point, % no scientific notation in plots
+	table/col sep=comma, % only tabs are column separators
+	unbounded coords=jump, % better have skips in a plot than appear to be interpolating
+	filter discard warning=false, % Don't complain about empty cells
+}
 \usepackage{slantsc}
 \usepackage{geometry}
 \usepackage{amssymb}

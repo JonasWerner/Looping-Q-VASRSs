@@ -1,4 +1,41 @@
 \begin{frame}[t]
 	\frametitle{Evaluation}
-	Show nice graphs comparing our benchmarks
+		We tested a subset of SVComp benchmarks containing 859 programs on specifications: \\
+		\begin{itemize}
+			\item Ultimate version: v0.2.2-dev-fb4f59a \\
+			\item Timeout: 900s \\
+			\item Memory Limit: 8000 MB\\
+			\item CPU core limit: 2
+		\end{itemize} \vspace*{0.25cm}
+		On a system with specifications:
+		\begin{itemize}
+			\item OS: Linux-5.11.22-4-pve-x86\_64-with-glibc2.31 \\
+			\item CPU: AMD Ryzen Threadripper 3970X 32-Core Processor \\
+			\item Cores: 32, frequency: 4549 MHz, Turbo Boost: enabled \\
+			\item RAM: 137439 MB
+		\end{itemize} \vspace*{0.25cm}
+	We compared five tools:
+	\begin{itemize}
+		\item Automizer Default \\
+		\item Automizer with Jordan control-flow transformation (\color{emblue}CFG Jordan) \\
+		\item Automizer with \qvasr\ control-flow transformation (\color{emblue}CFG \qvasr)\\
+		\item Automizer with Jordan Accelerated Interpolation (\color{emblue}Accel Jordan) \\
+		\item Automizer with \qvasr\ Accelerated Interpolation (\color{emblue}Accel \qvasr) \\
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+	\frametitle{Evaluation}
+	Of 859 programs, we archived the following results: \\ \vspace*{1cm}
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{c|cccccccc}
+		Tool & \#Safe & \#Unsafe &\#Unknown & \#Timeout &\#Exceptions & \shortstack{Out of \\ Memory}& \shortstack{CPUTime \\ Total (s)} & \shortstack{Memory \\ Total (MB)}\\
+		\hline
+		Default & 372 & 128 & 43 & 273 & 33 & 10 & 297000 & 607000 \\
+		CFG Jordan & 375 & 124 & 43 & 242 & 65& 9 & 268000 & 593000 \\
+		CFG \qvasr & 372 & 127 & 43 & 267 & 39 & 10 & 292000 & 585000 \\
+		Accel Jordan & 257 & 100 & 38 & 312 & 152 & 0 & 331000 & 522000\\
+		Accel \qvasr & 319 & 115 & 43 & 346 & 34 & 2 & 365000 & 548000
+	\end{tabular}
+	}
 \end{frame}
