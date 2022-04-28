@@ -18,17 +18,14 @@
 
 \begin{frame}[t]
 	\frametitle{Loop Unwinding}
-		\frametitle{Motivation}
 	\begin{center}
-		Loop analysis is one of the most challenging parts of software verification \\
-		"\color{emblue}Archilles Heel of program verification \color{black}" \cite{DBLP:journals/fmsd/KroeningSTTW13} \pause
+		Unrolling a loop until a certain bound\\
 		\begin{minipage}{0.35\textwidth}
 			\vspace*{0.5cm}
 			\resizebox{0.7\textwidth}{!}{\input{fig/lst_ex_p0.tex}}
 		\end{minipage}
 		\pause
 		\begin{tabular}{@{}l@{}}
-			\onslide<2->\tabitem Unrolls a loop until a certain bound \\
 			\onslide<3->\tabitem  Simplest Approach \\
 			\onslide<4->\tabitem \color{red} Cannot argue beyond bound!
 		\end{tabular}
@@ -69,6 +66,8 @@
 \begin{frame}[t]
 	\frametitle{Loop Summarization}
 	\begin{center}
+		\onslide<+->
+		 Represent relationships between inputs and outputs to model loop's effect on variables \\ \vspace*{0.25cm}
 		There are two kinds of loop summarization: \\
 		\onslide<+-> \color{emblue}Underapproximative \color{black} and \color{emblue}Overapproximative \color{black} Summarization
 		\begin{columns}[t]
@@ -77,7 +76,7 @@
 				\onslide<+-> \color{emblue} Underapproximation \color{black}:
 				\begin{itemize}
 					\onslide<+-> \item Summary forms a subset of actual loop behaviour
-					\item Not every counterexample is covered!
+					\onslide<+-> \item Not every counterexample is covered!
 				\end{itemize}
 			\end{column}
 			\begin{column}{0.5\textwidth}
@@ -91,6 +90,7 @@
 \begin{frame}[t]
 	\frametitle{Loop Summarization}
 	\begin{center}
+		Represent relationships between inputs and outputs to model loop's effect on variables \\ \vspace*{0.25cm}
 		There are two kinds of loop summarization: \\
 		\onslide<+-> \color{emblue}Underapproximative \color{black} and \color{emblue}Overapproximative \color{black} Summarization
 		\begin{columns}[t]
@@ -112,4 +112,9 @@
 
 \begin{frame}[t]
 	\frametitle{Thesis' Goal}
+	\begin{center}
+		Implement a new loop summarization library based on rational vector addition systems with resets (\qvasr) in Ultimate \\
+		\onslide<+-> $\rightarrow$ Overapproximation with a \color{red} guaranteed \color{black} degree of precision! \\\vspace*{1cm}
+		\onslide<+-> Adapt the \qvasr\ library to be used in the Trace Abstraction scheme
+	\end{center}
 \end{frame}

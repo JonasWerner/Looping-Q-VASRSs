@@ -1,8 +1,7 @@
 \begin{frame}[t]
 	\frametitle{\qvasr}
 	\begin{definition}[\qvasr]
-		A rational vector addition system with resets (\qvasr)\ $V$ is a transition system, consisting of a set of pairs of vectors $(\vec{r}, \vec{a})$:\\
-		TODO: What is the set of states?
+		A rational vector addition system with resets (\qvasr)\ $V$ is a set of transformers, that are a pair of vectors $(\vec{r}, \vec{a})$:\\
 		\begin{center}
 			$ V = 
 			\begin{Bmatrix}
@@ -26,7 +25,7 @@
 	\end{definition}
 	\begin{center}
 	\onslide<2->
-		Given a \qvasr\ $V$ with pair $(\vec{r}, \vec{a}) \in V$, transitions $\vec{x} \rightarrow_V \vec{x}'$ are defined as: \\
+		Given a \qvasr\ $V$ with pair $(\vec{r}, \vec{a}) \in V$ of dimension $n$, $V$ defines a transition system $(Q_V, \rightarrow_V)$ with state space $Q_V =  \mathbb{Q}^n$  and transitions $\vec{x} \rightarrow_V \vec{x}'$ defined as: \\
 			\begin{equation*}
 				\begin{bmatrix}
 					x_1' \\
