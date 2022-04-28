@@ -47,7 +47,7 @@
 			\vspace*{0.5cm}
 			$\rightarrow F = G \lor H$ \onslide<4-> with loop summary:
 			\begin{align*}
-				\psi: \	\exists k_1, k_2.\ &((-x' + y' + z' = 1\ \\ & \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \\ &\land\ y' = y + k_1 - 3k_2)\ \\ &\lor\ x' = x\ \land\ y' = y\ \land\ z' = z
+				\psi: \	\exists k_1, k_2.\ &((-x' + y' + z' = 1\ \\ & \lor\ -x' + y' + z' = -x + y + z - 5k_2)\ \\ &\land\ y' = y + k_1 - 3k_2)\
 			\end{align*}
 		\end{column}
 	\end{columns}
@@ -108,15 +108,24 @@
 		\end{column}
 	\end{columns}
 	\begin{center}
-		\only<5>{post(\color{red} $(x = 0 \land y = 2)$, \color{black}\st{$\psi$}) = \color{red} \itp{x \leq y + 9 \land x \leq 11}}
-		\only<6>{post(\color{red} $x \leq y + 9 \land x \leq 11$, \color{black}\st{x<=20; x<=10}) = \color{red}\itp{x \leq y + 9 \land x \leq 10}}
-		\only<7>{post(\color{red} $x \leq y + 8 \land x \leq 12$, \color{black}\st{$\psi$}) = \color{red}\itp{x \leq y + 9 \land x \leq 11}}
-		\only<8>{post(\color{red} $x \leq y + 9 \land x \leq 10$, \color{black}\st{x<=20; x<=10}) = \color{red}\itp{x \leq y + 9 \land x \leq 10}}
-		\only<9>{post(\color{red} $x \leq y + 8 \land x \leq 12$, \color{black}\st{$\psi$}) = \color{red}\itp{x \leq y + 9 \land x \leq 11}}
-		\only<10>{post(\color{red} $x \leq y + 7 \land x = 5 \land y = 3$, \color{black} \st{x<=20; x>10}) = \color{red}\itp{\bot}}
-		\only<11>{post(\color{red} $\bot$, \color{black} \st{$\psi$}) = \color{red}\itp{\bot}}
-		\only<12>{post(\color{red} $\bot$, \color{black} \st{x<=20; x>10}) = \color{red}\itp{\bot}}
-		\only<13>{post(\color{red} $\bot$, \color{black} \st{x=x+1; y=y-3}) = \color{red}\itp{\bot}}
-		\only<14>{post(\color{red} $\bot$, \color{black} \st{x=x+1; y=y-3}) = \color{red}\itp{\bot}}
+		\only<5>{post(\color{red} $(x = 0 \land y = 2)$, \color{black}\st{$\psi$}) = \color{red} \itp{(x \leq 21 \land x > 11) \lor (x \leq y + 9 \land x \leq 11)}}
+		
+		\only<6>{post(\color{red} $(x \leq 21 \land x > 11) \lor (x \leq y + 9 \land x \leq 11)$, \color{black}\st{x<=20; x<=10}) = \color{red}\itp{x \leq y + 9 \land x \leq 10}}
+		
+		\only<7>{post(\color{red} $x \leq 9 \land x + y \leq 9$, \color{black}\st{$\psi$}) = \color{red}\itp{(x \leq 21 \land x > 11) \lor (x \leq y + 9 \land x \leq 11)}}
+		
+		\only<8>{post(\color{red} $(x \leq 21 \land x > 11) \lor (x \leq y + 9 \land x \leq 11)$, \color{black}\st{x<=20; x<=10}) = \color{red}\itp{x \leq y + 9 \land x \leq 10}}
+		
+		\only<9>{post(\color{red} $x \leq 9 \land x + y \leq 9$, \color{black}\st{$\psi$}) = \color{red}\itp{(x \leq 21 \land x > 11) \lor (x \leq y + 9 \land x \leq 11)}}
+		
+		\only<10>{post(\color{red} $(x \leq 21 \land x > 11) \lor (x \leq y + 9 \land x \leq 11)$, \color{black} \st{x<=20; x>10}) = \color{red}\itp{(x \leq 21 \land x > 11)}}
+		
+		\only<11>{post(\color{red} $(x \leq 21 \land x > 11)$, \color{black} \st{$\psi$}) = \color{red}\itp{(x \leq 21 \land x > 11)}}
+		
+		\only<12>{post(\color{red} $(x \leq 21 \land x > 11)$, \color{black} \st{x<=20; x>10}) = \color{red}\itp{(x \leq 20 \land x > 10)}}
+		
+		\only<13>{post(\color{red} $x \leq 20 \land x > 10$, \color{black} \st{x=x+1; y=y-3}) = \color{red}\itp{x \leq 21 \land x > 11}}
+		
+		\only<14>{post(\color{red} $x \leq 21 \land x > 11$, \color{black} \st{x > 20}) = \color{red}\itp{x = 21}}
 	\end{center}
 \end{frame}
