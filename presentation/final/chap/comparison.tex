@@ -1,4 +1,47 @@
 \begin{frame}[t]
 	\frametitle{Accelerated Interpolation vs Control-Flow Transformation}
-	TODO: show differences between the 2 techniques: transformation more bruteforce, while accel Interpol more modular 
+		Control-Flow Graph Transformation: \\
+		\begin{itemize}
+			\item Bruteforce $\rightarrow$ summarize all findable loops \\ \vspace*{1cm}
+		\end{itemize}
+		
+		Accelerated Interpolation: \\
+		\begin{itemize}
+			\item Decide which path is summarizable
+			\item Employ heuristics to choose when to summarize
+			\item Change meta traces to an underapproximation by chaining summarized loop paths
+		\end{itemize}
+		\vspace*{1cm}
+\resizebox{\textwidth}{!}{
+		\begin{tikzpicture}[%
+			->,
+			>=stealth', shorten >=1pt, auto,
+			node distance=2.5cm, scale=1,
+			transform shape, align=center,
+			smallnode/.style={inner sep=1.4}
+			initial text =]
+			
+			\node[state](1){$\loc{1}$};
+			
+			\node[state] (2) [right of=1] {$\loc{2}$};
+			
+			\node[state] (3) [right of=2, xshift=-0.55cm] {$\loc{2}'$};
+			
+			\node[state] (4) [right of=3, xshift=-0.55cm] {$\loc{2}$};
+			
+			\node[state] (5) [right of=4, xshift=-0.55cm] {$\loc{2}'$};
+			
+			\node[state] (6) [right of=5, xshift=0.4cm] {$\loc{7}$};
+			
+			\node[state] (7) [right of=6, xshift=0.4cm] {$\loc{9}$};
+			
+			\path (1) edge node {\texttt{x := 0}} (2);
+			\path (2) edge node {$\psi^*_{L_{1}}$} (3);
+			\path (3) edge node {$\varepsilon$} (4);
+			\path (4) edge node {$\psi^*_{L_{2}}$} (5);
+			\path (5) edge node {\texttt{!x <= 10}} (6);
+			\path (6) edge node {\texttt{x != 11}} (7);
+			;
+		\end{tikzpicture}
+}
 \end{frame}
